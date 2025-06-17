@@ -1,68 +1,190 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    --primary-color: #01a5e4;
+    --primary-color-hover: #01a5e499;
+    --secondary-color: #fff;
+    --bg-color: #f9f9f9;
+    --text-primary-color: #333;
+    --text-secondary-color: #8a8a8a;
+    --fade-color: rgba(0, 0, 0, 0.5);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.212);
+    --error-color: #ffc0c0;
+    --error-color-text: #881010;
 }
 
-a {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+.logo {
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  font-size: 2rem;
+  display: none;
 }
 
-body {
-  margin: 0;
+.open .logo {
+  display: block;
+}
+
+.container {
   display: flex;
-  place-items: center;
-  min-width: 320px;
+}
+
+.sidebar {
   min-height: 100vh;
+  padding: 2rem;
+  background: var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 20px var(--shadow-color);
+  z-index: 2;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.sidebarBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  background: transparent;
+  border: none;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: 0.1s ease-in-out;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.sidebarBtn:hover {
+  color: var(--text-secondary-color);
+}
+
+.flexContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.mainContainer {
+    width: 100%;
+    padding: 2rem 5%;
+    color: var(--text-primary-color);
+    background: var(--bg-color);
+}
+
+.titleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.titleContainer h1 {
+    font-weight: 500;
+}
+
+.btnsContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    border: 2px solid var(--primary-color);
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.secondary {
+    background: transparent;
+    color: var(--primary-color);
+}
+
+.btn:hover {
+    transform: translateY(-4px);
+}
+
+.decksConatiner {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.filterContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+}
+
+.filterContainer button {
+    background-color: transparent;
+    padding: 0.3rem;
+    border: 1px solid var(--border);
+    border-radius: 0.2rem;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.filterContainer button:hover {
+    transform: translateY(-4px);
+}
+
+.deck {
+    background: var(--secondary-color);
+    list-style: none;
+    padding: 1.3rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.2rem;
+    box-shadow: -4px 4px 0px var(--border-color);
+    display: grid;
+    gap: 0.5rem;
+    transition: 0.2s;
+}
+
+.deck:hover {
+    cursor: pointer;
+    border-color: var(--border-color);
+    box-shadow: -4px 4px 0px var(--border-color);
+    transform: translateY(-4px);
+}
+
+.deck:active {
+    box-shadow: -4px 4px 0px var(--border-color);
+    transform: translateY(4px);
+    transform: translateX(-4px);
+    box-shadow: none;
+}
+
+.deck strong {
+    width: fit-content;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.2rem;
+    background-color: var(--border-color);
+}
+
+.deck p {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--text-secondary-color);
 }
