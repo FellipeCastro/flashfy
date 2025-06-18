@@ -22,51 +22,61 @@
 }
 
 .logo {
-  font-weight: 500;
-  font-size: 2rem;
-  display: none;
+    font-weight: 500;
+    font-size: 2rem;
+    display: none;
 }
 
 .open .logo {
-  display: block;
+    display: block;
 }
 
 .container {
-  display: flex;
+    display: flex;
 }
 
 .sidebar {
-  min-height: 100vh;
-  padding: 2rem;
-  background: var(--secondary-color);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 0 20px var(--shadow-color);
-  z-index: 2;
+    height: 100vh;
+    padding: 2rem;
+    background: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 0 20px var(--shadow-color);
+    z-index: 2;
+    transition: 0.2s ease-in-out;
+}
+
+.open {
+    width: 25%;
 }
 
 .sidebarBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.6rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: 0.1s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.open .sidebarBtn {
+    transform: rotate(180deg);
 }
 
 .sidebarBtn:hover {
-  color: var(--text-secondary-color);
+    color: var(--text-secondary-color);
 }
 
 .flexContainer {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 1rem;
 }
 
 .mainContainer {
@@ -93,7 +103,19 @@
     gap: 1rem;
 }
 
-.btn {
+.btnsContainerColumn {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.open .btnsContainerColumn {
+    display: flex;
+}
+
+.btn {  
     background: var(--primary-color);
     color: var(--secondary-color);
     border: none;
@@ -104,6 +126,14 @@
     font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.btnsContainerColumn .btn {
+    width: 100%;
 }
 
 .secondary {

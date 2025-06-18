@@ -1,14 +1,23 @@
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
+import { useState } from "react";
 
 const App = () => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
     return (
-        <div className="container open">
-            <div className="sidebar">
+        <div className="container">
+            <div className={isSidebarOpen ? "sidebar open" : "sidebar"}>
                 <div className="flexContainer">
-                    <button className="sidebarBtn">
+                    <button className="sidebarBtn" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                         <MdKeyboardDoubleArrowRight />
                     </button>
                     <div className="logo">FlashFy</div>
+                </div>
+
+                <div className="btnsContainerColumn">
+                    <button className="btn secondary">+ Novo deck</button>
+                    <button className="btn"><FaUser /> Ver Perfil</button>
                 </div>
             </div>
 
