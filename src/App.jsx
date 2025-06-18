@@ -3,6 +3,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Button from "./components/Button/Button";
 import Deck from "./components/Deck/Deck";
 import styles from "./App.module.css";
+import AddCardModal from "./components/AddCardModal/AddCardModal";
 
 const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -31,125 +32,111 @@ const App = () => {
     };
 
     return (
-        <div className={styles.container}>
-            <Sidebar
-                isSidebarOpen={isSidebarOpen}
-                setIsSidebarOpen={setIsSidebarOpen}
-            />
+        <>
+            <div className={styles.container}>
+                <Sidebar
+                    isSidebarOpen={isSidebarOpen}
+                    setIsSidebarOpen={setIsSidebarOpen}
+                />
 
-            <div className={styles.mainContainer}>
-                <div className={styles.titleContainer}>
-                    <h1>Meus decks</h1>
-                    <div className={styles.btnsContainer}>
-                        <Button secondary>+ Novo deck</Button>
-                        <Button>+ Novo card</Button>
+                <div className={styles.mainContainer}>
+                    <div className={styles.titleContainer}>
+                        <h1>Meus decks</h1>
+                        <div className={styles.btnsContainer}>
+                            <Button secondary>+ Novo deck</Button>
+                            <Button>+ Novo card</Button>
+                        </div>
                     </div>
+                    <div className={styles.filterContainer}>
+                        <button
+                            style={{
+                                backgroundColor: "hsla(200, 75%, 50%, 0.4)",
+                            }}
+                        >
+                            Matemática
+                        </button>
+                        <button
+                            style={{
+                                backgroundColor: "hsla(20, 85%, 55%, 0.4)",
+                            }}
+                        >
+                            História
+                        </button>
+                        <button
+                            style={{
+                                backgroundColor: "hsla(120, 60%, 45%, 0.4)",
+                            }}
+                        >
+                            Ciência
+                        </button>
+                        <button
+                            style={{
+                                backgroundColor: "hsla(200, 75%, 50%, 0.4)",
+                            }}
+                        >
+                            Matemática
+                        </button>
+                        <button
+                            style={{
+                                backgroundColor: "hsla(20, 85%, 55%, 0.4)",
+                            }}
+                        >
+                            História
+                        </button>
+
+                        <button
+                            style={{
+                                backgroundColor: "hsla(200, 75%, 50%, 0.4)",
+                            }}
+                        >
+                            Matemática
+                        </button>
+                        <button
+                            style={{
+                                backgroundColor: "hsla(20, 85%, 55%, 0.4)",
+                            }}
+                        >
+                            História
+                        </button>
+                        <button
+                            style={{
+                                backgroundColor: "hsla(200, 75%, 50%, 0.4)",
+                            }}
+                        >
+                            Matemática
+                        </button>
+                    </div>
+                    <ul className={styles.decksConatiner}>
+                        <Deck
+                            color="hsla(200, 75%, 50%, 0.4)"
+                            deck="Matemática"
+                            title="Expressões numéricas"
+                            cards={2}
+                        />
+                        <Deck
+                            color="hsla(120, 60%, 45%, 0.4)"
+                            deck="Ciências"
+                            title="Cadeia alimentar"
+                            cards={4}
+                        />
+                        <Deck
+                            color="hsla(20, 85%, 55%, 0.4)"
+                            deck="História"
+                            title="Neocolônialismo"
+                            cards={3}
+                        />
+                        <Deck
+                            color="hsla(200, 75%, 50%, 0.4)"
+                            deck="Matemática"
+                            title="Funções quadrádicas"
+                            cards={2}
+                        />
+                    </ul>
                 </div>
-                <div className={styles.filterContainer}>
-                    <button
-                        style={{ backgroundColor: "hsla(200, 75%, 50%, 0.4)" }}
-                    >
-                        Matemática
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(20, 85%, 55%, 0.4)" }}
-                    >
-                        História
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(120, 60%, 45%, 0.4)" }}
-                    >
-                        Ciência
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(200, 75%, 50%, 0.4)" }}
-                    >
-                        Matemática
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(20, 85%, 55%, 0.4)" }}
-                    >
-                        História
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(120, 60%, 45%, 0.4)" }}
-                    >
-                        Ciência
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(200, 75%, 50%, 0.4)" }}
-                    >
-                        Matemática
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(20, 85%, 55%, 0.4)" }}
-                    >
-                        História
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(120, 60%, 45%, 0.4)" }}
-                    >
-                        Ciência
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(200, 75%, 50%, 0.4)" }}
-                    >
-                        Matemática
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(20, 85%, 55%, 0.4)" }}
-                    >
-                        História
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(120, 60%, 45%, 0.4)" }}
-                    >
-                        Ciência
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(200, 75%, 50%, 0.4)" }}
-                    >
-                        Matemática
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(20, 85%, 55%, 0.4)" }}
-                    >
-                        História
-                    </button>
-                    <button
-                        style={{ backgroundColor: "hsla(120, 60%, 45%, 0.4)" }}
-                    >
-                        Ciência
-                    </button>
-                </div>
-                <ul className={styles.decksConatiner}>
-                    <Deck
-                        color="hsla(200, 75%, 50%, 0.4)"
-                        deck="Matemática"
-                        title="Expressões numéricas"
-                        cards={2}
-                    />
-                    <Deck
-                        color="hsla(120, 60%, 45%, 0.4)"
-                        deck="Ciências"
-                        title="Cadeia alimentar"
-                        cards={4}
-                    />
-                    <Deck
-                        color="hsla(20, 85%, 55%, 0.4)"
-                        deck="História"
-                        title="Neocolônialismo"
-                        cards={3}
-                    />
-                    <Deck
-                        color="hsla(200, 75%, 50%, 0.4)"
-                        deck="Matemática"
-                        title="Funções quadrádicas"
-                        cards={2}
-                    />
-                </ul>
             </div>
-        </div>
+
+            {/* <AddCardModal /> */}
+        </>
     );
 };
 

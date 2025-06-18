@@ -81,10 +81,15 @@
     color: var(--text-secondary-color);
     border-radius: 2rem;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 .menu button svg {
     font-size: 1.2rem;
+}
+
+.menu button:hover {
+    color: var(--text-primary-color);
 }
 
 .menu button.active {

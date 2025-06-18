@@ -1,0 +1,22 @@
+.fade {
+    z-index: 8;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: var(--fade-color);
+}
+
+.formContainer {
+    width: 100%;
+    max-width: 700px;
+    z-index: 9;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--secondary-color);
+    padding: 2em;
+    border-radius: 0.5em;
+}
