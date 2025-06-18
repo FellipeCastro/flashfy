@@ -1,3 +1,4 @@
+import Button from "../Button/Button";
 import styles from "./AddCardModal.module.css";
 
 const AddCardModal = () => {
@@ -7,7 +8,7 @@ const AddCardModal = () => {
             <div className={styles.formContainer}>
                 <h2>Criar novo flashcard</h2>
 
-                <form method="post" autoComplete="off" className="form">
+                <form method="post" autoComplete="off" className={styles.form}>
                     <div className={styles.inputContainer}>
                         <label htmlFor="deck">Deck</label>
                         <select name="deck" id="deck">
@@ -31,7 +32,10 @@ const AddCardModal = () => {
                     </div>
 
                     <div className={styles.inputContainer}>
-                        <label htmlFor="question">Pergunta</label>
+                        <div className={styles.labelFlex}>
+                            <label htmlFor="question">Pergunta</label>
+                            <input type="file" name="question" id="question" />
+                        </div>
                         <textarea
                             name="question"
                             id="question"
@@ -40,9 +44,9 @@ const AddCardModal = () => {
                     </div>
 
                     <div className={styles.inputContainer}>
-                        <div>
+                        <div className={styles.labelFlex}>
                             <label htmlFor="answer">Resposta</label>
-                            <input type="file" name="answer" id="anwer" />
+                            <input type="file" name="answer" id="answer" />
                         </div>
                         <textarea
                             name="answer"
@@ -51,9 +55,7 @@ const AddCardModal = () => {
                         ></textarea>
                     </div>
 
-                    <button type="submit" className={styles.submitBtn}>
-                        Criar flashcard
-                    </button>
+                    <Button>Criar flashcard</Button>
                 </form>
             </div>
         </>
