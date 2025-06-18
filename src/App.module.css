@@ -1,0 +1,61 @@
+.container {
+    display: flex;
+}
+
+.mainContainer {
+    width: 100%;
+    padding: 2rem 5%;
+    color: var(--text-primary-color);
+    background: var(--bg-color);
+}
+
+.titleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.titleContainer h1 {
+    font-weight: 500;
+}
+
+.btnsContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.decksConatiner {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.filterContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+}
+
+.filterContainer button {
+    background-color: transparent;
+    padding: 0.2rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.2rem;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.filterContainer button:hover {
+    transform: translateY(-4px);
+}
