@@ -21,62 +21,8 @@
     font-family: "Montserrat", sans-serif;
 }
 
-.logo {
-    font-weight: 500;
-    font-size: 2rem;
-    display: none;
-}
-
-.open .logo {
-    display: block;
-}
-
 .container {
     display: flex;
-}
-
-.sidebar {
-    height: 100vh;
-    padding: 2rem;
-    background: var(--secondary-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 0 20px var(--shadow-color);
-    z-index: 2;
-    transition: 0.2s ease-in-out;
-}
-
-.open {
-    width: 25%;
-}
-
-.sidebarBtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
-}
-
-.open .sidebarBtn {
-    transform: rotate(180deg);
-}
-
-.sidebarBtn:hover {
-    color: var(--text-secondary-color);
-}
-
-.flexContainer {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    gap: 1rem;
 }
 
 .mainContainer {
@@ -101,48 +47,6 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-}
-
-.btnsContainerColumn {
-    width: 100%;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.open .btnsContainerColumn {
-    display: flex;
-}
-
-.btn {  
-    background: var(--primary-color);
-    color: var(--secondary-color);
-    border: none;
-    border: 2px solid var(--primary-color);
-    border-radius: 2rem;
-    padding: 1rem 2rem;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-}
-
-.btnsContainerColumn .btn {
-    width: 100%;
-}
-
-.secondary {
-    background: transparent;
-    color: var(--primary-color);
-}
-
-.btn:hover {
-    transform: translateY(-4px);
 }
 
 .decksConatiner {

@@ -1,32 +1,23 @@
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import { FaUser } from "react-icons/fa";
 import { useState } from "react";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Button from "./components/Button/Button";
 
 const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
         <div className="container">
-            <div className={isSidebarOpen ? "sidebar open" : "sidebar"}>
-                <div className="flexContainer">
-                    <button className="sidebarBtn" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                        <MdKeyboardDoubleArrowRight />
-                    </button>
-                    <div className="logo">FlashFy</div>
-                </div>
-
-                <div className="btnsContainerColumn">
-                    <button className="btn secondary">+ Novo deck</button>
-                    <button className="btn"><FaUser /> Ver Perfil</button>
-                </div>
-            </div>
+            <Sidebar
+                isSidebarOpen={isSidebarOpen}
+                setIsSidebarOpen={setIsSidebarOpen}
+            />
 
             <div className="mainContainer">
                 <div className="titleContainer">
                     <h1>Meus decks</h1>
                     <div className="btnsContainer">
-                        <button className="btn secondary">+ Novo deck</button>
-                        <button className="btn">+ Novo card</button>
+                        <Button secondary>+ Novo deck</Button>
+                        <Button>+ Novo card</Button>
                     </div>
                 </div>
                 <div className="filterContainer">
