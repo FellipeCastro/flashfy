@@ -1,13 +1,15 @@
 .progressBarContainer {
     width: 100%;
     background: var(--secondary-color);
-    box-shadow: 0 0 20px var(--shadow-color);
-    border-radius: .4rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.2rem;
+    box-shadow: -4px 4px 0px var(--border-color);
     padding: 1.2rem;
     margin-bottom: 2rem;
 }
 
 .progressBarContainer h2 {
+    color: var(--text-secondary-color);
     display: flex;
     align-items: center;
     gap: 0.4rem;
@@ -15,9 +17,9 @@
     margin-bottom: 2rem;
 }
 
-/* .progressBarContainer h2 svg {
-    color: brown;
-} */
+.progressBarContainer h2 svg {
+    color: var(--primary-color);
+}
 
 .weekDays {
     list-style: none;
@@ -39,7 +41,8 @@
 
 .active {
     background: linear-gradient(45deg, var(--primary-color), var(--primary-color-hover));
-    border: 2px solid var(--text-primary-color);
+    border: 2px solid var(--border-color);
+    color: var(--secondary-color);
 }
 
 .progressBar {

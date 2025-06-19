@@ -1,5 +1,5 @@
 import { MdKeyboardDoubleArrowRight, MdHome } from "react-icons/md";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaBookReader } from "react-icons/fa";
 import styles from "./Sidebar.module.css";
 import Button from "../Button/Button";
 
@@ -25,10 +25,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             <MdHome /> Página inicial
                         </button>
                         <button>
-                            <MdHome /> Página inicial
-                        </button>
-                        <button>
-                            <MdHome /> Página inicial
+                            <FaBookReader /> Nossa metodologia
                         </button>
                     </div>
                 )}
@@ -36,7 +33,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
             {isSidebarOpen && (
                 <div className={styles.btnsContainerColumn}>
-                    <Button secondary>Botão teste</Button>
+                    {/* <Button secondary>Botão teste</Button> */}
                     <Button>
                         <FaUser /> Ver Perfil
                     </Button>
