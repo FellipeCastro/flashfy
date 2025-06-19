@@ -1,9 +1,10 @@
 import { useState } from "react";
+import ProgressBar from "./components/ProgressBar/ProgressBar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Button from "./components/Button/Button";
 import Deck from "./components/Deck/Deck";
-import styles from "./App.module.css";
 import AddCardModal from "./components/AddCardModal/AddCardModal";
+import styles from "./App.module.css";
 
 const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -40,6 +41,8 @@ const App = () => {
                 />
 
                 <div className={styles.mainContainer}>
+                    <ProgressBar />
+
                     <div className={styles.titleContainer}>
                         <h1>Meus decks</h1>
                         <div className={styles.btnsContainer}>
