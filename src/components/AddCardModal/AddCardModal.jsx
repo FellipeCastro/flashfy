@@ -1,3 +1,4 @@
+import { IoMdLink, IoMdClose  } from "react-icons/io";
 import Button from "../Button/Button";
 import styles from "./AddCardModal.module.css";
 
@@ -6,7 +7,13 @@ const AddCardModal = () => {
         <>
             <div className={styles.fade}></div>
             <div className={styles.formContainer}>
-                <h2>Criar novo flashcard</h2>
+                <div className={styles.flexContainer}>
+                    <h2>Criar novo flashcard</h2>
+
+                    <button className={styles.closeBtn}>
+                        <IoMdClose />
+                    </button>
+                </div>
 
                 <form method="post" autoComplete="off" className={styles.form}>
                     <div className={styles.inputContainer}>
@@ -32,9 +39,13 @@ const AddCardModal = () => {
                     </div>
 
                     <div className={styles.inputContainer}>
-                        <div className={styles.labelFlex}>
+                        <div className={styles.flexContainer}>
                             <label htmlFor="question">Pergunta</label>
-                            <input type="file" name="question" id="question" />
+                            
+                            <label htmlFor="fileQuestion" className={styles.file}>
+                                <IoMdLink />
+                                <input type="file" name="fileQuestion" id="fileQuestion" />
+                            </label>
                         </div>
                         <textarea
                             name="question"
@@ -44,9 +55,12 @@ const AddCardModal = () => {
                     </div>
 
                     <div className={styles.inputContainer}>
-                        <div className={styles.labelFlex}>
+                        <div className={styles.flexContainer}>
                             <label htmlFor="answer">Resposta</label>
-                            <input type="file" name="answer" id="answer" />
+                            <label htmlFor="fileAnswer" className={styles.file}>
+                                <IoMdLink />
+                                <input type="file" name="fileAnswer" id="fileAnswer" />
+                            </label>
                         </div>
                         <textarea
                             name="answer"
