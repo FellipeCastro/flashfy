@@ -101,6 +101,7 @@ const App = () => {
                         >
                             História
                         </button>
+                        
                         <button
                             style={{
                                 backgroundColor: "hsla(200, 75%, 50%, 0.4)",
@@ -115,12 +116,14 @@ const App = () => {
                             deck="Matemática"
                             title="Expressões numéricas"
                             cards={2}
+                            toDo={true}
                         />
                         <Deck
                             color="hsla(120, 60%, 45%, 0.4)"
                             deck="Ciências"
                             title="Cadeia alimentar"
                             cards={4}
+                            toDo={true}
                         />
                         <Deck
                             color="hsla(20, 85%, 55%, 0.4)"

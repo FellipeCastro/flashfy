@@ -8,6 +8,7 @@
     display: grid;
     gap: 0.5rem;
     transition: 0.2s;
+    position: relative;
 }
 
 .deck:hover {
@@ -36,4 +37,18 @@
     font-size: 0.8rem;
     font-weight: bold;
     color: var(--text-secondary-color);
+}
+
+.toDo {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.4rem;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    background: var(--border-color);
+    color: var(--secondary-color);
+    border-radius: 50%;
+    font-size: 0.6rem;
 }

@@ -13,7 +13,6 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     <button
                         className={styles.sidebarBtn}
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        aria-label={isSidebarOpen ? "Fechar menu" : "Abrir menu"}
                     >
                         <MdKeyboardDoubleArrowRight />
                     </button>
