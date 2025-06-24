@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
@@ -8,9 +8,9 @@ import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
 import styles from "./Home.module.css";
 
 const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
-    
     const [isAddCardFormOpen, setIsAddCardFormOpen] = useState(false);
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
+    const [decks, setDecks] = useState([]);
 
     const subjects = [
         { name: "Português", color: "rgba(255, 193, 7, 0.4)" },
@@ -28,7 +28,7 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
         { name: "Sociologia", color: "rgba(255, 87, 34, 0.4)" },
     ];
 
-    const decks = [
+    const mockDecks = [
         {
             title: "Expressões numéricas",
             subject: "Matemática",
@@ -141,6 +141,54 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
         return acc;
     }, {});
 
+    const createDeck = (subject, title) => {
+        // Verifica se já existe um deck com o mesmo título
+        const deckExists = decks.some(
+            (deck) =>
+                deck.title.toLowerCase() === title.toLowerCase() &&
+                deck.subject === subject
+        );
+
+        if (deckExists) {
+            alert("Já existe um deck com este título para esta matéria!");
+            return;
+        }
+
+        // Cria o novo deck
+        const newDeck = {
+            title: title,
+            subject: subject,
+            cards: [], // Começa sem cards
+            toDo: false,
+        };
+
+        // Atualiza o estado adicionando o novo deck
+        setDecks([...decks, newDeck]);
+
+        // Fecha o formulário de adicionar deck
+        setIsAddDeckFormOpen(false);
+    };
+
+    const createCard = (title, question, answer) => {
+        setDecks((prevDecks) =>
+            prevDecks.map((deck) => {
+                if (deck.title === title) {
+                    return {
+                        ...deck,
+                        cards: [...deck.cards, { question, answer }],
+                    };
+                }
+                return deck;
+            })
+        );
+
+        setIsAddCardFormOpen(false);
+    };
+
+    useEffect(() => {
+        setDecks(mockDecks);
+    }, []);
+
     return (
         <>
             <div className={styles.container}>
@@ -201,10 +249,18 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
             </div>
 
             {isAddCardFormOpen && (
-                <AddCardForm setIsAddCardFormOpen={setIsAddCardFormOpen} />
+                <AddCardForm
+                    setIsAddCardFormOpen={setIsAddCardFormOpen}
+                    decks={decks}
+                    createCard={createCard}
+                />
             )}
             {isAddDeckFormOpen && (
-                <AddDeckForm setIsAddDeckFormOpen={setIsAddDeckFormOpen} />
+                <AddDeckForm
+                    setIsAddDeckFormOpen={setIsAddDeckFormOpen}
+                    subjects={subjects}
+                    createDeck={createDeck}
+                />
             )}
         </>
     );

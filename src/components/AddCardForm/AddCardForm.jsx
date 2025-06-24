@@ -1,8 +1,18 @@
+import { useState } from "react";
 import { IoMdLink, IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
 import styles from "./AddCardForm.module.css";
 
-const AddCardForm = ({ setIsAddCardFormOpen }) => {
+const AddCardForm = ({ setIsAddCardFormOpen, decks, createCard }) => {
+    const [deck, setDeck] = useState("");
+    const [question, setQuestion] = useState("");
+    const [answer, setAnswer] = useState("");
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        createCard(deck, question, answer);
+    };
+
     const closeModal = () => {
         setIsAddCardFormOpen(false);
     };
@@ -19,16 +29,28 @@ const AddCardForm = ({ setIsAddCardFormOpen }) => {
                     </button>
                 </div>
 
-                <form method="post" autoComplete="off" className={styles.form}>
+                <form
+                    method="post"
+                    autoComplete="off"
+                    onSubmit={onSubmit}
+                    className={styles.form}
+                >
                     <div className={styles.inputContainer}>
                         <label htmlFor="deck">Deck</label>
-                        <select name="deck" id="deck">
+                        <select
+                            name="deck"
+                            id="deck"
+                            onChange={(e) => setDeck(e.target.value)}
+                            value={deck}
+                        >
                             <option value="">Selecione um deck</option>
-                            <option value="math">Funções quadráticas</option>
-                            <option value="port">Porcentagem</option>
-                            <option value="hist">Segunda Guerra Mundial</option>
-                            <option value="geo">Geologia</option>
-                            <option value="bio">Biologia Ambiental</option>
+                            {decks.map((deck) => {
+                                return (
+                                    <option value={deck.title}>
+                                        {deck.title}
+                                    </option>
+                                );
+                            })}
                         </select>
                     </div>
 
@@ -52,6 +74,8 @@ const AddCardForm = ({ setIsAddCardFormOpen }) => {
                             name="question"
                             id="question"
                             placeholder="Digite a pergunta aqui"
+                            onChange={(e) => setQuestion(e.target.value)}
+                            value={question}
                         ></textarea>
                     </div>
 
@@ -71,6 +95,8 @@ const AddCardForm = ({ setIsAddCardFormOpen }) => {
                             name="answer"
                             id="answer"
                             placeholder="Digite a resposta aqui"
+                            onChange={(e) => setAnswer(e.target.value)}
+                            value={answer}
                         ></textarea>
                     </div>
 
