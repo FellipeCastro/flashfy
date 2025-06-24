@@ -1,16 +1,20 @@
-import { IoMdLink, IoMdClose  } from "react-icons/io";
+import { IoMdLink, IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
-import styles from "./AddCardModal.module.css";
+import styles from "./AddCardForm.module.css";
 
-const AddCardModal = () => {
+const AddCardForm = ({ setIsAddCardFormOpen }) => {
+    const closeModal = () => {
+        setIsAddCardFormOpen(false);
+    };
+
     return (
         <>
-            <div className={styles.fade}></div>
+            <div className={styles.fade} onClick={closeModal}></div>
             <div className={styles.formContainer}>
                 <div className={styles.flexContainer}>
-                    <h2>Criar novo flashcard</h2>
+                    <h2>Criar novo Card</h2>
 
-                    <button className={styles.closeBtn}>
+                    <button className={styles.closeBtn} onClick={closeModal}>
                         <IoMdClose />
                     </button>
                 </div>
@@ -20,31 +24,28 @@ const AddCardModal = () => {
                         <label htmlFor="deck">Deck</label>
                         <select name="deck" id="deck">
                             <option value="">Selecione um deck</option>
-                            <option value="math">Matemática</option>
-                            <option value="port">Português</option>
-                            <option value="hist">História</option>
-                            <option value="geo">Geografia</option>
-                            <option value="bio">Biologia</option>
+                            <option value="math">Funções quadráticas</option>
+                            <option value="port">Porcentagem</option>
+                            <option value="hist">Segunda Guerra Mundial</option>
+                            <option value="geo">Geologia</option>
+                            <option value="bio">Biologia Ambiental</option>
                         </select>
-                    </div>
-
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="title">Titulo</label>
-                        <input
-                            type="text"
-                            name="title"
-                            id="title"
-                            placeholder="Ex. Funções quadráticas"
-                        />
                     </div>
 
                     <div className={styles.inputContainer}>
                         <div className={styles.flexContainer}>
                             <label htmlFor="question">Pergunta</label>
-                            
-                            <label htmlFor="fileQuestion" className={styles.file}>
+
+                            <label
+                                htmlFor="fileQuestion"
+                                className={styles.file}
+                            >
                                 <IoMdLink />
-                                <input type="file" name="fileQuestion" id="fileQuestion" />
+                                <input
+                                    type="file"
+                                    name="fileQuestion"
+                                    id="fileQuestion"
+                                />
                             </label>
                         </div>
                         <textarea
@@ -59,7 +60,11 @@ const AddCardModal = () => {
                             <label htmlFor="answer">Resposta</label>
                             <label htmlFor="fileAnswer" className={styles.file}>
                                 <IoMdLink />
-                                <input type="file" name="fileAnswer" id="fileAnswer" />
+                                <input
+                                    type="file"
+                                    name="fileAnswer"
+                                    id="fileAnswer"
+                                />
                             </label>
                         </div>
                         <textarea
@@ -69,11 +74,11 @@ const AddCardModal = () => {
                         ></textarea>
                     </div>
 
-                    <Button>Criar flashcard</Button>
+                    <Button>Criar Card</Button>
                 </form>
             </div>
         </>
     );
 };
 
-export default AddCardModal;
+export default AddCardForm;

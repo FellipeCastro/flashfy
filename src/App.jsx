@@ -3,34 +3,143 @@ import ProgressBar from "./components/ProgressBar/ProgressBar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Button from "./components/Button/Button";
 import Deck from "./components/Deck/Deck";
-import AddCardModal from "./components/AddCardModal/AddCardModal";
+import AddCardForm from "./components/AddCardForm/AddCardForm";
 import styles from "./App.module.css";
+import AddDeckForm from "./components/AddDeckForm/AddDeckForm";
 
 const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isAddCardFormOpen, setIsAddCardFormOpen] = useState(false);
+    const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
 
-    const decks = {
-        linguagens: "rgba(179, 179, 179, 0.4)", // normal (hsla(0, 0%, 70%, 0.4))
-        redacao: "rgba(220, 80, 50, 0.4)", // fire (hsla(20, 85%, 55%, 0.4))
-        matematica: "rgba(51, 144, 191, 0.4)", // water (hsla(200, 75%, 50%, 0.4))
-        fisica: "rgba(255, 239, 71, 0.4)", // electric (hsla(50, 95%, 60%, 0.4))
-        biologia: "rgba(71, 168, 71, 0.4)", // grass (hsla(120, 60%, 45%, 0.4))
-        quimica: "rgba(211, 255, 255, 0.4)", // ice (hsla(190, 100%, 85%, 0.4))
-        historia: "rgba(191, 50, 50, 0.4)", // fighting (hsla(0, 75%, 45%, 0.4))
-        filosofia: "rgba(168, 71, 168, 0.4)", // poison (hsla(280, 60%, 55%, 0.4))
-        geografia: "rgba(140, 117, 89, 0.4)", // ground (hsla(30, 40%, 45%, 0.4))
-        sociologia: "rgba(163, 194, 255, 0.4)", // flying (hsla(220, 80%, 80%, 0.4))
-        psicologia: "rgba(229, 71, 229, 0.4)", // psychic (hsla(300, 70%, 60%, 0.4))
-        ecologia: "rgba(102, 140, 71, 0.4)", // bug (hsla(90, 55%, 40%, 0.4))
-        geologia: "rgba(102, 89, 76, 0.4)", // rock (hsla(35, 30%, 35%, 0.4))
-        literatura: "rgba(102, 71, 140, 0.4)", // ghost (hsla(260, 55%, 40%, 0.4))
-        artes: "rgba(140, 71, 191, 0.4)", // dragon (hsla(270, 65%, 50%, 0.4))
-        direito: "rgba(51, 51, 64, 0.4)", // dark (hsla(240, 20%, 20%, 0.4))
-        engenharias: "rgba(179, 191, 204, 0.4)", // steel (hsla(210, 20%, 70%, 0.4))
-        musica: "rgba(255, 194, 230, 0.4)", // fairy (hsla(330, 80%, 85%, 0.4))
-        tecnologia: "rgba(128, 128, 128, 0.4)", // unknown (hsla(0, 0%, 50%, 0.4))
-        astronomia: "rgba(51, 71, 255, 0.4)", // stellar (hsla(240, 80%, 50%, 0.4))
-    };
+    const subjects = [
+        { name: "Português", color: "rgba(255, 193, 7, 0.4)" },
+        { name: "Literatura", color: "rgba(156, 39, 176, 0.4)" },
+        { name: "Inglês", color: "rgba(229, 57, 53, 0.4)" },
+        { name: "Espanhol", color: "rgba(255, 152, 0, 0.4)" },
+        { name: "Artes", color: "rgba(255, 235, 59, 0.4)" },
+        { name: "Matemática", color: "rgba(33, 150, 243, 0.4)" },
+        { name: "Biologia", color: "rgba(76, 175, 80, 0.4)" },
+        { name: "Física", color: "rgba(158, 158, 158, 0.4)" },
+        { name: "Química", color: "rgba(56, 142, 60, 0.4)" },
+        { name: "História", color: "rgba(239, 154, 154, 0.4)" },
+        { name: "Geografia", color: "rgba(171, 71, 188, 0.4)" },
+        { name: "Filosofia", color: "rgba(0, 188, 212, 0.4)" },
+        { name: "Sociologia", color: "rgba(255, 87, 34, 0.4)" },
+    ];
+
+    const decks = [
+        {
+            title: "Expressões numéricas",
+            subject: "Matemática",
+            cards: [
+                {
+                    question:
+                        "Qual é a ordem correta das operações matemáticas?",
+                    answer: "Parênteses, Expoentes, Multiplicação/Divisão (da esquerda para a direita), Adição/Subtração (da esquerda para a direita)",
+                },
+                { question: "Quanto é (5 + 3) × 2?", answer: "16" },
+            ],
+            toDo: true,
+        },
+        {
+            title: "Cadeia alimentar",
+            subject: "Biologia",
+            cards: [
+                {
+                    question: "O que é um produtor em uma cadeia alimentar?",
+                    answer: "Organismos que produzem seu próprio alimento através da fotossíntese",
+                },
+                {
+                    question:
+                        "Qual a diferença entre cadeia alimentar e teia alimentar?",
+                    answer: "Cadeia alimentar é linear, enquanto teia alimentar mostra múltiplas interconexões",
+                },
+                {
+                    question: "O que são decompositores?",
+                    answer: "Organismos que quebram matéria orgânica morta",
+                },
+            ],
+            toDo: true,
+        },
+        {
+            title: "Neocolonialismo",
+            subject: "História",
+            cards: [
+                {
+                    question: "O que foi o neocolonialismo?",
+                    answer: "Expansão imperialista das potências europeias no século XIX",
+                },
+                {
+                    question:
+                        "Qual conferência dividiu a África entre as potências europeias?",
+                    answer: "Conferência de Berlim (1884-1885)",
+                },
+                {
+                    question:
+                        "Qual era o principal interesse econômico no neocolonialismo?",
+                    answer: "Obtenção de matéria-prima e novos mercados",
+                },
+            ],
+            toDo: false,
+        },
+        {
+            title: "Funções quadráticas",
+            subject: "Matemática",
+            cards: [
+                {
+                    question: "Qual a forma geral de uma função quadrática?",
+                    answer: "f(x) = ax² + bx + c",
+                },
+                {
+                    question: "Como se calcula o vértice de uma parábola?",
+                    answer: "x = -b/2a, depois substitui na função para encontrar y",
+                },
+            ],
+            toDo: false,
+        },
+        {
+            title: "Tabela periódica",
+            subject: "Química",
+            cards: [
+                {
+                    question: "Quem organizou a primeira tabela periódica?",
+                    answer: "Dmitri Mendeleiev",
+                },
+                {
+                    question: "O que são grupos na tabela periódica?",
+                    answer: "Colunas verticais com propriedades químicas similares",
+                },
+                {
+                    question: "Qual a diferença entre metais e não-metais?",
+                    answer: "Metais são bons condutores, maleáveis; não-metais são geralmente isolantes",
+                },
+            ],
+            toDo: true,
+        },
+        {
+            title: "Literatura modernista",
+            subject: "Literatura",
+            cards: [
+                {
+                    question:
+                        "Quando ocorreu a Semana de Arte Moderna no Brasil?",
+                    answer: "1922",
+                },
+                {
+                    question:
+                        "Quais são as três fases do modernismo brasileiro?",
+                    answer: "1ª fase (1922-1930): heroica; 2ª fase (1930-1945): regionalista; 3ª fase (1945-): experimentalismo",
+                },
+            ],
+            toDo: false,
+        },
+    ];
+
+    const subjectColors = subjects.reduce((acc, subject) => {
+        acc[subject.name] = subject.color;
+        return acc;
+    }, {});
 
     return (
         <>
@@ -46,102 +155,57 @@ const App = () => {
                     <div className={styles.titleContainer}>
                         <h1>Meus decks</h1>
                         <div className={styles.btnsContainer}>
-                            <Button secondary>+ Novo deck</Button>
-                            <Button>+ Novo card</Button>
+                            <Button
+                                secondary
+                                onClick={() => setIsAddDeckFormOpen(true)}
+                            >
+                                + Novo deck
+                            </Button>
+                            <Button onClick={() => setIsAddCardFormOpen(true)}>
+                                + Novo card
+                            </Button>
                         </div>
                     </div>
                     <div className={styles.filterContainer}>
-                        <button
-                            style={{
-                                backgroundColor: "hsla(200, 75%, 50%, 0.4)",
-                            }}
-                        >
-                            Matemática
-                        </button>
-                        <button
-                            style={{
-                                backgroundColor: "hsla(20, 85%, 55%, 0.4)",
-                            }}
-                        >
-                            História
-                        </button>
-                        <button
-                            style={{
-                                backgroundColor: "hsla(120, 60%, 45%, 0.4)",
-                            }}
-                        >
-                            Ciência
-                        </button>
-                        <button
-                            style={{
-                                backgroundColor: "hsla(200, 75%, 50%, 0.4)",
-                            }}
-                        >
-                            Matemática
-                        </button>
-                        <button
-                            style={{
-                                backgroundColor: "hsla(20, 85%, 55%, 0.4)",
-                            }}
-                        >
-                            História
-                        </button>
-
-                        <button
-                            style={{
-                                backgroundColor: "hsla(200, 75%, 50%, 0.4)",
-                            }}
-                        >
-                            Matemática
-                        </button>
-                        <button
-                            style={{
-                                backgroundColor: "hsla(20, 85%, 55%, 0.4)",
-                            }}
-                        >
-                            História
-                        </button>
-                        
-                        <button
-                            style={{
-                                backgroundColor: "hsla(200, 75%, 50%, 0.4)",
-                            }}
-                        >
-                            Matemática
-                        </button>
+                        {subjects.map((subject) => {
+                            return (
+                                <button
+                                    style={{
+                                        backgroundColor: subject.color,
+                                    }}
+                                >
+                                    {subject.name}
+                                </button>
+                            );
+                        })}
                     </div>
                     <ul className={styles.decksConatiner}>
-                        <Deck
-                            color="hsla(200, 75%, 50%, 0.4)"
-                            deck="Matemática"
-                            title="Expressões numéricas"
-                            cards={2}
-                            toDo={true}
-                        />
-                        <Deck
-                            color="hsla(120, 60%, 45%, 0.4)"
-                            deck="Ciências"
-                            title="Cadeia alimentar"
-                            cards={4}
-                            toDo={true}
-                        />
-                        <Deck
-                            color="hsla(20, 85%, 55%, 0.4)"
-                            deck="História"
-                            title="Neocolônialismo"
-                            cards={3}
-                        />
-                        <Deck
-                            color="hsla(200, 75%, 50%, 0.4)"
-                            deck="Matemática"
-                            title="Funções quadrádicas"
-                            cards={2}
-                        />
+                        {decks
+                            // Ordena: decks com toDo=true vêm primeiro
+                            .sort((a, b) => {
+                                if (a.toDo === b.toDo) return 0; // mesma categoria, mantém ordem
+                                return a.toDo ? -1 : 1; // toDo=true vem antes
+                            })
+                            .map((deck) => (
+                                <Deck
+                                    key={deck.title}
+                                    color={subjectColors[deck.subject]}
+                                    subject={deck.subject}
+                                    title={deck.title}
+                                    cards={deck.cards.length}
+                                    toDo={deck.toDo}
+                                />
+                            ))}
                     </ul>
                 </div>
             </div>
 
-            {/* <AddCardModal /> */}
+            {isAddCardFormOpen && (
+                <AddCardForm setIsAddCardFormOpen={setIsAddCardFormOpen} />
+            )}
+            {isAddDeckFormOpen && (
+                <AddDeckForm setIsAddDeckFormOpen={setIsAddDeckFormOpen} />
+            )}
         </>
     );
 };
