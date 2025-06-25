@@ -44,15 +44,10 @@ const AddDeckForm = ({ setIsAddDeckFormOpen, subjects, createDeck }) => {
                         >
                             <option value="">Selecione uma matéria</option>
                             {subjects.map((subject) => {
-                                const normalizedValue = subject.name
-                                    .normalize("NFD")
-                                    .replace(/[\u0300-\u036f]/g, "")
-                                    .toLowerCase();
-
                                 return (
                                     <option
                                         key={subject.name}
-                                        value={normalizedValue}
+                                        value={subject.name}
                                     >
                                         {subject.name}
                                     </option>

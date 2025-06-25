@@ -23,4 +23,5 @@
 
 html, body {
     scroll-behavior: smooth;
+    color: var(--text-primary-color);
 }
