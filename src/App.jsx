@@ -8,13 +8,13 @@ const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
-        // <BrowserRouter>
-        //     <Routes>
-        //         <Route path="/" element={<Home isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />} />
-        //         <Route path="/methodology" element={<Methodology isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />} />
-        //     </Routes>
-        // </BrowserRouter>
-        <Cards />
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />} />
+                <Route path="/methodology" element={<Methodology isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />} />
+                <Route path="/cards/:id" element={<Cards />} /> 
+            </Routes>
+        </BrowserRouter>
     );
 };
 
