@@ -1,9 +1,9 @@
 import { FaExclamation } from "react-icons/fa";
 import styles from "./Deck.module.css";
 
-const Deck = ({ color, subject, title, cards, toDo }) => {
+const Deck = ({ color, subject, title, cards, toDo, openCard }) => {
     return (
-        <li className={styles.deck}>
+        <li className={styles.deck} onClick={openCard}>
             {toDo && (
                 <span
                     className={styles.toDo}

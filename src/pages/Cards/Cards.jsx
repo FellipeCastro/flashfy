@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import styles from "./Cards.module.css";
 
 const Cards = () => {
+    const { id } = useParams();
     const [showAnswer, setShowAnswer] = useState(false);
 
     return (

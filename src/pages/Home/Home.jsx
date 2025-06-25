@@ -6,11 +6,13 @@ import Deck from "../../components/Deck/Deck";
 import AddCardForm from "../../components/AddCardForm/AddCardForm";
 import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
 import styles from "./Home.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const [isAddCardFormOpen, setIsAddCardFormOpen] = useState(false);
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
     const [decks, setDecks] = useState([]);
+    const navigate = useNavigate();
 
     const subjects = [
         { name: "Português", color: "rgba(255, 193, 7, 0.4)" },
@@ -30,6 +32,7 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
     const mockDecks = [
         {
+            id: 1,
             title: "Expressões numéricas",
             subject: "Matemática",
             cards: [
@@ -43,6 +46,7 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
             toDo: true,
         },
         {
+            id: 2,
             title: "Cadeia alimentar",
             subject: "Biologia",
             cards: [
@@ -63,6 +67,7 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
             toDo: true,
         },
         {
+            id: 3,
             title: "Neocolonialismo",
             subject: "História",
             cards: [
@@ -84,6 +89,7 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
             toDo: false,
         },
         {
+            id: 4,
             title: "Funções quadráticas",
             subject: "Matemática",
             cards: [
@@ -99,6 +105,7 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
             toDo: false,
         },
         {
+            id: 5,
             title: "Tabela periódica",
             subject: "Química",
             cards: [
@@ -118,6 +125,7 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
             toDo: true,
         },
         {
+            id: 6,
             title: "Literatura modernista",
             subject: "Literatura",
             cards: [
@@ -242,6 +250,8 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     title={deck.title}
                                     cards={deck.cards.length}
                                     toDo={deck.toDo}
+                                    openCard={() => navigate(`/cards/${deck.id}`)}
+                                    decks={decks}
                                 />
                             ))}
                     </ul>
