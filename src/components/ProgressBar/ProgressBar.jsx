@@ -23,7 +23,7 @@ const ProgressBar = () => {
                 <span className={styles.progressText}>30%</span>
             </div>
 
-            <p className={styles.message}>Você estudou 2 flashcards hoje!</p>
+            <p className={styles.message}>Você estudou 2 decks hoje!</p>
         </div>
     );
 };

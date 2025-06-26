@@ -167,6 +167,11 @@
     transform: translateY(-4px);
 }
 
+.difficulty li.selected {
+    transform: translateY(-4px);
+    background: var(--text-secondary-color);
+}
+
 .navBtn {
     border: none;
     background: none;

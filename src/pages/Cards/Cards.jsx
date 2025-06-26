@@ -5,27 +5,28 @@ import styles from "./Cards.module.css";
 
 const Cards = () => {
     const { state } = useLocation();
-    const decks = state?.decks || [];
+    const { decks, onUpdateDeck } = state || {};
     const { id } = useParams();
+
     const [showAnswer, setShowAnswer] = useState(false);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
-    const [deck, setDeck] = useState(null);
-    const [difficulty, setDifficulty] = useState(null);
+    const [currentDeck, setCurrentDeck] = useState(null);
+    const [selectedDifficulty, setSelectedDifficulty] = useState(null);
 
     useEffect(() => {
         // Encontra o deck correspondente ao ID na URL
-        const selectedDeck = decks.find((deck) => deck.id === parseInt(id));
-        setDeck(selectedDeck);
+        const selectedDeck = decks?.find((deck) => deck.id === parseInt(id));
+        setCurrentDeck(selectedDeck);
         setCurrentCardIndex(0);
         setShowAnswer(false);
-        setDifficulty(null);
+        setSelectedDifficulty(null);
     }, [id, decks]);
 
     const handleNextCard = () => {
-        if (currentCardIndex < deck.cards.length - 1) {
+        if (currentCardIndex < currentDeck?.cards?.length - 1) {
             setCurrentCardIndex(currentCardIndex + 1);
             setShowAnswer(false);
-            setDifficulty(null);
+            setSelectedDifficulty(null);
         }
     };
 
@@ -33,18 +34,30 @@ const Cards = () => {
         if (currentCardIndex > 0) {
             setCurrentCardIndex(currentCardIndex - 1);
             setShowAnswer(false);
-            setDifficulty(null);
+            setSelectedDifficulty(null);
         }
     };
 
     const handleSetDifficulty = (level) => {
-        setDifficulty(level);
-        // Aqui você pode adicionar lógica para salvar a dificuldade do card
-        // fazer a media das dificudades
-        // 
+        const updatedCards = currentDeck.cards.map((card, index) =>
+            index === currentCardIndex ? { ...card, difficulty: level } : card
+        );
+
+        const updatedDeck = {
+            ...currentDeck,
+            cards: updatedCards,
+        };
+
+        setCurrentDeck(updatedDeck);
+        setSelectedDifficulty(level);
+
+        // Atualiza no estado global se a função estiver disponível
+        if (onUpdateDeck) {
+            onUpdateDeck(updatedDeck);
+        }
     };
 
-    if (!deck || deck.cards.length === 0) {
+    if (!currentDeck || currentDeck.cards.length === 0) {
         return (
             <>
                 <header className={styles.header}>
@@ -60,8 +73,8 @@ const Cards = () => {
         );
     }
 
-    const currentCard = deck.cards[currentCardIndex];
-    const progress = ((currentCardIndex + 1) / deck.cards.length) * 100;
+    const currentCard = currentDeck.cards[currentCardIndex];
+    const progress = ((currentCardIndex + 1) / currentDeck.cards.length) * 100;
 
     return (
         <>
@@ -69,7 +82,7 @@ const Cards = () => {
                 <Link to="/">
                     <FaArrowLeft />
                 </Link>
-                <h1>{deck.title}</h1>
+                <h1>{currentDeck.title}</h1>
             </header>
             <div className={styles.mainContainer}>
                 <div className={styles.progressBar}>
@@ -78,7 +91,7 @@ const Cards = () => {
                         style={{ width: `${progress}%` }}
                     ></div>
                     <span className={styles.progressText}>
-                        {currentCardIndex + 1}/{deck.cards.length}
+                        {currentCardIndex + 1}/{currentDeck.cards.length}
                     </span>
                 </div>
                 <div className={styles.card}>
@@ -113,7 +126,10 @@ const Cards = () => {
                             <li
                                 key={level}
                                 className={
-                                    difficulty === level ? styles.selected : ""
+                                    currentCard.difficulty === level ||
+                                    selectedDifficulty === level
+                                        ? styles.selected
+                                        : ""
                                 }
                                 onClick={() => handleSetDifficulty(level)}
                             >
@@ -133,7 +149,8 @@ const Cards = () => {
                         <button
                             onClick={handleNextCard}
                             disabled={
-                                currentCardIndex === deck.cards.length - 1
+                                currentCardIndex ===
+                                currentDeck.cards.length - 1
                             }
                             className={styles.navBtn}
                         >

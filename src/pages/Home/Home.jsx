@@ -35,112 +35,130 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
             id: 1,
             title: "Expressões numéricas",
             subject: "Matemática",
+            toDo: true,
             cards: [
                 {
                     question:
                         "Qual é a ordem correta das operações matemáticas?",
                     answer: "Parênteses, Expoentes, Multiplicação/Divisão (da esquerda para a direita), Adição/Subtração (da esquerda para a direita)",
+                    difficulty: 1,
                 },
-                { question: "Quanto é (5 + 3) × 2?", answer: "16" },
+                {
+                    question: "Quanto é (5 + 3) × 2?",
+                    answer: "16",
+                    difficulty: 4,
+                },
             ],
-            toDo: true,
         },
         {
             id: 2,
             title: "Cadeia alimentar",
             subject: "Biologia",
+            toDo: true,
             cards: [
                 {
                     question: "O que é um produtor em uma cadeia alimentar?",
                     answer: "Organismos que produzem seu próprio alimento através da fotossíntese",
+                    difficulty: 3,
                 },
                 {
                     question:
                         "Qual a diferença entre cadeia alimentar e teia alimentar?",
                     answer: "Cadeia alimentar é linear, enquanto teia alimentar mostra múltiplas interconexões",
+                    difficulty: 5,
                 },
                 {
                     question: "O que são decompositores?",
                     answer: "Organismos que quebram matéria orgânica morta",
+                    difficulty: 1,
                 },
             ],
-            toDo: true,
         },
         {
             id: 3,
             title: "Neocolonialismo",
             subject: "História",
+            toDo: false,
             cards: [
                 {
                     question: "O que foi o neocolonialismo?",
                     answer: "Expansão imperialista das potências europeias no século XIX",
+                    difficulty: 2,
                 },
                 {
                     question:
                         "Qual conferência dividiu a África entre as potências europeias?",
                     answer: "Conferência de Berlim (1884-1885)",
+                    difficulty: 3,
                 },
                 {
                     question:
                         "Qual era o principal interesse econômico no neocolonialismo?",
                     answer: "Obtenção de matéria-prima e novos mercados",
+                    difficulty: 2,
                 },
             ],
-            toDo: false,
         },
         {
             id: 4,
             title: "Funções quadráticas",
             subject: "Matemática",
+            toDo: false,
             cards: [
                 {
                     question: "Qual a forma geral de uma função quadrática?",
                     answer: "f(x) = ax² + bx + c",
+                    difficulty: 1,
                 },
                 {
                     question: "Como se calcula o vértice de uma parábola?",
                     answer: "x = -b/2a, depois substitui na função para encontrar y",
+                    difficulty: 3,
                 },
             ],
-            toDo: false,
         },
         {
             id: 5,
             title: "Tabela periódica",
             subject: "Química",
+            toDo: true,
             cards: [
                 {
                     question: "Quem organizou a primeira tabela periódica?",
                     answer: "Dmitri Mendeleiev",
+                    difficulty: 2,
                 },
                 {
                     question: "O que são grupos na tabela periódica?",
                     answer: "Colunas verticais com propriedades químicas similares",
+                    difficulty: 1,
                 },
                 {
                     question: "Qual a diferença entre metais e não-metais?",
                     answer: "Metais são bons condutores, maleáveis; não-metais são geralmente isolantes",
+                    difficulty: 1,
                 },
             ],
-            toDo: true,
         },
         {
             id: 6,
             title: "Literatura modernista",
             subject: "Literatura",
+            toDo: false,
             cards: [
                 {
                     question:
                         "Quando ocorreu a Semana de Arte Moderna no Brasil?",
                     answer: "1922",
+                    difficulty: 5,
                 },
                 {
                     question:
                         "Quais são as três fases do modernismo brasileiro?",
                     answer: "1ª fase (1922-1930): heroica; 2ª fase (1930-1945): regionalista; 3ª fase (1945-): experimentalismo",
+                    difficulty: 4,
                 },
             ],
-            toDo: false,
         },
     ];
 
@@ -252,7 +270,19 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     toDo={deck.toDo}
                                     openCard={() =>
                                         navigate(`/cards/${deck.id}`, {
-                                            state: { decks },
+                                            state: {
+                                                decks,
+                                                onUpdateDeck: (updatedDeck) => {
+                                                    setDecks((prev) =>
+                                                        prev.map((d) =>
+                                                            d.id ===
+                                                            updatedDeck.id
+                                                                ? updatedDeck
+                                                                : d
+                                                        )
+                                                    );
+                                                },
+                                            },
                                         })
                                     }
                                 />
