@@ -31,7 +31,7 @@
 
 .progressBar {
     width: 100%;
-    height: 20px;
+    height: 25px;
     background: var(--shadow-color);
     border-radius: 2rem;
     overflow: hidden;
@@ -48,7 +48,17 @@
     border-radius: 2rem;
 }
 
+.progressText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
 .card {
+    width: 100%;
     background: var(--secondary-color);
     border: 2px solid var(--border-color);
     border-radius: 0.2rem;
@@ -155,6 +165,14 @@
 
 .difficulty li:hover {
     transform: translateY(-4px);
+}
+
+.navBtn {
+    border: none;
+    background: none;
+    text-decoration: underline;
+    font-weight: 500;
+    cursor: pointer;
 }
 
 .hidden {

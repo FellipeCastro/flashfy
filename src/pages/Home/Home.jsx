@@ -250,8 +250,11 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     title={deck.title}
                                     cards={deck.cards.length}
                                     toDo={deck.toDo}
-                                    openCard={() => navigate(`/cards/${deck.id}`)}
-                                    decks={decks}
+                                    openCard={() =>
+                                        navigate(`/cards/${deck.id}`, {
+                                            state: { decks },
+                                        })
+                                    }
                                 />
                             ))}
                     </ul>
