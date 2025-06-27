@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import mockDecks from "../../mockDecks";
 import styles from "./Cards.module.css";
 
 const Cards = () => {
@@ -15,7 +16,7 @@ const Cards = () => {
 
     useEffect(() => {
         // Encontra o deck correspondente ao ID na URL
-        const selectedDeck = decks?.find((deck) => deck.id === parseInt(id));
+        const selectedDeck = mockDecks?.find((deck) => deck.id === parseInt(id));
         setCurrentDeck(selectedDeck);
         setCurrentCardIndex(0);
         setShowAnswer(false);
