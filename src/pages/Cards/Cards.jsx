@@ -8,15 +8,19 @@ const Cards = () => {
     const { state } = useLocation();
     const { decks, onUpdateDeck } = state || {};
     const { id } = useParams();
-
+    
     const [showAnswer, setShowAnswer] = useState(false);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [currentDeck, setCurrentDeck] = useState(null);
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
+    
+    const difficults = [];
 
     useEffect(() => {
         // Encontra o deck correspondente ao ID na URL
-        const selectedDeck = mockDecks?.find((deck) => deck.id === parseInt(id));
+        const selectedDeck = mockDecks?.find(
+            (deck) => deck.id === parseInt(id)
+        );
         setCurrentDeck(selectedDeck);
         setCurrentCardIndex(0);
         setShowAnswer(false);
@@ -56,6 +60,13 @@ const Cards = () => {
         if (onUpdateDeck) {
             onUpdateDeck(updatedDeck);
         }
+    };
+
+    const handleFinalize = () => {
+        currentDeck.cards.map((deck) => {
+            difficults.push(deck.difficulty);
+        });
+        console.log(difficults);
     };
 
     if (!currentDeck || currentDeck.cards.length === 0) {
@@ -148,14 +159,17 @@ const Cards = () => {
                             Anterior
                         </button>
                         <button
-                            onClick={handleNextCard}
-                            disabled={
+                            onClick={
                                 currentCardIndex ===
                                 currentDeck.cards.length - 1
+                                    ? handleFinalize
+                                    : handleNextCard
                             }
                             className={styles.navBtn}
                         >
-                            Próximo
+                            {currentCardIndex === currentDeck.cards.length - 1
+                                ? "Finalizar"
+                                : "Próximo"}
                         </button>
                     </div>
                 </div>
