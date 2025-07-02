@@ -116,11 +116,12 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             })
                             .map((deck) => (
                                 <Deck
-                                    key={deck.title}
+                                    key={deck.id}
                                     color={subjectColors[deck.subject]}
                                     subject={deck.subject}
                                     title={deck.title}
                                     cards={deck.cards.length}
+                                    nextReview={deck.nextReview}
                                     toDo={deck.toDo}
                                     openCard={() =>
                                         navigate(`/cards/${deck.id}`)

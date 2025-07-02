@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams, useLocation } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import mockDecks from "../../mockDecks";
 import styles from "./Cards.module.css";
@@ -8,12 +8,13 @@ const Cards = () => {
     const { state } = useLocation();
     const { decks, onUpdateDeck } = state || {};
     const { id } = useParams();
-    
+    const navigate = useNavigate();
+
     const [showAnswer, setShowAnswer] = useState(false);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [currentDeck, setCurrentDeck] = useState(null);
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
-    
+
     const difficults = [];
 
     useEffect(() => {
@@ -64,9 +65,15 @@ const Cards = () => {
 
     const handleFinalize = () => {
         currentDeck.cards.map((deck) => {
+            if (!deck.difficulty) {
+                difficults.push(1);
+                return;
+            }
             difficults.push(deck.difficulty);
         });
         console.log(difficults);
+        // Alteração da data da próxima revisão
+        navigate("/");
     };
 
     if (!currentDeck || currentDeck.cards.length === 0) {
