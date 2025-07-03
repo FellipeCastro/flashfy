@@ -1,7 +1,7 @@
 import { FaExclamation } from "react-icons/fa";
 import styles from "./Deck.module.css";
 
-const Deck = ({ color, subject, title, cards, nextReview, toDo, openCard }) => {
+const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
     const formatDate = (dateString) => {
         const now = new Date();
         const reviewDate = new Date(dateString);
@@ -45,7 +45,7 @@ const Deck = ({ color, subject, title, cards, nextReview, toDo, openCard }) => {
 
     return (
         <li className={styles.deck} onClick={openCard}>
-            {(toDo || needsAttention()) && (
+            {needsAttention() && (
                 <span
                     className={styles.toDo}
                     style={{ backgroundColor: color }}

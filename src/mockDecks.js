@@ -9,12 +9,12 @@ const mockDecks = [
             {
                 question: "Qual é a ordem correta das operações matemáticas?",
                 answer: "Parênteses, Expoentes, Multiplicação/Divisão, Adição/Subtração",
-                difficulty: 3,
+                difficulty: null,
             },
             {
                 question: "Quanto é (5 + 3) × 2?",
                 answer: "16",
-                difficulty: 1,
+                difficulty: null,
             }
         ]
     },
@@ -28,12 +28,12 @@ const mockDecks = [
             {
                 question: "O que é um produtor em uma cadeia alimentar?",
                 answer: "Organismos que produzem alimento via fotossíntese",
-                difficulty: 2,
+                difficulty: null,
             },
             {
                 question: "Qual a diferença entre cadeia e teia alimentar?",
                 answer: "Cadeia é linear, teia mostra interconexões múltiplas",
-                difficulty: 4,
+                difficulty: null,
             }
         ]
     },
@@ -47,12 +47,12 @@ const mockDecks = [
             {
                 question: "O que foi o neocolonialismo?",
                 answer: "Expansão imperialista europeia no século XIX",
-                difficulty: 3,
+                difficulty: null,
             },
             {
                 question: "Qual conferência dividiu a África?",
                 answer: "Conferência de Berlim (1884-1885)",
-                difficulty: 2,
+                difficulty: null,
             }
         ]
     },
@@ -66,12 +66,12 @@ const mockDecks = [
             {
                 question: "Qual a forma geral de uma função quadrática?",
                 answer: "f(x) = ax² + bx + c",
-                difficulty: 1,
+                difficulty: null,
             },
             {
                 question: "Como calcular o vértice?",
                 answer: "x = -b/2a, depois calcular y",
-                difficulty: 3,
+                difficulty: null,
             }
         ]
     },
@@ -85,12 +85,12 @@ const mockDecks = [
             {
                 question: "Quem organizou a primeira tabela periódica?",
                 answer: "Dmitri Mendeleiev",
-                difficulty: 2,
+                difficulty: null,
             },
             {
                 question: "O que são grupos na tabela periódica?",
                 answer: "Colunas com propriedades químicas similares",
-                difficulty: 1,
+                difficulty: null,
             }
         ]
     },
@@ -104,12 +104,12 @@ const mockDecks = [
             {
                 question: "Quando ocorreu a Semana de Arte Moderna?",
                 answer: "1922",
-                difficulty: 5,
+                difficulty: null,
             },
             {
                 question: "Quais são as três fases do modernismo?",
                 answer: "1ª fase (1922-30), 2ª fase (1930-45), 3ª fase (pós-45)",
-                difficulty: 4,
+                difficulty: null,
             }
         ]
     }

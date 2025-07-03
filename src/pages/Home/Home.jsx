@@ -107,12 +107,25 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             );
                         })}
                     </div>
-                    <ul className={styles.decksConatiner}>
+                    <ul className={styles.decksContainer}>
                         {decks
-                            // Ordena: decks com toDo=true vêm primeiro
                             .sort((a, b) => {
-                                if (a.toDo === b.toDo) return 0; // mesma categoria, mantém ordem
-                                return a.toDo ? -1 : 1; // toDo=true vem antes
+                                const now = new Date();
+
+                                // Trata decks sem data (vão para o final)
+                                if (!a.nextReview && !b.nextReview) return 0;
+                                if (!a.nextReview) return 1;
+                                if (!b.nextReview) return -1;
+
+                                const aDate = new Date(a.nextReview);
+                                const bDate = new Date(b.nextReview);
+
+                                // Prioritiza revisões vencidas (datas passadas)
+                                if (aDate < now && bDate >= now) return -1;
+                                if (bDate < now && aDate >= now) return 1;
+
+                                // Ordena pela data mais próxima (crescente)
+                                return aDate - bDate;
                             })
                             .map((deck) => (
                                 <Deck
@@ -122,7 +135,6 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     title={deck.title}
                                     cards={deck.cards.length}
                                     nextReview={deck.nextReview}
-                                    toDo={deck.toDo}
                                     openCard={() =>
                                         navigate(`/cards/${deck.id}`)
                                     }
