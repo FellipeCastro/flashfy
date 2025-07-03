@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaTrashAlt } from "react-icons/fa";
 import mockDecks from "../../mockDecks";
 import styles from "./Cards.module.css";
 
@@ -98,10 +98,16 @@ const Cards = () => {
     return (
         <>
             <header className={styles.header}>
-                <Link to="/">
-                    <FaArrowLeft />
-                </Link>
-                <h1>{currentDeck.title}</h1>
+                <div className={styles.titleContainer}>
+                    <Link to="/">
+                        <FaArrowLeft />
+                    </Link>
+                    <h1>{currentDeck.title}</h1>
+                </div>
+
+                <button className={styles.deleteBtn}>
+                    <FaTrashAlt />
+                </button>
             </header>
             <div className={styles.mainContainer}>
                 <div className={styles.progressBar}>
@@ -119,7 +125,7 @@ const Cards = () => {
                         className={`${styles.answer} ${
                             showAnswer ? styles.showAnswer : ""
                         }`}
-                        onClick={() => !showAnswer && setShowAnswer(true)}
+                        onClick={() => setShowAnswer(!showAnswer)}
                     >
                         <div className={`${styles.face} ${styles.back}`}>
                             <p>Clique para ver a resposta</p>

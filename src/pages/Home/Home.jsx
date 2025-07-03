@@ -151,6 +151,7 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     createCard={createCard}
                 />
             )}
+            
             {isAddDeckFormOpen && (
                 <AddDeckForm
                     setIsAddDeckFormOpen={setIsAddDeckFormOpen}

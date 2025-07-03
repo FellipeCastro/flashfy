@@ -3,10 +3,16 @@
     background: var(--secondary-color);
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: space-between;
     padding: 1rem 5%;
     z-index: 5;
     box-shadow: 0 0 30px var(--shadow-color);
+}
+
+.titleContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .header a {
@@ -18,6 +24,21 @@
 
 .header h1 {
     font-weight: 500;
+}
+
+.deleteBtn {
+    display: grid;
+    align-items: center;
+    padding: 0.4rem;
+    border: none;
+    background: transparent;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.deleteBtn:hover {
+    color: var(--text-secondary-color);
 }
 
 .mainContainer {
@@ -100,7 +121,6 @@
     text-align: center;
     transform: rotateY(180deg);
     backface-visibility: hidden;
-    cursor: default;
 }
 
 .back {

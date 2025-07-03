@@ -9,7 +9,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
     return (
         <div
-            className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ""}`}
+            className={`${styles.sidebar} ${isSidebarOpen ? styles.open : null}`}
         >
             <div className={styles.topContainer}>
                 <div className={styles.flexContainer}>
@@ -25,10 +25,10 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 </div>
                 {isSidebarOpen && (
                     <div className={styles.menu}>
-                        <Link to="/" className={location.pathname === "/" ? styles.active : ""}>
+                        <Link to="/" className={location.pathname === "/" ? styles.active : null}>
                             <MdHome /> Página inicial
                         </Link>
-                        <Link to="/methodology" className={location.pathname === "/methodology" ? styles.active : ""}>
+                        <Link to="/methodology" className={location.pathname === "/methodology" ? styles.active : null}>
                             <FaBookReader /> Nossa metodologia
                         </Link>
                     </div>
