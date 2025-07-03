@@ -4,7 +4,7 @@ const mockDecks = [
         title: "Expressões numéricas",
         subject: "Matemática",
         toDo: false,
-        nextReview: "2025-07-02T09:00:00", // Amanhã de manhã
+        nextReview: "2025-07-03T22:00:00", // Amanhã de manhã
         cards: [
             {
                 question: "Qual é a ordem correta das operações matemáticas?",
@@ -23,7 +23,7 @@ const mockDecks = [
         title: "Cadeia alimentar",
         subject: "Biologia",
         toDo: false,
-        nextReview: "2025-07-03T18:00:00", // 2 dias depois, fim de tarde
+        nextReview: "2025-07-02T18:00:00", // 2 dias depois, fim de tarde
         cards: [
             {
                 question: "O que é um produtor em uma cadeia alimentar?",
