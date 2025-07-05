@@ -15,8 +15,6 @@ const Cards = () => {
     const [currentDeck, setCurrentDeck] = useState(null);
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
 
-    const difficults = [];
-
     useEffect(() => {
         // Encontra o deck correspondente ao ID na URL
         const selectedDeck = mockDecks?.find(
@@ -64,16 +62,46 @@ const Cards = () => {
     };
 
     const handleFinalize = () => {
+        const difficulties = [];
         currentDeck.cards.map((deck) => {
             if (!deck.difficulty) {
-                difficults.push(1);
+                difficulties.push(1);
                 return;
             }
-            difficults.push(deck.difficulty);
+            difficulties.push(deck.difficulty);
         });
-        console.log(difficults);
-        // Alteração da data da próxima revisão
-        navigate("/");
+
+        // Fazer a média das dificuldades
+        // Alterar a data da próxima revisão, se a media for:
+        // 1 = 7 dias
+        // 2 = 5 dias
+        // 3 = 3 dias
+        // 4 = No dia seguinte
+        const average = Math.round(
+            difficulties.reduce((sum, value) => sum + value, 0) /
+                difficulties.length
+        );
+        const daysToAdd =
+            {
+                1: 7,
+                2: 5,
+                3: 3,
+                4: 1,
+            }[average] || 3;
+
+        const newReviewDate = new Date();
+        newReviewDate.setDate(newReviewDate.getDate() + daysToAdd);
+
+        const updatedDeck = {
+            ...currentDeck,
+            nextReview: newReviewDate.toISOString(),
+        };
+
+        setCurrentDeck(updatedDeck);
+        if (onUpdateDeck) onUpdateDeck(updatedDeck);
+
+        console.log("Dificuldade média: ", average);
+        console.log("Próxima revisão: ", currentDeck.nextReview);
     };
 
     if (!currentDeck || currentDeck.cards.length === 0) {
@@ -147,7 +175,7 @@ const Cards = () => {
                     </div>
 
                     <ul className={styles.difficulty}>
-                        {[1, 2, 3, 4, 5].map((level) => (
+                        {[1, 2, 3, 4].map((level) => (
                             <li
                                 key={level}
                                 className={
