@@ -3,7 +3,7 @@ const mockDecks = [
         id: 1,
         title: "Expressões numéricas",
         subject: "Matemática",
-        nextReview: "2025-07-01T18:00:00", 
+        nextReview: "2025-07-05T10:20:00", 
         cards: [
             {
                 question: "Qual é a ordem correta das operações matemáticas?",

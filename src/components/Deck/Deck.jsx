@@ -5,34 +5,48 @@ const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
     const formatDate = (dateString) => {
         const now = new Date();
         const reviewDate = new Date(dateString);
-        const diffTime = reviewDate - now;
+        const diffTime = reviewDate - now; // Diferença em milissegundos
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-        // const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
-        // const diffMinutes = Math.floor(diffTime / (1000 * 60));
+        const diffHours = Math.floor(
+            (diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const diffMinutes = Math.floor(
+            (diffTime % (1000 * 60 * 60)) / (1000 * 60)
+        );
 
-        if (diffTime === 0) {
-            return "Agora";
+        // Se a data já passou
+        if (diffTime < 0) {
+            const daysPassed = Math.abs(diffDays);
+            return daysPassed === 0
+                ? "Vencido hoje"
+                : `Vencido há ${daysPassed} dia${daysPassed > 1 ? "s" : ""}`;
         }
 
-        if (diffDays < 0) {
-            return `Há ${-diffDays} dias atrás`;
-        }
-
+        // Se for hoje
         if (diffDays === 0) {
-            return "Hoje";
+            if (diffHours === 0) {
+                return diffMinutes <= 0
+                    ? "Agora"
+                    : `Em ${diffMinutes} minuto${diffMinutes > 1 ? "s" : ""}`;
+            }
+            return `Hoje em ${diffHours} hora${diffHours > 1 ? "s" : ""}`;
         }
 
+        // Amanhã
         if (diffDays === 1) {
             return "Amanhã";
         }
 
+        // Esta semana
         if (diffDays <= 7) {
-            return `Daqui a ${diffDays} dias`;
+            return `Em ${diffDays} dia${diffDays > 1 ? "s" : ""}`;
         }
 
+        // Mais de uma semana
         return reviewDate.toLocaleDateString("pt-BR", {
             day: "2-digit",
             month: "2-digit",
+            year: "numeric",
         });
     };
 
