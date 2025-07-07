@@ -3,7 +3,7 @@ const mockDecks = [
         id: 1,
         title: "Expressões numéricas",
         subject: "Matemática",
-        nextReview: "2025-07-05T10:20:00", 
+        nextReview: "", 
         cards: [
             {
                 question: "Qual é a ordem correta das operações matemáticas?",
@@ -41,7 +41,7 @@ const mockDecks = [
         id: 2,
         title: "Cadeia alimentar",
         subject: "Biologia",
-        nextReview: "2025-07-01T20:30:00", 
+        nextReview: "", 
         cards: [
             {
                 question: "O que é um produtor em uma cadeia alimentar?",
@@ -79,7 +79,7 @@ const mockDecks = [
         id: 3,
         title: "Neocolonialismo",
         subject: "História",
-        nextReview: "2025-07-03T00:00:00", 
+        nextReview: "", 
         cards: [
             {
                 question: "O que foi o neocolonialismo?",
@@ -117,7 +117,7 @@ const mockDecks = [
         id: 4,
         title: "Funções quadráticas",
         subject: "Matemática",
-        nextReview: "2025-07-05T09:00:00", 
+        nextReview: "", 
         cards: [
             {
                 question: "Qual a forma geral de uma função quadrática?",
@@ -155,7 +155,7 @@ const mockDecks = [
         id: 5,
         title: "Tabela periódica",
         subject: "Química",
-        nextReview: "2025-06-30T10:00:00", 
+        nextReview: "", 
         cards: [
             {
                 question: "Quem organizou a primeira tabela periódica?",
@@ -193,7 +193,7 @@ const mockDecks = [
         id: 6,
         title: "Literatura modernista",
         subject: "Literatura",
-        nextReview: "2025-07-10T16:00:00", 
+        nextReview: "", 
         cards: [
             {
                 question: "Quando ocorreu a Semana de Arte Moderna no Brasil?",

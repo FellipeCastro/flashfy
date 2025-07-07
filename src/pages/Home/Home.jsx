@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import mockDecks from "../../mockDecks";
+import { useState } from "react";
 import subjects from "../../subjects";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -10,10 +9,9 @@ import AddCardForm from "../../components/AddCardForm/AddCardForm";
 import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
 import styles from "./Home.module.css";
 
-const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks }) => {
     const [isAddCardFormOpen, setIsAddCardFormOpen] = useState(false);
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
-    const [decks, setDecks] = useState([]);
     const navigate = useNavigate();
 
     const subjectColors = subjects.reduce((acc, subject) => {
@@ -64,10 +62,6 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
         setIsAddCardFormOpen(false);
     };
-
-    useEffect(() => {
-        setDecks(mockDecks);
-    }, []);
 
     return (
         <>

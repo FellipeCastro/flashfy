@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaTrashAlt } from "react-icons/fa";
-import mockDecks from "../../mockDecks";
 import styles from "./Cards.module.css";
 
-const Cards = () => {
-    const { state } = useLocation();
-    const { decks, onUpdateDeck } = state || {};
+const Cards = ({ decks, updateDeck }) => {
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -17,9 +14,7 @@ const Cards = () => {
 
     useEffect(() => {
         // Encontra o deck correspondente ao ID na URL
-        const selectedDeck = mockDecks?.find(
-            (deck) => deck.id === parseInt(id)
-        );
+        const selectedDeck = decks.find((deck) => deck.id === parseInt(id));
         setCurrentDeck(selectedDeck);
         setCurrentCardIndex(0);
         setShowAnswer(false);
@@ -54,67 +49,63 @@ const Cards = () => {
 
         setCurrentDeck(updatedDeck);
         setSelectedDifficulty(level);
-
-        // Atualiza no estado global se a função estiver disponível
-        if (onUpdateDeck) {
-            onUpdateDeck(updatedDeck);
-        }
     };
 
     const handleFinalize = () => {
-        const difficulties = [];
-        currentDeck.cards.map((deck) => {
-            if (!deck.difficulty) {
-                difficulties.push(1);
-                return;
-            }
-            difficulties.push(deck.difficulty);
-        });
+        // 1. Calcular dificuldades (com fallback para 1 se não definido)
+        const difficulties = currentDeck.cards.map(
+            (card) => card.difficulty || 1
+        );
 
-        // Fazer a média das dificuldades
-        // Alterar a data da próxima revisão, se a media for:
-        // 1 = 7 dias
-        // 2 = 5 dias
-        // 3 = 3 dias
-        // 4 = No dia seguinte
+        // 2. Calcular média e arredondar
         const average = Math.round(
             difficulties.reduce((sum, value) => sum + value, 0) /
                 difficulties.length
         );
+
+        // 3. Determinar dias para adicionar
         const daysToAdd =
             {
                 1: 7,
                 2: 5,
                 3: 3,
                 4: 1,
-            }[average] || 3;
+            }[average] || 3; // Fallback para 3 dias se average for inesperado
 
+        // 4. Calcular nova data
         const newReviewDate = new Date();
         newReviewDate.setDate(newReviewDate.getDate() + daysToAdd);
 
+        // 5. Criar novo deck atualizado
         const updatedDeck = {
             ...currentDeck,
             nextReview: newReviewDate.toISOString(),
         };
 
-        setCurrentDeck(updatedDeck);
-        if (onUpdateDeck) onUpdateDeck(updatedDeck);
+        // Para debug - verifique os valores ANTES da atualização
+        console.log("Dificuldade média:", average);
+        console.log("Nova data de revisão:", newReviewDate.toISOString());
 
-        console.log("Dificuldade média: ", average);
-        console.log("Próxima revisão: ", currentDeck.nextReview);
+        // 6. Atualizar estados
+        updateDeck(updatedDeck);
+
+        // 7. Navegar para home
+        navigate("/");
     };
 
     if (!currentDeck || currentDeck.cards.length === 0) {
         return (
             <>
                 <header className={styles.header}>
-                    <Link to="/">
-                        <FaArrowLeft />
-                    </Link>
-                    <h1>Deck não encontrado</h1>
+                    <div className={styles.titleContainer}>
+                        <Link to="/">
+                            <FaArrowLeft />
+                        </Link>
+                        <h1>Deck não encontrado</h1>
+                    </div>
                 </header>
                 <div className={styles.mainContainer}>
-                    <p>Não há cards neste deck ou o deck não existe.</p>
+                    <p>Esse deck não existe</p>
                 </div>
             </>
         );
