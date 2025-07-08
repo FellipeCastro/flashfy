@@ -10,7 +10,6 @@ import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
 import styles from "./Home.module.css";
 
 const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks }) => {
-    const [isAddCardFormOpen, setIsAddCardFormOpen] = useState(false);
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -34,6 +33,7 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks }) => {
 
         // Cria o novo deck
         const newDeck = {
+            id: window.crypto.getRandomValues(new Uint32Array(1))[0],
             title: title,
             subject: subject,
             cards: [], // Começa sem cards
@@ -43,24 +43,10 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks }) => {
         // Atualiza o estado adicionando o novo deck
         setDecks([...decks, newDeck]);
 
+        console.log(decks);
+
         // Fecha o formulário de adicionar deck
         setIsAddDeckFormOpen(false);
-    };
-
-    const createCard = (title, question, answer) => {
-        setDecks((prevDecks) =>
-            prevDecks.map((deck) => {
-                if (deck.title === title) {
-                    return {
-                        ...deck,
-                        cards: [...deck.cards, { question, answer }],
-                    };
-                }
-                return deck;
-            })
-        );
-
-        setIsAddCardFormOpen(false);
     };
 
     return (
@@ -77,14 +63,8 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks }) => {
                     <div className={styles.titleContainer}>
                         <h1>Meus decks</h1>
                         <div className={styles.btnsContainer}>
-                            <Button
-                                secondary
-                                onClick={() => setIsAddDeckFormOpen(true)}
-                            >
+                            <Button onClick={() => setIsAddDeckFormOpen(true)}>
                                 + Novo deck
-                            </Button>
-                            <Button onClick={() => setIsAddCardFormOpen(true)}>
-                                + Novo card
                             </Button>
                         </div>
                     </div>
@@ -92,6 +72,7 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks }) => {
                         {subjects.map((subject) => {
                             return (
                                 <button
+                                    key={subject.name}
                                     style={{
                                         backgroundColor: subject.color,
                                     }}
@@ -138,14 +119,6 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks }) => {
                 </div>
             </div>
 
-            {isAddCardFormOpen && (
-                <AddCardForm
-                    setIsAddCardFormOpen={setIsAddCardFormOpen}
-                    decks={decks}
-                    createCard={createCard}
-                />
-            )}
-            
             {isAddDeckFormOpen && (
                 <AddDeckForm
                     setIsAddDeckFormOpen={setIsAddDeckFormOpen}

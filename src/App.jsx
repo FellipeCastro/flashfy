@@ -46,7 +46,7 @@ const App = () => {
                 />
                 <Route
                     path="/cards/:id"
-                    element={<Cards decks={decks} updateDeck={updateDeck} />}
+                    element={<Cards decks={decks} setDecks={setDecks} updateDeck={updateDeck} />}
                 />
             </Routes>
         </BrowserRouter>

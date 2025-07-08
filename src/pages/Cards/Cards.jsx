@@ -2,24 +2,44 @@ import { useState, useEffect } from "react";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaTrashAlt } from "react-icons/fa";
 import styles from "./Cards.module.css";
+import Button from "../../components/Button/Button";
+import AddCardForm from "../../components/AddCardForm/AddCardForm";
 
-const Cards = ({ decks, updateDeck }) => {
+const Cards = ({ decks, setDecks, updateDeck }) => {
     const { id } = useParams();
     const navigate = useNavigate();
+
+    // Encontra o deck correspondente ao ID na URL
+    const selectedDeck = decks.find((deck) => deck.id === parseInt(id));
 
     const [showAnswer, setShowAnswer] = useState(false);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [currentDeck, setCurrentDeck] = useState(null);
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
+    const [isAddCardFormOpen, setIsAddCardFormOpen] = useState(false);
 
     useEffect(() => {
-        // Encontra o deck correspondente ao ID na URL
-        const selectedDeck = decks.find((deck) => deck.id === parseInt(id));
         setCurrentDeck(selectedDeck);
         setCurrentCardIndex(0);
         setShowAnswer(false);
         setSelectedDifficulty(null);
-    }, [id, decks]);
+    });
+
+    const createCard = (question, answer) => {
+        setDecks((prevDecks) =>
+            prevDecks.map((deck) => {
+                if (deck.title === selectedDeck.title) {
+                    return {
+                        ...deck,
+                        cards: [...deck.cards, { question, answer }],
+                    };
+                }
+                return deck;
+            })
+        );
+
+        setIsAddCardFormOpen(false);
+    };
 
     const handleNextCard = () => {
         if (currentCardIndex < currentDeck?.cards?.length - 1) {
@@ -93,7 +113,8 @@ const Cards = ({ decks, updateDeck }) => {
         navigate("/");
     };
 
-    if (!currentDeck || currentDeck.cards.length === 0) {
+    // Fazer validação currentDeck.cards.length === 0
+    if (!currentDeck) {
         return (
             <>
                 <header className={styles.header}>
@@ -111,6 +132,33 @@ const Cards = ({ decks, updateDeck }) => {
         );
     }
 
+    if (currentDeck.cards.length === 0) {
+        return (
+            <>
+                <header className={styles.header}>
+                    <div className={styles.titleContainer}>
+                        <Link to="/">
+                            <FaArrowLeft />
+                        </Link>
+                        <h1>{currentDeck.title}</h1>
+                        <button className={styles.deleteBtn}>
+                            <FaTrashAlt />
+                        </button>
+                    </div>
+
+                    <div className={styles.btnsContainer}>
+                        <Button onClick={() => setIsAddCardFormOpen(true)}>
+                            + Novo Card
+                        </Button>
+                    </div>
+                </header>
+                <div className={styles.mainContainer}>
+                    <p>Crie cards para responder nesse deck</p>
+                </div>
+            </>
+        );
+    }
+
     const currentCard = currentDeck.cards[currentCardIndex];
     const progress = ((currentCardIndex + 1) / currentDeck.cards.length) * 100;
 
@@ -122,11 +170,16 @@ const Cards = ({ decks, updateDeck }) => {
                         <FaArrowLeft />
                     </Link>
                     <h1>{currentDeck.title}</h1>
+                    <button className={styles.deleteBtn}>
+                        <FaTrashAlt />
+                    </button>
                 </div>
 
-                <button className={styles.deleteBtn}>
-                    <FaTrashAlt />
-                </button>
+                <div className={styles.btnsContainer}>
+                    <Button onClick={() => setIsAddCardFormOpen(true)}>
+                        + Novo Card
+                    </Button>
+                </div>
             </header>
             <div className={styles.mainContainer}>
                 <div className={styles.progressBar}>
@@ -206,6 +259,13 @@ const Cards = ({ decks, updateDeck }) => {
                     </div>
                 </div>
             </div>
+
+            {isAddCardFormOpen && (
+                <AddCardForm
+                    setIsAddCardFormOpen={setIsAddCardFormOpen}
+                    createCard={createCard}
+                />
+            )}
         </>
     );
 };

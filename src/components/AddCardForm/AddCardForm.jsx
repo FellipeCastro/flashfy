@@ -3,14 +3,13 @@ import { IoMdLink, IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
 import styles from "./AddCardForm.module.css";
 
-const AddCardForm = ({ setIsAddCardFormOpen, decks, createCard }) => {
-    const [deck, setDeck] = useState("");
+const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
     const [question, setQuestion] = useState("");
     const [answer, setAnswer] = useState("");
 
     const onSubmit = (e) => {
         e.preventDefault();
-        createCard(deck, question, answer);
+        createCard(question, answer);
     };
 
     const closeModal = () => {
@@ -35,25 +34,6 @@ const AddCardForm = ({ setIsAddCardFormOpen, decks, createCard }) => {
                     onSubmit={onSubmit}
                     className={styles.form}
                 >
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="deck">Deck</label>
-                        <select
-                            name="deck"
-                            id="deck"
-                            onChange={(e) => setDeck(e.target.value)}
-                            value={deck}
-                        >
-                            <option value="">Selecione um deck</option>
-                            {decks.map((deck) => {
-                                return (
-                                    <option value={deck.title}>
-                                        {deck.title}
-                                    </option>
-                                );
-                            })}
-                        </select>
-                    </div>
-
                     <div className={styles.inputContainer}>
                         <div className={styles.flexContainer}>
                             <label htmlFor="question">Pergunta</label>

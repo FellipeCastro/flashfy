@@ -226,7 +226,7 @@ const mockDecks = [
                 difficulty: null,
             },
         ],
-    }
+    },
 ];
 
 export default mockDecks;
