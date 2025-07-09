@@ -23,7 +23,7 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
         setCurrentCardIndex(0);
         setShowAnswer(false);
         setSelectedDifficulty(null);
-    });
+    }, [decks, id]);
 
     const createCard = (question, answer) => {
         setDecks((prevDecks) =>
@@ -195,7 +195,7 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
                     <p className={styles.question}>{currentCard.question}</p>
                     <div
                         className={`${styles.answer} ${
-                            showAnswer ? styles.showAnswer : ""
+                            showAnswer ? styles.showAnswer : null
                         }`}
                         onClick={() => setShowAnswer(!showAnswer)}
                     >
@@ -210,7 +210,7 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
 
                 <div
                     className={`${styles.feedback} ${
-                        showAnswer ? "" : styles.hidden
+                        showAnswer ? null : styles.hidden
                     }`}
                 >
                     <div className={styles.flexContainer}>
@@ -226,7 +226,7 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
                                     currentCard.difficulty === level ||
                                     selectedDifficulty === level
                                         ? styles.selected
-                                        : ""
+                                        : null
                                 }
                                 onClick={() => handleSetDifficulty(level)}
                             >
