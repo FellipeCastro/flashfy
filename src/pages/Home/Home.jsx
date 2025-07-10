@@ -37,7 +37,6 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks }) => {
             title: title,
             subject: subject,
             cards: [], // Começa sem cards
-            toDo: false,
         };
 
         // Atualiza o estado adicionando o novo deck
@@ -83,6 +82,9 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks }) => {
                         })}
                     </div>
                     <ul className={styles.decksContainer}>
+                        {decks.length === 0 && (
+                            <p>Crie seus decks para começar a estudar!</p>
+                        )}
                         {decks
                             .sort((a, b) => {
                                 const now = new Date();
