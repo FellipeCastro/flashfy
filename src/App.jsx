@@ -7,10 +7,12 @@ import mockData from "./mockData";
 
 const App = () => {
     const [decks, setDecks] = useState([]);
+    const [progress, setProgress] = useState([]);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         setDecks(mockData.decks);
+        setProgress(mockData.progress);
     }, []);
 
     const updateDeck = (updatedDeck) => {
@@ -32,6 +34,8 @@ const App = () => {
                             setIsSidebarOpen={setIsSidebarOpen}
                             decks={decks}
                             setDecks={setDecks}
+                            progress={progress}
+                            setProgress={setProgress}
                         />
                     }
                 />

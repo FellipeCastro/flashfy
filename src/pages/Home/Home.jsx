@@ -9,7 +9,7 @@ import AddCardForm from "../../components/AddCardForm/AddCardForm";
 import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
 import styles from "./Home.module.css";
 
-const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks }) => {
+const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks, progress, setProgress }) => {
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -57,7 +57,10 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks }) => {
                 />
 
                 <div className={styles.mainContainer}>
-                    <ProgressBar />
+                    <ProgressBar 
+                        progress={progress}
+                        setProgress={setProgress}
+                    />
 
                     <div className={styles.titleContainer}>
                         <h1>Meus decks</h1>

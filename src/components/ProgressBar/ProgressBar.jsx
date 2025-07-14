@@ -1,29 +1,41 @@
 import { FaFire } from "react-icons/fa6";
 import styles from "./ProgressBar.module.css";
 
-const ProgressBar = () => {
+const ProgressBar = ({ progress, setProgress }) => {
+
+    const days = [
+        "D",
+        "S",
+        "T",
+        "Q",
+        "Q",
+        "S",
+        "S",
+    ]
+
+    const date = new Date();
+    const currentDay = date.getDay();
+
+    const currentProgress = Math.round((progress.studiedDecks / progress.decksToStudy) * 100);
+    
     return (
         <div className={styles.progressBarContainer}>
             <h2>
-                <FaFire /> 2 dias consecutivos!
+                <FaFire /> {progress.consecutiveDays} dias consecutivos!
             </h2>
 
             <ul className={styles.weekDays}>
-                <li className={styles.day}>D</li>
-                <li className={styles.day}>S</li>
-                <li className={styles.day}>T</li>
-                <li className={styles.day}>Q</li>
-                <li className={`${styles.day} ${styles.active}`}>Q</li>
-                <li className={styles.day}>S</li>
-                <li className={styles.day}>S</li>
+                {days.map((day, index) => {
+                    return <li key={index} className={`${styles.day} ${index === currentDay ? styles.active : null }`}>{day}</li>
+                })}
             </ul>
 
             <div className={styles.progressBar}>
-                <div className={styles.progress} style={{ width: "30%" }}></div>
-                <span className={styles.progressText}>30%</span>
+                <div className={styles.progress} style={{ width: `${currentProgress}%` }}></div>
+                <span className={styles.progressText}>{currentProgress}%</span>
             </div>
 
-            <p className={styles.message}>Você estudou 2 decks hoje!</p>
+            <p className={styles.message}>Você estudou {progress.studiedDecks} deck{progress.studiedDecks > 1 ? "s" : null} hoje!</p>
         </div>
     );
 };
