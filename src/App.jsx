@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import mockDecks from "./mockDecks";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Methodology from "./pages/Methodology/Methodology";
 import Cards from "./pages/Cards/Cards";
+import mockData from "./mockData";
 
 const App = () => {
     const [decks, setDecks] = useState([]);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
-        setDecks(mockDecks);
+        setDecks(mockData.decks);
     }, []);
 
     const updateDeck = (updatedDeck) => {
