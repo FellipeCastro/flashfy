@@ -42,8 +42,6 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks, progress, setP
         // Atualiza o estado adicionando o novo deck
         setDecks([...decks, newDeck]);
 
-        console.log(decks);
-
         // Fecha o formulário de adicionar deck
         setIsAddDeckFormOpen(false);
     };

@@ -5,7 +5,7 @@ import styles from "./Cards.module.css";
 import Button from "../../components/Button/Button";
 import AddCardForm from "../../components/AddCardForm/AddCardForm";
 
-const Cards = ({ decks, setDecks, updateDeck }) => {
+const Cards = ({ decks, setDecks, updateDeck, setProgress }) => {
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -102,12 +102,14 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
             nextReview: newReviewDate.toISOString(),
         };
 
-        // Para debug - verifique os valores ANTES da atualização
-        console.log("Dificuldade média:", average);
-        console.log("Nova data de revisão:", newReviewDate.toISOString());
-
         // 6. Atualizar estados
         updateDeck(updatedDeck);
+
+        // adicionar 1 aos decks
+        setProgress((prevProgress) => ({
+            ...prevProgress,
+            studiedDecks: prevProgress.studiedDecks + 1,
+        }));
 
         // 7. Navegar para home
         navigate("/");
@@ -160,7 +162,8 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
     }
 
     const currentCard = currentDeck.cards[currentCardIndex];
-    const progress = ((currentCardIndex + 1) / currentDeck.cards.length) * 100;
+    const progress =
+        ((currentCardIndex + 1) / currentDeck.cards.length) * 100;
 
     return (
         <>

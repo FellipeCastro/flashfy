@@ -6,7 +6,7 @@ const mockData = {
     progress: {
         consecutiveDays: 6,
         decksToStudy: 7,
-        studiedDecks: 2,
+        studiedDecks: 0,
     },
     decks: [    
         {
