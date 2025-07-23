@@ -5,7 +5,7 @@ const mockData = {
     password: "1234",
     progress: {
         consecutiveDays: 6,
-        decksToStudy: 7,
+        decksToStudy: 0,
         studiedDecks: 0,
     },
     decks: [    

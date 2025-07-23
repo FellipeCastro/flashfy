@@ -1,7 +1,15 @@
 import { FaExclamation } from "react-icons/fa";
 import styles from "./Deck.module.css";
 
-const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
+const Deck = ({
+    color,
+    subject,
+    title,
+    cards,
+    nextReview,
+    openCard,
+    setProgress,
+}) => {
     const formatDate = (dateString) => {
         const now = new Date();
         const reviewDate = new Date(dateString);
@@ -56,6 +64,13 @@ const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
         const diffTime = reviewDate - new Date();
         return diffTime < 0 || diffTime < 1000 * 60 * 60 * 24; // Vencido ou vence hoje
     };
+
+    needsAttention()
+        ? setProgress((prevProgress) => ({
+              ...prevProgress,
+              decksToStudy: prevProgress.decksToStudy + 1,
+          }))
+        : null;
 
     return (
         <li className={styles.deck} onClick={openCard}>
