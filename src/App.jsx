@@ -10,10 +10,14 @@ const App = () => {
     const [progress, setProgress] = useState([]);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    useEffect(() => {
-        setDecks(mockData.decks);
-        setProgress(mockData.progress);
-    }, []);
+    const calculateDecksToStudy = (decks) => {
+        return decks.filter((deck) => {
+            if (!deck.nextReview || deck.nextReview === "") return false;
+            const reviewDate = new Date(deck.nextReview);
+            const diffTime = reviewDate - new Date();
+            return diffTime < 0 || diffTime < 1000 * 60 * 60 * 24;
+        }).length;
+    };
 
     const updateDeck = (updatedDeck) => {
         setDecks((prevDecks) =>
@@ -22,6 +26,19 @@ const App = () => {
             )
         );
     };
+
+    useEffect(() => {
+        setDecks(mockData.decks);
+        setProgress({
+            ...mockData.progress,
+            decksToStudy: calculateDecksToStudy(mockData.decks),
+        });
+    }, []);
+
+    useEffect(() => {
+        console.log(progress.decksToStudy);
+        
+    })
 
     return (
         <BrowserRouter>
