@@ -3,14 +3,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Methodology from "./pages/Methodology/Methodology";
 import Cards from "./pages/Cards/Cards";
+import mockData from "./mockData";
 
 const App = () => {
     const [decks, setDecks] = useState([]);
-    const [progress, setProgress] = useState({
-        consecutiveDays: 0,
-        decksToStudy: 0,
-        studiedDecks: 0,
-    });
+    const [progress, setProgress] = useState({});
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const calculateDecksToStudy = (decks) => {
@@ -18,7 +15,7 @@ const App = () => {
             if (!deck.nextReview) return false; // Decks sem data não devem ser estudados
 
             try {
-                const reviewDate = new Date(decks.nextReview);
+                const reviewDate = new Date(deck.nextReview);
                 const diffTime = reviewDate - new Date();
                 return diffTime < 0 || diffTime < 1000 * 60 * 60 * 24; // Vencido ou vence hoje
             } catch (e) {
@@ -29,18 +26,17 @@ const App = () => {
     };
 
     const updateDeck = (updatedDeck) => {
-        setDecks((prevDecks) =>
-            prevDecks.map((deck) =>
+        setDecks((prevDecks) => {
+            const newDecks = prevDecks.map((deck) =>
                 deck.id === updatedDeck.id ? updatedDeck : deck
-            )
-        );
-        // Atualiza contagem imediatamente
-        setProgress((prev) => ({
-            ...prev,
-            decksToStudy: calculateDecksToStudy(
-                decks.map((d) => (d.id === updatedDeck.id ? updatedDeck : d))
-            ),
-        }));
+            );
+            // Atualiza contagem com os decks mais recentes
+            setProgress((prev) => ({
+                ...prev,
+                decksToStudy: calculateDecksToStudy(newDecks),
+            }));
+            return newDecks;
+        });
     };
 
     useEffect(() => {
@@ -51,6 +47,10 @@ const App = () => {
             decksToStudy: calculateDecksToStudy(mockData.decks),
         });
     }, []);
+
+    useEffect(() => {
+        console.log(progress);
+    });
 
     return (
         <BrowserRouter>
