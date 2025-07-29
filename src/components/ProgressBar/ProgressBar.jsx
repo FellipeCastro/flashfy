@@ -18,7 +18,7 @@ const ProgressBar = ({ progress, setProgress }) => {
                     <li
                         key={index}
                         className={`${styles.day} ${
-                            index === currentDay ? styles.active : ""
+                            index === currentDay ? styles.active : null
                         }`}
                     >
                         {day}

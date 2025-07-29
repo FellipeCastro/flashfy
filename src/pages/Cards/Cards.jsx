@@ -72,18 +72,18 @@ const Cards = ({ decks, setDecks, updateDeck, setProgress }) => {
     };
 
     const handleFinalize = () => {
-        // 1. Calcular dificuldades (com fallback para 1 se não definido)
+        // Calcular dificuldades (com fallback para 1 se não definido)
         const difficulties = currentDeck.cards.map(
             (card) => card.difficulty || 1
         );
 
-        // 2. Calcular média e arredondar
+        // Calcular média e arredondar
         const average = Math.round(
             difficulties.reduce((sum, value) => sum + value, 0) /
                 difficulties.length
         );
 
-        // 3. Determinar dias para adicionar
+        // Determinar dias para adicionar
         const daysToAdd =
             {
                 1: 7,
@@ -92,17 +92,17 @@ const Cards = ({ decks, setDecks, updateDeck, setProgress }) => {
                 4: 1,
             }[average] || 3; // Fallback para 3 dias se average for inesperado
 
-        // 4. Calcular nova data
+        // Calcular nova data
         const newReviewDate = new Date();
         newReviewDate.setDate(newReviewDate.getDate() + daysToAdd);
 
-        // 5. Criar novo deck atualizado
+        // Criar novo deck atualizado
         const updatedDeck = {
             ...currentDeck,
             nextReview: newReviewDate.toISOString(),
         };
 
-        // 6. Atualizar estados
+        // Atualizar estados
         updateDeck(updatedDeck);
 
         // adicionar 1 aos decks
@@ -111,7 +111,7 @@ const Cards = ({ decks, setDecks, updateDeck, setProgress }) => {
             studiedDecks: prevProgress.studiedDecks + 1,
         }));
 
-        // 7. Navegar para home
+        // Navegar para home
         navigate("/");
     };
 
