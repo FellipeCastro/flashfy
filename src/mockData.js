@@ -4,7 +4,7 @@ const mockData = {
     name: "Fellipe Castro",
     password: "1234",
     progress: {
-        consecutiveDays: 6,
+        consecutiveDays: 0,
         decksToStudy: 0,
         studiedDecks: 0,
     },

@@ -5,7 +5,7 @@ import styles from "./Cards.module.css";
 import Button from "../../components/Button/Button";
 import AddCardForm from "../../components/AddCardForm/AddCardForm";
 
-const Cards = ({ decks, setDecks, updateDeck, setProgress }) => {
+const Cards = ({ decks, setDecks, updateDeck }) => {
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -104,13 +104,7 @@ const Cards = ({ decks, setDecks, updateDeck, setProgress }) => {
 
         // Atualizar estados
         updateDeck(updatedDeck);
-
-        // adicionar 1 aos decks
-        setProgress((prevProgress) => ({
-            ...prevProgress,
-            studiedDecks: prevProgress.studiedDecks + 1,
-        }));
-
+        
         // Navegar para home
         navigate("/");
     };
