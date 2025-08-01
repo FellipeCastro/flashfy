@@ -64,7 +64,6 @@ const App = () => {
                     ? checkConsecutiveDays(today)
                     : prev.consecutiveDays,
                 decksToStudy: remainingDecksToStudy,
-                studiedDecks: (prev.studiedDecks || 0) + 1,
             }));
 
             if (isNewDay) {
@@ -141,7 +140,7 @@ const App = () => {
                             decks={decks}
                             setDecks={setDecks}
                             updateDeck={updateDeck}
-                            progress={progress}
+                            setProgress={setProgress}
                         />
                     }
                 />
