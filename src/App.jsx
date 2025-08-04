@@ -52,19 +52,31 @@ const App = () => {
         const isNewDay = !lastStudyDate || lastStudyDate !== today;
 
         setDecks((prevDecks) => {
+            const previousDeck = prevDecks.find((d) => d.id === updatedDeck.id);
+            const wasNotReviewedBefore = !previousDeck?.nextReview;
+
             const newDecks = prevDecks.map((deck) =>
                 deck.id === updatedDeck.id ? updatedDeck : deck
             );
 
-            const remainingDecksToStudy = calculateDecksToStudy(newDecks);
+            // Calcula se é o primeiro deck do dia
+            const isFirstDeckOfDay = progress.studiedDecks === 0;
 
-            setProgress((prev) => ({
-                ...prev,
-                consecutiveDays: isNewDay
-                    ? checkConsecutiveDays(today)
-                    : prev.consecutiveDays,
-                decksToStudy: remainingDecksToStudy,
-            }));
+            setProgress((prev) => {
+                const shouldIncrementConsecutive =
+                    isFirstDeckOfDay && wasNotReviewedBefore;
+
+                return {
+                    ...prev,
+                    consecutiveDays: shouldIncrementConsecutive
+                        ? (prev.consecutiveDays || 0) + 1
+                        : prev.consecutiveDays || 0,
+                    decksToStudy: calculateDecksToStudy(newDecks),
+                    studiedDecks: wasNotReviewedBefore
+                        ? (prev.studiedDecks || 0) + 1
+                        : prev.studiedDecks || 0,
+                };
+            });
 
             if (isNewDay) {
                 setLastStudyDate(today);
@@ -81,14 +93,7 @@ const App = () => {
         setLastStudyDate(initialDate);
 
         setDecks(mockData.decks);
-        setProgress({
-            ...mockData.progress,
-            consecutiveDays: storedDate
-                ? mockData.progress.consecutiveDays || 0
-                : 0,
-            decksToStudy: calculateDecksToStudy(mockData.decks),
-            studiedDecks: calculateStudiedDecks(),
-        });
+        setProgress(mockData.progress);
     }, []);
 
     const checkNewDay = () => {
@@ -103,9 +108,13 @@ const App = () => {
     };
 
     useEffect(() => {
-        const interval = setInterval(checkNewDay, 1000 * 60 * 60);
+        const interval = setInterval(checkNewDay, 1000 * 60 * 60); // Verifica a cada hora
         return () => clearInterval(interval);
     }, [lastStudyDate]);
+
+    useEffect(() => {
+        console.log(progress);        
+    })
 
     return (
         <BrowserRouter>
