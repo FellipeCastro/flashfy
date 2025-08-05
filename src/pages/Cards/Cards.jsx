@@ -5,7 +5,7 @@ import styles from "./Cards.module.css";
 import Button from "../../components/Button/Button";
 import AddCardForm from "../../components/AddCardForm/AddCardForm";
 
-const Cards = ({ decks, setDecks, updateDeck, setProgress }) => {
+const Cards = ({ decks, setDecks, updateDeck }) => {
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -92,13 +92,16 @@ const Cards = ({ decks, setDecks, updateDeck, setProgress }) => {
         const newReviewDate = new Date();
         newReviewDate.setDate(newReviewDate.getDate() + daysToAdd);
 
-        // Atualizar o deck - apenas isso, sem mexer no progress
+        // Atualizar o deck
         const updatedDeck = {
             ...currentDeck,
             nextReview: newReviewDate.toISOString(),
         };
 
+        // Atualizar estados
         updateDeck(updatedDeck);
+
+        // Navegar para home
         navigate("/");
     };
 

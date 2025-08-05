@@ -5,11 +5,17 @@ import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
 import Deck from "../../components/Deck/Deck";
-import AddCardForm from "../../components/AddCardForm/AddCardForm";
 import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
 import styles from "./Home.module.css";
 
-const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks, progress, setProgress }) => {
+const Home = ({
+    isSidebarOpen,
+    setIsSidebarOpen,
+    decks,
+    setDecks,
+    progress,
+    setProgress,
+}) => {
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -55,10 +61,7 @@ const Home = ({ isSidebarOpen, setIsSidebarOpen, decks, setDecks, progress, setP
                 />
 
                 <div className={styles.mainContainer}>
-                    <ProgressBar 
-                        progress={progress}
-                        setProgress={setProgress}
-                    />
+                    <ProgressBar progress={progress} />
 
                     <div className={styles.titleContainer}>
                         <h1>Meus decks</h1>

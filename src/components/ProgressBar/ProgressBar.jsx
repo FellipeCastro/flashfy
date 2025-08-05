@@ -1,7 +1,7 @@
 import { FaFire } from "react-icons/fa6";
 import styles from "./ProgressBar.module.css";
 
-const ProgressBar = ({ progress, setProgress }) => {
+const ProgressBar = ({ progress }) => {
     const days = ["D", "S", "T", "Q", "Q", "S", "S"];
 
     const date = new Date();
@@ -10,7 +10,10 @@ const ProgressBar = ({ progress, setProgress }) => {
     return (
         <div className={styles.progressBarContainer}>
             <h2>
-                <FaFire /> {progress.consecutiveDays} dias consecutivos!
+                <FaFire />
+                {progress.consecutiveDays <= 1
+                    ? "Vamos começar sua sequência!"
+                    : `${progress.consecutiveDays} dias consecutivos!`}
             </h2>
 
             <ul className={styles.weekDays}>
@@ -30,8 +33,9 @@ const ProgressBar = ({ progress, setProgress }) => {
                 <span>
                     <strong>Decks estudados: </strong> {progress.studiedDecks}
                 </span>
-                                <span>
-                    <strong>Decks para estudar: </strong> {progress.decksToStudy}
+                <span>
+                    <strong>Decks para estudar: </strong>{" "}
+                    {progress.decksToStudy}
                 </span>
             </div>
         </div>

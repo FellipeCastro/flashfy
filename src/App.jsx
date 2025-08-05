@@ -11,18 +11,6 @@ const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [lastStudyDate, setLastStudyDate] = useState(null);
 
-    const checkConsecutiveDays = (currentDate) => {
-        if (!lastStudyDate) return 1;
-
-        const today = new Date(currentDate);
-        const lastDate = new Date(lastStudyDate);
-        const diffDays = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
-
-        if (diffDays === 1) return (progress.consecutiveDays || 0) + 1;
-        if (diffDays > 1) return 1;
-        return progress.consecutiveDays || 0;
-    };
-
     const calculateStudiedDecks = () => {
         const today = new Date().toDateString();
         if (!lastStudyDate || lastStudyDate !== today) {
@@ -52,31 +40,20 @@ const App = () => {
         const isNewDay = !lastStudyDate || lastStudyDate !== today;
 
         setDecks((prevDecks) => {
-            const previousDeck = prevDecks.find((d) => d.id === updatedDeck.id);
-            const wasNotReviewedBefore = !previousDeck?.nextReview;
+            const isFirstDeckOfDay = progress.studiedDecks === 0;
 
             const newDecks = prevDecks.map((deck) =>
                 deck.id === updatedDeck.id ? updatedDeck : deck
             );
 
-            // Calcula se é o primeiro deck do dia
-            const isFirstDeckOfDay = progress.studiedDecks === 0;
-
-            setProgress((prev) => {
-                const shouldIncrementConsecutive =
-                    isFirstDeckOfDay && wasNotReviewedBefore;
-
-                return {
-                    ...prev,
-                    consecutiveDays: shouldIncrementConsecutive
-                        ? (prev.consecutiveDays || 0) + 1
-                        : prev.consecutiveDays || 0,
-                    decksToStudy: calculateDecksToStudy(newDecks),
-                    studiedDecks: wasNotReviewedBefore
-                        ? (prev.studiedDecks || 0) + 1
-                        : prev.studiedDecks || 0,
-                };
-            });
+            setProgress((prev) => ({
+                ...prev,
+                consecutiveDays: isFirstDeckOfDay
+                    ? (prev.consecutiveDays || 0) + 1
+                    : prev.consecutiveDays,
+                decksToStudy: calculateDecksToStudy(newDecks),
+                studiedDecks: (prev.studiedDecks || 0) + 1,
+            }));
 
             if (isNewDay) {
                 setLastStudyDate(today);
@@ -93,28 +70,31 @@ const App = () => {
         setLastStudyDate(initialDate);
 
         setDecks(mockData.decks);
-        setProgress(mockData.progress);
+        setProgress({
+            ...mockData.progress,
+            consecutiveDays: storedDate
+                ? mockData.progress.consecutiveDays || 0
+                : 0,
+            decksToStudy: calculateDecksToStudy(mockData.decks),
+            studiedDecks: calculateStudiedDecks(),
+        });
     }, []);
 
-    const checkNewDay = () => {
-        const today = new Date().toDateString();
-        if (lastStudyDate && lastStudyDate !== today) {
-            setLastStudyDate(today);
-            setProgress((prev) => ({
-                ...prev,
-                studiedDecks: 0,
-            }));
-        }
-    };
-
     useEffect(() => {
+        const checkNewDay = () => {
+            const today = new Date().toDateString();
+            if (lastStudyDate && lastStudyDate !== today) {
+                setLastStudyDate(today);
+                setProgress((prev) => ({
+                    ...prev,
+                    studiedDecks: 0,
+                }));
+            }
+        };
+
         const interval = setInterval(checkNewDay, 1000 * 60 * 60); // Verifica a cada hora
         return () => clearInterval(interval);
     }, [lastStudyDate]);
-
-    useEffect(() => {
-        console.log(progress);        
-    })
 
     return (
         <BrowserRouter>
@@ -149,7 +129,6 @@ const App = () => {
                             decks={decks}
                             setDecks={setDecks}
                             updateDeck={updateDeck}
-                            setProgress={setProgress}
                         />
                     }
                 />
