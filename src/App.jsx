@@ -11,14 +11,25 @@ const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [lastStudyDate, setLastStudyDate] = useState(null);
 
-    const calculateStudiedDecks = () => {
+    // Função para incrementar studiedDecks
+    const incrementStudiedDecks = () => {
+        setProgress((prev) => ({
+            ...prev,
+            studiedDecks: (prev.studiedDecks || 0) + 1,
+        }));
+    };
+
+    // Função para verificar e resetar studiedDecks se for novo dia
+    const checkAndResetStudiedDecks = () => {
         const today = new Date().toDateString();
         if (!lastStudyDate || lastStudyDate !== today) {
             localStorage.setItem("lastStudyDate", today);
             setLastStudyDate(today);
-            return 0;
+            setProgress((prev) => ({
+                ...prev,
+                studiedDecks: 0,
+            }));
         }
-        return progress.studiedDecks || 0;
     };
 
     const calculateDecksToStudy = (decks) => {
@@ -40,19 +51,19 @@ const App = () => {
         const isNewDay = !lastStudyDate || lastStudyDate !== today;
 
         setDecks((prevDecks) => {
-            const isFirstDeckOfDay = progress.studiedDecks === 0;
-
             const newDecks = prevDecks.map((deck) =>
                 deck.id === updatedDeck.id ? updatedDeck : deck
             );
 
+            // Verifica se é novo dia e atualiza o contador
+            checkAndResetStudiedDecks();
+
+            // Incrementa o contador de decks estudados
+            incrementStudiedDecks();
+
             setProgress((prev) => ({
                 ...prev,
-                consecutiveDays: isFirstDeckOfDay
-                    ? (prev.consecutiveDays || 0) + 1
-                    : prev.consecutiveDays,
                 decksToStudy: calculateDecksToStudy(newDecks),
-                studiedDecks: (prev.studiedDecks || 0) + 1,
             }));
 
             if (isNewDay) {
@@ -72,27 +83,22 @@ const App = () => {
         setDecks(mockData.decks);
         setProgress({
             ...mockData.progress,
-            consecutiveDays: storedDate
-                ? mockData.progress.consecutiveDays || 0
-                : 0,
-            decksToStudy: calculateDecksToStudy(mockData.decks),
-            studiedDecks: calculateStudiedDecks(),
+            decksToStudy: calculateDecksToStudy(mockData.decks)
         });
+
+        // Verifica ao carregar se precisa resetar por novo dia
+        checkAndResetStudiedDecks();
     }, []);
 
+    // Verifica a cada hora se mudou o dia
     useEffect(() => {
-        const checkNewDay = () => {
+        const interval = setInterval(() => {
             const today = new Date().toDateString();
             if (lastStudyDate && lastStudyDate !== today) {
-                setLastStudyDate(today);
-                setProgress((prev) => ({
-                    ...prev,
-                    studiedDecks: 0,
-                }));
+                checkAndResetStudiedDecks();
             }
-        };
+        }, 1000 * 60 * 60); // Verifica a cada hora
 
-        const interval = setInterval(checkNewDay, 1000 * 60 * 60); // Verifica a cada hora
         return () => clearInterval(interval);
     }, [lastStudyDate]);
 
