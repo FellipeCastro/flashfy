@@ -14,7 +14,8 @@ const Home = ({
     decks,
     setDecks,
     progress,
-    setProgress,
+    selectedSubjects,
+    setSelectedSubjects,
 }) => {
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
     const navigate = useNavigate();
@@ -52,6 +53,17 @@ const Home = ({
         setIsAddDeckFormOpen(false);
     };
 
+    // Função que alterna a seleção de uma matéria
+    const handleSubjectSelection = (subject) => {
+        setSelectedSubjects(
+            (prevSubjects) =>
+                // Verifica se a matéria já está na lista de materias selecionadas
+                prevSubjects.includes(subject)
+                    ? prevSubjects.filter((t) => t !== subject) // Se já estiver na lista, remove a matéria filtrando o array para não incluí-la
+                    : [...prevSubjects, subject] // Se não estiver na lista, adiciona a matéria ao final do array
+        );
+    };
+
     return (
         <>
             <div className={styles.container}>
@@ -79,6 +91,14 @@ const Home = ({
                                     style={{
                                         backgroundColor: subject.color,
                                     }}
+                                    onClick={() =>
+                                        handleSubjectSelection(subject.name)
+                                    }
+                                    className={
+                                        selectedSubjects.includes(subject.name)
+                                            ? styles.active
+                                            : null
+                                    }
                                 >
                                     {subject.name}
                                 </button>

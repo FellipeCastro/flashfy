@@ -4,12 +4,14 @@ import Home from "./pages/Home/Home";
 import Methodology from "./pages/Methodology/Methodology";
 import Cards from "./pages/Cards/Cards";
 import mockData from "./mockData";
+import subjects from "./subjects";
 
 const App = () => {
     const [decks, setDecks] = useState([]);
     const [progress, setProgress] = useState({});
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [lastStudyDate, setLastStudyDate] = useState(null);
+    const [selectedSubjects, setSelectedSubjects] = useState([]);
 
     // Função para incrementar studiedDecks
     const incrementStudiedDecks = () => {
@@ -75,6 +77,15 @@ const App = () => {
         });
     };
 
+    // Filtra a lista de Pokémon com base nos tipos selecionados e no termo de busca
+    const filteredDecks = decks.filter((deck) => {
+        // Se não há assuntos selecionados, mostra todos os decks
+        if (selectedSubjects.length === 0) return true;
+
+        // Verifica se o deck tem pelo menos um dos assuntos selecionados
+        return selectedSubjects.some((subject) => deck.subject?.includes(subject));
+    });
+
     useEffect(() => {
         const storedDate = localStorage.getItem("lastStudyDate");
         const initialDate = storedDate || new Date().toDateString();
@@ -83,7 +94,7 @@ const App = () => {
         setDecks(mockData.decks);
         setProgress({
             ...mockData.progress,
-            decksToStudy: calculateDecksToStudy(mockData.decks)
+            decksToStudy: calculateDecksToStudy(mockData.decks),
         });
 
         // Verifica ao carregar se precisa resetar por novo dia
@@ -111,11 +122,11 @@ const App = () => {
                         <Home
                             isSidebarOpen={isSidebarOpen}
                             setIsSidebarOpen={setIsSidebarOpen}
-                            decks={decks}
+                            decks={selectedSubjects > 0 ? filteredDecks : decks}
                             setDecks={setDecks}
                             progress={progress}
-                            setProgress={setProgress}
-                            calculateDecksToStudy={calculateDecksToStudy}
+                            selectedSubjects={selectedSubjects}
+                            setSelectedSubjects={setSelectedSubjects}
                         />
                     }
                 />
