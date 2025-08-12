@@ -122,7 +122,7 @@ const App = () => {
                         <Home
                             isSidebarOpen={isSidebarOpen}
                             setIsSidebarOpen={setIsSidebarOpen}
-                            decks={selectedSubjects > 0 ? filteredDecks : decks}
+                            decks={filteredDecks}
                             setDecks={setDecks}
                             progress={progress}
                             selectedSubjects={selectedSubjects}
