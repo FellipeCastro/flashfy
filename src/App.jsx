@@ -4,7 +4,6 @@ import Home from "./pages/Home/Home";
 import Methodology from "./pages/Methodology/Methodology";
 import Cards from "./pages/Cards/Cards";
 import mockData from "./mockData";
-import subjects from "./subjects";
 
 const App = () => {
     const [decks, setDecks] = useState([]);
@@ -77,7 +76,7 @@ const App = () => {
         });
     };
 
-    // Filtra a lista de Pokémon com base nos tipos selecionados e no termo de busca
+    // Filtra os decks com base nas matérias selecionados
     const filteredDecks = decks.filter((deck) => {
         // Se não há assuntos selecionados, mostra todos os decks
         if (selectedSubjects.length === 0) return true;

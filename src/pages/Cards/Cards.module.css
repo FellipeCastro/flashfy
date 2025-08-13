@@ -206,6 +206,13 @@
     cursor: pointer;
 }
 
+.msg {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    color: var(--text-secondary-color);
+}
+
 .hidden {
     opacity: 0;
     pointer-events: none;

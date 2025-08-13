@@ -31,18 +31,12 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         <Link to="/methodology" className={location.pathname === "/methodology" ? styles.active : null}>
                             <FaBookReader /> Nossa metodologia
                         </Link>
+                        {/* <Link to="/user" className={location.pathname === "/user" ? styles.active : null}>
+                            <FaUser /> Ver Perfil
+                        </Link> */}
                     </div>
                 )}
             </div>
-
-            {isSidebarOpen && (
-                <div className={styles.btnsContainerColumn}>
-                    {/* <Button secondary>Botão teste</Button> */}
-                    <Button>
-                        <FaUser /> Ver Perfil
-                    </Button>
-                </div>
-            )}
         </div>
     );
 };

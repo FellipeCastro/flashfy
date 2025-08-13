@@ -105,7 +105,6 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
         navigate("/");
     };
 
-    // Fazer validação currentDeck.cards.length === 0
     if (!currentDeck) {
         return (
             <>
@@ -118,7 +117,7 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
                     </div>
                 </header>
                 <div className={styles.mainContainer}>
-                    <p>Esse deck não existe</p>
+                    <p className={styles.msg}>Esse deck não existe!</p>
                 </div>
             </>
         );
@@ -145,7 +144,7 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
                     </div>
                 </header>
                 <div className={styles.mainContainer}>
-                    <p>Crie cards para responder nesse deck</p>
+                    <p className={styles.msg}>Crie cards para responder!</p>
                 </div>
             </>
         );

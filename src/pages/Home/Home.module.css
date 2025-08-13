@@ -33,6 +33,13 @@
     gap: 1rem;
 }
 
+.msg {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    color: var(--text-secondary-color);
+}
+
 .filterContainer {
     width: 100%;
     display: grid;

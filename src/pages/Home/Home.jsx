@@ -107,7 +107,7 @@ const Home = ({
                     </div>
                     <ul className={styles.decksContainer}>
                         {decks.length === 0 && (
-                            <p>Crie seus decks para começar a estudar!</p>
+                            <li className={styles.msg}>Crie seus decks para começar a estudar!</li>
                         )}
                         {decks
                             .sort((a, b) => {

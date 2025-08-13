@@ -7,4 +7,17 @@
     padding: 2rem 5%;
     color: var(--text-primary-color);
     background: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mainContainer h1,
+.mainContainer h2 {
+    margin: 0.5rem 0;
+}
+
+.mainContainer p {
+    color: var(--text-secondary-color);
+    text-align: justify;
 }
