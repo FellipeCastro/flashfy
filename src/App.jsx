@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Methodology from "./pages/Methodology/Methodology";
 import Cards from "./pages/Cards/Cards";
+import IaQuestions from "./pages/IaQuestions/IaQuestions";
 import mockData from "./mockData";
 
 const App = () => {
@@ -82,7 +83,9 @@ const App = () => {
         if (selectedSubjects.length === 0) return true;
 
         // Verifica se o deck tem pelo menos um dos assuntos selecionados
-        return selectedSubjects.some((subject) => deck.subject?.includes(subject));
+        return selectedSubjects.some((subject) =>
+            deck.subject?.includes(subject)
+        );
     });
 
     useEffect(() => {
@@ -133,6 +136,15 @@ const App = () => {
                     path="/methodology"
                     element={
                         <Methodology
+                            isSidebarOpen={isSidebarOpen}
+                            setIsSidebarOpen={setIsSidebarOpen}
+                        />
+                    }
+                />
+                <Route
+                    path="/iaquestions"
+                    element={
+                        <IaQuestions
                             isSidebarOpen={isSidebarOpen}
                             setIsSidebarOpen={setIsSidebarOpen}
                         />
