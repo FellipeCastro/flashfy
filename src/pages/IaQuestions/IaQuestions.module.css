@@ -11,3 +11,46 @@
     flex-direction: column;
     gap: 0.5rem;
 }
+
+.mainContainer h1 {
+    color: var(--text-secondary-color);
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.inputContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.inputContainer label {
+    font-weight: bold;
+    color: var(--text-secondary-color);
+}
+
+.inputContainer input,
+.inputContainer select {
+    width: 100%;
+    padding: 0.4rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.2rem;
+    color: var(--text-secondary-color);
+    outline: none;
+}
+
+.inputContainer input::placeholder {
+    color: var(--text-secondary-color);
+}
+
+.flexContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
