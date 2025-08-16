@@ -16,9 +16,11 @@
 .mainContainer h2 {
     margin: 0.5rem 0;
     color: var(--text-secondary-color);
+    line-height: 1.6;
 }
 
 .mainContainer p {
     color: var(--text-secondary-color);
     text-align: justify;
+    line-height: 1.6;
 }
