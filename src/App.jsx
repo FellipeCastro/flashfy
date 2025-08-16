@@ -133,18 +133,18 @@ const App = () => {
                     }
                 />
                 <Route
-                    path="/methodology"
+                    path="/iaquestions"
                     element={
-                        <Methodology
+                        <IaQuestions
                             isSidebarOpen={isSidebarOpen}
                             setIsSidebarOpen={setIsSidebarOpen}
                         />
                     }
                 />
                 <Route
-                    path="/iaquestions"
+                    path="/methodology"
                     element={
-                        <IaQuestions
+                        <Methodology
                             isSidebarOpen={isSidebarOpen}
                             setIsSidebarOpen={setIsSidebarOpen}
                         />

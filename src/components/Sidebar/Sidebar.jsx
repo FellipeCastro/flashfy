@@ -10,7 +10,9 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
     return (
         <div
-            className={`${styles.sidebar} ${isSidebarOpen ? styles.open : null}`}
+            className={`${styles.sidebar} ${
+                isSidebarOpen ? styles.open : null
+            }`}
         >
             <div className={styles.topContainer}>
                 <div className={styles.flexContainer}>
@@ -26,14 +28,33 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 </div>
                 {isSidebarOpen && (
                     <div className={styles.menu}>
-                        <Link to="/" className={location.pathname === "/" ? styles.active : null}>
+                        <Link
+                            to="/"
+                            className={
+                                location.pathname === "/" ? styles.active : null
+                            }
+                        >
                             <MdHome /> Página inicial
                         </Link>
-                        <Link to="/methodology" className={location.pathname === "/methodology" ? styles.active : null}>
-                            <FaBookReader /> Nossa metodologia
-                        </Link>
-                        <Link to="/iaquestions" className={location.pathname === "/iaquestions" ? styles.active : null}>
+                        <Link
+                            to="/iaquestions"
+                            className={
+                                location.pathname === "/iaquestions"
+                                    ? styles.active
+                                    : null
+                            }
+                        >
                             <RiRobot2Fill /> Perguntas geradas por IA
+                        </Link>
+                        <Link
+                            to="/methodology"
+                            className={
+                                location.pathname === "/methodology"
+                                    ? styles.active
+                                    : null
+                            }
+                        >
+                            <FaBookReader /> Nossa metodologia
                         </Link>
                         {/* <Link to="/user" className={location.pathname === "/user" ? styles.active : null}>
                             <FaUser /> Ver Perfil

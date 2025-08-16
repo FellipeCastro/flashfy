@@ -15,13 +15,20 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 <form method="post" className={styles.form}>
                     <div className={styles.inputContainer}>
                         <label htmlFor="theme">Tema:</label>
-                        <input type="text" name="theme" id="theme" placeholder="Digite o tema das questões aqui" />
+                        <input
+                            type="text"
+                            name="theme"
+                            id="theme"
+                            placeholder="Digite o tema das questões aqui"
+                        />
                     </div>
                     <div className={styles.flexContainer}>
                         <div className={styles.inputContainer}>
                             <label htmlFor="difficulty">Dificuldade:</label>
                             <select name="difficulty" id="difficulty">
-                                <option value="">Selecione a dificuldade das perguntas</option>
+                                <option value="">
+                                    Selecione a dificuldade das perguntas
+                                </option>
                                 <option value="easy">Fácil</option>
                                 <option value="medium">Médio</option>
                                 <option value="hard">Difícil</option>
@@ -31,7 +38,9 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             <label htmlFor="quantity">Quantidade:</label>
                             {/* <input type="number" name="quantity" id="quantity" placeholder="Escolha quantas perguntas serão geradas" /> */}
                             <select name="quantity" id="quantity">
-                                <option value="">Escolha quantas perguntas serão geradas</option>
+                                <option value="">
+                                    Escolha quantas perguntas serão geradas
+                                </option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -45,10 +54,235 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             </select>
                         </div>
                     </div>
-                    <Button>
-                        Gerar perguntas por IA
-                    </Button>
+                    <Button>Gerar perguntas por IA</Button>
                 </form>
+
+                <div className={styles.titleContainer}>
+                    <h2>Revolução industrial</h2>
+                    <div className={styles.flexTitle}>
+                        <span className={styles.difficulty}>Médio</span>
+                        <span>0/8</span>
+                    </div>
+                </div>
+                <div className={styles.questionsContainer}>
+                    <div className={styles.question}>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing
+                            elit. Praesentium ut blanditiis tempora voluptate
+                            sunt nihil rem, veritatis aspernatur perspiciatis
+                            itaque odit eius molestias nulla quos! Ullam
+                            deserunt fugiat veniam quasi!
+                        </p>
+                        <div className={styles.alternativesContainer}>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.question}>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing
+                            elit. Praesentium ut blanditiis tempora voluptate
+                            sunt nihil rem, veritatis aspernatur perspiciatis
+                            itaque odit eius molestias nulla quos! Ullam
+                            deserunt fugiat veniam quasi!
+                        </p>
+                        <div className={styles.alternativesContainer}>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.question}>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing
+                            elit. Praesentium ut blanditiis tempora voluptate
+                            sunt nihil rem, veritatis aspernatur perspiciatis
+                            itaque odit eius molestias nulla quos! Ullam
+                            deserunt fugiat veniam quasi!
+                        </p>
+                        <div className={styles.alternativesContainer}>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.question}>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing
+                            elit. Praesentium ut blanditiis tempora voluptate
+                            sunt nihil rem, veritatis aspernatur perspiciatis
+                            itaque odit eius molestias nulla quos! Ullam
+                            deserunt fugiat veniam quasi!
+                        </p>
+                        <div className={styles.alternativesContainer}>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.question}>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing
+                            elit. Praesentium ut blanditiis tempora voluptate
+                            sunt nihil rem, veritatis aspernatur perspiciatis
+                            itaque odit eius molestias nulla quos! Ullam
+                            deserunt fugiat veniam quasi!
+                        </p>
+                        <div className={styles.alternativesContainer}>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.question}>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing
+                            elit. Praesentium ut blanditiis tempora voluptate
+                            sunt nihil rem, veritatis aspernatur perspiciatis
+                            itaque odit eius molestias nulla quos! Ullam
+                            deserunt fugiat veniam quasi!
+                        </p>
+                        <div className={styles.alternativesContainer}>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.question}>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing
+                            elit. Praesentium ut blanditiis tempora voluptate
+                            sunt nihil rem, veritatis aspernatur perspiciatis
+                            itaque odit eius molestias nulla quos! Ullam
+                            deserunt fugiat veniam quasi!
+                        </p>
+                        <div className={styles.alternativesContainer}>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.question}>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing
+                            elit. Praesentium ut blanditiis tempora voluptate
+                            sunt nihil rem, veritatis aspernatur perspiciatis
+                            itaque odit eius molestias nulla quos! Ullam
+                            deserunt fugiat veniam quasi!
+                        </p>
+                        <div className={styles.alternativesContainer}>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                            <div className={styles.alternative}>
+                                <button></button> Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit.
+                            </div>
+                        </div>
+                    </div>
+                    <Button>Checar respostas</Button>
+                </div>
             </div>
         </div>
     );
