@@ -3,71 +3,6 @@ import Button from "../../components/Button/Button";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import styles from "./IaQuestions.module.css";
 
-// Componente de Alternativa
-const Alternative = ({
-    id,
-    text,
-    isSelected,
-    onSelect,
-    showCorrect,
-    isCorrect,
-}) => {
-    const getAlternativeStyle = () => {
-        if (showCorrect) {
-            if (isCorrect) return styles.correct;
-            if (isSelected && !isCorrect) return styles.incorrect;
-        }
-        return isSelected ? styles.selected : "";
-    };
-
-    return (
-        <div
-            className={`${styles.alternative} ${getAlternativeStyle()}`}
-            onClick={() => !showCorrect && onSelect(id)}
-            role="radio"
-            aria-checked={isSelected}
-            tabIndex="0"
-            onKeyDown={(e) => {
-                if (e.key === " " || e.key === "Enter") {
-                    !showCorrect && onSelect(id);
-                }
-            }}
-        >
-            <span className={styles.radioIndicator} />
-            <span className={styles.alternativeText}>{text}</span>
-        </div>
-    );
-};
-
-// Componente de Questão
-const Question = ({
-    id,
-    text,
-    alternatives,
-    selectedAlternative,
-    onSelectAlternative,
-    showCorrect,
-}) => {
-    return (
-        <div className={styles.question}>
-            <p>{text}</p>
-            <div className={styles.alternativesContainer}>
-                {alternatives.map((alternative) => (
-                    <Alternative
-                        key={alternative.id}
-                        id={alternative.id}
-                        text={alternative.text}
-                        isSelected={selectedAlternative === alternative.id}
-                        onSelect={onSelectAlternative}
-                        showCorrect={showCorrect}
-                        isCorrect={alternative.isCorrect}
-                    />
-                ))}
-            </div>
-        </div>
-    );
-};
-
 const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
     // Estado para o formulário de geração
     const [formData, setFormData] = useState({
@@ -110,7 +45,7 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
     // Estado para as respostas selecionadas
     const [selectedAnswers, setSelectedAnswers] = useState({});
-    const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
+    const [answersVerified, setAnswersVerified] = useState(false);
 
     // Manipulador de seleção de alternativa
     const handleSelectAlternative = (questionId, alternativeId) => {
@@ -132,17 +67,19 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
     // Manipulador de envio do formulário
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Aqui você implementaria a lógica para gerar questões com IA
+        // Lógica para gerar questões com IA
         console.log("Dados para gerar questões:", formData);
-        // Simulação de geração de questões
-        // setQuestions(novasQuestoesGeradas);
+    };
+
+    // Função para verificar as respostas
+    const handleVerifyAnswers = () => {
+        setAnswersVerified(true);
     };
 
     // Contador de respostas corretas
     const correctCount = questions.reduce((count, question) => {
         const selectedId = selectedAnswers[question.id];
         if (!selectedId) return count;
-
         const selectedAlt = question.alternatives.find(
             (alt) => alt.id === selectedId
         );
@@ -210,7 +147,7 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     <Button type="submit">Gerar perguntas por IA</Button>
                 </form>
 
-                {questions.length > 0 && (
+                {questions.length > 0 ? (
                     <>
                         <div className={styles.titleContainer}>
                             <h2>{formData.theme || "Revolução Industrial"}</h2>
@@ -219,72 +156,142 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     {formData.difficulty || "Médio"}
                                 </span>
                                 <span>
-                                    {/* {correctCount}/{questions.length} */}
-                                    0/{questions.length}
+                                    {answersVerified ? (
+                                        <span>
+                                            {correctCount}/{questions.length}
+                                        </span>
+                                    ) : (
+                                        `0/${questions.length}`
+                                    )}
                                 </span>
                             </div>
                         </div>
-                        <div className={styles.questionsContainer}>
-                            {questions.map((question, index) => (
-                                <>
-                                    <div
-                                        key={question.id}
-                                        className={styles.question}
-                                    >
-                                        <p>{question.text}</p>
-                                        <div
-                                            className={
-                                                styles.alternativesContainer
-                                            }
-                                        >
-                                            {question.alternatives.map(
-                                                (alternative) => (
-                                                    <label
-                                                        key={alternative.id}
-                                                        className={`${
-                                                            styles.alternative
-                                                        } ${
-                                                            selectedAnswers[
-                                                                question.id
-                                                            ] === alternative.id
-                                                                ? styles.selected
-                                                                : ""
-                                                        }`}
-                                                    >
-                                                        <input
-                                                            type="checkbox"
-                                                            checked={
-                                                                selectedAnswers[
-                                                                    question.id
-                                                                ] ===
-                                                                alternative.id
+
+                        <div
+                            className={`${styles.questionsContainer} ${
+                                answersVerified ? styles.showCorrect : ""
+                            }`}
+                        >
+                            {questions.map((question, index) => {
+                                const selectedId = selectedAnswers[question.id];
+                                const isCorrect = selectedId
+                                    ? question.alternatives.find(
+                                          (a) => a.id === selectedId
+                                      )?.isCorrect
+                                    : false;
+
+                                return (
+                                    <div key={question.id}>
+                                        <div className={styles.question}>
+                                            <p>{question.text}</p>
+                                            <div
+                                                className={
+                                                    styles.alternativesContainer
+                                                }
+                                            >
+                                                {question.alternatives.map(
+                                                    (alternative) => {
+                                                        const isSelected =
+                                                            selectedId ===
+                                                            alternative.id;
+                                                        let alternativeClass =
+                                                            "";
+
+                                                        if (answersVerified) {
+                                                            if (
+                                                                alternative.isCorrect
+                                                            ) {
+                                                                alternativeClass =
+                                                                    styles.correct;
+                                                            } else if (
+                                                                isSelected &&
+                                                                !alternative.isCorrect
+                                                            ) {
+                                                                alternativeClass =
+                                                                    styles.incorrect;
                                                             }
-                                                            onChange={() =>
-                                                                handleSelectAlternative(
-                                                                    question.id,
+                                                        } 
+
+                                                        return (
+                                                            <label
+                                                                key={
                                                                     alternative.id
-                                                                )
-                                                            }
-                                                        />
-                                                        <span
-                                                            className={
-                                                                styles.alternativeText
-                                                            }
-                                                        >
-                                                            {alternative.text}
-                                                        </span>
-                                                    </label>
-                                                )
-                                            )}
+                                                                }
+                                                                className={`${
+                                                                    styles.alternative
+                                                                } ${alternativeClass} ${
+                                                                    answersVerified
+                                                                        ? styles.verified
+                                                                        : ""
+                                                                }`}
+                                                            >
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={
+                                                                        isSelected
+                                                                    }
+                                                                    onChange={() =>
+                                                                        !answersVerified &&
+                                                                        handleSelectAlternative(
+                                                                            question.id,
+                                                                            alternative.id
+                                                                        )
+                                                                    }
+                                                                    disabled={
+                                                                        answersVerified
+                                                                    }
+                                                                />
+                                                                <span
+                                                                    className={
+                                                                        styles.alternativeText
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        alternative.text
+                                                                    }
+                                                                    {answersVerified &&
+                                                                        alternative.isCorrect && (
+                                                                            <span
+                                                                                className={
+                                                                                    styles.correctMarker
+                                                                                }
+                                                                            >
+                                                                                {" "}
+                                                                                (Correta)
+                                                                            </span>
+                                                                        )}
+                                                                </span>
+                                                            </label>
+                                                        );
+                                                    }
+                                                )}
+                                            </div>
                                         </div>
+                                        {index < questions.length - 1 && (
+                                            <hr className={styles.divider} />
+                                        )}
                                     </div>
-                                    {index < questions.length - 1 && (
-                                        <hr className={styles.divider} />
-                                    )}
-                                </>
-                            ))}
+                                );
+                            })}
                         </div>
+
+                        {!answersVerified ? (
+                            <Button
+                                onClick={handleVerifyAnswers}
+                            >
+                                Verificar respostas
+                            </Button>
+                        ) : (
+                            <div className={styles.resultsFeedback}>
+                                Você acertou {correctCount} de{" "}
+                                {questions.length} questões!
+                            </div>
+                        )}
                     </>
+                ) : (
+                    <strong className={styles.noQuestions}>
+                        Gere perguntas de qualquer tema usando Inteligência Artificial
+                    </strong>
                 )}
             </div>
         </div>

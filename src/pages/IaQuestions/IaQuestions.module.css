@@ -53,6 +53,10 @@
     font-size: 1rem;
 }
 
+.inputContainer select {
+    color: var(--text-secondary-color);
+}
+
 .inputContainer input::placeholder {
     color: var(--text-secondary-color);
     opacity: 0.7;
@@ -101,6 +105,16 @@
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
+}
+
+.show-correct .alternative.correct {
+    animation: pulseCorrect 1.5s ease-in-out;
+}
+
+@keyframes pulseCorrect {
+    0% { background-color: var(--correct-bg); }
+    50% { background-color: rgba(76, 175, 80, 0.3); }
+    100% { background-color: var(--correct-bg); }
 }
 
 .question {
@@ -171,12 +185,62 @@
     line-height: 1.6;
 }
 
+/* Estilos para verificação de respostas */
+.alternative.correct {
+    background-color: var(--correct-bg);
+}
+
+.alternative.correct input[type="checkbox"]:checked {
+    background-color: var(--correct-color);
+    border-color: var(--correct-color);
+}
+
+.alternative.incorrect {
+    background-color: var(--incorrect-bg);
+}
+
+.alternative.incorrect input[type="checkbox"]:checked {
+    background-color: var(--incorrect-color);
+    border-color: var(--incorrect-color);
+}
+
+.alternative.verified {
+    pointer-events: none;
+}
+
+.correct-marker {
+    color: var(--correct-color);
+    font-weight: bold;
+    margin-left: 0.5rem;
+    display: none;
+}
+
+.show-correct .correct-marker {
+    display: inline;
+}
+
+.alternative.correct .alternativeText {
+    font-weight: 600;
+}
+
+.resultsFeedback {
+    padding: 1rem;
+    text-align: center;
+    background-color: var(--shadow-color);
+    border-radius: 0.4rem;
+}
+
 /* Estilo para linha divisória */
 .divider {
     height: 2px;
     background-color: var(--border-color);
-    margin: 1rem 0;
     border: none;
+    margin-top: 2rem;
+}
+
+.noQuestions {
+    color: var(--text-secondary-color);
+    text-align: center;
 }
 
 /* Responsividade */
