@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../../components/Button/Button";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import styles from "./IaQuestions.module.css";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
     // Estado para o formulário de geração
@@ -13,34 +14,34 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
     // Estado para as questões geradas
     const [questions, setQuestions] = useState([
-        {
-            id: 1,
-            text: "Qual foi o principal fator da Revolução Industrial?",
-            alternatives: [
-                {
-                    id: "a",
-                    text: "Invenção da máquina a vapor",
-                    isCorrect: true,
-                },
-                {
-                    id: "b",
-                    text: "Descoberta da eletricidade",
-                    isCorrect: false,
-                },
-                { id: "c", text: "Invenção do computador", isCorrect: false },
-                { id: "d", text: "Revolução Francesa", isCorrect: false },
-            ],
-        },
-        {
-            id: 2,
-            text: "Em que século começou a Revolução Industrial?",
-            alternatives: [
-                { id: "a", text: "Século XVII", isCorrect: false },
-                { id: "b", text: "Século XVIII", isCorrect: true },
-                { id: "c", text: "Século XIX", isCorrect: false },
-                { id: "d", text: "Século XX", isCorrect: false },
-            ],
-        },
+        // {
+        //     id: 1,
+        //     text: "Qual foi o principal fator da Revolução Industrial?",
+        //     alternatives: [
+        //         {
+        //             id: "a",
+        //             text: "Invenção da máquina a vapor",
+        //             isCorrect: true,
+        //         },
+        //         {
+        //             id: "b",
+        //             text: "Descoberta da eletricidade",
+        //             isCorrect: false,
+        //         },
+        //         { id: "c", text: "Invenção do computador", isCorrect: false },
+        //         { id: "d", text: "Revolução Francesa", isCorrect: false },
+        //     ],
+        // },
+        // {
+        //     id: 2,
+        //     text: "Em que século começou a Revolução Industrial?",
+        //     alternatives: [
+        //         { id: "a", text: "Século XVII", isCorrect: false },
+        //         { id: "b", text: "Século XVIII", isCorrect: true },
+        //         { id: "c", text: "Século XIX", isCorrect: false },
+        //         { id: "d", text: "Século XX", isCorrect: false },
+        //     ],
+        // },
     ]);
 
     // Estado para as respostas selecionadas
@@ -64,11 +65,72 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
         }));
     };
 
+    const generateQuestionsWithAI = async (formData) => {
+        try {
+            const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+            const genAI = new GoogleGenerativeAI(apiKey);
+            const model = genAI.getGenerativeModel({
+                model: "gemini-1.5-flash",
+            });
+
+            const prompt = `Você é um especialista em criação de questões educacionais. Gere ${formData.quantity} perguntas sobre "${formData.theme}" com dificuldade ${formData.difficulty}.
+
+            REQUISITOS:
+            - 4 alternativas por questão (A, B, C, D)
+            - Apenas UMA correta por questão
+            - Formato JSON estrito conforme exemplo:
+
+            {
+                "questions": [
+                    {
+                        "text": "Pergunta exemplo?",
+                        "alternatives": [
+                            {"id": "a", "text": "Alternativa A", "isCorrect": false},
+                            {"id": "b", "text": "Alternativa B", "isCorrect": true},
+                            {"id": "c", "text": "Alternativa C", "isCorrect": false},
+                            {"id": "d", "text": "Alternativa D", "isCorrect": false}
+                        ],
+                        "explanation": "Explicação concisa"
+                    }
+                ]
+            }`;
+
+            const result = await model.generateContent(prompt);
+            const responseText = result.response.text();
+
+            // Melhor tratamento da resposta
+            const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) throw new Error("Formato de resposta inesperado");
+
+            const parsedData = JSON.parse(jsonMatch[0]);
+            return parsedData.questions.map((q, i) => ({
+                id: i + 1,
+                text: q.text,
+                alternatives: q.alternatives,
+                explanation: q.explanation,
+            }));
+        } catch (error) {
+            console.error("Erro na geração:", error);
+            throw new Error("Erro ao gerar questões. Tente novamente.");
+        }
+    };
+
     // Manipulador de envio do formulário
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Lógica para gerar questões com IA
-        console.log("Dados para gerar questões:", formData);
+        try {
+            if (!formData.theme || !formData.difficulty || !formData.quantity) {
+                alert("Preencha todos os campos");
+                return;
+            }
+
+            const generated = await generateQuestionsWithAI(formData);
+            setQuestions(generated);
+            setSelectedAnswers({});
+            setAnswersVerified(false);
+        } catch (error) {
+            alert(error.message);
+        }
     };
 
     // Função para verificar as respostas
@@ -210,7 +272,7 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                                                 alternativeClass =
                                                                     styles.incorrect;
                                                             }
-                                                        } 
+                                                        }
 
                                                         return (
                                                             <label
@@ -276,9 +338,7 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         </div>
 
                         {!answersVerified ? (
-                            <Button
-                                onClick={handleVerifyAnswers}
-                            >
+                            <Button onClick={handleVerifyAnswers}>
                                 Verificar respostas
                             </Button>
                         ) : (
@@ -290,7 +350,8 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     </>
                 ) : (
                     <strong className={styles.noQuestions}>
-                        Gere perguntas de qualquer tema usando Inteligência Artificial
+                        Gere perguntas de qualquer tema usando Inteligência
+                        Artificial
                     </strong>
                 )}
             </div>
