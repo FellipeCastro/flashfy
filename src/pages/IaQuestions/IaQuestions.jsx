@@ -133,9 +133,9 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
             - Apenas UMA alternativa correta por questão (isCorrect: true)
             - Textos claros, objetivos e autocontidos
             - Dificuldade proporcional: 
-              * "easy": fatos básicos, reconhecimento
-              * "medium": aplicação de conceitos, relações simples
-              * "hard": análise, síntese, múltiplos conceitos
+              * "Fácil": fatos básicos, reconhecimento
+              * "Médio": aplicação de conceitos, relações simples
+              * "Difícil": análise, síntese, múltiplos conceitos
             
             EXEMPLO DE TEXTO VÁLIDO:
             "text": "Qual a capital da França?"
@@ -152,35 +152,54 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
             console.log("Enviando prompt para Gemini...");
             const result = await model.generateContent(prompt);
             const responseText = result.response.text();
+            console.log("Resposta bruta:", responseText);
 
-            // Método mais robusto para extrair JSON
-            let jsonString = responseText;
+            // Função robusta para limpar e validar JSON
+            const cleanAndParseJSON = (jsonString) => {
+                let cleaned = jsonString.trim();
 
-            // Remove markdown code blocks se existirem
-            jsonString = jsonString.replace(/```(json)?/g, "");
+                // Remove qualquer texto antes do primeiro { e depois do último }
+                const firstBrace = cleaned.indexOf("{");
+                const lastBrace = cleaned.lastIndexOf("}");
 
-            // Encontra o primeiro { e último }
-            const firstBrace = jsonString.indexOf("{");
-            const lastBrace = jsonString.lastIndexOf("}");
+                if (firstBrace === -1 || lastBrace === -1) {
+                    throw new Error("JSON não encontrado na resposta");
+                }
 
-            if (firstBrace === -1 || lastBrace === -1) {
-                console.error("JSON não encontrado na resposta:", responseText);
-                throw new Error("Formato de resposta inválido do Gemini");
-            }
+                cleaned = cleaned.substring(firstBrace, lastBrace + 1);
 
-            jsonString = jsonString.substring(firstBrace, lastBrace + 1);
+                // Remove code blocks
+                cleaned = cleaned.replace(/```(json)?/g, "");
 
-            // Limpeza adicional do JSON
-            jsonString = jsonString
-                .replace(/\n/g, " ") // Remove quebras de linha
-                .replace(/\t/g, " ") // Remove tabs
-                .replace(/\s+/g, " ") // Remove espaços múltiplos
-                .replace(/'/g, '"') // Substitui aspas simples por duplas
-                .replace(/(\w):/g, '"$1":') // Adiciona aspas nas chaves se faltarem
-                .replace(/,\s*}/g, "}") // Remove vírgulas finais
-                .replace(/,\s*]/g, "]"); // Remove vírgulas finais em arrays
+                // Substitui aspas simples por duplas
+                cleaned = cleaned.replace(/'/g, '"');
 
-            const parsedData = JSON.parse(jsonString);
+                // Corrige vírgulas trailing
+                cleaned = cleaned.replace(/,\s*}/g, "}");
+                cleaned = cleaned.replace(/,\s*]/g, "]");
+
+                // Remove quebras de linha e tabs
+                cleaned = cleaned.replace(/[\n\t]/g, " ");
+
+                // Remove múltiplos espaços
+                cleaned = cleaned.replace(/\s+/g, " ");
+
+                // Corrige chaves sem aspas
+                cleaned = cleaned.replace(
+                    /([{,]\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)(\s*:)/g,
+                    '$1"$2"$3'
+                );
+
+                // Corrige valores booleanos
+                cleaned = cleaned.replace(/:(\s*)'(true|false)'/g, ":$1$2");
+                cleaned = cleaned.replace(/:(\s*)"(true|false)"/g, ":$1$2");
+
+                console.log("JSON limpo:", cleaned);
+
+                return JSON.parse(cleaned);
+            };
+
+            const parsedData = cleanAndParseJSON(responseText);
 
             // Garantir que cada questão tenha um ID único baseado no índice
             return parsedData.questions.map((question, index) => ({
@@ -209,10 +228,6 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
         // Valida o formulário
         if (!validateForm()) {
-            setErrorMessage((prev) => ({
-                ...prev,
-                main: "Por favor, corrija os erros no formulário",
-            }));
             return;
         }
 
