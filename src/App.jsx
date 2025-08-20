@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Methodology from "./pages/Methodology/Methodology";
 import Cards from "./pages/Cards/Cards";
 import IaQuestions from "./pages/IaQuestions/IaQuestions";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
+import Profile from "./pages/Profile/Profile";
 import mockData from "./mockData";
+// import Calendar from "./pages/Calendar/Calendar";
 
 const App = () => {
     const [decks, setDecks] = useState([]);
@@ -12,6 +16,7 @@ const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [lastStudyDate, setLastStudyDate] = useState(null);
     const [selectedSubjects, setSelectedSubjects] = useState([]);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     // Função para incrementar studiedDecks
     const incrementStudiedDecks = () => {
@@ -77,7 +82,7 @@ const App = () => {
         });
     };
 
-    // Filtra os decks com base nas matérias selecionados
+    // Filtra os decks com base nas matérias selecionadas
     const filteredDecks = decks.filter((deck) => {
         // Se não há assuntos selecionados, mostra todos os decks
         if (selectedSubjects.length === 0) return true;
@@ -99,6 +104,10 @@ const App = () => {
             decksToStudy: calculateDecksToStudy(mockData.decks),
         });
 
+        // Verificar autenticação ao carregar
+        const token = localStorage.getItem('authToken');
+        setIsAuthenticated(!!token);
+
         // Verifica ao carregar se precisa resetar por novo dia
         checkAndResetStudiedDecks();
     }, []);
@@ -118,48 +127,139 @@ const App = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route
-                    path="/"
+                {/* Rota de login */}
+                <Route 
+                    path="/login" 
                     element={
-                        <Home
-                            isSidebarOpen={isSidebarOpen}
-                            setIsSidebarOpen={setIsSidebarOpen}
-                            decks={filteredDecks}
-                            setDecks={setDecks}
-                            progress={progress}
-                            selectedSubjects={selectedSubjects}
-                            setSelectedSubjects={setSelectedSubjects}
-                        />
-                    }
+                        isAuthenticated ? (
+                            <Navigate to="/" replace />
+                        ) : (
+                            <Login setIsAuthenticated={setIsAuthenticated} />
+                        )
+                    } 
                 />
-                <Route
-                    path="/iaquestions"
+                
+                {/* Rota de cadastro */}
+                <Route 
+                    path="/register" 
                     element={
-                        <IaQuestions
-                            isSidebarOpen={isSidebarOpen}
-                            setIsSidebarOpen={setIsSidebarOpen}
-                        />
-                    }
+                        isAuthenticated ? (
+                            <Navigate to="/" replace />
+                        ) : (
+                            <Register setIsAuthenticated={setIsAuthenticated} />
+                        )
+                    } 
                 />
-                <Route
-                    path="/methodology"
+                
+                {/* Rotas protegidas - redireciona para login se não autenticado */}
+                <Route 
+                    path="/" 
                     element={
-                        <Methodology
-                            isSidebarOpen={isSidebarOpen}
-                            setIsSidebarOpen={setIsSidebarOpen}
-                        />
-                    }
+                        isAuthenticated ? (
+                            <Home
+                                isSidebarOpen={isSidebarOpen}
+                                setIsSidebarOpen={setIsSidebarOpen}
+                                decks={filteredDecks}
+                                setDecks={setDecks}
+                                progress={progress}
+                                selectedSubjects={selectedSubjects}
+                                setSelectedSubjects={setSelectedSubjects}
+                                setIsAuthenticated={setIsAuthenticated}
+                            />
+                        ) : (
+                            <Navigate to="/login" replace />
+                        )
+                    } 
                 />
-                <Route
-                    path="/cards/:id"
+                
+                <Route 
+                    path="/iaquestions" 
                     element={
-                        <Cards
-                            decks={decks}
-                            setDecks={setDecks}
-                            updateDeck={updateDeck}
-                        />
-                    }
+                        isAuthenticated ? (
+                            <IaQuestions
+                                isSidebarOpen={isSidebarOpen}
+                                setIsSidebarOpen={setIsSidebarOpen}
+                                setIsAuthenticated={setIsAuthenticated}
+                            />
+                        ) : (
+                            <Navigate to="/login" replace />
+                        )
+                    } 
                 />
+                
+                <Route 
+                    path="/methodology" 
+                    element={
+                        isAuthenticated ? (
+                            <Methodology
+                                isSidebarOpen={isSidebarOpen}
+                                setIsSidebarOpen={setIsSidebarOpen}
+                                setIsAuthenticated={setIsAuthenticated}
+                            />
+                        ) : (
+                            <Navigate to="/login" replace />
+                        )
+                    } 
+                />
+                
+                <Route 
+                    path="/cards/:id" 
+                    element={
+                        isAuthenticated ? (
+                            <Cards
+                                decks={decks}
+                                setDecks={setDecks}
+                                updateDeck={updateDeck}
+                                setIsAuthenticated={setIsAuthenticated}
+                            />
+                        ) : (
+                            <Navigate to="/login" replace />
+                        )
+                    } 
+                />
+                
+                <Route 
+                    path="/profile" 
+                    element={
+                        isAuthenticated ? (
+                            <Profile
+                                isSidebarOpen={isSidebarOpen}
+                                setIsSidebarOpen={setIsSidebarOpen}
+                                setIsAuthenticated={setIsAuthenticated}
+                            />
+                        ) : (
+                            <Navigate to="/login" replace />
+                        )
+                    } 
+                />
+                
+                {/* Rota padrão para redirecionar para a home se autenticado, ou para login se não */}
+                <Route 
+                    path="*" 
+                    element={
+                        isAuthenticated ? (
+                            <Navigate to="/" replace />
+                        ) : (
+                            <Navigate to="/login" replace />
+                        )
+                    } 
+                />
+                {/* <Route 
+                    path="/calendar" 
+                    element={
+                        isAuthenticated ? (
+                            <Calendar
+                                isSidebarOpen={isSidebarOpen}
+                                setIsSidebarOpen={setIsSidebarOpen}
+                                setIsAuthenticated={setIsAuthenticated}
+                                decks={decks}
+                                progress={progress}
+                            />
+                        ) : (
+                            <Navigate to="/login" replace />
+                        )
+                    } 
+                /> */}
             </Routes>
         </BrowserRouter>
     );

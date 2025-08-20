@@ -99,3 +99,45 @@
     background: var(--shadow-color);
     color: var(--text-primary-color);
 }
+.logoutBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: none;
+    color: var(--text-primary-color);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 4px;
+    margin-top: auto; /* Empurra para baixo */
+}
+
+.logoutBtn:hover {
+    background-color: var(--error-color);
+    color: var(--error-color-text);
+}
+
+/* Ajuste para o menu ter espaço flexível */
+.menu {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Garante que os links fiquem no topo e o logout na base */
+.menu > *:not(.logoutBtn) {
+    flex-shrink: 0;
+}
+
+.menu .logoutBtn {
+    margin-top: 2rem;
+}
+.logo img{
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
