@@ -62,6 +62,104 @@
     opacity: 0.7;
 }
 
+/* Estilos para erros */
+.inputError {
+    border-color: var(--incorrect-color) !important;
+    border-width: 2px !important;
+}
+
+.fieldError {
+    color: var(--incorrect-color);
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-top: 0.3rem;
+    display: block;
+}
+
+.mainError {
+    background-color: var(--incorrect-bg);
+    color: var(--incorrect-color);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    border-left: 4px solid var(--incorrect-color);
+}
+
+.questionsMainContainer {
+    margin-top: 2rem;
+}
+
+.errorContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: var(--incorrect-bg);
+    border: 2px solid var(--incorrect-color);
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.errorContainer svg {
+    color: var(--incorrect-color);
+}
+
+.errorIcon {
+    font-size: 2rem;
+}
+
+.errorText h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--incorrect-color);
+}
+
+.errorText p {
+    margin: 0;
+    color: var(--text-primary-color);
+}
+
+.emptyState {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 3rem 1rem;
+    color: var(--text-secondary-color);
+}
+
+.emptyState svg {
+    font-size: 2rem;
+}
+
+.loadingState {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary-color);
+}
+
+.loadingSpinner {
+    width: 40px;
+    height: 40px;
+    border: 5px solid var(--border-color);
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+.loadingState p {
+    font-weight: bold;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .flexContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -112,9 +210,15 @@
 }
 
 @keyframes pulseCorrect {
-    0% { background-color: var(--correct-bg); }
-    50% { background-color: rgba(76, 175, 80, 0.3); }
-    100% { background-color: var(--correct-bg); }
+    0% {
+        background-color: var(--correct-bg);
+    }
+    50% {
+        background-color: rgba(76, 175, 80, 0.3);
+    }
+    100% {
+        background-color: var(--correct-bg);
+    }
 }
 
 .question {
@@ -228,6 +332,15 @@
     text-align: center;
     background-color: var(--shadow-color);
     border-radius: 0.4rem;
+}
+
+.resultsFeedback p {
+    color: var(--text-secondary-color);
+    font-weight: bold;
+}
+
+.resultsFeedback p strong {
+    font-weight: bold;
 }
 
 /* Estilo para linha divisória */

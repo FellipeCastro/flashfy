@@ -1,152 +1,260 @@
 import { useState } from "react";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoAlertFill } from "react-icons/go";
+import { RiRobot2Fill } from "react-icons/ri";
 import Button from "../../components/Button/Button";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import styles from "./IaQuestions.module.css";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
-    // Estado para o formulário de geração
     const [formData, setFormData] = useState({
         theme: "",
         difficulty: "",
         quantity: "",
     });
 
-    // Estado para as questões geradas
-    const [questions, setQuestions] = useState([
-        // {
-        //     id: 1,
-        //     text: "Qual foi o principal fator da Revolução Industrial?",
-        //     alternatives: [
-        //         {
-        //             id: "a",
-        //             text: "Invenção da máquina a vapor",
-        //             isCorrect: true,
-        //         },
-        //         {
-        //             id: "b",
-        //             text: "Descoberta da eletricidade",
-        //             isCorrect: false,
-        //         },
-        //         { id: "c", text: "Invenção do computador", isCorrect: false },
-        //         { id: "d", text: "Revolução Francesa", isCorrect: false },
-        //     ],
-        // },
-        // {
-        //     id: 2,
-        //     text: "Em que século começou a Revolução Industrial?",
-        //     alternatives: [
-        //         { id: "a", text: "Século XVII", isCorrect: false },
-        //         { id: "b", text: "Século XVIII", isCorrect: true },
-        //         { id: "c", text: "Século XIX", isCorrect: false },
-        //         { id: "d", text: "Século XX", isCorrect: false },
-        //     ],
-        // },
-    ]);
-
-    // Estado para as respostas selecionadas
+    const [questions, setQuestions] = useState([]);
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [answersVerified, setAnswersVerified] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState({
+        theme: "",
+        difficulty: "",
+        quantity: "",
+        main: "",
+    });
 
-    // Manipulador de seleção de alternativa
-    const handleSelectAlternative = (questionId, alternativeId) => {
+    // Função para validar o formulário
+    const validateForm = () => {
+        const newErrors = {
+            theme: "",
+            difficulty: "",
+            quantity: "",
+            main: "",
+        };
+
+        let isValid = true;
+
+        // Validação do tema
+        if (!formData.theme.trim()) {
+            newErrors.theme = "Tema é obrigatório";
+            isValid = false;
+        } else if (formData.theme.trim().length < 3) {
+            newErrors.theme = "Tema deve ter pelo menos 3 caracteres";
+            isValid = false;
+        }
+
+        // Validação da dificuldade
+        if (!formData.difficulty) {
+            newErrors.difficulty = "Selecione a dificuldade";
+            isValid = false;
+        }
+
+        // Validação da quantidade
+        if (!formData.quantity) {
+            newErrors.quantity = "Selecione a quantidade";
+            isValid = false;
+        }
+
+        setErrorMessage(newErrors);
+        return isValid;
+    };
+
+    // Manipulador de seleção de alternativa - CORRIGIDO
+    const handleSelectAlternative = (questionIndex, alternativeId) => {
         setSelectedAnswers((prev) => ({
             ...prev,
-            [questionId]: alternativeId,
+            [questionIndex]: alternativeId, // Usa o índice da questão como chave
         }));
     };
 
-    // Manipulador de mudança no formulário
+    // Manipulador de mudança no formulário - limpa o erro do campo quando o usuário digita
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
             ...prev,
             [name]: value,
         }));
+
+        // Limpa o erro específico do campo quando o usuário começa a digitar
+        if (errorMessage[name]) {
+            setErrorMessage((prev) => ({
+                ...prev,
+                [name]: "",
+                main: "",
+            }));
+        }
     };
 
     const generateQuestionsWithAI = async (formData) => {
         try {
-            const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+            const apiKey = import.meta.env.VITE_GEMINI_API;
+            if (!apiKey) {
+                throw new Error("Chave API não configurada");
+            }
             const genAI = new GoogleGenerativeAI(apiKey);
             const model = genAI.getGenerativeModel({
                 model: "gemini-1.5-flash",
             });
 
-            const prompt = `Você é um especialista em criação de questões educacionais. Gere ${formData.quantity} perguntas sobre "${formData.theme}" com dificuldade ${formData.difficulty}.
-
-            REQUISITOS:
-            - 4 alternativas por questão (A, B, C, D)
-            - Apenas UMA correta por questão
-            - Formato JSON estrito conforme exemplo:
-
+            const prompt = `Você é um gerador especializado de questões educacionais em formato JSON.
+            Gere EXATAMENTE ${formData.quantity} perguntas sobre "${formData.theme}" com dificuldade ${formData.difficulty}.
+            
+            FORMATO EXATO OBRIGATÓRIO (APENAS JSON PURO):
             {
                 "questions": [
                     {
-                        "text": "Pergunta exemplo?",
+                        "text": "Texto completo da pergunta?",
                         "alternatives": [
                             {"id": "a", "text": "Alternativa A", "isCorrect": false},
                             {"id": "b", "text": "Alternativa B", "isCorrect": true},
                             {"id": "c", "text": "Alternativa C", "isCorrect": false},
                             {"id": "d", "text": "Alternativa D", "isCorrect": false}
                         ],
-                        "explanation": "Explicação concisa"
+                        "explanation": "Explicação concisa da resposta correta"
                     }
                 ]
-            }`;
+            }
+            
+            REGRAS ESTRITAS DE FORMATAÇÃO:
+            1. JSON VÁLIDO: Apenas o objeto JSON, sem texto adicional, comentários ou markdown
+            2. ASPAS DUPLAS: Use exclusivamente aspas duplas (") para strings e propriedades
+            3. SEM CARACTERES ESPECIAIS: 
+               - Proibido: aspas simples ('), crases, barras invertidas, caracteres Unicode
+               - Use apenas: letras A-Z, números 0-9, pontuação básica (. , ? !), espaços
+            4. ESCAPE OBRIGATÓRIO: Se necessário, use \\" para aspas dentro de textos
+            5. ESTRUTURA FIXA: 
+               - Array "questions" com exatamente ${formData.quantity} objetos
+               - Cada questão deve ter "text", "alternatives" (array com 4 objetos) e "explanation"
+               - Cada alternativa deve ter "id" (a-d), "text" e "isCorrect" (boolean)
+            6. VALIDAÇÃO BOOLEANA: "isCorrect" deve ser true ou false (não 0/1, não strings)
+            
+            REGRAS DE CONTEÚDO:
+            - Apenas UMA alternativa correta por questão (isCorrect: true)
+            - Textos claros, objetivos e autocontidos
+            - Dificuldade proporcional: 
+              * "easy": fatos básicos, reconhecimento
+              * "medium": aplicação de conceitos, relações simples
+              * "hard": análise, síntese, múltiplos conceitos
+            
+            EXEMPLO DE TEXTO VÁLIDO:
+            "text": "Qual a capital da França?"
+            "text": "Em que ano ocorreu a Revolução Francesa?"
+            "text": "Explique o conceito de fotossíntese."
+            
+            EXEMPLO DE TEXTO INVÁLIDO:
+            "text": "Qual a capital da França? (dica: começa com 'P')"
+            "text": "Em que ano ocorreu a Revolução Francesa? - considere o século XVIII"
+            "text": "Explique o conceito de fotossíntese usando os termos 'clorofila' e 'CO2'"
+            
+            RETORNE APENAS O JSON VÁLIDO, SEM QUALQUER TEXTO ADICIONAL, COMENTÁRIOS OU EXPLICAÇÕES.`;
 
+            console.log("Enviando prompt para Gemini...");
             const result = await model.generateContent(prompt);
             const responseText = result.response.text();
 
-            // Melhor tratamento da resposta
-            const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-            if (!jsonMatch) throw new Error("Formato de resposta inesperado");
+            // Método mais robusto para extrair JSON
+            let jsonString = responseText;
 
-            const parsedData = JSON.parse(jsonMatch[0]);
-            return parsedData.questions.map((q, i) => ({
-                id: i + 1,
-                text: q.text,
-                alternatives: q.alternatives,
-                explanation: q.explanation,
-            }));
-        } catch (error) {
-            console.error("Erro na geração:", error);
-            throw new Error("Erro ao gerar questões. Tente novamente.");
-        }
-    };
+            // Remove markdown code blocks se existirem
+            jsonString = jsonString.replace(/```(json)?/g, "");
 
-    // Manipulador de envio do formulário
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            if (!formData.theme || !formData.difficulty || !formData.quantity) {
-                alert("Preencha todos os campos");
-                return;
+            // Encontra o primeiro { e último }
+            const firstBrace = jsonString.indexOf("{");
+            const lastBrace = jsonString.lastIndexOf("}");
+
+            if (firstBrace === -1 || lastBrace === -1) {
+                console.error("JSON não encontrado na resposta:", responseText);
+                throw new Error("Formato de resposta inválido do Gemini");
             }
 
-            const generated = await generateQuestionsWithAI(formData);
-            setQuestions(generated);
-            setSelectedAnswers({});
-            setAnswersVerified(false);
+            jsonString = jsonString.substring(firstBrace, lastBrace + 1);
+
+            // Limpeza adicional do JSON
+            jsonString = jsonString
+                .replace(/\n/g, " ") // Remove quebras de linha
+                .replace(/\t/g, " ") // Remove tabs
+                .replace(/\s+/g, " ") // Remove espaços múltiplos
+                .replace(/'/g, '"') // Substitui aspas simples por duplas
+                .replace(/(\w):/g, '"$1":') // Adiciona aspas nas chaves se faltarem
+                .replace(/,\s*}/g, "}") // Remove vírgulas finais
+                .replace(/,\s*]/g, "]"); // Remove vírgulas finais em arrays
+
+            const parsedData = JSON.parse(jsonString);
+
+            // Garantir que cada questão tenha um ID único baseado no índice
+            return parsedData.questions.map((question, index) => ({
+                ...question,
+                id: index + 1, // ID único para cada questão
+                alternatives: question.alternatives || [], // Garantir que alternatives exista
+            }));
         } catch (error) {
-            alert(error.message);
+            console.error("Erro detalhado na geração:", error);
+            throw new Error(
+                error.message || "Erro ao gerar questões. Tente novamente."
+            );
         }
     };
 
-    // Função para verificar as respostas
-    const handleVerifyAnswers = () => {
-        setAnswersVerified(true);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Limpa mensagens de erro anteriores
+        setErrorMessage({
+            theme: "",
+            difficulty: "",
+            quantity: "",
+            main: "",
+        });
+
+        // Valida o formulário
+        if (!validateForm()) {
+            setErrorMessage((prev) => ({
+                ...prev,
+                main: "Por favor, corrija os erros no formulário",
+            }));
+            return;
+        }
+
+        setQuestions([]);
+        setSelectedAnswers({}); // Limpa respostas anteriores
+        setAnswersVerified(false);
+
+        try {
+            setIsLoading(true);
+            const generated = await generateQuestionsWithAI(formData);
+
+            if (!generated || generated.length === 0) {
+                throw new Error("Nenhuma questão foi gerada");
+            }
+
+            setQuestions(generated);
+        } catch (error) {
+            console.error("Erro no submit:", error);
+            setErrorMessage((prev) => ({
+                ...prev,
+                main: "Atualize a página e tente novamente!",
+            }));
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    // Contador de respostas corretas
-    const correctCount = questions.reduce((count, question) => {
-        const selectedId = selectedAnswers[question.id];
+    // Contador de respostas corretas - CORRIGIDO
+    const correctCount = questions.reduce((count, question, index) => {
+        const selectedId = selectedAnswers[index]; // Usa o índice da questão
         if (!selectedId) return count;
+
         const selectedAlt = question.alternatives.find(
             (alt) => alt.id === selectedId
         );
         return count + (selectedAlt?.isCorrect ? 1 : 0);
     }, 0);
+
+    // Função para verificar se todas as questões foram respondidas
+    const allQuestionsAnswered =
+        questions.length > 0 &&
+        Object.keys(selectedAnswers).length === questions.length;
 
     return (
         <div className={styles.container}>
@@ -157,7 +265,12 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
             <div className={styles.mainContainer}>
                 <h1>Gere perguntas por IA</h1>
-                <form onSubmit={handleSubmit} className={styles.form}>
+
+                <form
+                    onSubmit={handleSubmit}
+                    className={styles.form}
+                    autoComplete="off"
+                >
                     <div className={styles.inputContainer}>
                         <label htmlFor="theme">Tema:</label>
                         <input
@@ -167,9 +280,17 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             placeholder="Digite o tema das questões aqui"
                             value={formData.theme}
                             onChange={handleInputChange}
-                            required
+                            className={
+                                errorMessage.theme ? styles.inputError : ""
+                            }
                         />
+                        {errorMessage.theme && (
+                            <span className={styles.fieldError}>
+                                {errorMessage.theme}
+                            </span>
+                        )}
                     </div>
+
                     <div className={styles.flexContainer}>
                         <div className={styles.inputContainer}>
                             <label htmlFor="difficulty">Dificuldade:</label>
@@ -178,16 +299,26 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                 id="difficulty"
                                 value={formData.difficulty}
                                 onChange={handleInputChange}
-                                required
+                                className={
+                                    errorMessage.difficulty
+                                        ? styles.inputError
+                                        : ""
+                                }
                             >
                                 <option value="">
                                     Selecione a dificuldade
                                 </option>
-                                <option value="easy">Fácil</option>
-                                <option value="medium">Médio</option>
-                                <option value="hard">Difícil</option>
+                                <option value="Fácil">Fácil</option>
+                                <option value="Médio">Médio</option>
+                                <option value="Difícil">Difícil</option>
                             </select>
+                            {errorMessage.difficulty && (
+                                <span className={styles.fieldError}>
+                                    {errorMessage.difficulty}
+                                </span>
+                            )}
                         </div>
+
                         <div className={styles.inputContainer}>
                             <label htmlFor="quantity">Quantidade:</label>
                             <select
@@ -195,7 +326,11 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                 id="quantity"
                                 value={formData.quantity}
                                 onChange={handleInputChange}
-                                required
+                                className={
+                                    errorMessage.quantity
+                                        ? styles.inputError
+                                        : ""
+                                }
                             >
                                 <option value="">Selecione a quantidade</option>
                                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
@@ -204,38 +339,64 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     </option>
                                 ))}
                             </select>
+                            {errorMessage.quantity && (
+                                <span className={styles.fieldError}>
+                                    {errorMessage.quantity}
+                                </span>
+                            )}
                         </div>
                     </div>
-                    <Button type="submit">Gerar perguntas por IA</Button>
+
+                    <Button type="submit" disabled={isLoading}>
+                        {isLoading ? "Gerando..." : "Gerar perguntas por IA"}
+                    </Button>
                 </form>
+
+                {errorMessage.main && !isLoading && questions.length === 0 && (
+                    <div className={styles.errorContainer}>
+                        <div className={styles.errorIcon}>
+                            <GoAlertFill />
+                        </div>
+                        <div className={styles.errorText}>
+                            <h3>Não foi possível gerar as questões</h3>
+                            <p>{errorMessage.main}</p>
+                        </div>
+                    </div>
+                )}
 
                 {questions.length > 0 ? (
                     <>
                         <div className={styles.titleContainer}>
-                            <h2>{formData.theme || "Revolução Industrial"}</h2>
+                            <h2>{formData.theme}</h2>
                             <div className={styles.flexTitle}>
                                 <span className={styles.difficulty}>
-                                    {formData.difficulty || "Médio"}
+                                    {formData.difficulty}
                                 </span>
                                 <span>
                                     {answersVerified ? (
-                                        <span>
+                                        <span
+                                            className={
+                                                correctCount ===
+                                                questions.length
+                                                    ? styles.perfectScore
+                                                    : styles.normalScore
+                                            }
+                                        >
                                             {correctCount}/{questions.length}
                                         </span>
                                     ) : (
-                                        `0/${questions.length}`
+                                        `${
+                                            Object.keys(selectedAnswers).length
+                                        }/${questions.length}`
                                     )}
                                 </span>
                             </div>
                         </div>
 
-                        <div
-                            className={`${styles.questionsContainer} ${
-                                answersVerified ? styles.showCorrect : ""
-                            }`}
-                        >
-                            {questions.map((question, index) => {
-                                const selectedId = selectedAnswers[question.id];
+                        <div className={styles.questionsContainer}>
+                            {questions.map((question, questionIndex) => {
+                                const selectedId =
+                                    selectedAnswers[questionIndex]; // Usa o índice da questão
                                 const isCorrect = selectedId
                                     ? question.alternatives.find(
                                           (a) => a.id === selectedId
@@ -243,9 +404,14 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     : false;
 
                                 return (
-                                    <div key={question.id}>
+                                    <div
+                                        key={`question-${questionIndex}`}
+                                        className={styles.questionItem}
+                                    >
                                         <div className={styles.question}>
-                                            <p>{question.text}</p>
+                                            <p className={styles.questionText}>
+                                                {question.text}
+                                            </p>
                                             <div
                                                 className={
                                                     styles.alternativesContainer
@@ -272,13 +438,14 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                                                 alternativeClass =
                                                                     styles.incorrect;
                                                             }
+                                                        } else if (isSelected) {
+                                                            alternativeClass =
+                                                                styles.selected;
                                                         }
 
                                                         return (
                                                             <label
-                                                                key={
-                                                                    alternative.id
-                                                                }
+                                                                key={`alt-${questionIndex}-${alternative.id}`}
                                                                 className={`${
                                                                     styles.alternative
                                                                 } ${alternativeClass} ${
@@ -295,7 +462,7 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                                                     onChange={() =>
                                                                         !answersVerified &&
                                                                         handleSelectAlternative(
-                                                                            question.id,
+                                                                            questionIndex,
                                                                             alternative.id
                                                                         )
                                                                     }
@@ -329,7 +496,8 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                                 )}
                                             </div>
                                         </div>
-                                        {index < questions.length - 1 && (
+                                        {questionIndex <
+                                            questions.length - 1 && (
                                             <hr className={styles.divider} />
                                         )}
                                     </div>
@@ -338,21 +506,55 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         </div>
 
                         {!answersVerified ? (
-                            <Button onClick={handleVerifyAnswers}>
-                                Verificar respostas
-                            </Button>
+                            <>
+                                <Button
+                                    onClick={() => setAnswersVerified(true)}
+                                    disabled={!allQuestionsAnswered}
+                                >
+                                    Verificar respostas
+                                </Button>
+                            </>
                         ) : (
                             <div className={styles.resultsFeedback}>
-                                Você acertou {correctCount} de{" "}
-                                {questions.length} questões!
+                                <p>
+                                    Você acertou <strong>{correctCount}</strong>{" "}
+                                    de <strong>{questions.length}</strong>{" "}
+                                    questões!
+                                </p>
+                                {correctCount === questions.length ? (
+                                    <p className={styles.resultMsg}>
+                                        Excelente! Parabéns!
+                                    </p>
+                                ) : correctCount >= questions.length / 2 ? (
+                                    <p className={styles.resultMsg}>
+                                        Bom trabalho!
+                                    </p>
+                                ) : (
+                                    <p className={styles.resultMsg}>
+                                        Continue estudando!
+                                    </p>
+                                )}
                             </div>
                         )}
                     </>
                 ) : (
-                    <strong className={styles.noQuestions}>
-                        Gere perguntas de qualquer tema usando Inteligência
-                        Artificial
-                    </strong>
+                    !errorMessage.main &&
+                    !isLoading && (
+                        <div className={styles.emptyState}>
+                            <RiRobot2Fill />
+                            <strong className={styles.noQuestions}>
+                                Gere perguntas de qualquer tema usando
+                                Inteligência Artificial
+                            </strong>
+                        </div>
+                    )
+                )}
+
+                {isLoading && (
+                    <div className={styles.loadingState}>
+                        <div className={styles.loadingSpinner}></div>
+                        <p>Gerando questões...</p>
+                    </div>
                 )}
             </div>
         </div>

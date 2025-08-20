@@ -105,10 +105,12 @@ const Home = ({
                             );
                         })}
                     </div>
+                    {decks.length === 0 && (
+                        <p className={styles.msg}>
+                            Crie seus decks para começar a estudar!
+                        </p>
+                    )}
                     <ul className={styles.decksContainer}>
-                        {decks.length === 0 && (
-                            <li className={styles.msg}>Crie seus decks para começar a estudar!</li>
-                        )}
                         {decks
                             .sort((a, b) => {
                                 const now = new Date();

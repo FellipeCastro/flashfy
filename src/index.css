@@ -12,9 +12,9 @@
     --border-color: rgba(0, 0, 0, 0.212);
     --error-color: #ffc0c0;
     --error-color-text: #881010;
-    --correct-color: #4CAF50;
+    --correct-color: #4caf50;
     --correct-bg: rgba(76, 175, 80, 0.1);
-    --incorrect-color: #F44336;
+    --incorrect-color: #f44336;
     --incorrect-bg: rgba(244, 67, 54, 0.1);
 }
 
@@ -25,8 +25,50 @@
     font-family: "Montserrat", sans-serif;
 }
 
-html, body {
+html,
+body {
     scroll-behavior: smooth;
     background: var(--bg-color);
     color: var(--text-primary-color);
+    font-size: 8px;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    html,
+    body {
+        font-size: 8px;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    html,
+    body {
+        font-size: 10px;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    html,
+    body {
+        font-size: 12px;
+    }
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    html,
+    body {
+        font-size: 14px;
+    }
+}
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
+    html,
+    body {
+        font-size: 16px;
+    }
 }
