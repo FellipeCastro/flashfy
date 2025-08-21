@@ -32,7 +32,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             to="/"
                             className={
                                 location.pathname === "/" ? styles.active : null
-                            }
+                           }
                         >
                             <MdHome /> Página inicial
                         </Link>

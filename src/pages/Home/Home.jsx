@@ -107,6 +107,11 @@ const Home = ({
                             );
                         })}
                     </div>
+                    <div className={styles.deleteSubjectContainer}>
+                        <button className={styles.deleteSubjectBtn}>
+                            Excluir matéria
+                        </button>
+                    </div>
                     {decks.length === 0 && (
                         <p className={styles.msg}>
                             Crie seus decks para começar a estudar!

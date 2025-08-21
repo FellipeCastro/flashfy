@@ -356,22 +356,8 @@
     text-align: center;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
     .flexContainer {
         grid-template-columns: 1fr;
-        gap: 1.2rem;
-    }
-
-    .mainContainer {
-        padding: 1.5rem;
-    }
-
-    .mainContainer h1 {
-        font-size: 1.5rem;
-    }
-
-    .titleContainer h2 {
-        font-size: 1.3rem;
     }
 }

@@ -45,8 +45,8 @@
     right: 0.4rem;
     display: grid;
     place-items: center;
-    width: 20px;
-    height: 20px;
+    width: 1.4rem;
+    height: 1.4rem;
     background: var(--border-color);
     color: var(--text-primary-color);
     border-radius: 50%;

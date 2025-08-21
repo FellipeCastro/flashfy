@@ -17,7 +17,8 @@
 }
 
 .titleContainer h1 {
-    font-weight: 500;
+    font-weight: bold;
+    color: var(--text-secondary-color);
 }
 
 .btnsContainer {
@@ -29,7 +30,7 @@
 .decksContainer {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
     gap: 1rem;
 }
 
@@ -45,7 +46,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
     gap: 0.4rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0.6rem;
 }
 
 .filterContainer button {
@@ -66,4 +67,34 @@
 .filterContainer button:hover,
 .active {
     transform: translateY(-4px);
+}
+
+.deleteSubjectContainer {
+    width: 100%;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.deleteSubjectBtn {
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    color: var(--text-secondary-color);
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .mainContainer {
+        padding: 1rem 2rem;
+    }
+    
+    .filterContainer {
+        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    }
+
+    .decksContainer {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    }
 }

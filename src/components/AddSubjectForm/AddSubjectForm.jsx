@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { IoMdLink, IoMdClose } from "react-icons/io";
+import { IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
 import styles from "./AddSubjectForm.module.css";
 
 const AddSubjectForm = ({ setIsAddDeckFormOpen, setIsAddSubjectFormOpen }) => {
     const [subject, setSubject] = useState("");
-    const [color, setColor] = useState("#007bff"); // Cor padrão
+    const [color, setColor] = useState("#ffffff");
 
     const onSubmit = (e) => {
         e.preventDefault();

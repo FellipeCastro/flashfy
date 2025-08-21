@@ -1,4 +1,5 @@
 .sidebar {
+    width: fit-content;
     min-height: 100vh;
     padding: 1rem;
     background: var(--secondary-color);
@@ -98,4 +99,22 @@
 .menu a.active {
     background: var(--shadow-color);
     color: var(--text-primary-color);
+}
+
+@media (max-width: 992px) {
+    .sidebar.open {
+        max-width: 300px;
+        width: 300px;
+    }
+}
+
+@media (max-width: 576px) {    
+    .sidebar {
+        padding: 0.6rem;
+    }
+    
+    .sidebar.open {
+        width: 100%;
+        position: fixed;
+    }
 }
