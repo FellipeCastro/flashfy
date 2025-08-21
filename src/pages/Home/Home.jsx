@@ -6,6 +6,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
 import Deck from "../../components/Deck/Deck";
 import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
+import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 import styles from "./Home.module.css";
 
 const Home = ({
@@ -18,6 +19,7 @@ const Home = ({
     setSelectedSubjects,
 }) => {
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
+    const [isAddSubjectFormOpen, setIsAddSubjectFormOpen] = useState(false);
     const navigate = useNavigate();
 
     const subjectColors = subjects.reduce((acc, subject) => {
@@ -150,8 +152,16 @@ const Home = ({
             {isAddDeckFormOpen && (
                 <AddDeckForm
                     setIsAddDeckFormOpen={setIsAddDeckFormOpen}
+                    setIsAddSubjectFormOpen={setIsAddSubjectFormOpen}
                     subjects={subjects}
                     createDeck={createDeck}
+                />
+            )}
+
+            {isAddSubjectFormOpen && (
+                <AddSubjectForm
+                    setIsAddDeckFormOpen={setIsAddDeckFormOpen}
+                    setIsAddSubjectFormOpen={setIsAddSubjectFormOpen}
                 />
             )}
         </>

@@ -3,10 +3,15 @@ import { IoMdLink, IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
 import styles from "./AddDeckForm.module.css";
 
-const AddDeckForm = ({ setIsAddDeckFormOpen, subjects, createDeck }) => {
+const AddDeckForm = ({ setIsAddDeckFormOpen, setIsAddSubjectFormOpen, subjects, createDeck }) => {
     const [subject, setSubject] = useState("");
     const [title, setTitle] = useState("");
 
+    const openAddSubjectForm = () => {
+        setIsAddDeckFormOpen(false);
+        setIsAddSubjectFormOpen(true);
+    }
+    
     const onSubmit = (e) => {
         e.preventDefault();
         createDeck(subject, title);
@@ -54,6 +59,9 @@ const AddDeckForm = ({ setIsAddDeckFormOpen, subjects, createDeck }) => {
                                 );
                             })}
                         </select>
+                        <button className={styles.addSubject} onClick={openAddSubjectForm}>
+                            Adicionar matéria
+                        </button>
                     </div>
 
                     <div className={styles.inputContainer}>

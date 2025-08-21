@@ -57,16 +57,6 @@
     gap: 0.6rem;
 }
 
-
-.file {
-    font-size: 1.3rem;
-    cursor: pointer;
-}
-
-.file input {
-    display: none;
-}
-
 .inputContainer {
     width: 100%;
     display: flex;
@@ -79,9 +69,7 @@
     color: var(--text-secondary-color);
 }
 
-.inputContainer input,
-.inputContainer select,
-.inputContainer textarea {
+.inputContainer input {
     width: 100%;
     padding: 0.4rem;
     border: 1px solid var(--border-color);
@@ -90,21 +78,51 @@
     outline: none;
 }
 
-.inputContainer input::placeholder,
-.inputContainer textarea::placeholder {
+.inputColor {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.inputContainer input::placeholder {
     color: var(--text-secondary-color);
 }
 
-.inputContainer textarea {
-    resize: vertical;
-    min-height: 80px;
+.inputContainer input[type="color"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: none;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    background-color: transparent;
 }
 
-.addSubject {
-    background-color: transparent;
-    border: none;
-    text-align: right;
-    text-decoration: underline;
-    cursor: pointer;
+.inputContainer input[type="color"]::-webkit-color-swatch {
+    border-radius: 0.2rem;
+    border: 1px solid var(--border-color);
+}
+
+.inputContainer input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border-radius: 0.2rem;
+}
+
+.inputContainer input[type="color"]::-moz-color-swatch {
+    border-radius: 0.2rem;
+    border: 1px solid var(--border-color);
+}
+
+.colorPickerContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.colorPreview {
+    font-size: 0.9rem;
     color: var(--text-secondary-color);
 }
