@@ -17,6 +17,7 @@
 }
 
 .titleContainer h1 {
+    font-size: 1.8rem;
     font-weight: bold;
     color: var(--text-secondary-color);
 }
@@ -54,6 +55,7 @@
     padding: 0.3rem;
     border: 2px solid var(--border-color);
     border-radius: 0.2rem;
+    color: var(--text-primary-color);
     cursor: pointer;
     transition: 0.2s;
     display: flex;
