@@ -12,6 +12,7 @@ const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [lastStudyDate, setLastStudyDate] = useState(null);
     const [selectedSubjects, setSelectedSubjects] = useState([]);
+    const [aiCredits, setAiCredits] = useState(0);
 
     // Função para incrementar studiedDecks
     const incrementStudiedDecks = () => {
@@ -88,6 +89,10 @@ const App = () => {
         );
     });
 
+    const subtractAiCredits = () => {
+        setAiCredits(aiCredits - 1)
+    }
+
     useEffect(() => {
         const storedDate = localStorage.getItem("lastStudyDate");
         const initialDate = storedDate || new Date().toDateString();
@@ -98,6 +103,7 @@ const App = () => {
             ...mockData.progress,
             decksToStudy: calculateDecksToStudy(mockData.decks),
         });
+        setAiCredits(mockData.aiCredits);
 
         // Verifica ao carregar se precisa resetar por novo dia
         checkAndResetStudiedDecks();
@@ -109,6 +115,7 @@ const App = () => {
             const today = new Date().toDateString();
             if (lastStudyDate && lastStudyDate !== today) {
                 checkAndResetStudiedDecks();
+                setAiCredits(3);
             }
         }, 1000 * 60 * 60); // Verifica a cada hora
 
@@ -138,6 +145,8 @@ const App = () => {
                         <AiQuestions
                             isSidebarOpen={isSidebarOpen}
                             setIsSidebarOpen={setIsSidebarOpen}
+                            aiCredits={aiCredits}
+                            subtractAiCredits={subtractAiCredits}
                         />
                     }
                 />

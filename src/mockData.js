@@ -3,6 +3,7 @@ const mockData = {
     email: "fehcastru@gmail.com",
     name: "Fellipe Castro",
     password: "1234",
+    aiCredits: 3,
     progress: {
         consecutiveDays: 0,
         decksToStudy: 0,

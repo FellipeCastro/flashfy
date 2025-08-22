@@ -7,7 +7,7 @@ import Button from "../../components/Button/Button";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import styles from "./AiQuestions.module.css";
 
-const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen, aiCredits, subtractAiCredits }) => {
     const [formData, setFormData] = useState(() => {
         const saved = localStorage.getItem("formData");
         return saved
@@ -242,10 +242,10 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
         });
 
         // Valida o formulário
-        if (!validateForm()) {
+        if (aiCredits === 0) {
             setErrorMessage((prev) => ({
                 ...prev,
-                main: "Por favor, corrija os erros no formulário",
+                main: "Seus créditos do dia esgotaram. Volte amanha!",
             }));
             return;
         }
@@ -265,6 +265,7 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
             }
 
             setQuestions(generated);
+            subtractAiCredits();
         } catch (error) {
             console.error("Erro no submit:", error);
             setErrorMessage((prev) => ({
@@ -292,14 +293,6 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
         questions.length > 0 &&
         Object.keys(selectedAnswers).length === questions.length;
 
-    // Limpar questões do localStorage
-    const clearQuestions = () => {
-        setQuestions([]);
-        setSelectedAnswers({});
-        setAnswersVerified(false);
-        localStorage.removeItem("questions");
-    };
-
     return (
         <div className={styles.container}>
             <Sidebar
@@ -311,17 +304,17 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 <div className={styles.titleContainer}>
                     <h1>Gere perguntas por IA</h1>
                     <span className={styles.credits}>
-                        3
+                        {aiCredits}
                         <IoTicket />
                     </span>
                 </div>
 
-                <p className={styles.paragraph}>
+                {/* <p className={styles.paragraph}>
                     Gere perguntas personalizadas de qualquer tema usando
                     inteligência artificial. Você tem 3 créditos diários para
                     criar formulários com quantidade e dificuldade
                     personalizadas para seus estudos.
-                </p>
+                </p> */}
 
                 <form
                     onSubmit={handleSubmit}
