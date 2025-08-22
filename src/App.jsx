@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Methodology from "./pages/Methodology/Methodology";
 import Cards from "./pages/Cards/Cards";
-import IaQuestions from "./pages/IaQuestions/IaQuestions";
+import AiQuestions from "./pages/AiQuestions/AiQuestions";
 import mockData from "./mockData";
 
 const App = () => {
@@ -133,9 +133,9 @@ const App = () => {
                     }
                 />
                 <Route
-                    path="/iaquestions"
+                    path="/aiquestions"
                     element={
-                        <IaQuestions
+                        <AiQuestions
                             isSidebarOpen={isSidebarOpen}
                             setIsSidebarOpen={setIsSidebarOpen}
                         />

@@ -1,19 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoAlertFill } from "react-icons/go";
 import { RiRobot2Fill } from "react-icons/ri";
+import { IoTicket } from "react-icons/io5";
 import Button from "../../components/Button/Button";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import styles from "./IaQuestions.module.css";
+import styles from "./AiQuestions.module.css";
 
-const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
-    const [formData, setFormData] = useState({
-        theme: "",
-        difficulty: "",
-        quantity: "",
+const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
+    const [formData, setFormData] = useState(() => {
+        const saved = localStorage.getItem("formData");
+        return saved
+            ? JSON.parse(saved)
+            : {
+                  theme: "",
+                  difficulty: "",
+                  quantity: "",
+              };
     });
 
-    const [questions, setQuestions] = useState([]);
+    const [questions, setQuestions] = useState(() => {
+        const saved = localStorage.getItem("questions");
+        return saved ? JSON.parse(saved) : [];
+    });
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [answersVerified, setAnswersVerified] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +32,12 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
         quantity: "",
         main: "",
     });
+
+    useEffect(() => {
+        if (questions.length > 0) {
+            localStorage.setItem("questions", JSON.stringify(questions));
+        }
+    }, [questions]);
 
     // Função para validar o formulário
     const validateForm = () => {
@@ -186,7 +201,7 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
                 // Corrige chaves sem aspas
                 cleaned = cleaned.replace(
-                    /([{,]\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)(\s*:)/g,
+                    /([{,]\s*)([a-zA-Z_$][a-zA-Z0-9_$])(\s:)/g,
                     '$1"$2"$3'
                 );
 
@@ -228,8 +243,14 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
         // Valida o formulário
         if (!validateForm()) {
+            setErrorMessage((prev) => ({
+                ...prev,
+                main: "Por favor, corrija os erros no formulário",
+            }));
             return;
         }
+
+        localStorage.setItem("formData", JSON.stringify(formData));
 
         setQuestions([]);
         setSelectedAnswers({}); // Limpa respostas anteriores
@@ -255,7 +276,7 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
         }
     };
 
-    // Contador de respostas corretas - CORRIGIDO
+    // Contador de respostas corretas
     const correctCount = questions.reduce((count, question, index) => {
         const selectedId = selectedAnswers[index]; // Usa o índice da questão
         if (!selectedId) return count;
@@ -271,6 +292,14 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
         questions.length > 0 &&
         Object.keys(selectedAnswers).length === questions.length;
 
+    // Limpar questões do localStorage
+    const clearQuestions = () => {
+        setQuestions([]);
+        setSelectedAnswers({});
+        setAnswersVerified(false);
+        localStorage.removeItem("questions");
+    };
+
     return (
         <div className={styles.container}>
             <Sidebar
@@ -279,7 +308,20 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
             />
 
             <div className={styles.mainContainer}>
-                <h1>Gere perguntas por IA</h1>
+                <div className={styles.titleContainer}>
+                    <h1>Gere perguntas por IA</h1>
+                    <span className={styles.credits}>
+                        3
+                        <IoTicket />
+                    </span>
+                </div>
+
+                <p className={styles.paragraph}>
+                    Gere perguntas personalizadas de qualquer tema usando
+                    inteligência artificial. Você tem 3 créditos diários para
+                    criar formulários com quantidade e dificuldade
+                    personalizadas para seus estudos.
+                </p>
 
                 <form
                     onSubmit={handleSubmit}
@@ -384,7 +426,11 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         <div className={styles.titleContainer}>
                             <h2>{formData.theme}</h2>
                             <div className={styles.flexTitle}>
-                                <span className={styles.difficulty}>
+                                <span
+                                    className={`${styles.difficulty} ${
+                                        styles[formData.difficulty]
+                                    }`}
+                                >
                                     {formData.difficulty}
                                 </span>
                                 <span>
@@ -556,11 +602,11 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     !errorMessage.main &&
                     !isLoading && (
                         <div className={styles.emptyState}>
-                            <RiRobot2Fill />
+                            {/* <RiRobot2Fill />
                             <strong className={styles.noQuestions}>
                                 Gere perguntas de qualquer tema usando
                                 Inteligência Artificial
-                            </strong>
+                            </strong> */}
                         </div>
                     )
                 )}
@@ -576,4 +622,4 @@ const IaQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
     );
 };
 
-export default IaQuestions;
+export default AiQuestions;

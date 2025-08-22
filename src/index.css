@@ -16,6 +16,15 @@
     --correct-bg: rgba(76, 175, 80, 0.1);
     --incorrect-color: #f44336;
     --incorrect-bg: rgba(244, 67, 54, 0.1);
+    --difficulty-easy: #4caf50;
+    --difficulty-easy-bg: rgba(76, 175, 80, 0.1);
+    --difficulty-easy-light: #e8f5e9;
+    --difficulty-medium: #ff9800;
+    --difficulty-medium-bg: rgba(255, 152, 0, 0.1);
+    --difficulty-medium-light: #fff3e0;
+    --difficulty-hard: #f44336;
+    --difficulty-hard-bg: rgba(244, 67, 54, 0.1);
+    --difficulty-hard-light: #ffebee;
 }
 
 * {

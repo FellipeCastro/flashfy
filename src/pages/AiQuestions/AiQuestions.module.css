@@ -19,6 +19,28 @@
     font-size: 1.8rem;
 }
 
+.paragraph {
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-align: justify;
+    line-height: 1.6;
+    color: var(--text-secondary-color);
+}
+
+.credits {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--text-secondary-color);
+}
+
+.credits svg {
+    font-family: 1.4rem;
+}
+
 .form {
     width: 100%;
     display: flex;
@@ -50,11 +72,8 @@
     color: var(--text-primary-color);
     background-color: var(--secondary-color);
     outline: none;
-    font-size: 1rem;
-}
-
-.inputContainer select {
     color: var(--text-secondary-color);
+    font-size: 1rem;
 }
 
 .inputContainer input::placeholder {
@@ -170,7 +189,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 1rem 0;
 }
 
 .titleContainer h2 {
@@ -178,6 +196,7 @@
     font-size: 1.5rem;
     font-weight: bold;
     text-transform: capitalize;
+    margin: 1rem 0;
 }
 
 .flexTitle {
@@ -198,6 +217,24 @@
     font-size: 0.9rem;
     border-radius: 2rem;
     text-transform: capitalize;
+}
+
+.difficulty.Fácil {
+    background-color: var(--difficulty-easy-bg);
+    color: var(--difficulty-easy);
+    border: 1px solid var(--difficulty-easy);
+}
+
+.difficulty.Médio {
+    background-color: var(--difficulty-medium-bg);
+    color: var(--difficulty-medium);
+    border: 1px solid var(--difficulty-medium);
+}
+
+.difficulty.Difícil {
+    background-color: var(--difficulty-hard-bg);
+    color: var(--difficulty-hard);
+    border: 1px solid var(--difficulty-hard);
 }
 
 .questionsContainer {
@@ -344,7 +381,10 @@
     font-weight: bold;
 }
 
-/* Estilo para linha divisória */
+.resultMsg {
+    font-weight: normal;
+}
+
 .divider {
     height: 2px;
     background-color: var(--border-color);

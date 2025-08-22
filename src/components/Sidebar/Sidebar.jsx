@@ -37,9 +37,9 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             <MdHome /> Página inicial
                         </Link>
                         <Link
-                            to="/iaquestions"
+                            to="/aiquestions"
                             className={
-                                location.pathname === "/iaquestions"
+                                location.pathname === "/aiquestions"
                                     ? styles.active
                                     : null
                             }
