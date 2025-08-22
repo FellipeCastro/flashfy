@@ -107,4 +107,5 @@
     text-decoration: underline;
     cursor: pointer;
     color: var(--text-secondary-color);
+    font-weight: 500;
 }

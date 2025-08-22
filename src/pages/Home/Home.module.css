@@ -35,9 +35,15 @@
     gap: 1rem;
 }
 
+.noDecks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
 .msg {
-    width: 100%;
-    text-align: center;
     font-weight: bold;
     color: var(--text-secondary-color);
 }
@@ -85,6 +91,7 @@
     cursor: pointer;
     color: var(--text-secondary-color);
     font-size: 1rem;
+    font-weight: 500;
 }
 
 @media (max-width: 768px) {

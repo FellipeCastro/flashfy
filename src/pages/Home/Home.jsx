@@ -113,9 +113,11 @@ const Home = ({
                         </button>
                     </div>
                     {decks.length === 0 && (
-                        <p className={styles.msg}>
-                            Crie seus decks para começar a estudar!
-                        </p>
+                        <div className={styles.noDecks}>
+                            <p className={styles.msg}>
+                                Crie seus decks para começar a estudar!
+                            </p>
+                        </div>
                     )}
                     <ul className={styles.decksContainer}>
                         {decks
