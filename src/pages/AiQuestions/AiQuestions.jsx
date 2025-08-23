@@ -7,7 +7,12 @@ import Button from "../../components/Button/Button";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import styles from "./AiQuestions.module.css";
 
-const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen, aiCredits, subtractAiCredits }) => {
+const AiQuestions = ({
+    isSidebarOpen,
+    setIsSidebarOpen,
+    aiCredits,
+    subtractAiCredits,
+}) => {
     const [formData, setFormData] = useState(() => {
         const saved = localStorage.getItem("formData");
         return saved
@@ -71,7 +76,13 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen, aiCredits, subtractAiCre
             isValid = false;
         }
 
+        if (aiCredits === 0) {
+            newErrors.main = "Seus créditos acabaram!";
+            isValid = false;
+        }
+
         setErrorMessage(newErrors);
+        setQuestions([]);
         return isValid;
     };
 
@@ -242,11 +253,7 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen, aiCredits, subtractAiCre
         });
 
         // Valida o formulário
-        if (aiCredits === 0) {
-            setErrorMessage((prev) => ({
-                ...prev,
-                main: "Seus créditos do dia esgotaram. Volte amanha!",
-            }));
+        if (!validateForm()) {
             return;
         }
 
@@ -270,7 +277,7 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen, aiCredits, subtractAiCre
             console.error("Erro no submit:", error);
             setErrorMessage((prev) => ({
                 ...prev,
-                main: "Atualize a página e tente novamente!",
+                main: "Tente gerar as questões novamente!",
             }));
         } finally {
             setIsLoading(false);

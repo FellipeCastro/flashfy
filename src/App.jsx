@@ -115,7 +115,7 @@ const App = () => {
             const today = new Date().toDateString();
             if (lastStudyDate && lastStudyDate !== today) {
                 checkAndResetStudiedDecks();
-                setAiCredits(3);
+                setAiCredits(10);
             }
         }, 1000 * 60 * 60); // Verifica a cada hora
 
