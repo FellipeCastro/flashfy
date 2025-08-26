@@ -14,7 +14,7 @@
 
 .mainContainer h1,
 .mainContainer h2 {
-    margin: 0.5rem 0;
+    margin-top: 1rem;
     color: var(--text-secondary-color);
     line-height: 1.6;
 }
@@ -23,8 +23,27 @@
     font-weight: 500;
 }
 
-.mainContainer p {
+.mainContainer p,
+.mainContainer li {
     color: var(--text-secondary-color);
     text-align: justify;
     line-height: 1.6;
+}
+
+.mainContainer strong {
+    color: var(--text-secondary-color);
+    font-weight: 600;
+}
+
+.mainContainer ul, 
+.mainContainer ol {
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.mainContainer a {
+    font-weight: 600;
+    color: var(--text-primary-color);
 }
