@@ -5,6 +5,8 @@ import { RiRobot2Fill } from "react-icons/ri";
 import styles from "./Sidebar.module.css";
 import Button from "../Button/Button";
 import { MdCalendarToday } from "react-icons/md";
+import { FaUsers, FaTrophy } from "react-icons/fa";
+import { FaFlask } from "react-icons/fa";
 
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated }) => {
@@ -84,6 +86,17 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated }) => {
                         >
                             <FaBookReader /> Nossa metodologia
                         </Link>
+                        <Link
+                                to="/community"
+                                className={
+                                    location.pathname === "/community"
+                                        ? styles.active
+                                        : null
+                                }
+                        >
+                                <FaUsers /> Comunidade
+                        </Link>
+
                         <Link 
                             to="/profile" 
                             className={location.pathname === "/profile" ? styles.active : null}

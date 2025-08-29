@@ -7,8 +7,9 @@ import IaQuestions from "./pages/IaQuestions/IaQuestions";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Profile from "./pages/Profile/Profile";
+import Community from "./pages/Community/Community";
 import mockData from "./mockData";
-// import Calendar from "./pages/Calendar/Calendar";
+import subjects from "./subjects"; // Importe o subjects
 
 const App = () => {
     const [decks, setDecks] = useState([]);
@@ -226,6 +227,8 @@ const App = () => {
                                 isSidebarOpen={isSidebarOpen}
                                 setIsSidebarOpen={setIsSidebarOpen}
                                 setIsAuthenticated={setIsAuthenticated}
+                                decks={decks}
+                                progress={progress} // ← Certifique-se que está passando isso
                             />
                         ) : (
                             <Navigate to="/login" replace />
@@ -233,18 +236,25 @@ const App = () => {
                     } 
                 />
                 
-                {/* Rota padrão para redirecionar para a home se autenticado, ou para login se não */}
                 <Route 
-                    path="*" 
+                    path="/community" 
                     element={
                         isAuthenticated ? (
-                            <Navigate to="/" replace />
+                            <Community
+                                isSidebarOpen={isSidebarOpen}
+                                setIsSidebarOpen={setIsSidebarOpen}
+                                setIsAuthenticated={setIsAuthenticated}
+                                decks={decks}
+                                progress={progress}
+                                subjects={subjects} // ← Agora subjects está definido
+                            />
                         ) : (
                             <Navigate to="/login" replace />
                         )
                     } 
                 />
-                {/* <Route 
+{/*                 
+                <Route 
                     path="/calendar" 
                     element={
                         isAuthenticated ? (
@@ -260,6 +270,33 @@ const App = () => {
                         )
                     } 
                 /> */}
+                <Route 
+                        path="/profile" 
+                        element={
+                            isAuthenticated ? (
+                                <Profile
+                                    isSidebarOpen={isSidebarOpen}
+                                    setIsSidebarOpen={setIsSidebarOpen}
+                                    setIsAuthenticated={setIsAuthenticated}
+                                    decks={decks} // ← Adicione esta linha
+                                />
+                            ) : (
+                                <Navigate to="/login" replace />
+                            )
+                        } 
+                    />
+                
+                {/* Rota padrão para redirecionar para a home se autenticado, ou para login se não */}
+                <Route 
+                    path="*" 
+                    element={
+                        isAuthenticated ? (
+                            <Navigate to="/" replace />
+                        ) : (
+                            <Navigate to="/login" replace />
+                        )
+                    } 
+                />
             </Routes>
         </BrowserRouter>
     );

@@ -1,19 +1,29 @@
 import { FaFire } from "react-icons/fa6";
 import styles from "./ProgressBar.module.css";
 
-const ProgressBar = ({ progress }) => {
+const ProgressBar = ({ progress = {} }) => {
     const days = ["D", "S", "T", "Q", "Q", "S", "S"];
-
     const date = new Date();
     const currentDay = date.getDay();
+
+    // Valores padrão para evitar erros
+    const consecutiveDays = progress.consecutiveDays || 0;
+    const totalStudyTime = progress.totalStudyTime || 0;
+    const accuracy = progress.accuracy || 0;
+
+    const formatStudyTime = (minutes) => {
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        return `${hours}h ${mins}m`;
+    };
 
     return (
         <div className={styles.progressBarContainer}>
             <h2>
                 <FaFire />
-                {progress.consecutiveDays <= 1
+                {consecutiveDays <= 1
                     ? "Vamos começar sua sequência!"
-                    : `${progress.consecutiveDays} dias consecutivos!`}
+                    : `${consecutiveDays} dias consecutivos!`}
             </h2>
 
             <ul className={styles.weekDays}>
@@ -31,11 +41,10 @@ const ProgressBar = ({ progress }) => {
 
             <div className={styles.progress}>
                 <span>
-                    <strong>Decks estudados: </strong> {progress.studiedDecks}
+                    <strong>Tempo de estudo: </strong> {formatStudyTime(totalStudyTime)}
                 </span>
                 <span>
-                    <strong>Decks para estudar: </strong>{" "}
-                    {progress.decksToStudy}
+                    <strong>Taxa de acerto: </strong> {accuracy}%
                 </span>
             </div>
         </div>

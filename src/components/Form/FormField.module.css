@@ -1,0 +1,83 @@
+/* components/Form/FormField.module.css */
+.formField {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary-color);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  background-color: #fafafa;
+  padding-right: 3rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(1, 165, 228, 0.1);
+  background-color: #fff;
+}
+
+.input.errorInput {
+  border-color: var(--error-color-text);
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 0.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary-color);
+  transition: all 0.2s ease;
+}
+
+.passwordToggle:hover {
+  background-color: rgba(1, 165, 228, 0.1);
+  color: var(--primary-color);
+}
+
+.eyeIcon {
+  transition: transform 0.2s ease;
+}
+
+.passwordToggle:hover .eyeIcon {
+  transform: scale(1.1);
+}
+
+.fieldError {
+  color: var(--error-color-text);
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
+  display: block;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
