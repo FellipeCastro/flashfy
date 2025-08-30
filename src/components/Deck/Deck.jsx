@@ -5,7 +5,7 @@ const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
     const formatDate = (dateString) => {
         const now = new Date();
         const reviewDate = new Date(dateString);
-        const diffTime = reviewDate - now; // Diferença em milissegundos
+        const diffTime = reviewDate - now;
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
         const diffHours = Math.floor(
             (diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -14,7 +14,6 @@ const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
             (diffTime % (1000 * 60 * 60)) / (1000 * 60)
         );
 
-        // Se a data já passou
         if (diffTime < 0) {
             const daysPassed = Math.abs(diffDays);
             return daysPassed === 0
@@ -22,7 +21,6 @@ const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
                 : `Vencido há ${daysPassed} dia${daysPassed > 1 ? "s" : ""}`;
         }
 
-        // Se for hoje
         if (diffDays === 0) {
             if (diffHours === 0) {
                 return diffMinutes <= 0
@@ -32,17 +30,14 @@ const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
             return `Hoje em ${diffHours} hora${diffHours > 1 ? "s" : ""}`;
         }
 
-        // Amanhã
         if (diffDays === 1) {
             return "Amanhã";
         }
 
-        // Esta semana
         if (diffDays <= 7) {
             return `Em ${diffDays} dia${diffDays > 1 ? "s" : ""}`;
         }
 
-        // Mais de uma semana
         return reviewDate.toLocaleDateString("pt-BR", {
             day: "2-digit",
             month: "2-digit",
@@ -54,7 +49,7 @@ const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
         if (!nextReview) return false;
         const reviewDate = new Date(nextReview);
         const diffTime = reviewDate - new Date();
-        return diffTime < 0 || diffTime < 1000 * 60 * 60 * 24; // Vencido ou vence hoje
+        return diffTime < 0 || diffTime < 1000 * 60 * 60 * 24;
     };
 
     return (

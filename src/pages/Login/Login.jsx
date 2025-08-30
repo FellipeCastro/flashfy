@@ -1,4 +1,3 @@
-// pages/Login/Login.jsx
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import FormField from "../../components/Form/FormField";
@@ -55,14 +54,13 @@ const Login = ({ setIsAuthenticated }) => {
     try {
       await new Promise(resolve => setTimeout(resolve, 800));
       
-      // Verificação básica
       if (credentials.email === "demo@estudai.com" && credentials.password === "123456") {
         const fakeToken = 'fake-jwt-token';
         localStorage.setItem('authToken', fakeToken);
         localStorage.setItem('userEmail', credentials.email);
         
         setIsAuthenticated(true);
-        navigate("/");
+        navigate("/home");
       } else {
         setErrors({ general: "Email ou senha incorretos. Use demo@estudai.com / 123456" });
       }

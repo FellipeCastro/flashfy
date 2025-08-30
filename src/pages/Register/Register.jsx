@@ -1,4 +1,3 @@
-// pages/Register/Register.jsx
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import FormField from "../../components/Form/FormField";
@@ -80,7 +79,7 @@ const Register = ({ setIsAuthenticated }) => {
       localStorage.setItem('userName', formData.name);
       
       setIsAuthenticated(true);
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       setErrors({ general: "Ocorreu um erro inesperado. Tente novamente." });
     } finally {

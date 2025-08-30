@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Button from "../../components/Button/Button";
+import Deck from "../../components/Deck/Deck"; // Importar o componente Deck
 import { IoSearch, IoDownloadOutline, IoShareOutline, IoStar, IoTimeOutline } from "react-icons/io5";
 import styles from "./Community.module.css";
 
@@ -11,7 +12,6 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
     const [selectedSubject, setSelectedSubject] = useState('all');
     const [sortBy, setSortBy] = useState('popularity');
 
-    // Decks da comunidade (exemplos)
     const [communityDecks] = useState([
         { 
             id: 1, 
@@ -184,44 +184,15 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
                                 {sortedCommunityDecks.map(deck => {
                                     const subjectColor = getSubjectColor(deck.subject);
                                     return (
-                                        <div key={deck.id} className={styles.deckCard}>
-                                            <div className={styles.deckHeader}>
-                                                <h3>{deck.name}</h3>
-                                                <span className={styles.rating}>
-                                                    <IoStar /> {deck.rating}
-                                                </span>
-                                            </div>
-                                            
-                                            <div className={styles.deckMeta}>
-                                                <span className={styles.author}>por {deck.author}</span>
-                                                <span className={styles.subject} style={{backgroundColor: subjectColor}}>
-                                                    {deck.subject}
-                                                </span>
-                                            </div>
-
-                                            <p className={styles.description}>{deck.description}</p>
-
-                                            <div className={styles.deckStats}>
-                                                <span className={styles.stat}>
-                                                    <IoDownloadOutline /> {deck.downloads}
-                                                </span>
-                                                <span className={styles.stat}>
-                                                    {deck.cards} cards
-                                                </span>
-                                                <span className={styles.stat}>
-                                                    <IoTimeOutline /> {new Date(deck.createdAt).toLocaleDateString('pt-BR')}
-                                                </span>
-                                            </div>
-
-                                            <div className={styles.deckActions}>
-                                                <Button 
-                                                    onClick={() => handleDownloadDeck(deck.id)}
-                                                    className={styles.downloadBtn}
-                                                >
-                                                    <IoDownloadOutline /> Baixar
-                                                </Button>
-                                            </div>
-                                        </div>
+                                        <Deck
+                                            key={deck.id}
+                                            color={subjectColor}
+                                            subject={deck.subject}
+                                            title={deck.name}
+                                            cards={deck.cards}
+                                            nextReview={null} // Decks da comunidade não têm nextReview
+                                            openCard={() => handleDownloadDeck(deck.id)}
+                                        />
                                     );
                                 })}
                             </div>
@@ -246,39 +217,15 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
                                 {decks.map(deck => {
                                     const subjectColor = getSubjectColor(deck.subject);
                                     return (
-                                        <div key={deck.id} className={styles.deckCard}>
-                                            <div className={styles.deckHeader}>
-                                                <h3>{deck.title}</h3>
-                                                <button 
-                                                    className={styles.shareButton}
-                                                    onClick={() => handleShareDeck(deck.id)}
-                                                >
-                                                    <IoShareOutline />
-                                                </button>
-                                            </div>
-                                            
-                                            <div className={styles.deckMeta}>
-                                                <span className={styles.cardsCount}>
-                                                    {deck.cards?.length || 0} cards
-                                                </span>
-                                                <span className={styles.subject} style={{backgroundColor: subjectColor}}>
-                                                    {deck.subject}
-                                                </span>
-                                            </div>
-
-                                            {deck.nextReview && (
-                                                <div className={styles.reviewInfo}>
-                                                    <IoTimeOutline />
-                                                    Próxima revisão: {new Date(deck.nextReview).toLocaleDateString('pt-BR')}
-                                                </div>
-                                            )}
-
-                                            <div className={styles.deckActions}>
-                                                <Button className={styles.studyBtn}>
-                                                    Estudar
-                                                </Button>
-                                            </div>
-                                        </div>
+                                        <Deck
+                                            key={deck.id}
+                                            color={subjectColor}
+                                            subject={deck.subject}
+                                            title={deck.title}
+                                            cards={deck.cards?.length || 0}
+                                            nextReview={deck.nextReview}
+                                            openCard={() => {/* função para abrir deck */}}
+                                        />
                                     );
                                 })}
                             </div>

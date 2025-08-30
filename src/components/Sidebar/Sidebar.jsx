@@ -3,26 +3,17 @@ import { MdKeyboardDoubleArrowRight, MdHome, MdLogout } from "react-icons/md";
 import { FaUser, FaBookReader } from "react-icons/fa";
 import { RiRobot2Fill } from "react-icons/ri";
 import styles from "./Sidebar.module.css";
-import Button from "../Button/Button";
-import { MdCalendarToday } from "react-icons/md";
-import { FaUsers, FaTrophy } from "react-icons/fa";
-import { FaFlask } from "react-icons/fa";
-
+import { FaUsers } from "react-icons/fa";
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated }) => {
     const location = useLocation();
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        // Remove os itens de autenticação do localStorage
         localStorage.removeItem('authToken');
         localStorage.removeItem('userEmail');
         localStorage.removeItem('userName');
-        
-        // Atualiza o estado de autenticação
         setIsAuthenticated(false);
-        
-        // Redireciona para a página de login
         navigate('/login');
     };
 
@@ -49,23 +40,13 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated }) => {
                 {isSidebarOpen && (
                     <div className={styles.menu}>
                         <Link
-                            to="/"
+                            to="/home"
                             className={
-                                location.pathname === "/" ? styles.active : null
+                                location.pathname === "/home" ? styles.active : null
                             }
                         >
                             <MdHome /> Página inicial
                         </Link>
-                        {/* <Link
-                            to="/calendar"
-                            className={
-                                location.pathname === "/calendar"
-                                    ? styles.active
-                                    : null
-                            }
-                        >
-                            <MdCalendarToday /> Calendário de Estudos
-                        </Link> */}
                         <Link
                             to="/iaquestions"
                             className={
@@ -104,7 +85,6 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated }) => {
                             <FaUser /> Meu Perfil
                         </Link>
                         
-                        {/* Botão de Logout */}
                         <button 
                             className={styles.logoutBtn}
                             onClick={handleLogout}
