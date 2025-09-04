@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { FaBrain, FaUsers, FaRobot, FaChartLine, FaBook, FaClock, FaTrophy } from "react-icons/fa";
-import { IoFlash } from "react-icons/io5";
 import styles from "./LandingPage.module.css";
+import logo from "../../assets/logo/logo3.png";
+import Button from "../../components/Button/Button";
 
 const LandingPage = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
@@ -87,7 +88,8 @@ const LandingPage = ({ setIsAuthenticated }) => {
       <header className={styles.header}>
         <div className={styles.navbar}>
           <div className={styles.logo}>
-            <IoFlash /> FlashFy
+            <img src={logo} alt="FlashFy Logo" className={styles.logoImage} />
+            FlashFy
           </div>
           <nav className={styles.nav}>
             <a href="#features">Recursos</a>
@@ -95,18 +97,12 @@ const LandingPage = ({ setIsAuthenticated }) => {
             <a href="#testimonials">Depoimentos</a>
           </nav>
           <div className={styles.authButtons}>
-            <button 
-              className={`${styles.button} ${styles.outline}`}
-              onClick={handleLoginClick}
-            >
+            <Button secondary onClick={handleLoginClick}>
               Entrar
-            </button>
-            <button 
-              className={styles.button}
-              onClick={handleRegisterClick}
-            >
+            </Button>
+            <Button onClick={handleRegisterClick}>
               Cadastrar
-            </button>
+            </Button>
           </div>
         </div>
       </header>
@@ -116,18 +112,12 @@ const LandingPage = ({ setIsAuthenticated }) => {
           <h1>Domine qualquer assunto com flashcards inteligentes</h1>
           <p>O FlashFy utiliza algoritmos de repetição espaçada e IA para transformar sua forma de estudar e maximizar sua retenção de conhecimento.</p>
           <div className={styles.heroButtons}>
-            <button 
-              className={styles.buttonLarge}
-              onClick={handleRegisterClick}
-            >
+            <Button onClick={handleRegisterClick}>
               Começar Agora
-            </button>
-            <button 
-              className={`${styles.buttonLarge} ${styles.outline}`}
-              onClick={handleLoginClick}
-            >
+            </Button>
+            <Button secondary onClick={handleLoginClick}>
               Fazer Login
-            </button>
+            </Button>
           </div>
         </div>
         <div className={styles.heroVisual}>
@@ -198,12 +188,9 @@ const LandingPage = ({ setIsAuthenticated }) => {
         <div className={styles.container}>
           <h2>Pronto para transformar seus estudos?</h2>
           <p>Junte-se a milhares de estudantes que já usam o FlashFy</p>
-          <button 
-            className={styles.buttonLarge}
-            onClick={handleRegisterClick}
-          >
+          <Button onClick={handleRegisterClick}>
             Criar Minha Conta Gratuita
-          </button>
+          </Button>
         </div>
       </section>
 
@@ -212,7 +199,8 @@ const LandingPage = ({ setIsAuthenticated }) => {
           <div className={styles.footerContent}>
             <div className={styles.footerBrand}>
               <div className={styles.logo}>
-                <IoFlash /> FlashFy
+                <img src={logo} alt="FlashFy Logo" className={styles.logoImage} />
+                FlashFy
               </div>
               <p>Transformando a maneira como você estuda</p>
             </div>
@@ -238,7 +226,7 @@ const LandingPage = ({ setIsAuthenticated }) => {
             </div>
           </div>
           <div className={styles.footerBottom}>
-            <p>&copy; 2024 FlashFy. Todos os direitos reservados.</p>
+            <p>&copy; 2025 FlashFy. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>

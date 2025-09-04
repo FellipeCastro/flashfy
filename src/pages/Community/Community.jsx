@@ -1,16 +1,20 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Button from "../../components/Button/Button";
-import Deck from "../../components/Deck/Deck"; // Importar o componente Deck
+import Deck from "../../components/Deck/Deck";
+import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
 import { IoSearch, IoDownloadOutline, IoShareOutline, IoStar, IoTimeOutline } from "react-icons/io5";
 import styles from "./Community.module.css";
 
-const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks, progress, subjects }) => {
+const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks, progress, subjects, setDecks }) => {
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('community');
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedSubject, setSelectedSubject] = useState('all');
     const [sortBy, setSortBy] = useState('popularity');
+    const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
 
     const [communityDecks] = useState([
         { 
@@ -104,6 +108,33 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
         alert(`Deck ${deckId} compartilhado com sucesso!`);
     };
 
+    const handleStudyDeck = (deckId) => {
+        navigate(`/cards/${deckId}`);
+    };
+
+    const createDeck = (subject, title) => {
+        const deckExists = decks.some(
+            (deck) =>
+                deck.title.toLowerCase() === title.toLowerCase() &&
+                deck.subject === subject
+        );
+
+        if (deckExists) {
+            alert("Já existe um deck com este título para esta matéria!");
+            return;
+        }
+
+        const newDeck = {
+            id: window.crypto.getRandomValues(new Uint32Array(1))[0],
+            title: title,
+            subject: subject,
+            cards: [],
+        };
+
+        setDecks([...decks, newDeck]);
+        setIsAddDeckFormOpen(false);
+    };
+
     return (
         <div className={styles.container}>
             <Sidebar
@@ -138,7 +169,6 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
                 </div>
 
                 <div className={styles.content}>
-                    {/* Seção de Decks da Comunidade */}
                     {activeTab === 'community' && (
                         <div className={styles.section}>
                             <div className={styles.sectionHeader}>
@@ -184,15 +214,60 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
                                 {sortedCommunityDecks.map(deck => {
                                     const subjectColor = getSubjectColor(deck.subject);
                                     return (
-                                        <Deck
-                                            key={deck.id}
-                                            color={subjectColor}
-                                            subject={deck.subject}
-                                            title={deck.name}
-                                            cards={deck.cards}
-                                            nextReview={null} // Decks da comunidade não têm nextReview
-                                            openCard={() => handleDownloadDeck(deck.id)}
-                                        />
+                                        <div key={deck.id} className={styles.communityDeckCard}>
+                                            <div className={styles.deckHeader}>
+                                                <h3>{deck.name}</h3>
+                                                <div className={styles.rating}>
+                                                    <IoStar />
+                                                    {deck.rating}
+                                                </div>
+                                            </div>
+                                            
+                                            <div className={styles.deckMeta}>
+                                                <span className={styles.author}>por {deck.author}</span>
+                                                <span 
+                                                    className={styles.subject}
+                                                    style={{backgroundColor: subjectColor}}
+                                                >
+                                                    {deck.subject}
+                                                </span>
+                                                <span className={styles.cardsCount}>{deck.cards} cards</span>
+                                            </div>
+                                            
+                                            <p className={styles.description}>{deck.description}</p>
+                                            
+                                            <div className={styles.deckStats}>
+                                                <div className={styles.stat}>
+                                                    <IoDownloadOutline />
+                                                    {deck.downloads} downloads
+                                                </div>
+                                                <div className={styles.stat}>
+                                                    <IoTimeOutline />
+                                                    {new Date(deck.createdAt).toLocaleDateString('pt-BR')}
+                                                </div>
+                                            </div>
+                                            
+                                            <div className={styles.deckActions}>
+                                                <button 
+                                                    className={styles.downloadBtn}
+                                                    onClick={() => handleDownloadDeck(deck.id)}
+                                                >
+                                                    <IoDownloadOutline /> Baixar
+                                                </button>
+                                                <button 
+                                                    className={styles.studyBtn}
+                                                    onClick={() => handleStudyDeck(deck.id)}
+                                                >
+                                                    Estudar
+                                                </button>
+                                                <button 
+                                                    className={styles.shareButton}
+                                                    onClick={() => handleShareDeck(deck.id)}
+                                                >
+                                                    <IoShareOutline />
+                                                </button>
+                                            </div>
+                                        </div>
                                     );
                                 })}
                             </div>
@@ -205,12 +280,16 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
                         </div>
                     )}
 
-                    {/* Seção de Meus Decks */}
                     {activeTab === 'myDecks' && (
                         <div className={styles.section}>
                             <div className={styles.sectionHeader}>
                                 <h2>Meus Decks</h2>
-                                <span className={styles.decksCount}>{decks.length} decks</span>
+                                <div className={styles.controls}>
+                                    <span className={styles.decksCount}>{decks.length} decks</span>
+                                    <Button onClick={() => setIsAddDeckFormOpen(true)}>
+                                        + Novo deck
+                                    </Button>
+                                </div>
                             </div>
 
                             <div className={styles.decksGrid}>
@@ -224,7 +303,7 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
                                             title={deck.title}
                                             cards={deck.cards?.length || 0}
                                             nextReview={deck.nextReview}
-                                            openCard={() => {/* função para abrir deck */}}
+                                            openCard={() => handleStudyDeck(deck.id)}
                                         />
                                     );
                                 })}
@@ -233,13 +312,23 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
                             {decks.length === 0 && (
                                 <div className={styles.emptyState}>
                                     <p>Você ainda não criou nenhum deck.</p>
-                                    <Button>Criar Primeiro Deck</Button>
+                                    <Button onClick={() => setIsAddDeckFormOpen(true)}>
+                                        Criar Primeiro Deck
+                                    </Button>
                                 </div>
                             )}
                         </div>
                     )}
                 </div>
             </div>
+
+            {isAddDeckFormOpen && (
+                <AddDeckForm
+                    setIsAddDeckFormOpen={setIsAddDeckFormOpen}
+                    subjects={subjects}
+                    createDeck={createDeck}
+                />
+            )}
         </div>
     );
 };

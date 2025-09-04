@@ -1,8 +1,7 @@
-/* LandingPage.module.css */
 .landingPage {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  color: var(--text-primary-color);
-  background: var(--bg-color);
+  color: #333; /* Texto preto */
+  background: #fff; /* Fundo branco */
 }
 
 .container {
@@ -11,16 +10,17 @@
   padding: 0 1.5rem;
 }
 
+/* HEADER - Fundo branco com borda azul */
 .header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(248, 250, 252, 0.95);
-  backdrop-filter: blur(10px);
+  background: #fff; /* Fundo branco */
   z-index: 1000;
   padding: 1rem 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 2px solid #01a5e4; /* Borda azul */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra preta */
 }
 
 .navbar {
@@ -38,8 +38,13 @@
   gap: 0.5rem;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--primary-color);
+  color: #01a5e4; /* Azul - cor primária */
   flex: 1;
+}
+
+.logoImage {
+  height: 40px;
+  width: auto;
 }
 
 .nav {
@@ -50,14 +55,14 @@
 }
 
 .nav a {
-  color: var(--text-primary-color);
+  color: #333; /* Texto preto */
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s;
 }
 
 .nav a:hover {
-  color: var(--primary-color);
+  color: #01a5e4; /* Azul no hover */
 }
 
 .authButtons {
@@ -67,61 +72,7 @@
   flex: 1;
 }
 
-.button {
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 2px solid var(--primary-color);
-  background: var(--primary-color);
-  color: white;
-}
-
-.button.outline {
-  background: transparent;
-  color: var(--primary-color);
-}
-
-.button:hover {
-  background: var(--primary-color-hover);
-  border-color: var(--primary-color-hover);
-  color: white;
-}
-
-.button.outline:hover {
-  background: var(--primary-color);
-  color: white;
-}
-
-.buttonLarge {
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 2px solid var(--primary-color);
-  background: var(--primary-color);
-  color: white;
-}
-
-.buttonLarge.outline {
-  background: transparent;
-  color: var(--primary-color);
-}
-
-.buttonLarge:hover {
-  background: var(--primary-color-hover);
-  border-color: var(--primary-color-hover);
-  color: white;
-}
-
-.buttonLarge.outline:hover {
-  background: var(--primary-color);
-  color: white;
-}
-
+/* HERO SECTION */
 .hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -138,15 +89,12 @@
   font-weight: 800;
   line-height: 1.2;
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-color-hover));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #333; /* Texto preto */
 }
 
 .heroContent p {
   font-size: 1.2rem;
-  color: var(--text-secondary-color);
+  color: #666; /* Texto cinza */
   margin-bottom: 2rem;
   line-height: 1.6;
 }
@@ -162,6 +110,7 @@
   align-items: center;
 }
 
+/* FLASHCARD DEMO - Borda azul e sombra preta */
 .flashcardDemo {
   perspective: 1000px;
 }
@@ -173,10 +122,14 @@
   transform-style: preserve-3d;
   transition: transform 0.8s;
   cursor: pointer;
+  border: 2px solid #8a8a8a; /* Borda cinza */
+  border-radius: 0.5rem;
+  box-shadow: -4px 4px 0px rgba(0, 0, 0, 0.2); /* Sombra preta */
 }
 
 .flashcard:hover {
   transform: rotateY(180deg);
+  box-shadow: -6px 6px 0px rgba(0, 0, 0, 0.2); /* Sombra preta aumentada no hover */
 }
 
 .flashcardFront,
@@ -185,36 +138,35 @@
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  border-radius: 12px;
+  border-radius: 0.5rem;
   padding: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .flashcardFront {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-color-hover));
+  background: #01a5e4; /* Fundo azul */
   color: white;
 }
 
 .flashcardBack {
-  background: var(--secondary-color);
-  color: var(--text-primary-color);
+  background: #f8f9fa; /* Fundo cinza claro */
+  color: #333; /* Texto preto */
   transform: rotateY(180deg);
-  border: 2px solid var(--border-color);
 }
 
+/* FEATURES SECTION */
 .features {
   padding: 5rem 0;
-  background: var(--secondary-color);
+  background: #f8f9fa; /* Fundo cinza claro */
 }
 
 .features h2 {
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  color: var(--text-primary-color);
+  color: #333; /* Texto preto */
 }
 
 .featuresGrid {
@@ -223,37 +175,40 @@
   gap: 2rem;
 }
 
+/* FEATURE CARD - Borda azul e sombra preta */
 .featureCard {
-  background: var(--bg-color);
+  background: #fff; /* Fundo branco */
   padding: 2rem;
-  border-radius: 12px;
+  border-radius: 0.5rem;
   text-align: center;
-  border: 2px solid var(--border-color);
+  border: 2px solid #8a8a8a; /* Borda cinza */
   transition: all 0.3s ease;
+  box-shadow: -4px 4px 0px rgba(0, 0, 0, 0.1); /* Sombra preta */
 }
 
 .featureCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: -6px 6px 0px rgba(0, 0, 0, 0.15); /* Sombra preta aumentada no hover */
 }
 
 .featureIcon {
   font-size: 2.5rem;
-  color: var(--primary-color);
+  color: #01a5e4; /* Azul - cor primária */
   margin-bottom: 1rem;
 }
 
 .featureCard h3 {
   font-size: 1.3rem;
   margin-bottom: 1rem;
-  color: var(--text-primary-color);
+  color: #8a8a8a; /* Texto cinza */
 }
 
 .featureCard p {
-  color: var(--text-secondary-color);
+  color: #666; /* Texto cinza */
   line-height: 1.6;
 }
 
+/* HOW IT WORKS SECTION */
 .howItWorks {
   padding: 5rem 0;
 }
@@ -262,7 +217,7 @@
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  color: var(--text-primary-color);
+  color: #333 ; /* Texto preto */
 }
 
 .steps {
@@ -271,51 +226,64 @@
   gap: 2rem;
 }
 
+/* STEP CARD - Borda azul e sombra preta */
 .step {
   text-align: center;
   padding: 2rem;
+  background: #fff; /* Fundo branco */
+  border: 2px solid #8a8a8a; /* Borda cinza */
+  border-radius: 0.5rem;
+  box-shadow: -4px 4px 0px rgba(0, 0, 0, 0.1); /* Sombra preta */
+  transition: all 0.3s ease;
+}
+
+.step:hover {
+  transform: translateY(-4px);
+  box-shadow: -6px 6px 0px rgba(0, 0, 0, 0.15); /* Sombra preta aumentada no hover */
 }
 
 .stepNumber {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--primary-color);
+  background: #01a5e4; /* Azul - cor primária */
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
   margin: 0 auto 1rem;
+  border: 2px solid #8a8a8a; /* Borda cinza */
 }
 
 .stepIcon {
   font-size: 2rem;
-  color: var(--primary-color);
+  color: #01a5e4; /* Azul - cor primária */
   margin-bottom: 1rem;
 }
 
 .step h3 {
   font-size: 1.3rem;
   margin-bottom: 1rem;
-  color: var(--text-primary-color);
+  color: #8a8a8a; /* Texto cinza */
 }
 
 .step p {
-  color: var(--text-secondary-color);
+  color: #666; /* Texto cinza */
   line-height: 1.6;
 }
 
+/* TESTIMONIALS SECTION */
 .testimonials {
   padding: 5rem 0;
-  background: var(--secondary-color);
+  background: #f8f9fa; /* Fundo cinza claro */
 }
 
 .testimonials h2 {
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  color: var(--text-primary-color);
+  color: #333; /* Texto preto */
 }
 
 .testimonialGrid {
@@ -324,11 +292,19 @@
   gap: 2rem;
 }
 
+/* TESTIMONIAL CARD - Borda azul e sombra preta */
 .testimonialCard {
-  background: var(--bg-color);
+  background: #fff; /* Fundo branco */
   padding: 2rem;
-  border-radius: 12px;
-  border: 2px solid var(--border-color);
+  border-radius: 0.5rem;
+  border: 2px solid #8a8a8a; /* Borda cinza */
+  box-shadow: -4px 4px 0px rgba(0, 0, 0, 0.1); /* Sombra preta */
+  transition: all 0.3s ease;
+}
+
+.testimonialCard:hover {
+  transform: translateY(-4px);
+  box-shadow: -6px 6px 0px rgba(0, 0, 0, 0.15); /* Sombra preta aumentada no hover */
 }
 
 .testimonialContent {
@@ -337,25 +313,25 @@
 
 .testimonialContent p {
   font-style: italic;
-  color: var(--text-primary-color);
+  color: #8a8a8a; /* Texto preto */
   line-height: 1.6;
 }
 
 .testimonialAuthor h4 {
-  color: var(--text-primary-color);
+  color: #8a8a8a; /* Texto preto */
   margin-bottom: 0.25rem;
 }
 
 .testimonialAuthor span {
-  color: var(--text-secondary-color);
+  color: #666; /* Texto cinza */
   font-size: 0.9rem;
 }
 
+/* CTA SECTION - Fundo azul */
 .cta {
   padding: 5rem 0;
   text-align: center;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-color-hover));
-  color: white;
+  color: #8a8a8a;
 }
 
 .cta h2 {
@@ -369,10 +345,12 @@
   opacity: 0.9;
 }
 
+/* FOOTER - Borda azul no topo */
 .footer {
   padding: 3rem 0;
-  background: var(--secondary-color);
-  border-top: 1px solid var(--border-color);
+  background: #fff; /* Fundo cinza claro */
+  border-top: 2px solid #01a5e4; /* Borda azul */
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* Sombra preta */
 }
 
 .footerContent {
@@ -392,8 +370,12 @@
   font-size: 1.8rem;
 }
 
+.footerBrand .logoImage {
+  height: 30px;
+}
+
 .footerBrand p {
-  color: var(--text-secondary-color);
+  color: #666; /* Texto cinza */
 }
 
 .footerLinks {
@@ -403,30 +385,31 @@
 }
 
 .footerSection h4 {
-  color: var(--text-primary-color);
+  color: #333; /* Texto preto */
   margin-bottom: 1rem;
   font-size: 1.1rem;
 }
 
 .footerSection a {
   display: block;
-  color: var(--text-secondary-color);
+  color: #666; /* Texto cinza */
   text-decoration: none;
   margin-bottom: 0.5rem;
   transition: color 0.2s;
 }
 
 .footerSection a:hover {
-  color: var(--primary-color);
+  color: #007bff; /* Azul no hover */
 }
 
 .footerBottom {
   text-align: center;
   padding-top: 2rem;
-  border-top: 1px solid var(--border-color);
-  color: var(--text-secondary-color);
+  border-top: 1px solid #dee2e6; /* Borda cinza */
+  color: #666; /* Texto cinza */
 }
 
+/* RESPONSIVIDADE */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -437,6 +420,10 @@
     flex: none;
     width: 100%;
     justify-content: center;
+  }
+  
+  .logoImage {
+    height: 35px;
   }
   
   .nav {
@@ -473,6 +460,10 @@
   .footerLinks {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+  
+  .footerBrand .logoImage {
+    height: 25px;
   }
 }
 

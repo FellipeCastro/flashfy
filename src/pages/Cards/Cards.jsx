@@ -102,7 +102,7 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
         updateDeck(updatedDeck);
 
         // Navegar para home
-        navigate("/");
+        navigate("/home");
     };
 
     if (!currentDeck) {
@@ -110,7 +110,7 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
             <>
                 <header className={styles.header}>
                     <div className={styles.titleContainer}>
-                        <Link to="/">
+                        <Link to="/home">
                             <FaArrowLeft />
                         </Link>
                         <h1>Deck não encontrado</h1>
@@ -128,7 +128,7 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
             <>
                 <header className={styles.header}>
                     <div className={styles.titleContainer}>
-                        <Link to="/">
+                        <Link to="/home">
                             <FaArrowLeft />
                         </Link>
                         <h1>{currentDeck.title}</h1>
@@ -157,7 +157,7 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
         <>
             <header className={styles.header}>
                 <div className={styles.titleContainer}>
-                    <Link to="/">
+                    <Link to="/home">
                         <FaArrowLeft />
                     </Link>
                     <h1>{currentDeck.title}</h1>

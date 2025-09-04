@@ -4,6 +4,7 @@ import { FaUser, FaBookReader } from "react-icons/fa";
 import { RiRobot2Fill } from "react-icons/ri";
 import styles from "./Sidebar.module.css";
 import { FaUsers } from "react-icons/fa";
+import logo from "../../assets/logo/logo2.png";
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated }) => {
     const location = useLocation();
@@ -33,7 +34,10 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated }) => {
                     </button>
                     {isSidebarOpen && (
                         <>
-                            <div className={styles.logo}>FlashFy</div>
+                            <div className={styles.logoContainer}>
+                                <img src={logo} alt="FlashFy Logo" className={styles.logoImg} />
+                                <div className={styles.logoText}>FlashFy</div>
+                            </div>
                         </>
                     )}
                 </div>

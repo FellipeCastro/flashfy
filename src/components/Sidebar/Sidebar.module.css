@@ -1,3 +1,20 @@
+.logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logoImg {
+    width: 40px;
+    height: 40px;
+}
+
+.logoText {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--text-primary-color);
+}
+
 .sidebar {
     min-height: 100vh;
     padding: 1rem;
@@ -15,11 +32,6 @@
 .sidebar.open {
     max-width: 400px;
     width: 400px;
-}
-
-.sidebar .logo {
-    font-weight: 500;
-    font-size: 2rem;
 }
 
 .topContainer {
@@ -80,7 +92,7 @@
     gap: 0.4rem;
     font-size: 0.8rem;
     font-weight: 500;
-    color: var(--text-secondary-color);
+    color: #000000;
     text-decoration: none;
     border-radius: 2rem;
     cursor: pointer;
@@ -92,13 +104,14 @@
 }
 
 .menu a:hover {
-    color: var(--text-primary-color);
+    color: #01a5e4;
 }
 
 .menu a.active {
     background: var(--shadow-color);
-    color: var(--text-primary-color);
+    color: #01a5e4;
 }
+
 .logoutBtn {
     display: flex;
     align-items: center;
@@ -112,7 +125,7 @@
     cursor: pointer;
     transition: background-color 0.3s;
     border-radius: 4px;
-    margin-top: auto; /* Empurra para baixo */
+    margin-top: auto;
 }
 
 .logoutBtn:hover {
@@ -120,24 +133,16 @@
     color: var(--error-color-text);
 }
 
-/* Ajuste para o menu ter espaço flexível */
 .menu {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-/* Garante que os links fiquem no topo e o logout na base */
 .menu > *:not(.logoutBtn) {
     flex-shrink: 0;
 }
 
 .menu .logoutBtn {
     margin-top: 2rem;
-}
-.logo img{
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
