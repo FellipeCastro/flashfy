@@ -19,7 +19,7 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
     const [communityDecks] = useState([
         { 
             id: 1, 
-            name: "Funções Quadráticas", 
+            title: "Funções Quadráticas", 
             author: "Maria Silva", 
             downloads: 142, 
             rating: 4.8, 
@@ -31,7 +31,7 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
         },
         { 
             id: 2, 
-            name: "Revolução Industrial", 
+            title: "Revolução Industrial", 
             author: "João Santos", 
             downloads: 89, 
             rating: 4.5, 
@@ -43,7 +43,7 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
         },
         { 
             id: 3, 
-            name: "Tabela Periódica", 
+            title: "Tabela Periódica", 
             author: "Ana Costa", 
             downloads: 203, 
             rating: 4.9, 
@@ -55,7 +55,7 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
         },
         { 
             id: 4, 
-            name: "Fotossíntese", 
+            title: "Fotossíntese", 
             author: "Pedro Alves", 
             downloads: 76, 
             rating: 4.3, 
@@ -67,7 +67,7 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
         },
         { 
             id: 5, 
-            name: "Literatura Brasileira", 
+            title: "Literatura Brasileira", 
             author: "Carla Mendes", 
             downloads: 156, 
             rating: 4.7, 
@@ -85,7 +85,7 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
     };
 
     const filteredCommunityDecks = communityDecks.filter(deck => {
-        const matchesSearch = deck.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        const matchesSearch = deck.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             deck.description.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesSubject = selectedSubject === 'all' || deck.subject === selectedSubject;
         return matchesSearch && matchesSubject;
@@ -215,57 +215,50 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
                                     const subjectColor = getSubjectColor(deck.subject);
                                     return (
                                         <div key={deck.id} className={styles.communityDeckCard}>
-                                            <div className={styles.deckHeader}>
-                                                <h3>{deck.name}</h3>
-                                                <div className={styles.rating}>
-                                                    <IoStar />
-                                                    {deck.rating}
+                                            <Deck
+                                                color={subjectColor}
+                                                subject={deck.subject}
+                                                title={deck.title}
+                                                cards={deck.cards}
+                                                nextReview={null}
+                                                openCard={() => handleStudyDeck(deck.id)}
+                                            />
+                                            <div className={styles.deckInfo}>
+                                                <div className={styles.deckMeta}>
+                                                    <span className={styles.author}>por {deck.author}</span>
+                                                    <div className={styles.rating}>
+                                                        <IoStar />
+                                                        {deck.rating}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            
-                                            <div className={styles.deckMeta}>
-                                                <span className={styles.author}>por {deck.author}</span>
-                                                <span 
-                                                    className={styles.subject}
-                                                    style={{backgroundColor: subjectColor}}
-                                                >
-                                                    {deck.subject}
-                                                </span>
-                                                <span className={styles.cardsCount}>{deck.cards} cards</span>
-                                            </div>
-                                            
-                                            <p className={styles.description}>{deck.description}</p>
-                                            
-                                            <div className={styles.deckStats}>
-                                                <div className={styles.stat}>
-                                                    <IoDownloadOutline />
-                                                    {deck.downloads} downloads
+                                                
+                                                <p className={styles.description}>{deck.description}</p>
+                                                
+                                                <div className={styles.deckStats}>
+                                                    <div className={styles.stat}>
+                                                        <IoDownloadOutline />
+                                                        {deck.downloads} downloads
+                                                    </div>
+                                                    <div className={styles.stat}>
+                                                        <IoTimeOutline />
+                                                        {new Date(deck.createdAt).toLocaleDateString('pt-BR')}
+                                                    </div>
                                                 </div>
-                                                <div className={styles.stat}>
-                                                    <IoTimeOutline />
-                                                    {new Date(deck.createdAt).toLocaleDateString('pt-BR')}
+                                                
+                                                <div className={styles.deckActions}>
+                                                    <button 
+                                                        className={styles.downloadBtn}
+                                                        onClick={() => handleDownloadDeck(deck.id)}
+                                                    >
+                                                        <IoDownloadOutline /> Baixar
+                                                    </button>
+                                                    <button 
+                                                        className={styles.shareButton}
+                                                        onClick={() => handleShareDeck(deck.id)}
+                                                    >
+                                                        <IoShareOutline />
+                                                    </button>
                                                 </div>
-                                            </div>
-                                            
-                                            <div className={styles.deckActions}>
-                                                <button 
-                                                    className={styles.downloadBtn}
-                                                    onClick={() => handleDownloadDeck(deck.id)}
-                                                >
-                                                    <IoDownloadOutline /> Baixar
-                                                </button>
-                                                <button 
-                                                    className={styles.studyBtn}
-                                                    onClick={() => handleStudyDeck(deck.id)}
-                                                >
-                                                    Estudar
-                                                </button>
-                                                <button 
-                                                    className={styles.shareButton}
-                                                    onClick={() => handleShareDeck(deck.id)}
-                                                >
-                                                    <IoShareOutline />
-                                                </button>
                                             </div>
                                         </div>
                                     );
