@@ -5,16 +5,16 @@ import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Button from "../../components/Button/Button";
 import Deck from "../../components/Deck/Deck";
 import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
-import { IoSearch, IoDownloadOutline, IoShareOutline, IoStar, IoTimeOutline } from "react-icons/io5";
+import { IoSearch, IoDownloadOutline, IoShareOutline, IoStar, IoTimeOutline, IoFilter } from "react-icons/io5";
 import styles from "./Community.module.css";
 
 const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks, progress, subjects, setDecks }) => {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState('community');
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedSubject, setSelectedSubject] = useState('all');
     const [sortBy, setSortBy] = useState('popularity');
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
+    const [showFilters, setShowFilters] = useState(false);
 
     const [communityDecks] = useState([
         { 
@@ -153,163 +153,127 @@ const Community = ({ isSidebarOpen, setIsSidebarOpen, setIsAuthenticated, decks,
                     </div>
                 </div>
 
-                <div className={styles.tabs}>
-                    <button 
-                        className={`${styles.tab} ${activeTab === 'community' ? styles.active : ''}`}
-                        onClick={() => setActiveTab('community')}
-                    >
-                        Decks da Comunidade
-                    </button>
-                    <button 
-                        className={`${styles.tab} ${activeTab === 'myDecks' ? styles.active : ''}`}
-                        onClick={() => setActiveTab('myDecks')}
-                    >
-                        Meus Decks
-                    </button>
-                </div>
-
                 <div className={styles.content}>
-                    {activeTab === 'community' && (
-                        <div className={styles.section}>
-                            <div className={styles.sectionHeader}>
-                                <h2>Decks Compartilhados</h2>
-                                <div className={styles.controls}>
-                                    <div className={styles.searchBox}>
-                                        <IoSearch className={styles.searchIcon} />
-                                        <input
-                                            type="text"
-                                            placeholder="Buscar decks..."
-                                            value={searchTerm}
-                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                            className={styles.searchInput}
-                                        />
-                                    </div>
-                                    <div className={styles.filters}>
-                                        <select
-                                            value={selectedSubject}
-                                            onChange={(e) => setSelectedSubject(e.target.value)}
-                                            className={styles.filterSelect}
-                                        >
-                                            <option value="all">Todas as matérias</option>
-                                            {subjects.map(subject => (
-                                                <option key={subject.name} value={subject.name}>
-                                                    {subject.name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        <select
-                                            value={sortBy}
-                                            onChange={(e) => setSortBy(e.target.value)}
-                                            className={styles.filterSelect}
-                                        >
-                                            <option value="popularity">Mais populares</option>
-                                            <option value="rating">Melhor avaliados</option>
-                                            <option value="newest">Mais recentes</option>
-                                        </select>
-                                    </div>
+                    <div className={styles.searchSection}>
+                        <div className={styles.searchContainer}>
+                            <div className={styles.searchBox}>
+                                <IoSearch className={styles.searchIcon} />
+                                <input
+                                    type="text"
+                                    placeholder="Buscar decks..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className={styles.searchInput}
+                                />
+                            </div>
+                            <button 
+                                className={styles.filterToggle}
+                                onClick={() => setShowFilters(!showFilters)}
+                            >
+                                <IoFilter />
+                                Filtros
+                            </button>
+                        </div>
+
+                        {showFilters && (
+                            <div className={styles.filtersPanel}>
+                                <div className={styles.filterGroup}>
+                                    <label>Matéria:</label>
+                                    <select
+                                        value={selectedSubject}
+                                        onChange={(e) => setSelectedSubject(e.target.value)}
+                                        className={styles.filterSelect}
+                                    >
+                                        <option value="all">Todas as matérias</option>
+                                        {subjects.map(subject => (
+                                            <option key={subject.name} value={subject.name}>
+                                                {subject.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                
+                                <div className={styles.filterGroup}>
+                                    <label>Ordenar por:</label>
+                                    <select
+                                        value={sortBy}
+                                        onChange={(e) => setSortBy(e.target.value)}
+                                        className={styles.filterSelect}
+                                    >
+                                        <option value="popularity">Mais populares</option>
+                                        <option value="rating">Melhor avaliados</option>
+                                        <option value="newest">Mais recentes</option>
+                                    </select>
                                 </div>
                             </div>
+                        )}
+                    </div>
 
-                            <div className={styles.decksGrid}>
-                                {sortedCommunityDecks.map(deck => {
-                                    const subjectColor = getSubjectColor(deck.subject);
-                                    return (
-                                        <div key={deck.id} className={styles.communityDeckCard}>
-                                            <Deck
-                                                color={subjectColor}
-                                                subject={deck.subject}
-                                                title={deck.title}
-                                                cards={deck.cards}
-                                                nextReview={null}
-                                                openCard={() => handleStudyDeck(deck.id)}
-                                            />
-                                            <div className={styles.deckInfo}>
-                                                <div className={styles.deckMeta}>
-                                                    <span className={styles.author}>por {deck.author}</span>
-                                                    <div className={styles.rating}>
-                                                        <IoStar />
-                                                        {deck.rating}
-                                                    </div>
-                                                </div>
-                                                
-                                                <p className={styles.description}>{deck.description}</p>
-                                                
-                                                <div className={styles.deckStats}>
-                                                    <div className={styles.stat}>
-                                                        <IoDownloadOutline />
-                                                        {deck.downloads} downloads
-                                                    </div>
-                                                    <div className={styles.stat}>
-                                                        <IoTimeOutline />
-                                                        {new Date(deck.createdAt).toLocaleDateString('pt-BR')}
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className={styles.deckActions}>
-                                                    <button 
-                                                        className={styles.downloadBtn}
-                                                        onClick={() => handleDownloadDeck(deck.id)}
-                                                    >
-                                                        <IoDownloadOutline /> Baixar
-                                                    </button>
-                                                    <button 
-                                                        className={styles.shareButton}
-                                                        onClick={() => handleShareDeck(deck.id)}
-                                                    >
-                                                        <IoShareOutline />
-                                                    </button>
-                                                </div>
+                    <div className={styles.resultsInfo}>
+                        <h2>Decks Compartilhados</h2>
+                        <span className={styles.resultsCount}>
+                            {sortedCommunityDecks.length} {sortedCommunityDecks.length === 1 ? 'resultado' : 'resultados'}
+                        </span>
+                    </div>
+
+                    <div className={styles.decksGrid}>
+                        {sortedCommunityDecks.map(deck => {
+                            const subjectColor = getSubjectColor(deck.subject);
+                            return (
+                                <div key={deck.id} className={styles.communityDeckCard}>
+                                    <Deck
+                                        color={subjectColor}
+                                        subject={deck.subject}
+                                        title={deck.title}
+                                        cards={deck.cards}
+                                        nextReview={null}
+                                        openCard={() => handleStudyDeck(deck.id)}
+                                    />
+                                    <div className={styles.deckInfo}>
+                                        <div className={styles.deckMeta}>
+                                            <span className={styles.author}>por {deck.author}</span>
+                                            <div className={styles.rating}>
+                                                <IoStar />
+                                                {deck.rating}
                                             </div>
                                         </div>
-                                    );
-                                })}
-                            </div>
-
-                            {sortedCommunityDecks.length === 0 && (
-                                <div className={styles.emptyState}>
-                                    <p>Nenhum deck encontrado. Tente ajustar os filtros.</p>
+                                        
+                                        <p className={styles.description}>{deck.description}</p>
+                                        
+                                        <div className={styles.deckStats}>
+                                            <div className={styles.stat}>
+                                                <IoDownloadOutline />
+                                                {deck.downloads} downloads
+                                            </div>
+                                            <div className={styles.stat}>
+                                                <IoTimeOutline />
+                                                {new Date(deck.createdAt).toLocaleDateString('pt-BR')}
+                                            </div>
+                                        </div>
+                                        
+                                        <div className={styles.deckActions}>
+                                            <button 
+                                                className={styles.downloadBtn}
+                                                onClick={() => handleDownloadDeck(deck.id)}
+                                            >
+                                                <IoDownloadOutline /> Baixar
+                                            </button>
+                                            <button 
+                                                className={styles.shareButton}
+                                                onClick={() => handleShareDeck(deck.id)}
+                                            >
+                                                <IoShareOutline />
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            )}
-                        </div>
-                    )}
+                            );
+                        })}
+                    </div>
 
-                    {activeTab === 'myDecks' && (
-                        <div className={styles.section}>
-                            <div className={styles.sectionHeader}>
-                                <h2>Meus Decks</h2>
-                                <div className={styles.controls}>
-                                    <span className={styles.decksCount}>{decks.length} decks</span>
-                                    <Button onClick={() => setIsAddDeckFormOpen(true)}>
-                                        + Novo deck
-                                    </Button>
-                                </div>
-                            </div>
-
-                            <div className={styles.decksGrid}>
-                                {decks.map(deck => {
-                                    const subjectColor = getSubjectColor(deck.subject);
-                                    return (
-                                        <Deck
-                                            key={deck.id}
-                                            color={subjectColor}
-                                            subject={deck.subject}
-                                            title={deck.title}
-                                            cards={deck.cards?.length || 0}
-                                            nextReview={deck.nextReview}
-                                            openCard={() => handleStudyDeck(deck.id)}
-                                        />
-                                    );
-                                })}
-                            </div>
-
-                            {decks.length === 0 && (
-                                <div className={styles.emptyState}>
-                                    <p>Você ainda não criou nenhum deck.</p>
-                                    <Button onClick={() => setIsAddDeckFormOpen(true)}>
-                                        Criar Primeiro Deck
-                                    </Button>
-                                </div>
-                            )}
+                    {sortedCommunityDecks.length === 0 && (
+                        <div className={styles.emptyState}>
+                            <p>Nenhum deck encontrado. Tente ajustar os filtros.</p>
                         </div>
                     )}
                 </div>

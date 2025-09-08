@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FaBrain, FaUsers, FaRobot, FaChartLine, FaBook, FaClock, FaTrophy } from "react-icons/fa";
 import styles from "./LandingPage.module.css";
-import logo from "../../assets/logo/logo3.png";
+import logo from "../../assets/logo/logo4.png";
 import Button from "../../components/Button/Button";
 
 const LandingPage = ({ setIsAuthenticated }) => {
