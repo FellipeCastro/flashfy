@@ -1,0 +1,178 @@
+.registerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 20px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.registerCard {
+    background-color: var(--secondary-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 480px;
+    animation: slideIn 0.5s ease-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.registerCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.registerHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.registerHeader h1 {
+    color: var(--text-primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.registerHeader p {
+    color: var(--text-secondary-color);
+    margin: 0;
+    font-size: 1rem;
+}
+
+.registerForm {
+    margin-bottom: 1.5rem;
+}
+
+.errorMessage {
+    background-color: var(--error-color);
+    color: var(--error-color-text);
+    padding: 0.9rem;
+    border-radius: 8px;
+    margin-bottom: 1.2rem;
+    text-align: center;
+    font-size: 0.9rem;
+    border-left: 4px solid var(--error-color-text);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.registerButton {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+.registerButton:hover:not(:disabled) {
+    background: var(--primary-color-hover);
+}
+
+.registerButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.registerButton.loading {
+    background-color: var(--primary-color-hover);
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--secondary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.8rem 0;
+    color: var(--text-secondary-color);
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.divider::before {
+    margin-right: 1rem;
+}
+
+.divider::after {
+    margin-left: 1rem;
+}
+
+.loginLink {
+    text-align: center;
+    color: var(--text-secondary-color);
+    font-size: 0.9rem;
+}
+
+.loginLink a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.loginLink a:hover {
+    color: var(--primary-color-hover);
+    text-decoration: underline;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .registerCard {
+        padding: 1.8rem;
+    }
+}

@@ -1,0 +1,232 @@
+/* pages/Login/Login.module.css */
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 20px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.loginCard {
+    background-color: var(--secondary-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 450px;
+    animation: slideIn 0.5s ease-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.loginCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.loginHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.loginHeader h1 {
+    color: var(--text-primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.loginHeader p {
+    color: var(--text-secondary-color);
+    margin: 0;
+    font-size: 1rem;
+}
+
+.loginForm {
+    margin-bottom: 1.5rem;
+}
+
+.errorMessage {
+    background-color: var(--error-color);
+    color: var(--error-color-text);
+    padding: 0.9rem;
+    border-radius: 8px;
+    margin-bottom: 1.2rem;
+    text-align: center;
+    font-size: 0.9rem;
+    border-left: 4px solid var(--error-color-text);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.demoCredentials {
+    background-color: rgba(1, 165, 228, 0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary-color);
+    border-left: 3px solid var(--primary-color);
+}
+
+.demoCredentials p {
+    margin: 0.3rem 0;
+}
+
+.rememberForgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.rememberMe {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary-color);
+    cursor: pointer;
+}
+
+.rememberMe input {
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.forgotPassword {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-weight: 500;
+}
+
+.forgotPassword:hover {
+    color: var(--primary-color-hover);
+    text-decoration: underline;
+}
+
+.loginButton {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 1rem;
+}
+
+.loginButton:hover:not(:disabled) {
+    background: var(--primary-color-hover);
+}
+
+.loginButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.loginButton.loading {
+    background-color: var(--primary-color-hover);
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--secondary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.8rem 0;
+    color: var(--text-secondary-color);
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.divider::before {
+    margin-right: 1rem;
+}
+
+.divider::after {
+    margin-left: 1rem;
+}
+
+.registerLink {
+    text-align: center;
+    color: var(--text-secondary-color);
+    font-size: 0.9rem;
+}
+
+.registerLink a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.registerLink a:hover {
+    color: var(--primary-color-hover);
+    text-decoration: underline;
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .loginCard {
+        padding: 1.8rem;
+    }
+
+    .rememberForgot {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+}

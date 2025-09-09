@@ -10,7 +10,6 @@ import styles from "./AiQuestions.module.css";
 const AiQuestions = ({
     isSidebarOpen,
     setIsSidebarOpen,
-    aiCredits,
     subtractAiCredits,
 }) => {
     const [formData, setFormData] = useState(() => {
@@ -310,10 +309,6 @@ const AiQuestions = ({
             <div className={styles.mainContainer}>
                 <div className={styles.titleContainer}>
                     <h1>Gere perguntas por IA</h1>
-                    <span className={styles.credits}>
-                        {aiCredits}
-                        <IoTicket />
-                    </span>
                 </div>
 
                 {/* <p className={styles.paragraph}>

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Methodology from "./pages/Methodology/Methodology";
 import Cards from "./pages/Cards/Cards";
 import AiQuestions from "./pages/AiQuestions/AiQuestions";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
 import mockData from "./mockData";
 
 const App = () => {
@@ -12,7 +14,7 @@ const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [lastStudyDate, setLastStudyDate] = useState(null);
     const [selectedSubjects, setSelectedSubjects] = useState([]);
-    const [aiCredits, setAiCredits] = useState(0);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     // Função para incrementar studiedDecks
     const incrementStudiedDecks = () => {
@@ -89,10 +91,6 @@ const App = () => {
         );
     });
 
-    const subtractAiCredits = () => {
-        setAiCredits(aiCredits - 1)
-    }
-
     useEffect(() => {
         const storedDate = localStorage.getItem("lastStudyDate");
         const initialDate = storedDate || new Date().toDateString();
@@ -103,7 +101,9 @@ const App = () => {
             ...mockData.progress,
             decksToStudy: calculateDecksToStudy(mockData.decks),
         });
-        setAiCredits(mockData.aiCredits);
+
+        const token = localStorage.getItem("authToken");
+        setIsAuthenticated(token);
 
         // Verifica ao carregar se precisa resetar por novo dia
         checkAndResetStudiedDecks();
@@ -115,12 +115,23 @@ const App = () => {
             const today = new Date().toDateString();
             if (lastStudyDate && lastStudyDate !== today) {
                 checkAndResetStudiedDecks();
-                setAiCredits(10);
             }
         }, 1000 * 60 * 60); // Verifica a cada hora
 
         return () => clearInterval(interval);
     }, [lastStudyDate]);
+
+    // Componente de rota protegida
+    const ProtectedRoute = ({ children }) => {
+        const token = localStorage.getItem("authToken");
+        return token ? children : <Navigate to="/login" replace />;
+    };
+
+    // Componente de rota para visitantes
+    const GuestRoute = ({ children }) => {
+        const token = localStorage.getItem("authToken");
+        return token ? <Navigate to="/home" replace /> : children;
+    };
 
     return (
         <BrowserRouter>
@@ -128,45 +139,86 @@ const App = () => {
                 <Route
                     path="/"
                     element={
-                        <Home
-                            isSidebarOpen={isSidebarOpen}
-                            setIsSidebarOpen={setIsSidebarOpen}
-                            decks={filteredDecks}
-                            setDecks={setDecks}
-                            progress={progress}
-                            selectedSubjects={selectedSubjects}
-                            setSelectedSubjects={setSelectedSubjects}
+                        <Navigate
+                            to={
+                                localStorage.getItem("authToken")
+                                    ? "/home"
+                                    : "/login"
+                            }
+                            replace
                         />
                     }
                 />
+
+                <Route
+                    path="/login"
+                    element={
+                        <GuestRoute>
+                            <Login setIsAuthenticated={setIsAuthenticated} />
+                        </GuestRoute>
+                    }
+                />
+
+                <Route
+                    path="/register"
+                    element={
+                        <GuestRoute>
+                            <Register setIsAuthenticated={setIsAuthenticated} />
+                        </GuestRoute>
+                    }
+                />
+
+                <Route
+                    path="/home"
+                    element={
+                        <ProtectedRoute>
+                            <Home
+                                isSidebarOpen={isSidebarOpen}
+                                setIsSidebarOpen={setIsSidebarOpen}
+                                decks={filteredDecks}
+                                setDecks={setDecks}
+                                progress={progress}
+                                selectedSubjects={selectedSubjects}
+                                setSelectedSubjects={setSelectedSubjects}
+                            />
+                        </ProtectedRoute>
+                    }
+                />
+
                 <Route
                     path="/aiquestions"
                     element={
-                        <AiQuestions
-                            isSidebarOpen={isSidebarOpen}
-                            setIsSidebarOpen={setIsSidebarOpen}
-                            aiCredits={aiCredits}
-                            subtractAiCredits={subtractAiCredits}
-                        />
+                        <ProtectedRoute>
+                            <AiQuestions
+                                isSidebarOpen={isSidebarOpen}
+                                setIsSidebarOpen={setIsSidebarOpen}
+                            />
+                        </ProtectedRoute>
                     }
                 />
+
                 <Route
                     path="/methodology"
                     element={
-                        <Methodology
-                            isSidebarOpen={isSidebarOpen}
-                            setIsSidebarOpen={setIsSidebarOpen}
-                        />
+                        <ProtectedRoute>
+                            <Methodology
+                                isSidebarOpen={isSidebarOpen}
+                                setIsSidebarOpen={setIsSidebarOpen}
+                            />
+                        </ProtectedRoute>
                     }
                 />
+
                 <Route
                     path="/cards/:id"
                     element={
-                        <Cards
-                            decks={decks}
-                            setDecks={setDecks}
-                            updateDeck={updateDeck}
-                        />
+                        <ProtectedRoute>
+                            <Cards
+                                decks={decks}
+                                setDecks={setDecks}
+                                updateDeck={updateDeck}
+                            />
+                        </ProtectedRoute>
                     }
                 />
             </Routes>

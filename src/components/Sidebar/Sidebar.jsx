@@ -29,9 +29,9 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 {isSidebarOpen && (
                     <div className={styles.menu}>
                         <Link
-                            to="/"
+                            to="/home"
                             className={
-                                location.pathname === "/" ? styles.active : null
+                                location.pathname === "/home" ? styles.active : null
                            }
                         >
                             <MdHome /> Página inicial
