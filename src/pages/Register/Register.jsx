@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import FormField from "../../components/Form/FormField";
+import api from "../../constants/api.js";
 import styles from "./Register.module.css";
 
 const Register = ({ setIsAuthenticated }) => {
@@ -65,29 +66,31 @@ const Register = ({ setIsAuthenticated }) => {
 
         setIsLoading(true);
 
+        let isAuthenticated = false;
+
         try {
-            await new Promise((resolve) => setTimeout(resolve, 800));
-
-            if (formData.email === "demo@estudai.com") {
-                setErrors({
-                    general: "Este email já está em uso. Use outro email.",
-                });
-                return;
-            }
-
-            const fakeToken = "fake-jwt-token";
-            localStorage.setItem("authToken", fakeToken);
-            localStorage.setItem("userEmail", formData.email);
-            localStorage.setItem("userName", formData.name);
-
-            setIsAuthenticated(true);
-            navigate("/home");
-        } catch (error) {
-            setErrors({
-                general: "Ocorreu um erro inesperado. Tente novamente.",
+            const response = await api.post("/users/register", {
+                name: formData.name,
+                email: formData.email,
+                password: formData.confirmPassword,
             });
+
+            const result = response.data;
+            localStorage.setItem("authToken", result.token);
+            localStorage.setItem("idUser", result.idUser);
+            isAuthenticated = true;
+        } catch (error) {
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("idUser");
+            setErrors({
+                general: error.message,
+            });
+            console.error("Erro ao realizar login: ", error);
         } finally {
             setIsLoading(false);
+            if (isAuthenticated) {
+                navigate("/home");
+            }
         }
     };
 

@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import FormField from "../../components/Form/FormField";
+import api from "../../constants/api.js";
 import styles from "./Login.module.css";
 
-const Login = ({ setIsAuthenticated }) => {
+const Login = () => {
     const [credentials, setCredentials] = useState({
-        email: "demo@estudai.com",
-        password: "123456",
+        email: "",
+        password: "",
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
@@ -51,31 +52,30 @@ const Login = ({ setIsAuthenticated }) => {
 
         setIsLoading(true);
 
+        let isAuthenticated = false;
+
         try {
-            await new Promise((resolve) => setTimeout(resolve, 800));
-
-            if (
-                credentials.email === "demo@estudai.com" &&
-                credentials.password === "123456"
-            ) {
-                const fakeToken = "fake-jwt-token";
-                localStorage.setItem("authToken", fakeToken);
-                localStorage.setItem("userEmail", credentials.email);
-
-                setIsAuthenticated(true);
-                navigate("/home");
-            } else {
-                setErrors({
-                    general:
-                        "Email ou senha incorretos. Use demo@estudai.com / 123456",
-                });
-            }
-        } catch (error) {
-            setErrors({
-                general: "Ocorreu um erro inesperado. Tente novamente.",
+            const response = await api.post("/users/login", {
+                email: credentials.email,
+                password: credentials.password,
             });
+
+            const result = response.data;
+            localStorage.setItem("authToken", result.token);
+            localStorage.setItem("idUser", result.idUser);
+            isAuthenticated = true;
+        } catch (error) {
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("idUser");
+            setErrors({
+                general: error.message,
+            });
+            console.error("Erro ao realizar login: ", error);
         } finally {
             setIsLoading(false);
+            if (isAuthenticated) {
+                navigate("/home");
+            }
         }
     };
 

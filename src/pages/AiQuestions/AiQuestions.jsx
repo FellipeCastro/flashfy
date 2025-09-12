@@ -75,11 +75,6 @@ const AiQuestions = ({
             isValid = false;
         }
 
-        if (aiCredits === 0) {
-            newErrors.main = "Seus créditos acabaram!";
-            isValid = false;
-        }
-
         setErrorMessage(newErrors);
         setQuestions([]);
         return isValid;
@@ -271,7 +266,6 @@ const AiQuestions = ({
             }
 
             setQuestions(generated);
-            subtractAiCredits();
         } catch (error) {
             console.error("Erro no submit:", error);
             setErrorMessage((prev) => ({
@@ -310,13 +304,6 @@ const AiQuestions = ({
                 <div className={styles.titleContainer}>
                     <h1>Gere perguntas por IA</h1>
                 </div>
-
-                {/* <p className={styles.paragraph}>
-                    Gere perguntas personalizadas de qualquer tema usando
-                    inteligência artificial. Você tem 3 créditos diários para
-                    criar formulários com quantidade e dificuldade
-                    personalizadas para seus estudos.
-                </p> */}
 
                 <form
                     onSubmit={handleSubmit}
