@@ -10,7 +10,7 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
     const navigate = useNavigate();
 
     // Encontra o deck correspondente ao ID na URL
-    const selectedDeck = decks.find((deck) => deck.id === parseInt(id));
+    const selectedDeck = decks.find((deck) => deck.idDeck === parseInt(id));
 
     const [showAnswer, setShowAnswer] = useState(false);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);

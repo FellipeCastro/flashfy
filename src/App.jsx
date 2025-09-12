@@ -6,7 +6,7 @@ import Cards from "./pages/Cards/Cards";
 import AiQuestions from "./pages/AiQuestions/AiQuestions";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-import mockData from "./mockData";
+import api from "./constants/api.js";
 
 const App = () => {
     const [decks, setDecks] = useState([]);
@@ -14,71 +14,21 @@ const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [lastStudyDate, setLastStudyDate] = useState(null);
     const [selectedSubjects, setSelectedSubjects] = useState([]);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // Função para incrementar studiedDecks
-    const incrementStudiedDecks = () => {
-        setProgress((prev) => ({
-            ...prev,
-            studiedDecks: (prev.studiedDecks || 0) + 1,
-        }));
-    };
-
-    // Função para verificar e resetar studiedDecks se for novo dia
-    const checkAndResetStudiedDecks = () => {
-        const today = new Date().toDateString();
-        if (!lastStudyDate || lastStudyDate !== today) {
-            localStorage.setItem("lastStudyDate", today);
-            setLastStudyDate(today);
-            setProgress((prev) => ({
-                ...prev,
-                studiedDecks: 0,
-            }));
+    const loadData = async () => {
+        try {
+            const decksResponse = await api.get("/decks");
+            const progressResponse = await api.get("/progress");
+            setDecks(decksResponse.data);
+            setProgress(progressResponse.data);
+        } catch (error) {
+            console.log(error);
         }
     };
 
-    const calculateDecksToStudy = (decks) => {
-        return decks.filter((deck) => {
-            if (!deck.nextReview) return false;
-            try {
-                const reviewDate = new Date(deck.nextReview);
-                const diffTime = reviewDate - new Date();
-                return diffTime < 0 || diffTime < 1000 * 60 * 60 * 24;
-            } catch (e) {
-                console.error("Invalid date format for deck:", deck.id, e);
-                return false;
-            }
-        }).length;
-    };
-
-    const updateDeck = (updatedDeck) => {
-        const today = new Date().toDateString();
-        const isNewDay = !lastStudyDate || lastStudyDate !== today;
-
-        setDecks((prevDecks) => {
-            const newDecks = prevDecks.map((deck) =>
-                deck.id === updatedDeck.id ? updatedDeck : deck
-            );
-
-            // Verifica se é novo dia e atualiza o contador
-            checkAndResetStudiedDecks();
-
-            // Incrementa o contador de decks estudados
-            incrementStudiedDecks();
-
-            setProgress((prev) => ({
-                ...prev,
-                decksToStudy: calculateDecksToStudy(newDecks),
-            }));
-
-            if (isNewDay) {
-                setLastStudyDate(today);
-                localStorage.setItem("lastStudyDate", today);
-            }
-
-            return newDecks;
-        });
-    };
+    useEffect(() => {
+        loadData()
+    });
 
     // Filtra os decks com base nas matérias selecionados
     const filteredDecks = decks.filter((deck) => {
@@ -91,36 +41,6 @@ const App = () => {
         );
     });
 
-    useEffect(() => {
-        const storedDate = localStorage.getItem("lastStudyDate");
-        const initialDate = storedDate || new Date().toDateString();
-        setLastStudyDate(initialDate);
-
-        setDecks(mockData.decks);
-        setProgress({
-            ...mockData.progress,
-            decksToStudy: calculateDecksToStudy(mockData.decks),
-        });
-
-        const token = localStorage.getItem("authToken");
-        setIsAuthenticated(token);
-
-        // Verifica ao carregar se precisa resetar por novo dia
-        checkAndResetStudiedDecks();
-    }, []);
-
-    // Verifica a cada hora se mudou o dia
-    useEffect(() => {
-        const interval = setInterval(() => {
-            const today = new Date().toDateString();
-            if (lastStudyDate && lastStudyDate !== today) {
-                checkAndResetStudiedDecks();
-            }
-        }, 1000 * 60 * 60); // Verifica a cada hora
-
-        return () => clearInterval(interval);
-    }, [lastStudyDate]);
-
     // Componente de rota protegida
     const ProtectedRoute = ({ children }) => {
         const token = localStorage.getItem("authToken");
@@ -132,6 +52,10 @@ const App = () => {
         const token = localStorage.getItem("authToken");
         return token ? <Navigate to="/home" replace /> : children;
     };
+
+    const updateDeck = () => {
+        console.log("OK");   
+    }
 
     return (
         <BrowserRouter>
@@ -154,7 +78,7 @@ const App = () => {
                     path="/login"
                     element={
                         <GuestRoute>
-                            <Login setIsAuthenticated={setIsAuthenticated} />
+                            <Login />
                         </GuestRoute>
                     }
                 />
@@ -163,7 +87,7 @@ const App = () => {
                     path="/register"
                     element={
                         <GuestRoute>
-                            <Register setIsAuthenticated={setIsAuthenticated} />
+                            <Register />
                         </GuestRoute>
                     }
                 />

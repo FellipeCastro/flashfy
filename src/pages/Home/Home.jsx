@@ -141,14 +141,14 @@ const Home = ({
                             })
                             .map((deck) => (
                                 <Deck
-                                    key={deck.id}
+                                    key={deck.idDeck}
                                     color={subjectColors[deck.subject]}
                                     subject={deck.subject}
                                     title={deck.title}
-                                    cards={deck.cards.length}
+                                    cards={deck.cards}
                                     nextReview={deck.nextReview}
                                     openCard={() =>
-                                        navigate(`/cards/${deck.id}`)
+                                        navigate(`/cards/${deck.idDeck}`)
                                     }
                                 />
                             ))}
