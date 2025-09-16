@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaTrashAlt } from "react-icons/fa";
-import styles from "./Cards.module.css";
 import Button from "../../components/Button/Button";
 import AddCardForm from "../../components/AddCardForm/AddCardForm";
+import api from "../../constants/api.js";
+import styles from "./Cards.module.css";
 
 const Cards = ({ decks, setDecks, updateDeck }) => {
     const { id } = useParams();
@@ -22,7 +23,7 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
         setCurrentDeck(selectedDeck);
         setCurrentCardIndex(0);
         setShowAnswer(false);
-        setSelectedDifficulty(null);
+        setSelectedDifficulty(null);          
     }, [decks, id]);
 
     const createCard = (question, answer) => {

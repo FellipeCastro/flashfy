@@ -13,7 +13,6 @@ const Home = ({
     isSidebarOpen,
     setIsSidebarOpen,
     decks,
-    setDecks,
     progress,
     selectedSubjects,
     setSelectedSubjects,
@@ -28,28 +27,7 @@ const Home = ({
     }, {});
 
     const createDeck = (subject, title) => {
-        // Verifica se já existe um deck com o mesmo título
-        const deckExists = decks.some(
-            (deck) =>
-                deck.title.toLowerCase() === title.toLowerCase() &&
-                deck.subject === subject
-        );
-
-        if (deckExists) {
-            alert("Já existe um deck com este título para esta matéria!");
-            return;
-        }
-
-        // Cria o novo deck
-        const newDeck = {
-            id: window.crypto.getRandomValues(new Uint32Array(1))[0],
-            title: title,
-            subject: subject,
-            cards: [], // Começa sem cards
-        };
-
-        // Atualiza o estado adicionando o novo deck
-        setDecks([...decks, newDeck]);
+        
 
         // Fecha o formulário de adicionar deck
         setIsAddDeckFormOpen(false);
@@ -145,7 +123,7 @@ const Home = ({
                                     color={subjectColors[deck.subject]}
                                     subject={deck.subject}
                                     title={deck.title}
-                                    cards={deck.cards}
+                                    cards={deck.cards.length}
                                     nextReview={deck.nextReview}
                                     openCard={() =>
                                         navigate(`/cards/${deck.idDeck}`)

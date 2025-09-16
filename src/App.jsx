@@ -12,7 +12,6 @@ const App = () => {
     const [decks, setDecks] = useState([]);
     const [progress, setProgress] = useState({});
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [lastStudyDate, setLastStudyDate] = useState(null);
     const [selectedSubjects, setSelectedSubjects] = useState([]);
 
     const loadData = async () => {
@@ -52,10 +51,6 @@ const App = () => {
         const token = localStorage.getItem("authToken");
         return token ? <Navigate to="/home" replace /> : children;
     };
-
-    const updateDeck = () => {
-        console.log("OK");   
-    }
 
     return (
         <BrowserRouter>
@@ -140,7 +135,6 @@ const App = () => {
                             <Cards
                                 decks={decks}
                                 setDecks={setDecks}
-                                updateDeck={updateDeck}
                             />
                         </ProtectedRoute>
                     }
