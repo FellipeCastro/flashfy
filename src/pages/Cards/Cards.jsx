@@ -6,7 +6,7 @@ import AddCardForm from "../../components/AddCardForm/AddCardForm";
 import api from "../../constants/api.js";
 import styles from "./Cards.module.css";
 
-const Cards = ({ decks, setDecks, updateDeck }) => {
+const Cards = ({ decks, setDecks }) => {
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -72,38 +72,13 @@ const Cards = ({ decks, setDecks, updateDeck }) => {
         setSelectedDifficulty(level);
     };
 
-    const handleFinalize = () => {
-        // Calcular nova data de revisão
-        const difficulties = currentDeck.cards.map(
-            (card) => card.difficulty || 1
-        );
-        const average = Math.round(
-            difficulties.reduce((sum, value) => sum + value, 0) /
-                difficulties.length
-        );
-
-        const daysToAdd =
-            {
-                1: 7,
-                2: 5,
-                3: 3,
-                4: 1,
-            }[average] || 0;
-
-        const newReviewDate = new Date();
-        newReviewDate.setDate(newReviewDate.getDate() + daysToAdd);
-
-        // Atualizar o deck
-        const updatedDeck = {
-            ...currentDeck,
-            nextReview: newReviewDate.toISOString(),
-        };
-
-        // Atualizar estados
-        updateDeck(updatedDeck);
-
-        // Navegar para home
-        navigate("/home");
+    const handleFinalize = async () => {
+        try {
+            await api.post('/progress/increment');
+            navigate("/home");
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     if (!currentDeck) {

@@ -13,21 +13,32 @@ const App = () => {
     const [progress, setProgress] = useState({});
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [selectedSubjects, setSelectedSubjects] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const loadData = async () => {
+        const token = localStorage.getItem("authToken");
+        if (!token) return; // Não tenta carregar se não estiver logado
+
         try {
+            setLoading(true);
             const decksResponse = await api.get("/decks");
             const progressResponse = await api.get("/progress");
             setDecks(decksResponse.data);
             setProgress(progressResponse.data);
         } catch (error) {
-            console.log(error);
+            console.error("Erro ao carregar dados:", error);
+            if (error.response?.status === 401) {
+                localStorage.removeItem("authToken");
+                window.location.href = "/login";
+            }
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        loadData()
-    });
+        loadData();
+    }, []);
 
     // Filtra os decks com base nas matérias selecionados
     const filteredDecks = decks.filter((deck) => {
@@ -132,10 +143,7 @@ const App = () => {
                     path="/cards/:id"
                     element={
                         <ProtectedRoute>
-                            <Cards
-                                decks={decks}
-                                setDecks={setDecks}
-                            />
+                            <Cards decks={decks} setDecks={setDecks} />
                         </ProtectedRoute>
                     }
                 />

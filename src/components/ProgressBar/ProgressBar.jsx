@@ -11,9 +11,7 @@ const ProgressBar = ({ progress }) => {
         <div className={styles.progressBarContainer}>
             <h2>
                 <FaFire />
-                {progress.consecutiveDays <= 1
-                    ? "Vamos começar sua sequência!"
-                    : `${progress.consecutiveDays} dias consecutivos!`}
+                {progress.message}
             </h2>
 
             <ul className={styles.weekDays}>
