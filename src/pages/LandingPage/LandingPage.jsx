@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { FaBrain, FaUsers, FaRobot, FaChartLine, FaBook, FaClock, FaTrophy } from "react-icons/fa";
+import { FaBrain, FaUsers, FaRobot, FaChartLine, FaBook, FaClock, FaTrophy, FaTimes, FaBars } from "react-icons/fa";
+import { useState } from "react";
 import styles from "./LandingPage.module.css";
 import logo from "../../assets/logo/logo4.png";
 import Button from "../../components/Button/Button";
 
 const LandingPage = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const features = [
     {
@@ -77,10 +79,24 @@ const LandingPage = ({ setIsAuthenticated }) => {
 
   const handleLoginClick = () => {
     navigate("/login");
+    setIsMenuOpen(false);
   };
 
   const handleRegisterClick = () => {
     navigate("/register");
+    setIsMenuOpen(false);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
   };
 
   return (
@@ -91,12 +107,12 @@ const LandingPage = ({ setIsAuthenticated }) => {
             <img src={logo} alt="FlashFy Logo" className={styles.logoImage} />
             FlashFy
           </div>
-          <nav className={styles.nav}>
-            <a href="#features">Recursos</a>
-            <a href="#how-it-works">Como Funciona</a>
-            <a href="#testimonials">Depoimentos</a>
+          <nav className={`${styles.nav} ${isMenuOpen ? styles.active : ''}`}>
+            <a href="#features" onClick={(e) => { e.preventDefault(); scrollToSection('features'); }}>Recursos</a>
+            <a href="#how-it-works" onClick={(e) => { e.preventDefault(); scrollToSection('how-it-works'); }}>Como Funciona</a>
+            <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollToSection('testimonials'); }}>Depoimentos</a>
           </nav>
-          <div className={styles.authButtons}>
+          <div className={`${styles.authButtons} ${isMenuOpen ? styles.active : ''}`}>
             <Button secondary onClick={handleLoginClick}>
               Entrar
             </Button>
@@ -104,6 +120,13 @@ const LandingPage = ({ setIsAuthenticated }) => {
               Cadastrar
             </Button>
           </div>
+          <button 
+            className={styles.mobileMenuButton} 
+            onClick={toggleMenu}
+            aria-label="Menu mobile"
+          >
+            {isMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
         </div>
       </header>
 
@@ -188,9 +211,11 @@ const LandingPage = ({ setIsAuthenticated }) => {
         <div className={styles.container}>
           <h2>Pronto para transformar seus estudos?</h2>
           <p>Junte-se a milhares de estudantes que já usam o FlashFy</p>
-          <Button onClick={handleRegisterClick}>
-            Criar Minha Conta Gratuita
-          </Button>
+          <div className={styles.ctaButtonContainer}>
+            <Button onClick={handleRegisterClick}>
+              Criar Minha Conta Gratuita
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -207,9 +232,9 @@ const LandingPage = ({ setIsAuthenticated }) => {
             <div className={styles.footerLinks}>
               <div className={styles.footerSection}>
                 <h4>Produto</h4>
-                <a href="#features">Recursos</a>
-                <a href="#how-it-works">Como Funciona</a>
-                <a href="#testimonials">Depoimentos</a>
+                <a href="#features" onClick={(e) => { e.preventDefault(); scrollToSection('features'); }}>Recursos</a>
+                <a href="#how-it-works" onClick={(e) => { e.preventDefault(); scrollToSection('how-it-works'); }}>Como Funciona</a>
+                <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollToSection('testimonials'); }}>Depoimentos</a>
               </div>
               <div className={styles.footerSection}>
                 <h4>Suporte</h4>
