@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import subjects from "../../subjects";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
@@ -8,24 +7,35 @@ import Deck from "../../components/Deck/Deck";
 import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
 import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 import styles from "./Home.module.css";
+import api from "../../constants/api";
 
 const Home = ({
     isSidebarOpen,
     setIsSidebarOpen,
     decks,
     progress,
+    subjects,
     selectedSubjects,
     setSelectedSubjects,
+    loadData,
 }) => {
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
     const [isAddSubjectFormOpen, setIsAddSubjectFormOpen] = useState(false);
     const navigate = useNavigate();
 
-    const createDeck = (subject, title) => {
-        
-
-        // Fecha o formulário de adicionar deck
-        setIsAddDeckFormOpen(false);
+    const createDeck = async (idSubject, title) => {
+        try {
+            const response = await api.post("/decks", {
+                idSubject,
+                title,
+            });
+            if (response.data) {
+                setIsAddDeckFormOpen(false);
+                loadData();
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     // Função que alterna a seleção de uma matéria
@@ -80,11 +90,11 @@ const Home = ({
                             );
                         })}
                     </div>
-                    <div className={styles.deleteSubjectContainer}>
+                    {/* <div className={styles.deleteSubjectContainer}>
                         <button className={styles.deleteSubjectBtn}>
                             Excluir matéria
                         </button>
-                    </div>
+                    </div> */}
                     {decks.length === 0 && (
                         <div className={styles.noDecks}>
                             <p className={styles.msg}>

@@ -9,7 +9,7 @@ const AddDeckForm = ({
     subjects,
     createDeck,
 }) => {
-    const [subject, setSubject] = useState("");
+    const [idSubject, setIdSubject] = useState("");
     const [title, setTitle] = useState("");
 
     const openAddSubjectForm = () => {
@@ -19,7 +19,7 @@ const AddDeckForm = ({
 
     const onSubmit = (e) => {
         e.preventDefault();
-        createDeck(subject, title);
+        createDeck(idSubject, title);
     };
 
     const closeModal = () => {
@@ -57,15 +57,15 @@ const AddDeckForm = ({
                         <select
                             name="subject"
                             id="subject"
-                            onChange={(e) => setSubject(e.target.value)}
-                            value={subject}
+                            onChange={(e) => setIdSubject(e.target.value)}
+                            value={idSubject}
                         >
                             <option value="">Selecione uma matéria</option>
                             {subjects.map((subject) => {
                                 return (
                                     <option
                                         key={subject.name}
-                                        value={subject.name}
+                                        value={subject.idSubject}
                                     >
                                         {subject.name}
                                     </option>

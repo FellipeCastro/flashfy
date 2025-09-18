@@ -20,10 +20,13 @@
     text-decoration: none;
     font-size: 1.3rem;
     padding: 0.4rem;
+    display: flex;
+    align-items: center;
 }
 
 .header h1 {
-    font-weight: 500;
+    font-weight: bold;
+    font-size: 1.4rem;
 }
 
 .btnsContainer {
@@ -41,6 +44,8 @@
     font-size: 1.2rem;
     cursor: pointer;
     transition: 0.4s;
+    display: flex;
+    align-items: center;
 }
 
 .deleteBtn:hover {

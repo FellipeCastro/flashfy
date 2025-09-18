@@ -11,6 +11,7 @@ import api from "./constants/api.js";
 const App = () => {
     const [decks, setDecks] = useState([]);
     const [progress, setProgress] = useState({});
+    const [subjects, setSubjects] = useState([]);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [selectedSubjects, setSelectedSubjects] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -20,8 +21,10 @@ const App = () => {
             setLoading(true);
             const decksResponse = await api.get("/decks");
             const progressResponse = await api.get("/progress");
+            const subjectsResponse = await api.get("/subjects");
             setDecks(decksResponse.data);
             setProgress(progressResponse.data);
+            setSubjects(subjectsResponse.data);
         } catch (error) {
             console.error("Erro ao carregar dados:", error.message);
         } finally {
@@ -40,7 +43,7 @@ const App = () => {
 
         // Verifica se o deck tem pelo menos um dos assuntos selecionados
         return selectedSubjects.some((subject) =>
-            deck.subject?.includes(subject)
+            deck.subject.name?.includes(subject)
         );
     });
 
@@ -101,8 +104,10 @@ const App = () => {
                                 decks={filteredDecks}
                                 setDecks={setDecks}
                                 progress={progress}
+                                subjects={subjects}
                                 selectedSubjects={selectedSubjects}
                                 setSelectedSubjects={setSelectedSubjects}
+                                loadData={loadData}
                             />
                         </ProtectedRoute>
                     }
@@ -136,7 +141,10 @@ const App = () => {
                     path="/cards/:id"
                     element={
                         <ProtectedRoute>
-                            <Cards decks={decks} setDecks={setDecks} />
+                            <Cards
+                                decks={decks}
+                                loadData={loadData}
+                            />
                         </ProtectedRoute>
                     }
                 />

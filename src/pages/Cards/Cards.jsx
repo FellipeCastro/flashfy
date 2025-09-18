@@ -6,11 +6,10 @@ import AddCardForm from "../../components/AddCardForm/AddCardForm";
 import api from "../../constants/api.js";
 import styles from "./Cards.module.css";
 
-const Cards = ({ decks, setDecks }) => {
+const Cards = ({ decks, loadData }) => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    // Encontra o deck correspondente ao ID na URL
     const selectedDeck = decks.find((deck) => deck.idDeck === parseInt(id));
 
     const [showAnswer, setShowAnswer] = useState(false);
@@ -18,28 +17,35 @@ const Cards = ({ decks, setDecks }) => {
     const [currentDeck, setCurrentDeck] = useState(null);
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
     const [isAddCardFormOpen, setIsAddCardFormOpen] = useState(false);
+    const [difficulties, setDifficulties] = useState([]); // ✅ Novo estado para dificuldades
 
     useEffect(() => {
         setCurrentDeck(selectedDeck);
         setCurrentCardIndex(0);
         setShowAnswer(false);
-        setSelectedDifficulty(null);          
+        setSelectedDifficulty(null);
+
+        if (selectedDeck?.cards) {
+            setDifficulties(
+                selectedDeck.cards.map((card) => card.difficulty || null)
+            );
+        }
     }, [decks, id]);
 
-    const createCard = (question, answer) => {
-        setDecks((prevDecks) =>
-            prevDecks.map((deck) => {
-                if (deck.title === selectedDeck.title) {
-                    return {
-                        ...deck,
-                        cards: [...deck.cards, { question, answer }],
-                    };
-                }
-                return deck;
-            })
-        );
-
-        setIsAddCardFormOpen(false);
+    const createCard = async (question, answer) => {
+        try {
+            const response = await api.post("/cards", {
+                idDeck: id,
+                question,
+                answer,
+            });
+            if (response.data) {
+                setIsAddCardFormOpen(false);
+                loadData();
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleNextCard = () => {
@@ -68,14 +74,47 @@ const Cards = ({ decks, setDecks }) => {
             cards: updatedCards,
         };
 
+        const updatedDifficulties = [...difficulties];
+        updatedDifficulties[currentCardIndex] = level;
+        setDifficulties(updatedDifficulties);
+
         setCurrentDeck(updatedDeck);
         setSelectedDifficulty(level);
     };
 
     const handleFinalize = async () => {
         try {
-            await api.post('/progress/increment');
-            navigate("/home");
+            const hasNullDifficulties = difficulties.some(
+                (diff) => diff === null
+            );
+            if (hasNullDifficulties) {
+                alert(
+                    "Por favor, defina a dificuldade para todas as cards antes de finalizar."
+                );
+                return;
+            }
+
+            const response =  await api.put("/decks/study", {
+                idDeck: id,
+                difficulties: difficulties,
+            });
+
+            if (response.data) {
+                navigate("/home");
+                loadData();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const deleteDeck = () => async () => {
+        try {
+            const response = await api.delete(`/decks/${id}`);
+            if (response.data) {
+                navigate("/home");
+                loadData();
+            }
         } catch (error) {
             console.log(error);
         }
@@ -99,33 +138,6 @@ const Cards = ({ decks, setDecks }) => {
         );
     }
 
-    if (currentDeck.cards.length === 0) {
-        return (
-            <>
-                <header className={styles.header}>
-                    <div className={styles.titleContainer}>
-                        <Link to="/home">
-                            <FaArrowLeft />
-                        </Link>
-                        <h1>{currentDeck.title}</h1>
-                        <button className={styles.deleteBtn}>
-                            <FaTrashAlt />
-                        </button>
-                    </div>
-
-                    <div className={styles.btnsContainer}>
-                        <Button onClick={() => setIsAddCardFormOpen(true)}>
-                            + Novo Card
-                        </Button>
-                    </div>
-                </header>
-                <div className={styles.mainContainer}>
-                    <p className={styles.msg}>Crie cards para responder!</p>
-                </div>
-            </>
-        );
-    }
-
     const currentCard = currentDeck.cards[currentCardIndex];
     const progress = ((currentCardIndex + 1) / currentDeck.cards.length) * 100;
 
@@ -137,7 +149,7 @@ const Cards = ({ decks, setDecks }) => {
                         <FaArrowLeft />
                     </Link>
                     <h1>{currentDeck.title}</h1>
-                    <button className={styles.deleteBtn}>
+                    <button className={styles.deleteBtn} onClick={deleteDeck()}>
                         <FaTrashAlt />
                     </button>
                 </div>
@@ -148,83 +160,100 @@ const Cards = ({ decks, setDecks }) => {
                     </Button>
                 </div>
             </header>
+
             <div className={styles.mainContainer}>
-                <div className={styles.progressBar}>
-                    <div
-                        className={styles.progress}
-                        style={{ width: `${progress}%` }}
-                    ></div>
-                    <span className={styles.progressText}>
-                        {currentCardIndex + 1}/{currentDeck.cards.length}
-                    </span>
-                </div>
-                <div className={styles.card}>
-                    <p className={styles.question}>{currentCard.question}</p>
-                    <div
-                        className={`${styles.answer} ${
-                            showAnswer ? styles.showAnswer : null
-                        }`}
-                        onClick={() => setShowAnswer(!showAnswer)}
-                    >
-                        <div className={`${styles.face} ${styles.back}`}>
-                            <p>Clique para ver a resposta</p>
+                {currentDeck.cards.length === 0 ? (
+                    <p className={styles.msg}>Crie cards para responder!</p>
+                ) : (
+                    <>
+                        <div className={styles.progressBar}>
+                            <div
+                                className={styles.progress}
+                                style={{ width: `${progress}%` }}
+                            ></div>
+                            <span className={styles.progressText}>
+                                {currentCardIndex + 1}/
+                                {currentDeck.cards.length}
+                            </span>
                         </div>
-                        <div className={`${styles.face} ${styles.front}`}>
-                            <p>{currentCard.answer}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div
-                    className={`${styles.feedback} ${
-                        showAnswer ? null : styles.hidden
-                    }`}
-                >
-                    <div className={styles.flexContainer}>
-                        <span>Muito fácil</span>
-                        <span>Muito difícil</span>
-                    </div>
-
-                    <ul className={styles.difficulty}>
-                        {[1, 2, 3, 4].map((level) => (
-                            <li
-                                key={level}
-                                className={
-                                    currentCard.difficulty === level ||
-                                    selectedDifficulty === level
-                                        ? styles.selected
-                                        : null
-                                }
-                                onClick={() => handleSetDifficulty(level)}
+                        <div className={styles.card}>
+                            <p className={styles.question}>
+                                {currentCard.question}
+                            </p>
+                            <div
+                                className={`${styles.answer} ${
+                                    showAnswer ? styles.showAnswer : null
+                                }`}
+                                onClick={() => setShowAnswer(!showAnswer)}
                             >
-                                {level}
-                            </li>
-                        ))}
-                    </ul>
+                                <div
+                                    className={`${styles.face} ${styles.back}`}
+                                >
+                                    <p>Clique para ver a resposta</p>
+                                </div>
+                                <div
+                                    className={`${styles.face} ${styles.front}`}
+                                >
+                                    <p>{currentCard.answer}</p>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div className={styles.flexContainer}>
-                        <button
-                            onClick={handlePrevCard}
-                            disabled={currentCardIndex === 0}
-                            className={styles.navBtn}
+                        <div
+                            className={`${styles.feedback} ${
+                                showAnswer ? null : styles.hidden
+                            }`}
                         >
-                            Anterior
-                        </button>
-                        <button
-                            onClick={
-                                currentCardIndex ===
-                                currentDeck.cards.length - 1
-                                    ? handleFinalize
-                                    : handleNextCard
-                            }
-                            className={styles.navBtn}
-                        >
-                            {currentCardIndex === currentDeck.cards.length - 1
-                                ? "Finalizar"
-                                : "Próximo"}
-                        </button>
-                    </div>
-                </div>
+                            <div className={styles.flexContainer}>
+                                <span>Muito fácil</span>
+                                <span>Muito difícil</span>
+                            </div>
+
+                            <ul className={styles.difficulty}>
+                                {[1, 2, 3, 4].map((level) => (
+                                    <li
+                                        key={level}
+                                        className={
+                                            currentCard.difficulty === level ||
+                                            selectedDifficulty === level
+                                                ? styles.selected
+                                                : null
+                                        }
+                                        onClick={() =>
+                                            handleSetDifficulty(level)
+                                        }
+                                    >
+                                        {level}
+                                    </li>
+                                ))}
+                            </ul>
+
+                            <div className={styles.flexContainer}>
+                                <button
+                                    onClick={handlePrevCard}
+                                    disabled={currentCardIndex === 0}
+                                    className={styles.navBtn}
+                                >
+                                    Anterior
+                                </button>
+                                <button
+                                    onClick={
+                                        currentCardIndex ===
+                                        currentDeck.cards.length - 1
+                                            ? handleFinalize
+                                            : handleNextCard
+                                    }
+                                    className={styles.navBtn}
+                                >
+                                    {currentCardIndex ===
+                                    currentDeck.cards.length - 1
+                                        ? "Finalizar"
+                                        : "Próximo"}
+                                </button>
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
 
             {isAddCardFormOpen && (
