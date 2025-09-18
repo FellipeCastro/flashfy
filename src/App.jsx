@@ -16,9 +16,6 @@ const App = () => {
     const [loading, setLoading] = useState(false);
 
     const loadData = async () => {
-        const token = localStorage.getItem("authToken");
-        if (!token) return; // Não tenta carregar se não estiver logado
-
         try {
             setLoading(true);
             const decksResponse = await api.get("/decks");
@@ -26,11 +23,7 @@ const App = () => {
             setDecks(decksResponse.data);
             setProgress(progressResponse.data);
         } catch (error) {
-            console.error("Erro ao carregar dados:", error);
-            if (error.response?.status === 401) {
-                localStorage.removeItem("authToken");
-                window.location.href = "/login";
-            }
+            console.error("Erro ao carregar dados:", error.message);
         } finally {
             setLoading(false);
         }
@@ -84,7 +77,7 @@ const App = () => {
                     path="/login"
                     element={
                         <GuestRoute>
-                            <Login />
+                            <Login loadData={loadData} />
                         </GuestRoute>
                     }
                 />
@@ -93,7 +86,7 @@ const App = () => {
                     path="/register"
                     element={
                         <GuestRoute>
-                            <Register />
+                            <Register loadData={loadData} />
                         </GuestRoute>
                     }
                 />

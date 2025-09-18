@@ -4,7 +4,7 @@ import FormField from "../../components/Form/FormField";
 import api from "../../constants/api.js";
 import styles from "./Login.module.css";
 
-const Login = () => {
+const Login = ({ loadData }) => {
     const [credentials, setCredentials] = useState({
         email: "",
         password: "",
@@ -64,6 +64,7 @@ const Login = () => {
             localStorage.setItem("authToken", result.token);
             localStorage.setItem("idUser", result.idUser);
             isAuthenticated = true;
+            loadData();
         } catch (error) {
             localStorage.removeItem("authToken");
             localStorage.removeItem("idUser");

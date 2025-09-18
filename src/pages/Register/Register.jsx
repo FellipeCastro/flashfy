@@ -4,7 +4,7 @@ import FormField from "../../components/Form/FormField";
 import api from "../../constants/api.js";
 import styles from "./Register.module.css";
 
-const Register = ({ setIsAuthenticated }) => {
+const Register = ({ loadData }) => {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -79,13 +79,14 @@ const Register = ({ setIsAuthenticated }) => {
             localStorage.setItem("authToken", result.token);
             localStorage.setItem("idUser", result.idUser);
             isAuthenticated = true;
+            loadData();
         } catch (error) {
             localStorage.removeItem("authToken");
             localStorage.removeItem("idUser");
             setErrors({
                 general: error.message,
             });
-            console.error("Erro ao realizar login: ", error);
+            console.error("Erro ao realizar cadastro: ", error);
         } finally {
             setIsLoading(false);
             if (isAuthenticated) {

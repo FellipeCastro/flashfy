@@ -21,11 +21,6 @@ const Home = ({
     const [isAddSubjectFormOpen, setIsAddSubjectFormOpen] = useState(false);
     const navigate = useNavigate();
 
-    const subjectColors = subjects.reduce((acc, subject) => {
-        acc[subject.name] = subject.color;
-        return acc;
-    }, {});
-
     const createDeck = (subject, title) => {
         
 
@@ -120,8 +115,8 @@ const Home = ({
                             .map((deck) => (
                                 <Deck
                                     key={deck.idDeck}
-                                    color={subjectColors[deck.subject]}
-                                    subject={deck.subject}
+                                    color={deck.subject.color}
+                                    subject={deck.subject.name}
                                     title={deck.title}
                                     cards={deck.cards.length}
                                     nextReview={deck.nextReview}
