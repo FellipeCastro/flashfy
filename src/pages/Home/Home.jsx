@@ -38,6 +38,21 @@ const Home = ({
         }
     };
 
+    const createSubject = async (name, color) => {
+        try {
+            const response = await api.post("/subjects", {
+                name,
+                color,
+            });
+            if (response.data) {
+                setIsAddSubjectFormOpen(false);
+                loadData();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     // Função que alterna a seleção de uma matéria
     const handleSubjectSelection = (subject) => {
         setSelectedSubjects(
@@ -152,6 +167,7 @@ const Home = ({
                 <AddSubjectForm
                     setIsAddDeckFormOpen={setIsAddDeckFormOpen}
                     setIsAddSubjectFormOpen={setIsAddSubjectFormOpen}
+                    createSubject={createSubject}
                 />
             )}
         </>

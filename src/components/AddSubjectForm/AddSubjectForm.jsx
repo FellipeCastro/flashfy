@@ -3,23 +3,13 @@ import { IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
 import styles from "./AddSubjectForm.module.css";
 
-const AddSubjectForm = ({ setIsAddDeckFormOpen, setIsAddSubjectFormOpen }) => {
-    const [subject, setSubject] = useState("");
+const AddSubjectForm = ({
+    setIsAddDeckFormOpen,
+    setIsAddSubjectFormOpen,
+    createSubject,
+}) => {
+    const [name, setName] = useState("");
     const [color, setColor] = useState("#ffffff");
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-
-        // Converter a cor para RGBA com opacidade 0.4
-        const colorWithOpacity = hexToRgba(color, 0.4);
-
-        console.log({
-            subject,
-            color: colorWithOpacity,
-        });
-
-        closeModal();
-    };
 
     // Função para converter HEX para RGBA
     const hexToRgba = (hex, opacity) => {
@@ -33,6 +23,15 @@ const AddSubjectForm = ({ setIsAddDeckFormOpen, setIsAddSubjectFormOpen }) => {
 
         // Retorna no formato rgba
         return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        // Converter a cor para RGBA com opacidade 0.4
+        const colorWithOpacity = hexToRgba(color, 0.4);
+
+        createSubject(name, colorWithOpacity);
     };
 
     const closeModal = () => {
@@ -65,8 +64,8 @@ const AddSubjectForm = ({ setIsAddDeckFormOpen, setIsAddSubjectFormOpen }) => {
                             name="subject"
                             id="subject"
                             placeholder="Digite a matéria aqui"
-                            onChange={(e) => setSubject(e.target.value)}
-                            value={subject}
+                            onChange={(e) => setName(e.target.value)}
+                            value={name}
                         />
                     </div>
 
