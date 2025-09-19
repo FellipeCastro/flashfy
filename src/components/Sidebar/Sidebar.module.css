@@ -98,8 +98,12 @@
 }
 
 .menu a.active {
-    background: var(--shadow-color);
-    color: var(--text-primary-color);
+    background: linear-gradient(
+        45deg,
+        var(--primary-color),
+        var(--primary-color-hover)
+    );
+    color: var(--secondary-color);
 }
 
 @media (max-width: 992px) {
@@ -109,11 +113,11 @@
     }
 }
 
-@media (max-width: 576px) {    
+@media (max-width: 576px) {
     .sidebar {
         padding: 0.6rem;
     }
-    
+
     .sidebar.open {
         width: 100%;
         position: fixed;

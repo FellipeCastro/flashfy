@@ -19,10 +19,6 @@
     line-height: 1.6;
 }
 
-.mainContainer h2 {
-    font-weight: 500;
-}
-
 .mainContainer p,
 .mainContainer li {
     color: var(--text-secondary-color);

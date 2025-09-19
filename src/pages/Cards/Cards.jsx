@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaTrashAlt } from "react-icons/fa";
+import { MdArrowLeft, MdArrowRight, MdOutlineCheck } from "react-icons/md";
 import Button from "../../components/Button/Button";
 import AddCardForm from "../../components/AddCardForm/AddCardForm";
 import api from "../../constants/api.js";
@@ -12,7 +13,7 @@ const Cards = ({ decks, loadData }) => {
 
     const selectedDeck = decks.find((deck) => deck.idDeck === parseInt(id));
 
-    const [showAnswer, setShowAnswer] = useState(false);
+    const [showAnswer, setShowAnswer] = useState(true);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [currentDeck, setCurrentDeck] = useState(null);
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
@@ -94,7 +95,7 @@ const Cards = ({ decks, loadData }) => {
                 return;
             }
 
-            const response =  await api.put("/decks/study", {
+            const response = await api.put("/decks/study", {
                 idDeck: id,
                 difficulties: difficulties,
             });
@@ -200,57 +201,64 @@ const Cards = ({ decks, loadData }) => {
                         </div>
 
                         <div
-                            className={`${styles.feedback} ${
+                            className={`${styles.feedbackContainer} ${
                                 showAnswer ? null : styles.hidden
                             }`}
                         >
-                            <div className={styles.flexContainer}>
-                                <span>Muito fácil</span>
-                                <span>Muito difícil</span>
-                            </div>
-
-                            <ul className={styles.difficulty}>
-                                {[1, 2, 3, 4].map((level) => (
-                                    <li
-                                        key={level}
-                                        className={
-                                            currentCard.difficulty === level ||
-                                            selectedDifficulty === level
-                                                ? styles.selected
-                                                : null
-                                        }
-                                        onClick={() =>
-                                            handleSetDifficulty(level)
-                                        }
+                            <div className={styles.feedback}>
+                                <div className={styles.flexContainer}>
+                                    <span>Muito fácil</span>
+                                    <span>Muito difícil</span>
+                                </div>
+                                <div className={styles.flexContainer}>
+                                    <button
+                                        onClick={handlePrevCard}
+                                        disabled={currentCardIndex === 0}
+                                        className={styles.navBtn}
                                     >
-                                        {level}
-                                    </li>
-                                ))}
-                            </ul>
-
-                            <div className={styles.flexContainer}>
-                                <button
-                                    onClick={handlePrevCard}
-                                    disabled={currentCardIndex === 0}
-                                    className={styles.navBtn}
-                                >
-                                    Anterior
-                                </button>
-                                <button
-                                    onClick={
-                                        currentCardIndex ===
-                                        currentDeck.cards.length - 1
-                                            ? handleFinalize
-                                            : handleNextCard
-                                    }
-                                    className={styles.navBtn}
-                                >
-                                    {currentCardIndex ===
-                                    currentDeck.cards.length - 1
-                                        ? "Finalizar"
-                                        : "Próximo"}
-                                </button>
+                                        <MdArrowLeft />
+                                    </button>
+                                    <ul className={styles.difficulty}>
+                                        {[1, 2, 3, 4].map((level) => (
+                                            <li
+                                                key={level}
+                                                className={
+                                                    currentCard.difficulty ===
+                                                        level ||
+                                                    selectedDifficulty === level
+                                                        ? styles.selected
+                                                        : null
+                                                }
+                                                onClick={() =>
+                                                    handleSetDifficulty(level)
+                                                }
+                                            >
+                                                {level}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <button
+                                        onClick={
+                                            currentCardIndex ===
+                                            currentDeck.cards.length - 1
+                                                ? handleFinalize
+                                                : handleNextCard
+                                        }
+                                        className={styles.navBtn}
+                                    >
+                                        {/* {currentCardIndex ===
+                                        currentDeck.cards.length - 1 ? (
+                                            <MdOutlineCheck />
+                                        ) : ( */}
+                                            <MdArrowRight />
+                                        {/* )} */}
+                                    </button>
+                                </div>
                             </div>
+                            {/* {currentCardIndex ===
+                                currentDeck.cards.length - 1 && (
+                                <Button secondary>Finalizar estudo</Button>
+                            )} */}
                         </div>
                     </>
                 )}
