@@ -7,6 +7,7 @@ import AiQuestions from "./pages/AiQuestions/AiQuestions";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import api from "./constants/api.js";
+import Profile from "./pages/Profile/Profile.jsx";
 
 const App = () => {
     const [decks, setDecks] = useState([]);
@@ -28,7 +29,7 @@ const App = () => {
                         api.get("/progress"),
                         api.get("/subjects"),
                     ]);
-                
+
                 setDecks(decksResponse.data);
                 setProgress(progressResponse.data);
                 setSubjects(subjectsResponse.data);
@@ -147,6 +148,18 @@ const App = () => {
                     element={
                         <ProtectedRoute>
                             <Methodology
+                                isSidebarOpen={isSidebarOpen}
+                                setIsSidebarOpen={setIsSidebarOpen}
+                            />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/profile"
+                    element={
+                        <ProtectedRoute>
+                            <Profile
                                 isSidebarOpen={isSidebarOpen}
                                 setIsSidebarOpen={setIsSidebarOpen}
                             />

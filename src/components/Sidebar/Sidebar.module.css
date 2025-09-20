@@ -18,9 +18,21 @@
     width: 400px;
 }
 
-.sidebar .logo {
-    font-weight: 500;
-    font-size: 2rem;
+.logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logoImg {
+    width: 40px;
+    height: 40px;
+}
+
+.logoText {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--primary-color);
 }
 
 .topContainer {
@@ -91,10 +103,6 @@
 
 .menu a svg {
     font-size: 1.2rem;
-}
-
-.menu a:hover {
-    color: var(--text-primary-color);
 }
 
 .menu a.active {

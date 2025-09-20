@@ -4,6 +4,7 @@ import { FaUser, FaBookReader } from "react-icons/fa";
 import { RiRobot2Fill } from "react-icons/ri";
 import styles from "./Sidebar.module.css";
 import Button from "../Button/Button";
+import logo from "../../assets/logo.png";
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const location = useLocation();
@@ -23,7 +24,16 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         <MdKeyboardDoubleArrowRight />
                     </button>
                     {isSidebarOpen && (
-                        <div className={styles.logo}>FlashFy</div>
+                        <>
+                            <div className={styles.logoContainer}>
+                                <img
+                                    src={logo}
+                                    alt="FlashFy Logo"
+                                    className={styles.logoImg}
+                                />
+                                <div className={styles.logoText}>FlashFy</div>
+                            </div>
+                        </>
                     )}
                 </div>
                 {isSidebarOpen && (
@@ -31,8 +41,10 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         <Link
                             to="/home"
                             className={
-                                location.pathname === "/home" ? styles.active : null
-                           }
+                                location.pathname === "/home"
+                                    ? styles.active
+                                    : null
+                            }
                         >
                             <MdHome /> Página inicial
                         </Link>
@@ -56,9 +68,9 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         >
                             <FaBookReader /> Nossa metodologia
                         </Link>
-                        {/* <Link to="/user" className={location.pathname === "/user" ? styles.active : null}>
+                        <Link to="/profile" className={location.pathname === "/profile" ? styles.active : null}>
                             <FaUser /> Ver Perfil
-                        </Link> */}
+                        </Link>
                     </div>
                 )}
             </div>
