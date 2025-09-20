@@ -4,6 +4,7 @@ import { FaArrowLeft, FaTrashAlt } from "react-icons/fa";
 import { MdArrowLeft, MdArrowRight, MdOutlineCheck } from "react-icons/md";
 import Button from "../../components/Button/Button";
 import AddCardForm from "../../components/AddCardForm/AddCardForm";
+import Loading from "../../components/Loading/Loading.jsx";
 import api from "../../constants/api.js";
 import styles from "./Cards.module.css";
 
@@ -18,7 +19,10 @@ const Cards = ({ decks, loadData }) => {
     const [currentDeck, setCurrentDeck] = useState(null);
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
     const [isAddCardFormOpen, setIsAddCardFormOpen] = useState(false);
-    const [difficulties, setDifficulties] = useState([]); // ✅ Novo estado para dificuldades
+    const [difficulties, setDifficulties] = useState([]); 
+    const [isCreatingCard, setIsCreatingCard] = useState(false);
+    const [isStudyingDeck, setIsStudyingDeck] = useState(false);
+    const [isDeletingDeck, setIsDeletingDeck] = useState(false);
 
     useEffect(() => {
         setCurrentDeck(selectedDeck);
@@ -35,6 +39,7 @@ const Cards = ({ decks, loadData }) => {
 
     const createCard = async (question, answer) => {
         try {
+            setIsCreatingCard(true);
             const response = await api.post("/cards", {
                 idDeck: id,
                 question,
@@ -46,6 +51,8 @@ const Cards = ({ decks, loadData }) => {
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsCreatingCard(false);
         }
     };
 
@@ -85,6 +92,8 @@ const Cards = ({ decks, loadData }) => {
 
     const handleFinalize = async () => {
         try {
+            setIsStudyingDeck(true);
+
             const hasNullDifficulties = difficulties.some(
                 (diff) => diff === null
             );
@@ -106,11 +115,14 @@ const Cards = ({ decks, loadData }) => {
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsStudyingDeck(false);
         }
     };
 
     const deleteDeck = () => async () => {
         try {
+            setIsDeletingDeck(true);
             const response = await api.delete(`/decks/${id}`);
             if (response.data) {
                 navigate("/home");
@@ -118,6 +130,8 @@ const Cards = ({ decks, loadData }) => {
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsDeletingDeck(false);
         }
     };
 
@@ -144,6 +158,10 @@ const Cards = ({ decks, loadData }) => {
 
     return (
         <>
+            {isCreatingCard && <Loading />}
+            {isStudyingDeck && <Loading />}
+            {isDeletingDeck && <Loading />}
+
             <header className={styles.header}>
                 <div className={styles.titleContainer}>
                     <Link to="/home">

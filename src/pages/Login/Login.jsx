@@ -4,7 +4,7 @@ import FormField from "../../components/Form/FormField";
 import api from "../../constants/api.js";
 import styles from "./Login.module.css";
 
-const Login = ({ loadData }) => {
+const Login = ({ loadData, loading }) => {
     const [credentials, setCredentials] = useState({
         email: "",
         password: "",

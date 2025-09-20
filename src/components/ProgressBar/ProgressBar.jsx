@@ -1,7 +1,7 @@
 import { FaFire } from "react-icons/fa6";
 import styles from "./ProgressBar.module.css";
 
-const ProgressBar = ({ progress }) => {
+const ProgressBar = ({ progress, loading }) => {
     const days = ["D", "S", "T", "Q", "Q", "S", "S"];
 
     const date = new Date();
@@ -12,6 +12,7 @@ const ProgressBar = ({ progress }) => {
             <h2>
                 <FaFire />
                 {progress.message}
+                {loading && <p id="loader">Carregando...</p>}
             </h2>
 
             <ul className={styles.weekDays}>
@@ -29,11 +30,14 @@ const ProgressBar = ({ progress }) => {
 
             <div className={styles.progress}>
                 <span>
-                    <strong>Decks estudados: </strong> {progress.studiedDecks}
+                    <strong>Decks estudados: </strong>{" "}
+                    {progress.studiedDecks}
+                    {loading && <p id="loader">Carregando...</p>}{" "}
                 </span>
                 <span>
                     <strong>Decks para estudar: </strong>{" "}
                     {progress.decksToStudy}
+                    {loading && <p id="loader">Carregando...</p>}
                 </span>
             </div>
         </div>

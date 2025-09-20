@@ -19,12 +19,16 @@ const App = () => {
     const loadData = async () => {
         try {
             setLoading(true);
-            const decksResponse = await api.get("/decks");
-            const progressResponse = await api.get("/progress");
-            const subjectsResponse = await api.get("/subjects");
-            setDecks(decksResponse.data);
-            setProgress(progressResponse.data);
-            setSubjects(subjectsResponse.data);
+            const token = localStorage.getItem("authToken");
+
+            if (token) {
+                const decksResponse = await api.get("/decks");
+                const progressResponse = await api.get("/progress");
+                const subjectsResponse = await api.get("/subjects");
+                setDecks(decksResponse.data);
+                setProgress(progressResponse.data);
+                setSubjects(subjectsResponse.data);
+            }
         } catch (error) {
             console.error("Erro ao carregar dados:", error.message);
         } finally {
@@ -80,7 +84,7 @@ const App = () => {
                     path="/login"
                     element={
                         <GuestRoute>
-                            <Login loadData={loadData} />
+                            <Login loadData={loadData} loading={loading} />
                         </GuestRoute>
                     }
                 />
@@ -89,7 +93,7 @@ const App = () => {
                     path="/register"
                     element={
                         <GuestRoute>
-                            <Register loadData={loadData} />
+                            <Register loadData={loadData} loading={loading} />
                         </GuestRoute>
                     }
                 />
@@ -102,11 +106,23 @@ const App = () => {
                                 isSidebarOpen={isSidebarOpen}
                                 setIsSidebarOpen={setIsSidebarOpen}
                                 decks={filteredDecks}
-                                setDecks={setDecks}
                                 progress={progress}
                                 subjects={subjects}
                                 selectedSubjects={selectedSubjects}
                                 setSelectedSubjects={setSelectedSubjects}
+                                loadData={loadData}
+                                loading={loading}
+                            />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/cards/:id"
+                    element={
+                        <ProtectedRoute>
+                            <Cards
+                                decks={decks}
                                 loadData={loadData}
                             />
                         </ProtectedRoute>
@@ -132,18 +148,6 @@ const App = () => {
                             <Methodology
                                 isSidebarOpen={isSidebarOpen}
                                 setIsSidebarOpen={setIsSidebarOpen}
-                            />
-                        </ProtectedRoute>
-                    }
-                />
-
-                <Route
-                    path="/cards/:id"
-                    element={
-                        <ProtectedRoute>
-                            <Cards
-                                decks={decks}
-                                loadData={loadData}
                             />
                         </ProtectedRoute>
                     }

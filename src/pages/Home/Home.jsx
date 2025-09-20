@@ -6,6 +6,7 @@ import Button from "../../components/Button/Button";
 import Deck from "../../components/Deck/Deck";
 import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
 import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
+import Loading from "../../components/Loading/Loading";
 import styles from "./Home.module.css";
 import api from "../../constants/api";
 
@@ -18,13 +19,17 @@ const Home = ({
     selectedSubjects,
     setSelectedSubjects,
     loadData,
+    loading,
 }) => {
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
     const [isAddSubjectFormOpen, setIsAddSubjectFormOpen] = useState(false);
+    const [isCreatingDeck, setIsCreatingDeck] = useState(false);
+    const [isCreatingSubject, setIsCreatingSubject] = useState(false);
     const navigate = useNavigate();
 
     const createDeck = async (idSubject, title) => {
         try {
+            setIsCreatingDeck(true);
             const response = await api.post("/decks", {
                 idSubject,
                 title,
@@ -35,11 +40,14 @@ const Home = ({
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsCreatingDeck(false);
         }
     };
 
     const createSubject = async (name, color) => {
         try {
+            setIsCreatingSubject(true);
             const response = await api.post("/subjects", {
                 name,
                 color,
@@ -50,6 +58,8 @@ const Home = ({
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsCreatingSubject(false);
         }
     };
 
@@ -66,6 +76,9 @@ const Home = ({
 
     return (
         <>
+            {isCreatingDeck && <Loading />}
+            {isCreatingSubject && <Loading />}
+            
             <div className={styles.container}>
                 <Sidebar
                     isSidebarOpen={isSidebarOpen}
@@ -73,7 +86,7 @@ const Home = ({
                 />
 
                 <div className={styles.mainContainer}>
-                    <ProgressBar progress={progress} />
+                    <ProgressBar progress={progress} loading={loading} />
 
                     <div className={styles.titleContainer}>
                         <h1>Meus decks</h1>
@@ -83,6 +96,7 @@ const Home = ({
                             </Button>
                         </div>
                     </div>
+                    {loading && <p id="loader">Carregando dados...</p>}
                     <div className={styles.filterContainer}>
                         {subjects.map((subject) => {
                             return (
@@ -153,7 +167,6 @@ const Home = ({
                     </ul>
                 </div>
             </div>
-
             {isAddDeckFormOpen && (
                 <AddDeckForm
                     setIsAddDeckFormOpen={setIsAddDeckFormOpen}
@@ -162,7 +175,6 @@ const Home = ({
                     createDeck={createDeck}
                 />
             )}
-
             {isAddSubjectFormOpen && (
                 <AddSubjectForm
                     setIsAddDeckFormOpen={setIsAddDeckFormOpen}

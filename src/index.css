@@ -42,6 +42,24 @@ body {
     font-size: 8px;
 }
 
+#loader {
+    font-weight: bold;
+    color: var(--text-secondary-color);
+    animation: colorChange 2s infinite ease-in-out;
+}
+
+@keyframes colorChange {
+    0% {
+        color: lightgray;
+    }
+    50% {
+        color: gray;
+    }
+    100% {
+        color: lightgray;
+    }
+}
+
 /* 
     xs: 0,
     sm: 576px,
