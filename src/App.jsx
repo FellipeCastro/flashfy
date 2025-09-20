@@ -22,9 +22,13 @@ const App = () => {
             const token = localStorage.getItem("authToken");
 
             if (token) {
-                const decksResponse = await api.get("/decks");
-                const progressResponse = await api.get("/progress");
-                const subjectsResponse = await api.get("/subjects");
+                const [decksResponse, progressResponse, subjectsResponse] =
+                    await Promise.all([
+                        api.get("/decks"),
+                        api.get("/progress"),
+                        api.get("/subjects"),
+                    ]);
+                
                 setDecks(decksResponse.data);
                 setProgress(progressResponse.data);
                 setSubjects(subjectsResponse.data);
@@ -121,10 +125,7 @@ const App = () => {
                     path="/cards/:id"
                     element={
                         <ProtectedRoute>
-                            <Cards
-                                decks={decks}
-                                loadData={loadData}
-                            />
+                            <Cards decks={decks} loadData={loadData} />
                         </ProtectedRoute>
                     }
                 />

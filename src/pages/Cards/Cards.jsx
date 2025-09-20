@@ -7,6 +7,7 @@ import AddCardForm from "../../components/AddCardForm/AddCardForm";
 import Loading from "../../components/Loading/Loading.jsx";
 import api from "../../constants/api.js";
 import styles from "./Cards.module.css";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal.jsx";
 
 const Cards = ({ decks, loadData }) => {
     const { id } = useParams();
@@ -19,10 +20,12 @@ const Cards = ({ decks, loadData }) => {
     const [currentDeck, setCurrentDeck] = useState(null);
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
     const [isAddCardFormOpen, setIsAddCardFormOpen] = useState(false);
-    const [difficulties, setDifficulties] = useState([]); 
+    const [difficulties, setDifficulties] = useState([]);
     const [isCreatingCard, setIsCreatingCard] = useState(false);
     const [isStudyingDeck, setIsStudyingDeck] = useState(false);
     const [isDeletingDeck, setIsDeletingDeck] = useState(false);
+    const [deleteDeckModal, setDeleteDeckModal] = useState(false);
+    const [studyDeckModal, setStudyDeckModal] = useState(false);
 
     useEffect(() => {
         setCurrentDeck(selectedDeck);
@@ -117,6 +120,7 @@ const Cards = ({ decks, loadData }) => {
             console.log(error);
         } finally {
             setIsStudyingDeck(false);
+            setStudyDeckModal(false);
         }
     };
 
@@ -132,6 +136,7 @@ const Cards = ({ decks, loadData }) => {
             console.log(error);
         } finally {
             setIsDeletingDeck(false);
+            setDeleteDeckModal(false);
         }
     };
 
@@ -162,13 +167,37 @@ const Cards = ({ decks, loadData }) => {
             {isStudyingDeck && <Loading />}
             {isDeletingDeck && <Loading />}
 
+            {deleteDeckModal && (
+                <ConfirmModal
+                    title={"Deletar Deck"}
+                    description={"Tem certeza que deseja excluir esse deck?"}
+                    btnText={"Confirmar"}
+                    onClick={deleteDeck}
+                    onCancel={() => setDeleteDeckModal(false)}
+                />
+            )}
+
+            {studyDeckModal && (
+                <ConfirmModal
+                    title={"Finalizar estudo"}
+                    description={"Deseja finalizar o estudo desse deck?"}
+                    btnText={"Confirmar"}
+                    onClick={handleFinalize}
+                    onCancel={() => setStudyDeckModal(false)}
+                    success
+                />
+            )}
+
             <header className={styles.header}>
                 <div className={styles.titleContainer}>
                     <Link to="/home">
                         <FaArrowLeft />
                     </Link>
                     <h1>{currentDeck.title}</h1>
-                    <button className={styles.deleteBtn} onClick={deleteDeck()}>
+                    <button
+                        className={styles.deleteBtn}
+                        onClick={() => setDeleteDeckModal(true)}
+                    >
                         <FaTrashAlt />
                     </button>
                 </div>
@@ -259,24 +288,15 @@ const Cards = ({ decks, loadData }) => {
                                         onClick={
                                             currentCardIndex ===
                                             currentDeck.cards.length - 1
-                                                ? handleFinalize
+                                                ? () => setStudyDeckModal(true)
                                                 : handleNextCard
                                         }
                                         className={styles.navBtn}
                                     >
-                                        {/* {currentCardIndex ===
-                                        currentDeck.cards.length - 1 ? (
-                                            <MdOutlineCheck />
-                                        ) : ( */}
-                                            <MdArrowRight />
-                                        {/* )} */}
+                                        <MdArrowRight />
                                     </button>
                                 </div>
                             </div>
-                            {/* {currentCardIndex ===
-                                currentDeck.cards.length - 1 && (
-                                <Button secondary>Finalizar estudo</Button>
-                            )} */}
                         </div>
                     </>
                 )}
