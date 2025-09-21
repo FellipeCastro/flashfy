@@ -100,35 +100,36 @@ const LandingPage = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <div className={styles.landingPage}>
-      <header className={styles.header}>
-        <div className={styles.navbar}>
-          <div className={styles.logo}>
-            <img src={logo} alt="FlashFy Logo" className={styles.logoImage} />
-            FlashFy
+
+      <div className={styles.landingPage}>
+        <header className={styles.header}>
+          <div className={styles.navbar}>
+            <div className={styles.logo}>
+              <img src={logo} alt="FlashFy Logo" className={styles.logoImage} />
+              FlashFy
+            </div>
+            <nav className={`${styles.nav} ${isMenuOpen ? styles.active : ''}`}>
+              <a href="#features" onClick={(e) => { e.preventDefault(); scrollToSection('features'); }}>Recursos</a>
+              <a href="#how-it-works" onClick={(e) => { e.preventDefault(); scrollToSection('how-it-works'); }}>Como Funciona</a>
+              <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollToSection('testimonials'); }}>Depoimentos</a>
+            </nav>
+            <div className={`${styles.authButtons} ${isMenuOpen ? styles.active : ''}`}>
+              <Button secondary onClick={handleLoginClick}>
+                Entrar
+              </Button>
+              <Button onClick={handleRegisterClick}>
+                Cadastrar
+              </Button>
+            </div>
+            <button 
+              className={styles.mobileMenuButton} 
+              onClick={toggleMenu}
+              aria-label="Menu mobile"
+            >
+              {isMenuOpen ? <FaTimes /> : <FaBars />}
+            </button>
           </div>
-          <nav className={`${styles.nav} ${isMenuOpen ? styles.active : ''}`}>
-            <a href="#features" onClick={(e) => { e.preventDefault(); scrollToSection('features'); }}>Recursos</a>
-            <a href="#how-it-works" onClick={(e) => { e.preventDefault(); scrollToSection('how-it-works'); }}>Como Funciona</a>
-            <a href="#testimonials" onClick={(e) => { e.preventDefault(); scrollToSection('testimonials'); }}>Depoimentos</a>
-          </nav>
-          <div className={`${styles.authButtons} ${isMenuOpen ? styles.active : ''}`}>
-            <Button secondary onClick={handleLoginClick}>
-              Entrar
-            </Button>
-            <Button onClick={handleRegisterClick}>
-              Cadastrar
-            </Button>
-          </div>
-          <button 
-            className={styles.mobileMenuButton} 
-            onClick={toggleMenu}
-            aria-label="Menu mobile"
-          >
-            {isMenuOpen ? <FaTimes /> : <FaBars />}
-          </button>
-        </div>
-      </header>
+        </header>
 
       <section className={styles.hero}>
         <div className={styles.heroContent}>

@@ -1,8 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+    --primary-color: #01a5e4;
+    --primary-color-hover: #01a5e499;
+    --secondary-color: #fff;
+    --bg-color: #f9f9f9;
+    --text-primary-color: #333;
+    --text-secondary-color: #8a8a8a;
+    --fade-color: rgba(0, 0, 0, 0.5);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(0, 0, 0, 0.212);
+    --error-color: #ffc0c0;
+    --error-color-text: #881010;
+    --correct-color: #4CAF50;
+    --correct-bg: rgba(76, 175, 80, 0.1);
+    --incorrect-color: #F44336;
+    --incorrect-bg: rgba(244, 67, 54, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+html, body {
+    scroll-behavior: smooth;
+    background: var(--bg-color);
+    color: var(--text-primary-color);
+}
+
 /* LandingPage.module.css */
 .landingPage {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  color: #333;
-  background: #fff;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-primary-color);
+  background: var(--secondary-color);
   overflow-x: hidden;
 }
 
@@ -18,11 +51,11 @@
   top: 0;
   left: 0;
   right: 0;
-  background: #fff;
+  background: var(--secondary-color);
   z-index: 1000;
   padding: 1rem 0;
-  border-bottom: 2px solid #01a5e4;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid var(--primary-color);
+  box-shadow: 0 4px 6px var(--shadow-color);
 }
 
 .navbar {
@@ -41,7 +74,7 @@
   gap: 0.5rem;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #01a5e4;
+  color: var(--primary-color);
   z-index: 1001;
 }
 
@@ -57,14 +90,14 @@
 }
 
 .nav a {
-  color: #333;
+  color: var(--text-primary-color);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s;
 }
 
 .nav a:hover {
-  color: #01a5e4;
+  color: var(--primary-color);
 }
 
 .authButtons {
@@ -81,7 +114,7 @@
   padding: 0;
   z-index: 1001;
   font-size: 1.5rem;
-  color: #01a5e4;
+  color: var(--primary-color);
 }
 
 /* Estilos para o menu mobile ativo */
@@ -110,12 +143,12 @@
   font-weight: 800;
   line-height: 1.2;
   margin-bottom: 1.5rem;
-  color: #333;
+  color: var(--text-primary-color);
 }
 
 .heroContent p {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--text-secondary-color);
   margin-bottom: 2rem;
   line-height: 1.6;
 }
@@ -144,14 +177,14 @@
   transform-style: preserve-3d;
   transition: transform 0.8s;
   cursor: pointer;
-  border: 2px solid #8a8a8a;
+  border: 2px solid var(--border-color);
   border-radius: 0.5rem;
-  box-shadow: -4px 4px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: -4px 4px 0px var(--shadow-color);
 }
 
 .flashcard:hover {
   transform: rotateY(180deg);
-  box-shadow: -6px 6px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: -6px 6px 0px var(--shadow-color);
 }
 
 .flashcardFront,
@@ -169,27 +202,27 @@
 }
 
 .flashcardFront {
-  background: #01a5e4;
-  color: white;
+  background: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 .flashcardBack {
-  background: #f8f9fa;
-  color: #333;
+  background: var(--bg-color);
+  color: var(--text-primary-color);
   transform: rotateY(180deg);
 }
 
 /* FEATURES SECTION */
 .features {
   padding: 5rem 0;
-  background: #f8f9fa;
+  background: var(--bg-color);
 }
 
 .features h2 {
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  color: #333;
+  color: var(--text-primary-color);
 }
 
 .featuresGrid {
@@ -200,34 +233,34 @@
 
 /* FEATURE CARD */
 .featureCard {
-  background: #fff;
+  background: var(--secondary-color);
   padding: 2rem;
   border-radius: 0.5rem;
   text-align: center;
-  border: 2px solid #8a8a8a;
+  border: 2px solid var(--border-color);
   transition: all 0.3s ease;
-  box-shadow: -4px 4px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: -4px 4px 0px var(--shadow-color);
 }
 
 .featureCard:hover {
   transform: translateY(-4px);
-  box-shadow: -6px 6px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: -6px 6px 0px var(--shadow-color);
 }
 
 .featureIcon {
   font-size: 2.5rem;
-  color: #01a5e4;
+  color: var(--primary-color);
   margin-bottom: 1rem;
 }
 
 .featureCard h3 {
   font-size: 1.3rem;
   margin-bottom: 1rem;
-  color: #8a8a8a;
+  color: var(--text-secondary-color);
 }
 
 .featureCard p {
-  color: #666;
+  color: var(--text-secondary-color);
   line-height: 1.6;
 }
 
@@ -240,7 +273,7 @@
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  color: #333;
+  color: var(--text-primary-color);
 }
 
 .steps {
@@ -253,60 +286,60 @@
 .step {
   text-align: center;
   padding: 2rem;
-  background: #fff;
-  border: 2px solid #8a8a8a;
+  background: var(--secondary-color);
+  border: 2px solid var(--border-color);
   border-radius: 0.5rem;
-  box-shadow: -4px 4px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: -4px 4px 0px var(--shadow-color);
   transition: all 0.3s ease;
 }
 
 .step:hover {
   transform: translateY(-4px);
-  box-shadow: -6px 6px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: -6px 6px 0px var(--shadow-color);
 }
 
 .stepNumber {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #01a5e4;
-  color: white;
+  background: var(--primary-color);
+  color: var(--secondary-color);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
   margin: 0 auto 1rem;
-  border: 2px solid #8a8a8a;
+  border: 2px solid var(--border-color);
 }
 
 .stepIcon {
   font-size: 2rem;
-  color: #01a5e4;
+  color: var(--primary-color);
   margin-bottom: 1rem;
 }
 
 .step h3 {
   font-size: 1.3rem;
   margin-bottom: 1rem;
-  color: #8a8a8a;
+  color: var(--text-secondary-color);
 }
 
 .step p {
-  color: #666;
+  color: var(--text-secondary-color);
   line-height: 1.6;
 }
 
 /* TESTIMONIALS SECTION */
 .testimonials {
   padding: 5rem 0;
-  background: #f8f9fa;
+  background: var(--bg-color);
 }
 
 .testimonials h2 {
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  color: #333;
+  color: var(--text-primary-color);
 }
 
 .testimonialGrid {
@@ -317,17 +350,17 @@
 
 /* TESTIMONIAL CARD */
 .testimonialCard {
-  background: #fff;
+  background: var(--secondary-color);
   padding: 2rem;
   border-radius: 0.5rem;
-  border: 2px solid #8a8a8a;
-  box-shadow: -4px 4px 0px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--border-color);
+  box-shadow: -4px 4px 0px var(--shadow-color);
   transition: all 0.3s ease;
 }
 
 .testimonialCard:hover {
   transform: translateY(-4px);
-  box-shadow: -6px 6px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: -6px 6px 0px var(--shadow-color);
 }
 
 .testimonialContent {
@@ -336,17 +369,17 @@
 
 .testimonialContent p {
   font-style: italic;
-  color: #8a8a8a;
+  color: var(--text-secondary-color);
   line-height: 1.6;
 }
 
 .testimonialAuthor h4 {
-  color: #8a8a8a;
+  color: var(--text-secondary-color);
   margin-bottom: 0.25rem;
 }
 
 .testimonialAuthor span {
-  color: #666;
+  color: var(--text-secondary-color);
   font-size: 0.9rem;
 }
 
@@ -354,8 +387,8 @@
 .cta {
   padding: 5rem 0;
   text-align: center;
-  background: #01a5e4;
-  color: white;
+  background: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 .cta h2 {
@@ -373,12 +406,16 @@
   display: flex;
   justify-content: center;
 }
+.ctaButtonContainer button {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
 
 /* FOOTER */
 .footer {
   padding: 3rem 0;
-  background: #fff;
-  border-top: 2px solid #01a5e4;
+  background: var(--secondary-color);
+  border-top: 2px solid var(--primary-color);
 }
 
 .footerContent {
@@ -403,7 +440,7 @@
 }
 
 .footerBrand p {
-  color: #666;
+  color: var(--text-secondary-color);
 }
 
 .footerLinks {
@@ -413,28 +450,28 @@
 }
 
 .footerSection h4 {
-  color: #333;
+  color: var(--text-primary-color);
   margin-bottom: 1rem;
   font-size: 1.1rem;
 }
 
 .footerSection a {
   display: block;
-  color: #666;
+  color: var(--text-secondary-color);
   text-decoration: none;
   margin-bottom: 0.5rem;
   transition: color 0.2s;
 }
 
 .footerSection a:hover {
-  color: #007bff;
+  color: var(--primary-color);
 }
 
 .footerBottom {
   text-align: center;
   padding-top: 2rem;
-  border-top: 1px solid #dee2e6;
-  color: #666;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary-color);
 }
 
 /* RESPONSIVIDADE */
@@ -466,8 +503,8 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem 0;
-    background: #fff;
-    border-top: 1px solid #eee;
+    background: var(--secondary-color);
+    border-top: 1px solid var(--border-color);
   }
   
   .authButtons {
