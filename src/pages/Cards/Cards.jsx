@@ -114,7 +114,7 @@ const Cards = ({ decks, loadData }) => {
         }
     };
 
-    const deleteDeck = () => async () => {
+    const deleteDeck = async () => {
         try {
             setIsDeletingDeck(true);
             const response = await api.delete(`/decks/${id}`);
