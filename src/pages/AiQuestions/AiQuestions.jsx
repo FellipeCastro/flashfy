@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoAlertFill } from "react-icons/go";
-import { RiRobot2Fill } from "react-icons/ri";
-import { IoTicket } from "react-icons/io5";
 import Button from "../../components/Button/Button";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import styles from "./AiQuestions.module.css";
 
-const AiQuestions = ({
-    isSidebarOpen,
-    setIsSidebarOpen,
-    subtractAiCredits,
-}) => {
+const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const [formData, setFormData] = useState(() => {
         const saved = localStorage.getItem("formData");
         return saved

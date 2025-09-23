@@ -97,16 +97,6 @@ const Cards = ({ decks, loadData }) => {
         try {
             setIsStudyingDeck(true);
 
-            const hasNullDifficulties = difficulties.some(
-                (diff) => diff === null
-            );
-            if (hasNullDifficulties) {
-                alert(
-                    "Por favor, defina a dificuldade para todas as cards antes de finalizar."
-                );
-                return;
-            }
-
             const response = await api.put("/decks/study", {
                 idDeck: id,
                 difficulties: difficulties,
