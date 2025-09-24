@@ -11,8 +11,7 @@ const ProgressBar = ({ progress, loading }) => {
         <div className={styles.progressBarContainer}>
             <h2>
                 <FaFire />
-                {progress.message}
-                {loading && <p id="loader">Carregando...</p>}
+                {progress.message ? progress.message : <p id="loader">Carregando...</p>}
             </h2>
 
             <ul className={styles.weekDays}>
@@ -31,12 +30,11 @@ const ProgressBar = ({ progress, loading }) => {
             <div className={styles.progress}>
                 <span>
                     <strong>Decks estudados: </strong>{" "}
-                    {progress.studiedDecks}
-                    {loading && <p id="loader">Carregando...</p>}{" "}
+                    {progress.studiedDecks ? progress.studiedDecks : <p id="loader">Carregando...</p>}
                 </span>
                 <span>
                     <strong>Decks para estudar: </strong>{" "}
-                    {progress.decksToStudy}
+                    {progress.decksToStudy ? progress.decksToStudy : <p id="loader">Carregando...</p>}
                     {loading && <p id="loader">Carregando...</p>}
                 </span>
             </div>
