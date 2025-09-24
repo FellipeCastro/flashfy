@@ -35,7 +35,6 @@ const ProgressBar = ({ progress, loading }) => {
                 <span>
                     <strong>Decks para estudar: </strong>{" "}
                     {progress.decksToStudy ? progress.decksToStudy : <p id="loader">Carregando...</p>}
-                    {loading && <p id="loader">Carregando...</p>}
                 </span>
             </div>
         </div>
