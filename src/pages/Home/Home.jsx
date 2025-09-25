@@ -121,100 +121,118 @@ const Home = ({
                 <div className={styles.mainContainer}>
                     <ProgressBar progress={progress} loading={loading} />
 
-                    {loading && <p id="loader">Carregando dados...</p>}
+                    {loading ? (
+                        <p id="loader">Carregando dados...</p>
+                    ) : (
+                        <>
+                            <div className={styles.columnContainer}>
+                                <div className={styles.titleContainer}>
+                                    <h1>Meus decks</h1>
+                                    <Button
+                                        onClick={() =>
+                                            setIsAddDeckFormOpen(true)
+                                        }
+                                    >
+                                        + Novo deck
+                                    </Button>
+                                </div>
+                                {selectingSubjectToDelete ? (
+                                    <p className={styles.deleteMsg}>
+                                        Selecione a matéria que você deseja
+                                        deletar
+                                    </p>
+                                ) : (
+                                    <button
+                                        className={styles.deleteSubjectBtn}
+                                        onClick={() =>
+                                            setSelectingSubjectToDelete(true)
+                                        }
+                                    >
+                                        Excluir matéria
+                                    </button>
+                                )}
+                            </div>
 
-                    <div className={styles.columnContainer}>
-                        <div className={styles.titleContainer}>
-                            <h1>Meus decks</h1>
-                            <Button onClick={() => setIsAddDeckFormOpen(true)}>
-                                + Novo deck
-                            </Button>
-                        </div>
-                        {selectingSubjectToDelete ? (
-                            <p className={styles.deleteMsg}>
-                                Selecione a matéria que você deseja deletar
-                            </p>
-                        ) : (
-                            <button
-                                className={styles.deleteSubjectBtn}
-                                onClick={() =>
-                                    setSelectingSubjectToDelete(true)
-                                }
-                            >
-                                Excluir matéria
-                            </button>
-                        )}
-                    </div>
+                            <div className={styles.filterContainer}>
+                                {subjects.map((subject) => {
+                                    return (
+                                        <button
+                                            key={subject.idSubject} // Use idSubject como key
+                                            style={{
+                                                backgroundColor: subject.color,
+                                            }}
+                                            onClick={() =>
+                                                selectingSubjectToDelete
+                                                    ? handleDeleteSubjectClick(
+                                                          subject
+                                                      )
+                                                    : handleSubjectSelection(
+                                                          subject.name
+                                                      )
+                                            }
+                                            className={
+                                                selectedSubjects.includes(
+                                                    subject.name
+                                                )
+                                                    ? styles.active
+                                                    : null
+                                            }
+                                        >
+                                            {subject.name}
+                                        </button>
+                                    );
+                                })}
+                            </div>
 
-                    <div className={styles.filterContainer}>
-                        {subjects.map((subject) => {
-                            return (
-                                <button
-                                    key={subject.idSubject} // Use idSubject como key
-                                    style={{
-                                        backgroundColor: subject.color,
-                                    }}
-                                    onClick={() =>
-                                        selectingSubjectToDelete
-                                            ? handleDeleteSubjectClick(subject)
-                                            : handleSubjectSelection(
-                                                  subject.name
-                                              )
-                                    }
-                                    className={
-                                        selectedSubjects.includes(subject.name)
-                                            ? styles.active
-                                            : null
-                                    }
-                                >
-                                    {subject.name}
-                                </button>
-                            );
-                        })}
-                    </div>
+                            {decks.length === 0 && loading === false && (
+                                <div className={styles.noDecks}>
+                                    <p className={styles.msg}>
+                                        Crie seus decks para começar a estudar!
+                                    </p>
+                                </div>
+                            )}
 
-                    {decks.length === 0 && loading === false && (
-                        <div className={styles.noDecks}>
-                            <p className={styles.msg}>
-                                Crie seus decks para começar a estudar!
-                            </p>
-                        </div>
+                            <ul className={styles.decksContainer}>
+                                {decks
+                                    .sort((a, b) => {
+                                        const now = new Date();
+
+                                        // Trata decks sem data (vão para o final)
+                                        if (!a.nextReview && !b.nextReview)
+                                            return 0;
+                                        if (!a.nextReview) return 1;
+                                        if (!b.nextReview) return -1;
+
+                                        const aDate = new Date(a.nextReview);
+                                        const bDate = new Date(b.nextReview);
+
+                                        // Prioritiza revisões vencidas (datas passadas)
+                                        if (aDate < now && bDate >= now)
+                                            return -1;
+                                        if (bDate < now && aDate >= now)
+                                            return 1;
+
+                                        // Ordena pela data mais próxima (crescente)
+                                        return aDate - bDate;
+                                    })
+                                    .map((deck) => (
+                                        <Deck
+                                            key={deck.idDeck}
+                                            color={deck.subject.color}
+                                            subject={deck.subject.name}
+                                            title={deck.title}
+                                            cards={deck.cards.length}
+                                            nextReview={deck.nextReview}
+                                            openCard={() =>
+                                                navigate(
+                                                    `/cards/${deck.idDeck}`
+                                                )
+                                            }
+                                        />
+                                    ))}
+                            </ul>
+                        </>
                     )}
-
-                    <ul className={styles.decksContainer}>
-                        {decks
-                            .sort((a, b) => {
-                                const now = new Date();
-
-                                // Trata decks sem data (vão para o final)
-                                if (!a.nextReview && !b.nextReview) return 0;
-                                if (!a.nextReview) return 1;
-                                if (!b.nextReview) return -1;
-
-                                const aDate = new Date(a.nextReview);
-                                const bDate = new Date(b.nextReview);
-
-                                // Prioritiza revisões vencidas (datas passadas)
-                                if (aDate < now && bDate >= now) return -1;
-                                if (bDate < now && aDate >= now) return 1;
-
-                                // Ordena pela data mais próxima (crescente)
-                                return aDate - bDate;
-                            })
-                            .map((deck) => (
-                                <Deck
-                                    key={deck.idDeck}
-                                    color={deck.subject.color}
-                                    subject={deck.subject.name}
-                                    title={deck.title}
-                                    cards={deck.cards.length}
-                                    nextReview={deck.nextReview}
-                                    openCard={() =>
-                                        navigate(`/cards/${deck.idDeck}`)
-                                    }
-                                />
-                            ))}
-                    </ul>
                 </div>
             </div>
 
@@ -238,7 +256,7 @@ const Home = ({
             {deleteSubjectModal && subjectToDelete && (
                 <ConfirmModal
                     title={"Deletar matéria"}
-                    description={`Tem certeza que deseja excluir a matéria "${subjectToDelete.name}"? Todos os decks associados a esta matéria também serão excluídos.`}
+                    description={`Todos os decks associados a matéria "${subjectToDelete.name}" também serão excluídos.`}
                     btnText={"Confirmar"}
                     onClick={() => deleteSubject(subjectToDelete.idSubject)}
                     onCancel={handleCancelDelete}
