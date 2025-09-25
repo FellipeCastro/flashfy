@@ -78,7 +78,7 @@ const Home = ({
         <>
             {isCreatingDeck && <Loading />}
             {isCreatingSubject && <Loading />}
-            
+
             <div className={styles.container}>
                 <Sidebar
                     isSidebarOpen={isSidebarOpen}
@@ -88,15 +88,19 @@ const Home = ({
                 <div className={styles.mainContainer}>
                     <ProgressBar progress={progress} loading={loading} />
 
-                    <div className={styles.titleContainer}>
-                        <h1>Meus decks</h1>
-                        <div className={styles.btnsContainer}>
+                    <div className={styles.columnContainer}>
+                        <div className={styles.titleContainer}>
+                            <h1>Meus decks</h1>
                             <Button onClick={() => setIsAddDeckFormOpen(true)}>
                                 + Novo deck
                             </Button>
                         </div>
+                        <div className={styles.btnsContainer}>
+                            <button className={styles.deleteSubjectBtn}>
+                                Excluir matéria
+                            </button>
+                        </div>
                     </div>
-                    {loading && <p id="loader">Carregando dados...</p>}
                     <div className={styles.filterContainer}>
                         {subjects.map((subject) => {
                             return (
@@ -119,11 +123,7 @@ const Home = ({
                             );
                         })}
                     </div>
-                    {/* <div className={styles.deleteSubjectContainer}>
-                        <button className={styles.deleteSubjectBtn}>
-                            Excluir matéria
-                        </button>
-                    </div> */}
+
                     {decks.length === 0 && loading === false && (
                         <div className={styles.noDecks}>
                             <p className={styles.msg}>
@@ -131,6 +131,8 @@ const Home = ({
                             </p>
                         </div>
                     )}
+                    {loading && <p id="loader">Carregando dados...</p>}
+
                     <ul className={styles.decksContainer}>
                         {decks
                             .sort((a, b) => {

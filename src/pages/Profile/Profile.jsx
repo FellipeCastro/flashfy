@@ -9,8 +9,7 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const navigate = useNavigate();
 
     const logout = () => {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("idUser");
+        localStorage.clear();
         navigate("/login");
     };
 

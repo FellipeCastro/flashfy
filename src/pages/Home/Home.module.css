@@ -10,10 +10,19 @@
 }
 
 .titleContainer {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 2rem;
+    margin-bottom: 0.6rem;
+}
+
+.columnContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
 }
 
 .titleContainer h1 {
@@ -22,8 +31,17 @@
     color: var(--text-secondary-color);
 }
 
-.loadingMsg {
-    
+.deleteSubjectBtn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary-color);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.deleteSubjectBtn:hover {
+    text-decoration: underline;
 }
 
 .btnsContainer {
@@ -45,6 +63,7 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    margin-top: 1rem;
 }
 
 .msg {
@@ -81,33 +100,16 @@
     transform: translateY(-4px);
 }
 
-.deleteSubjectContainer {
-    width: 100%;
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.deleteSubjectBtn {
-    background-color: transparent;
-    border: none;
-    text-decoration: underline;
-    cursor: pointer;
-    color: var(--text-secondary-color);
-    font-size: 1rem;
-    font-weight: 500;
-}
-
 @media (max-width: 768px) {
     .mainContainer {
         padding: 1rem 2rem;
     }
-    
+
     .filterContainer {
         grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
     }
 
     .decksContainer {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 }

@@ -6,9 +6,77 @@ import styles from "./AddCardForm.module.css";
 const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
     const [question, setQuestion] = useState("");
     const [answer, setAnswer] = useState("");
+    const [errorMessage, setErrorMessage] = useState({
+        question: "",
+        answer: "",
+        main: "",
+    });
+
+    // Função para validar o formulário
+    const validateForm = () => {
+        const newErrors = {
+            question: "",
+            answer: "",
+            main: "",
+        };
+
+        let isValid = true;
+
+        // Validação da pergunta
+        if (!question.trim()) {
+            newErrors.question = "Pergunta é obrigatória";
+            isValid = false;
+        } else if (question.trim().length < 3) {
+            newErrors.question = "Pergunta deve ter pelo menos 3 caracteres";
+            isValid = false;
+        }
+
+        // Validação da resposta
+        if (!answer.trim()) {
+            newErrors.answer = "Resposta é obrigatória";
+            isValid = false;
+        } else if (answer.trim().length < 3) {
+            newErrors.answer = "Resposta deve ter pelo menos 3 caracteres";
+            isValid = false;
+        }
+
+        setErrorMessage(newErrors);
+        return isValid;
+    };
+
+    // Manipulador de mudança nos inputs - limpa o erro do campo quando o usuário digita
+    const handleInputChange = (field, value) => {
+        if (field === "question") {
+            setQuestion(value);
+        } else if (field === "answer") {
+            setAnswer(value);
+        }
+
+        // Limpa o erro específico do campo quando o usuário começa a digitar
+        if (errorMessage[field]) {
+            setErrorMessage((prev) => ({
+                ...prev,
+                [field]: "",
+                main: "",
+            }));
+        }
+    };
 
     const onSubmit = (e) => {
         e.preventDefault();
+
+        // Limpa mensagens de erro anteriores
+        setErrorMessage({
+            question: "",
+            answer: "",
+            main: "",
+        });
+
+        // Valida o formulário
+        if (!validateForm()) {
+            return;
+        }
+
         createCard(question, answer);
     };
 
@@ -54,9 +122,19 @@ const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
                             name="question"
                             id="question"
                             placeholder="Digite a pergunta aqui"
-                            onChange={(e) => setQuestion(e.target.value)}
+                            onChange={(e) =>
+                                handleInputChange("question", e.target.value)
+                            }
                             value={question}
+                            className={
+                                errorMessage.question ? styles.inputError : ""
+                            }
                         ></textarea>
+                        {errorMessage.question && (
+                            <span className={styles.fieldError}>
+                                {errorMessage.question}
+                            </span>
+                        )}
                     </div>
 
                     <div className={styles.inputContainer}>
@@ -75,12 +153,30 @@ const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
                             name="answer"
                             id="answer"
                             placeholder="Digite a resposta aqui"
-                            onChange={(e) => setAnswer(e.target.value)}
+                            onChange={(e) =>
+                                handleInputChange("answer", e.target.value)
+                            }
                             value={answer}
+                            className={
+                                errorMessage.answer ? styles.inputError : ""
+                            }
                         ></textarea>
+                        {errorMessage.answer && (
+                            <span className={styles.fieldError}>
+                                {errorMessage.answer}
+                            </span>
+                        )}
                     </div>
 
-                    <Button>Criar Card</Button>
+                    {errorMessage.main && (
+                        <div className={styles.errorContainer}>
+                            <div className={styles.errorText}>
+                                <p>{errorMessage.main}</p>
+                            </div>
+                        </div>
+                    )}
+
+                    <Button type="submit">Criar Card</Button>
                 </form>
             </div>
         </>

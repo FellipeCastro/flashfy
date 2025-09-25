@@ -17,8 +17,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--secondary-color);
-    padding: 1em 2em;
-    border-radius: 0.2em;
+    padding: 1.2em 2em;
+    border-radius: 0.5em;
 }
 
 .flexModal {
@@ -54,7 +54,7 @@
 
 .cancelBtn,
 .confirmBtn {
-    padding: 0.5em;
+    padding: 0.4em;
     border: 1px solid var(--text-secondary-color);
     border-radius: 2em;
     background-color: var(--secondary-color);

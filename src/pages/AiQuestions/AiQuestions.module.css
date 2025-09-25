@@ -27,20 +27,6 @@
     color: var(--text-secondary-color);
 }
 
-.credits {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: var(--text-secondary-color);
-}
-
-.credits svg {
-    font-family: 1.4rem;
-}
-
 .form {
     width: 100%;
     display: flex;
@@ -81,10 +67,9 @@
     opacity: 0.7;
 }
 
-/* Estilos para erros */
 .inputError {
-    border-color: var(--incorrect-color) !important;
-    border-width: 2px !important;
+    border-color: var(--incorrect-color);
+    border-width: 2px;
 }
 
 .fieldError {

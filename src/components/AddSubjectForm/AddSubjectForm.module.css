@@ -126,3 +126,17 @@
     font-size: 0.9rem;
     color: var(--text-secondary-color);
 }
+
+input.inputError,
+textarea.inputError {
+    border-color: var(--incorrect-color);
+    border-width: 2px;
+}
+
+.fieldError {
+    color: var(--incorrect-color);
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-top: 0.3rem;
+    display: block;
+}
