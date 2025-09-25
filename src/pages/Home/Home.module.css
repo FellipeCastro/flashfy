@@ -31,23 +31,21 @@
     color: var(--text-secondary-color);
 }
 
-.deleteSubjectBtn {
+.deleteSubjectBtn,
+.deleteMsg {
     background-color: transparent;
     border: none;
-    cursor: pointer;
     color: var(--text-secondary-color);
     font-size: 1rem;
     font-weight: 500;
 }
 
-.deleteSubjectBtn:hover {
-    text-decoration: underline;
+.deleteSubjectBtn {
+    cursor: pointer;
 }
 
-.btnsContainer {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+.deleteSubjectBtn:hover {
+    text-decoration: underline;
 }
 
 .decksContainer {
