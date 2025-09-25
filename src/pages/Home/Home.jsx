@@ -124,7 +124,7 @@ const Home = ({
                             Excluir matéria
                         </button>
                     </div> */}
-                    {decks.length === 0 && (
+                    {decks.length === 0 && loading === false && (
                         <div className={styles.noDecks}>
                             <p className={styles.msg}>
                                 Crie seus decks para começar a estudar!

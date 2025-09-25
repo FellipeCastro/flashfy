@@ -30,11 +30,11 @@ const ProgressBar = ({ progress, loading }) => {
             <div className={styles.progress}>
                 <span>
                     <strong>Decks estudados: </strong>{" "}
-                    {progress.studiedDecks ? progress.studiedDecks : <p id="loader">Carregando...</p>}
+                    {progress.studiedDecks ? progress.studiedDecks : 0}
                 </span>
                 <span>
                     <strong>Decks para estudar: </strong>{" "}
-                    {progress.decksToStudy ? progress.decksToStudy : <p id="loader">Carregando...</p>}
+                    {progress.decksToStudy ? progress.decksToStudy : 0}
                 </span>
             </div>
         </div>
