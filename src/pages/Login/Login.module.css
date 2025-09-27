@@ -53,20 +53,6 @@
     animation: fadeIn 0.3s ease-out;
 }
 
-.demoCredentials {
-    background-color: rgba(1, 165, 228, 0.05);
-    border-radius: 8px;
-    padding: 1rem;
-    margin: 1.5rem 0;
-    font-size: 0.85rem;
-    color: var(--text-secondary-color);
-    border-left: 3px solid var(--primary-color);
-}
-
-.demoCredentials p {
-    margin: 0.3rem 0;
-}
-
 .rememberForgot {
     display: flex;
     justify-content: space-between;

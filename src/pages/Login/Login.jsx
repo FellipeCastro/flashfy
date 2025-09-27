@@ -116,14 +116,6 @@ const Login = ({ loadData, loading }) => {
                         showPasswordToggle={true}
                     />
 
-                    <div className={styles.demoCredentials}>
-                        <p>
-                            <strong>Credenciais de demonstração:</strong>
-                        </p>
-                        <p>Email: demo@estudai.com</p>
-                        <p>Senha: 123456</p>
-                    </div>
-
                     <div className={styles.rememberForgot}>
                         <label className={styles.rememberMe}>
                             <input type="checkbox" />
