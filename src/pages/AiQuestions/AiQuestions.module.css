@@ -28,7 +28,6 @@
     color: var(--text-secondary-color);
 }
 
-/* FORMULÁRIO PADRONIZADO */
 .form {
     width: 100%;
     display: flex;
@@ -340,7 +339,6 @@
     line-height: 1.6;
 }
 
-/* Estilos para verificação de respostas */
 .alternative.correct {
     background-color: var(--correct-bg);
 }
@@ -380,7 +378,7 @@
 
 .resultsFeedback {
     background-color: rgba(1, 165, 228, 0.05);
-    border-radius: 0 8px 8px 0;
+    border-radius: 8px;
     padding: 1.4rem;
     font-size: 1.1rem;
     color: var(--text-secondary-color);
@@ -414,7 +412,6 @@
     text-align: center;
 }
 
-/* Animações */
 @keyframes fadeIn {
     from {
         opacity: 0;

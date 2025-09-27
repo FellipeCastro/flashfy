@@ -70,6 +70,10 @@
     color: var(--text-secondary-color);
 }
 
+.progress strong {
+    font-weight: 500;
+}
+
 @media (max-width: 330px) {
     .day {
         width: 3rem;
