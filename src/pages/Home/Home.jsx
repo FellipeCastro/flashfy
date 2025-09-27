@@ -137,10 +137,14 @@ const Home = ({
                                     </Button>
                                 </div>
                                 {selectingSubjectToDelete ? (
-                                    <p className={styles.deleteMsg}>
-                                        Selecione a matéria que você deseja
-                                        deletar
-                                    </p>
+                                    <button
+                                        className={styles.deleteSubjectBtn}
+                                        onClick={() =>
+                                            setSelectingSubjectToDelete(false)
+                                        }
+                                    >
+                                        Cancelar
+                                    </button>
                                 ) : (
                                     <button
                                         className={styles.deleteSubjectBtn}
@@ -157,7 +161,7 @@ const Home = ({
                                 {subjects.map((subject) => {
                                     return (
                                         <button
-                                            key={subject.idSubject} // Use idSubject como key
+                                            key={subject.idSubject}
                                             style={{
                                                 backgroundColor: subject.color,
                                             }}

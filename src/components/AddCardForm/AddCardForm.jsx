@@ -88,7 +88,7 @@ const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
         <>
             <div className={styles.fade} onClick={closeModal}></div>
             <div className={styles.formContainer}>
-                <div className={styles.flexContainer}>
+                <div className={styles.flexContainerTitle}>
                     <h2>Criar novo Card</h2>
 
                     <button className={styles.closeBtn} onClick={closeModal}>

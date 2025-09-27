@@ -18,8 +18,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--secondary-color);
-    padding: 2rem;
-    border-radius: 12px;
+    padding: 1.4rem 2rem;
+    border-radius: 0.4rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     animation: slideIn 0.3s ease-out;
 }
@@ -64,7 +64,7 @@
 .cancelBtn,
 .confirmBtn {
     padding: 0.8rem 1.5rem;
-    border-radius: 8px;
+    border-radius: 2rem;
     font-weight: 500;
     font-size: 0.9rem;
     cursor: pointer;

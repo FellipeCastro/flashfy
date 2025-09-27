@@ -4,7 +4,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: var(--secondary-color);
-    border-radius: 12px;
+    border-radius: 0.4rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     padding: 2rem;
     width: 90%;
@@ -30,10 +30,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.flexContainerTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1.5rem;
 }
 
-.flexContainer h2 {
+.flexContainerTitle h2 {
     color: var(--text-primary-color);
     margin: 0;
     font-size: 1.5rem;
@@ -99,7 +105,7 @@ textarea {
     width: 100%;
     padding: 0.9rem 1rem;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 0.2rem;
     font-size: 1rem;
     font-family: inherit;
     resize: vertical;
