@@ -6,15 +6,10 @@ import styles from "./AiQuestions.module.css";
 import api from "../../constants/api.js";
 
 const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
-    const [formData, setFormData] = useState(() => {
-        const saved = localStorage.getItem("formData");
-        return saved
-            ? JSON.parse(saved)
-            : {
-                  theme: "",
-                  difficulty: "",
-                  quantity: "",
-              };
+    const [formData, setFormData] = useState({
+        theme: "",
+        difficulty: "",
+        quantity: "",
     });
 
     // STATE UNIFICADO para armazenar toda a resposta da API
@@ -281,9 +276,22 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         </div>
                     </div>
 
-                    <Button type="submit" disabled={isLoading}>
-                        {isLoading ? "Gerando..." : "Gerar perguntas por IA"}
-                    </Button>
+                    <button
+                        type="submit"
+                        className={`${styles.submitButton} ${
+                            isLoading ? styles.loading : ""
+                        }`}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? (
+                            <>
+                                <span className={styles.spinner}></span>
+                                Gerando questões...
+                            </>
+                        ) : (
+                            "Gerar questões"
+                        )}
+                    </button>
                 </form>
 
                 {errorMessage.main &&
@@ -477,22 +485,22 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     <strong>
                                         {aiResponse.questions.length}
                                     </strong>{" "}
-                                    questões!
+                                    questões -{" "}
                                 </p>
                                 {correctCount ===
                                 aiResponse.questions.length ? (
-                                    <p className={styles.resultMsg}>
+                                    <span className={styles.resultMsg}>
                                         Excelente! Parabéns!
-                                    </p>
+                                    </span>
                                 ) : correctCount >=
                                   aiResponse.questions.length / 2 ? (
-                                    <p className={styles.resultMsg}>
+                                    <span className={styles.resultMsg}>
                                         Bom trabalho!
-                                    </p>
+                                    </span>
                                 ) : (
-                                    <p className={styles.resultMsg}>
+                                    <span className={styles.resultMsg}>
                                         Continue estudando!
-                                    </p>
+                                    </span>
                                 )}
                             </div>
                         )}
@@ -505,13 +513,13 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         </div>
                     )
                 )}
-
+                {/* 
                 {isLoading && (
                     <div className={styles.loadingState}>
                         <div className={styles.loadingSpinner}></div>
                         <p id="loader">Gerando questões...</p>
                     </div>
-                )}
+                )} */}
             </div>
         </div>
     );

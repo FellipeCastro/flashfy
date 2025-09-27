@@ -1,114 +1,183 @@
-.fade {
-    z-index: 8;
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: var(--fade-color);
-}
-
 .formContainer {
-    width: 100%;
-    max-width: 700px;
-    z-index: 9;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: var(--secondary-color);
+    background-color: var(--secondary-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     padding: 2rem;
-    border-radius: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+}
+
+.fade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    animation: fadeIn 0.3s ease-out;
 }
 
 .flexContainer {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
 }
 
-.formContainer h2 {
-    font-weight: 500;
+.flexContainer h2 {
+    color: var(--text-primary-color);
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
 .closeBtn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-secondary-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.2rem;
-    font-size: 1.2rem;
-    border: none;
-    background: transparent;
-    transition: 0.3s;
-    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .closeBtn:hover {
-    color: var(--text-secondary-color);
+    background-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-primary-color);
 }
 
 .form {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 1.5rem;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.inputContainer label {
+    color: var(--text-primary-color);
+    font-weight: 500;
+    font-size: 0.9rem;
 }
 
 .file {
-    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
     cursor: pointer;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.file:hover {
+    color: var(--primary-color-hover);
 }
 
 .file input {
     display: none;
 }
 
-.inputContainer {
+textarea {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-}
-
-.inputContainer label {
-    font-weight: bold;
-    color: var(--text-secondary-color);
-}
-
-.inputContainer input,
-.inputContainer select,
-.inputContainer textarea {
-    width: 100%;
-    padding: 0.4rem;
+    padding: 0.9rem 1rem;
     border: 1px solid var(--border-color);
-    border-radius: 0.2rem;
-    color: var(--text-secondary-color);
-    outline: none;
-}
-
-.inputContainer input::placeholder,
-.inputContainer textarea::placeholder {
-    color: var(--text-secondary-color);
-}
-
-.inputContainer textarea {
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
     resize: vertical;
-    min-height: 80px;
+    min-height: 100px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    background-color: #fafafa;
 }
 
-input.inputError,
-textarea.inputError {
-    border-color: var(--incorrect-color);
-    border-width: 2px;
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(1, 165, 228, 0.1);
+    background-color: #fff;
+}
+
+.inputError {
+    border-color: var(--error-color-text) !important;
 }
 
 .fieldError {
-    color: var(--incorrect-color);
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin-top: 0.3rem;
+    color: var(--error-color-text);
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
     display: block;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.errorContainer {
+    background-color: var(--error-color);
+    color: var(--error-color-text);
+    padding: 0.9rem;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.9rem;
+    border-left: 4px solid var(--error-color-text);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.errorText p {
+    margin: 0;
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -40px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .formContainer {
+        padding: 1.5rem;
+        width: 95%;
+    }
+
+    .flexContainer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .flexContainer h2 {
+        font-size: 1.3rem;
+    }
 }

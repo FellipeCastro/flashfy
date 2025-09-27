@@ -15,7 +15,7 @@
 .mainContainer h1,
 .mainContainer h2 {
     margin-top: 1rem;
-    color: var(--text-secondary-color);
+    color: var(--text-primary-color);
     line-height: 1.6;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .mainContainer strong {
-    color: var(--text-secondary-color);
+    color: var(--text-primary-color);
     font-weight: 600;
 }
 

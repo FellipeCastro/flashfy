@@ -110,7 +110,7 @@ const AddDeckForm = ({
                     className={styles.form}
                 >
                     <div className={styles.inputContainer}>
-                        <div className={styles.flexContainer}>
+                        <div className={styles.addSubjectContainer}>
                             <label htmlFor="subject">Matéria</label>
                             <button
                                 type="button"

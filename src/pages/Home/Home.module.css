@@ -28,7 +28,7 @@
 .titleContainer h1 {
     font-size: 1.8rem;
     font-weight: bold;
-    color: var(--text-secondary-color);
+    color: var(--text-primary-color);
 }
 
 .deleteSubjectBtn,

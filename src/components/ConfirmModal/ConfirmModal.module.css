@@ -1,92 +1,150 @@
 .fadeModal {
-    z-index: 9;
+    z-index: 999;
     width: 100%;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
-    background: var(--fade-color);
+    background: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease-out;
 }
 
 .confirmModal {
     width: 100%;
-    max-width: 500px;
-    z-index: 9;
-    position: absolute;
+    max-width: 450px;
+    z-index: 1000;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--secondary-color);
-    padding: 1.2em 2em;
-    border-radius: 0.5em;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out;
 }
 
 .flexModal {
     display: flex;
-    align-items: center;
-    gap: 1em;
-    margin-bottom: 1.5em;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .flexModal svg {
     font-size: 64px;
-    color: var(--text-secondary-color);
+    color: var(--error-color-text);
+    flex-shrink: 0;
+    margin-top: 0.2rem;
 }
 
 .confirmModal h2 {
-    font-size: 1.4em;
+    font-size: 1.5rem;
     text-align: left;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary-color);
+    font-weight: 700;
 }
 
 .confirmModal p {
-    font-size: 0.9em;
-    font-weight: bold;
+    font-size: 1rem;
+    font-weight: normal;
     color: var(--text-secondary-color);
     text-align: left;
+    margin: 0;
+    line-height: 1.5;
 }
 
 .btnsContainerModal {
     display: grid;
+    gap: 1rem;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1em;
 }
 
 .cancelBtn,
 .confirmBtn {
-    padding: 0.4em;
-    border: 1px solid var(--text-secondary-color);
-    border-radius: 2em;
-    background-color: var(--secondary-color);
-    color: var(--text-secondary-color);
-    font-weight: bold;
-    font-size: 0.9em;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cancelBtn {
+    border: 1px solid var(--border-color);
+    background-color: transparent;
+    color: var(--text-secondary-color);
+}
+
+.cancelBtn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-color: var(--text-secondary-color);
 }
 
 .confirmBtn {
     background-color: var(--error-color-text);
-    color: #fff;
-    border-color: var(--error-color-text);
+    color: var(--secondary-color);
+    border: none;
 }
 
-.success {
+.confirmBtn:hover {
+    background-color: var(--error-color);
+}
+
+.confirmBtn.success {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
+}
+
+.confirmBtn.success:hover {
+    background-color: var(--primary-color-hover);
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -40px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
 }
 
 @media (max-width: 600px) {
     .confirmModal {
         width: 90%;
+        padding: 1.5rem;
     }
 
     .confirmModal h2 {
-        font-size: 1.2em;
+        font-size: 1.3rem;
     }
 
-    .confirmModal p,
+    .confirmModal p {
+        font-size: 0.9rem;
+    }
+
+    .btnsContainerModal {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
     .cancelBtn,
     .confirmBtn {
-        font-size: 0.8em;
+        width: 100%;
+        padding: 1rem;
+        font-size: 0.9rem;
     }
 }
