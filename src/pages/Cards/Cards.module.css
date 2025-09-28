@@ -226,6 +226,15 @@
     color: var(--text-secondary-color);
 }
 
+.finalizeBtn {
+    width: 100%;
+}
+
+.finalizeBtn button {
+    width: 100%;
+    transition: 0.5s;
+}
+
 .hidden {
     opacity: 0;
     pointer-events: none;

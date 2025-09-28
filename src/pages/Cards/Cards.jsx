@@ -20,7 +20,7 @@ const Cards = ({ decks, loadData }) => {
     const [currentDeck, setCurrentDeck] = useState(null);
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
     const [isAddCardFormOpen, setIsAddCardFormOpen] = useState(false);
-    const [difficulties, setDifficulties] = useState([]);
+    const [difficulties, setDifficulties] = useState([]); // Começa vazio
     const [isCreatingCard, setIsCreatingCard] = useState(false);
     const [isStudyingDeck, setIsStudyingDeck] = useState(false);
     const [isDeletingDeck, setIsDeletingDeck] = useState(false);
@@ -33,10 +33,9 @@ const Cards = ({ decks, loadData }) => {
         setShowAnswer(false);
         setSelectedDifficulty(null);
 
+        // Inicializa o array de dificuldades vazio, com o mesmo tamanho do número de cards
         if (selectedDeck?.cards) {
-            setDifficulties(
-                selectedDeck.cards.map((card) => card.difficulty || null)
-            );
+            setDifficulties(new Array(selectedDeck.cards.length).fill(null));
         }
     }, [decks, id]);
 
@@ -76,20 +75,12 @@ const Cards = ({ decks, loadData }) => {
     };
 
     const handleSetDifficulty = (level) => {
-        const updatedCards = currentDeck.cards.map((card, index) =>
-            index === currentCardIndex ? { ...card, difficulty: level } : card
-        );
-
-        const updatedDeck = {
-            ...currentDeck,
-            cards: updatedCards,
-        };
-
+        // Atualiza apenas o array local de dificuldades
         const updatedDifficulties = [...difficulties];
         updatedDifficulties[currentCardIndex] = level;
         setDifficulties(updatedDifficulties);
 
-        setCurrentDeck(updatedDeck);
+        // Atualiza a dificuldade selecionada apenas para feedback visual
         setSelectedDifficulty(level);
     };
 
@@ -99,7 +90,7 @@ const Cards = ({ decks, loadData }) => {
 
             const response = await api.put("/decks/study", {
                 idDeck: id,
-                difficulties: difficulties,
+                difficulties,
             });
 
             if (response.data) {
@@ -150,6 +141,9 @@ const Cards = ({ decks, loadData }) => {
 
     const currentCard = currentDeck.cards[currentCardIndex];
     const progress = ((currentCardIndex + 1) / currentDeck.cards.length) * 100;
+
+    // Verifica a dificuldade atual baseada no array local
+    const currentDifficulty = difficulties[currentCardIndex];
 
     return (
         <>
@@ -260,7 +254,7 @@ const Cards = ({ decks, loadData }) => {
                                             <li
                                                 key={level}
                                                 className={
-                                                    currentCard.difficulty ===
+                                                    currentDifficulty ===
                                                         level ||
                                                     selectedDifficulty === level
                                                         ? styles.selected
@@ -275,11 +269,10 @@ const Cards = ({ decks, loadData }) => {
                                         ))}
                                     </ul>
                                     <button
-                                        onClick={
+                                        onClick={handleNextCard}
+                                        disabled={
                                             currentCardIndex ===
                                             currentDeck.cards.length - 1
-                                                ? () => setStudyDeckModal(true)
-                                                : handleNextCard
                                         }
                                         className={styles.navBtn}
                                     >
@@ -290,6 +283,17 @@ const Cards = ({ decks, loadData }) => {
                         </div>
                     </>
                 )}
+                <div
+                    className={`${styles.finalizeBtn} ${
+                        showAnswer ? null : styles.hidden
+                    }`}
+                >
+                {currentCardIndex === currentDeck.cards.length - 1 ? (
+                    <Button onClick={() => setStudyDeckModal(true)}>
+                        Finalizar estudo
+                    </Button>
+                ) : null}
+                </div>
             </div>
 
             {isAddCardFormOpen && (

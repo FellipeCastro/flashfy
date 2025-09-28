@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import styles from "./Profile.module.css";
+import Button from "../../components/Button/Button";
 
 const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const [logoutModal, setLogoutModal] = useState(false);
@@ -32,9 +33,9 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 />
 
                 <div className={styles.mainContainer}>
-                    <button secondary onClick={() => setLogoutModal(true)}>
+                    <Button onClick={() => setLogoutModal(true)}>
                         Sair
-                    </button>
+                    </Button>
                 </div>
             </div>
         </>
