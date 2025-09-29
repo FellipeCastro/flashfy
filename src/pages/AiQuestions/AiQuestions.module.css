@@ -397,7 +397,7 @@
 .resultsFeedback p strong,
 .resultMsg {
     color: var(--primary-color);
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .divider {

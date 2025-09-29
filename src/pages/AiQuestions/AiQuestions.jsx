@@ -311,7 +311,6 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 {aiResponse.questions.length > 0 ? (
                     <>
                         <div className={styles.titleContainer}>
-                            {/* USA OS DADOS DA RESPOSTA DA API */}
                             <h2>{aiResponse.theme}</h2>
                             <div className={styles.flexTitle}>
                                 <span
@@ -513,13 +512,6 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         </div>
                     )
                 )}
-                {/* 
-                {isLoading && (
-                    <div className={styles.loadingState}>
-                        <div className={styles.loadingSpinner}></div>
-                        <p id="loader">Gerando questões...</p>
-                    </div>
-                )} */}
             </div>
         </div>
     );

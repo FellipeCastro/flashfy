@@ -27,7 +27,7 @@
 }
 
 .mainContainer strong {
-    color: var(--text-primary-color);
+    color: var(--text-secondary-color);
     font-weight: 600;
 }
 

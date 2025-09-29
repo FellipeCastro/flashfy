@@ -217,6 +217,11 @@
     font-size: 2.4rem;
     color: var(--text-primary-color);
     cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.navBtn:hover {
+    color: var(--text-secondary-color);
 }
 
 .msg {
