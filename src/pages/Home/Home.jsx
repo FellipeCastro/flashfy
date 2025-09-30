@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
@@ -10,6 +10,7 @@ import Loading from "../../components/Loading/Loading";
 import styles from "./Home.module.css";
 import api from "../../constants/api";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import { IoBook, IoTime, IoStatsChart, IoStar, IoCalendar, IoChevronBack, IoChevronForward } from "react-icons/io5";
 
 const Home = ({
     isSidebarOpen,
@@ -27,11 +28,129 @@ const Home = ({
     const [isCreatingDeck, setIsCreatingDeck] = useState(false);
     const [isCreatingSubject, setIsCreatingSubject] = useState(false);
     const [isDeletingSubject, setIsDeletingSubject] = useState(false);
-    const [selectingSubjectToDelete, setSelectingSubjectToDelete] =
-        useState(false);
+    const [selectingSubjectToDelete, setSelectingSubjectToDelete] = useState(false);
     const [deleteSubjectModal, setDeleteSubjectModal] = useState(false);
     const [subjectToDelete, setSubjectToDelete] = useState(null);
+    const [studyStats, setStudyStats] = useState({
+        totalCards: 0,
+        totalDecks: 0,
+        cardsReviewed: 0,
+        studyTime: 0
+    });
+    
+    // Estado para o calendário
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const [studySessions, setStudySessions] = useState([]);
     const navigate = useNavigate();
+
+    // Calcular estatísticas de estudo
+    useEffect(() => {
+        if (decks.length > 0) {
+            const totalCards = decks.reduce((total, deck) => total + (deck.cards?.length || 0), 0);
+            const cardsReviewed = decks.reduce((total, deck) => {
+                return total + (deck.cards?.filter(card => card.lastReview).length || 0);
+            }, 0);
+            
+            // Simular sessões de estudo para demonstração
+            const mockStudySessions = generateMockStudySessions();
+            setStudySessions(mockStudySessions);
+            
+            setStudyStats({
+                totalCards,
+                totalDecks: decks.length,
+                cardsReviewed,
+                studyTime: Math.floor(totalCards * 2.5) // Estimativa de tempo em minutos
+            });
+        }
+    }, [decks]);
+
+    // Gerar sessões de estudo mockadas para demonstração
+    const generateMockStudySessions = () => {
+        const sessions = [];
+        const today = new Date();
+        
+        // Sessões dos últimos 15 dias
+        for (let i = 0; i < 15; i++) {
+            const date = new Date(today);
+            date.setDate(today.getDate() - i);
+            
+            // Aleatoriamente decidir se houve sessão neste dia
+            if (Math.random() > 0.3) {
+                sessions.push({
+                    date: date.toISOString().split('T')[0],
+                    duration: Math.floor(Math.random() * 120) + 30, // 30-150 minutos
+                    cardsStudied: Math.floor(Math.random() * 50) + 10, // 10-60 cards
+                    decks: Math.floor(Math.random() * 3) + 1 // 1-4 decks
+                });
+            }
+        }
+        return sessions;
+    };
+
+    // Funções de navegação do calendário
+    const goToPreviousMonth = () => {
+        setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+    };
+
+    const goToNextMonth = () => {
+        setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+    };
+
+    const goToToday = () => {
+        setCurrentDate(new Date());
+    };
+
+    // Gerar dias do calendário
+    const getCalendarDays = () => {
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        
+        const firstDayOfMonth = new Date(year, month, 1);
+        const lastDayOfMonth = new Date(year, month + 1, 0);
+        const daysInMonth = lastDayOfMonth.getDate();
+        
+        const startingDayOfWeek = firstDayOfMonth.getDay();
+        
+        const days = [];
+        
+        // Dias do mês anterior
+        const prevMonthLastDay = new Date(year, month, 0).getDate();
+        for (let i = startingDayOfWeek - 1; i >= 0; i--) {
+            days.push({
+                date: new Date(year, month - 1, prevMonthLastDay - i),
+                isCurrentMonth: false,
+                hasStudySession: false
+            });
+        }
+        
+        // Dias do mês atual
+        const today = new Date().toDateString();
+        for (let day = 1; day <= daysInMonth; day++) {
+            const date = new Date(year, month, day);
+            const dateString = date.toISOString().split('T')[0];
+            const hasStudySession = studySessions.some(session => session.date === dateString);
+            
+            days.push({
+                date,
+                isCurrentMonth: true,
+                isToday: date.toDateString() === today,
+                hasStudySession
+            });
+        }
+        
+        // Dias do próximo mês para completar a grid
+        const totalCells = 42; // 6 semanas
+        const remainingDays = totalCells - days.length;
+        for (let day = 1; day <= remainingDays; day++) {
+            days.push({
+                date: new Date(year, month + 1, day),
+                isCurrentMonth: false,
+                hasStudySession: false
+            });
+        }
+        
+        return days;
+    };
 
     const createDeck = async (idSubject, title) => {
         try {
@@ -42,7 +161,7 @@ const Home = ({
             });
             if (response.data) {
                 setIsAddDeckFormOpen(false);
-                loadData();
+                loadData(); // Atualiza os dados
             }
         } catch (error) {
             console.log(error);
@@ -60,7 +179,7 @@ const Home = ({
             });
             if (response.data) {
                 setIsAddSubjectFormOpen(false);
-                loadData();
+                loadData(); // Atualiza os dados
             }
         } catch (error) {
             console.log(error);
@@ -77,7 +196,7 @@ const Home = ({
                 setDeleteSubjectModal(false);
                 setSelectingSubjectToDelete(false);
                 setSubjectToDelete(null);
-                loadData();
+                loadData(); // Atualiza os dados
             }
         } catch (error) {
             console.log(error);
@@ -97,7 +216,6 @@ const Home = ({
         setSelectingSubjectToDelete(false);
     };
 
-    // Função que alterna a seleção de uma matéria
     const handleSubjectSelection = (subject) => {
         setSelectedSubjects((prevSubjects) =>
             prevSubjects.includes(subject)
@@ -105,6 +223,22 @@ const Home = ({
                 : [...prevSubjects, subject]
         );
     };
+
+    // Decks para revisão (com data vencida ou próxima)
+    const decksForReview = decks.filter(deck => {
+        if (!deck.nextReview) return false;
+        const reviewDate = new Date(deck.nextReview);
+        const today = new Date();
+        return reviewDate <= new Date(today.setDate(today.getDate() + 1)); // Revisões para hoje ou atrasadas
+    });
+
+    // Formatar nome do mês
+    const monthNames = [
+        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+    ];
+
+    const dayNames = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
     return (
         <>
@@ -125,116 +259,140 @@ const Home = ({
                         <p id="loader">Carregando dados...</p>
                     ) : (
                         <>
-                            <div className={styles.columnContainer}>
-                                <div className={styles.titleContainer}>
-                                    <h1>Meus decks</h1>
-                                    <Button
-                                        onClick={() =>
-                                            setIsAddDeckFormOpen(true)
-                                        }
-                                    >
-                                        + Novo deck
-                                    </Button>
+                            {/* Dashboard Stats */}
+                            <div className={styles.dashboard}>
+                                <h2>Dashboard de Estudos</h2>
+                                <div className={styles.statsGrid}>
+                                    <div className={styles.statCard}>
+                                        <div className={styles.statIcon}>
+                                            <IoBook />
+                                        </div>
+                                        <div className={styles.statInfo}>
+                                            <h3>{studyStats.totalDecks}</h3>
+                                            <p>Decks Criados</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.statCard}>
+                                        <div className={styles.statIcon}>
+                                            <IoStatsChart />
+                                        </div>
+                                        <div className={styles.statInfo}>
+                                            <h3>{studyStats.totalCards}</h3>
+                                            <p>Cartões Totais</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.statCard}>
+                                        <div className={styles.statIcon}>
+                                            <IoStar />
+                                        </div>
+                                        <div className={styles.statInfo}>
+                                            <h3>{studyStats.cardsReviewed}</h3>
+                                            <p>Cartões Revisados</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.statCard}>
+                                        <div className={styles.statIcon}>
+                                            <IoTime />
+                                        </div>
+                                        <div className={styles.statInfo}>
+                                            <h3>{studyStats.studyTime}</h3>
+                                            <p>Minutos de Estudo</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                {selectingSubjectToDelete ? (
-                                    <button
-                                        className={styles.deleteSubjectBtn}
-                                        onClick={() =>
-                                            setSelectingSubjectToDelete(false)
-                                        }
-                                    >
-                                        Cancelar
-                                    </button>
-                                ) : (
-                                    <button
-                                        className={styles.deleteSubjectBtn}
-                                        onClick={() =>
-                                            setSelectingSubjectToDelete(true)
-                                        }
-                                    >
-                                        Excluir matéria
-                                    </button>
-                                )}
                             </div>
 
-                            <div className={styles.filterContainer}>
-                                {subjects.map((subject) => {
-                                    return (
-                                        <button
-                                            key={subject.idSubject}
-                                            style={{
-                                                backgroundColor: subject.color,
-                                            }}
-                                            onClick={() =>
-                                                selectingSubjectToDelete
-                                                    ? handleDeleteSubjectClick(
-                                                          subject
-                                                      )
-                                                    : handleSubjectSelection(
-                                                          subject.name
-                                                      )
-                                            }
-                                            className={
-                                                selectedSubjects.includes(
-                                                    subject.name
-                                                )
-                                                    ? styles.active
-                                                    : null
-                                            }
-                                        >
-                                            {subject.name}
+                            {/* Calendário */}
+                            <div className={styles.calendarSection}>
+                                <div className={styles.calendarHeader}>
+                                    <div className={styles.calendarTitle}>
+                                        <IoCalendar className={styles.calendarIcon} />
+                                        <h3>Calendário de Estudos</h3>
+                                    </div>
+                                    <div className={styles.calendarControls}>
+                                        <button onClick={goToPreviousMonth} className={styles.calendarBtn}>
+                                            <IoChevronBack />
                                         </button>
-                                    );
-                                })}
+                                        <span className={styles.currentMonth}>
+                                            {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+                                        </span>
+                                        <button onClick={goToNextMonth} className={styles.calendarBtn}>
+                                            <IoChevronForward />
+                                        </button>
+                                        <button onClick={goToToday} className={styles.todayBtn}>
+                                            Hoje
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className={styles.calendar}>
+                                    <div className={styles.calendarWeekdays}>
+                                        {dayNames.map(day => (
+                                            <div key={day} className={styles.weekday}>
+                                                {day}
+                                            </div>
+                                        ))}
+                                    </div>
+                                    
+                                    <div className={styles.calendarDays}>
+                                        {getCalendarDays().map((day, index) => (
+                                            <div
+                                                key={index}
+                                                className={`${styles.calendarDay} ${
+                                                    !day.isCurrentMonth ? styles.otherMonth : ''
+                                                } ${day.isToday ? styles.today : ''} ${
+                                                    day.hasStudySession ? styles.hasStudySession : ''
+                                                }`}
+                                            >
+                                                <span className={styles.dayNumber}>
+                                                    {day.date.getDate()}
+                                                </span>
+                                                {day.hasStudySession && (
+                                                    <div className={styles.studyDot} title="Sessão de estudo"></div>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className={styles.calendarLegend}>
+                                    <div className={styles.legendItem}>
+                                        <div className={styles.studyDot}></div>
+                                        <span>Sessão de estudo</span>
+                                    </div>
+                                    <div className={styles.legendItem}>
+                                        <div className={`${styles.calendarDay} ${styles.today}`}></div>
+                                        <span>Hoje</span>
+                                    </div>
+                                </div>
                             </div>
 
-                            {decks.length === 0 && loading === false && (
-                                <div className={styles.noDecks}>
-                                    <p className={styles.msg}>
-                                        Crie seus decks para começar a estudar!
-                                    </p>
+                            {/* Revisões Pendentes */}
+                            {decksForReview.length > 0 && (
+                                <div className={styles.reviewSection}>
+                                    <div className={styles.sectionHeader}>
+                                        <h3>Revisões Pendentes</h3>
+                                        <span className={styles.reviewCount}>
+                                            {decksForReview.length} deck{decksForReview.length > 1 ? 's' : ''} para revisar
+                                        </span>
+                                    </div>
+                                    <div className={styles.reviewDecks}>
+                                        {decksForReview.slice(0, 3).map((deck) => (
+                                            <div key={deck.idDeck} className={styles.reviewDeck}>
+                                                <Deck
+                                                    color={deck.subject.color}
+                                                    subject={deck.subject.name}
+                                                    title={deck.title}
+                                                    cards={deck.cards.length}
+                                                    nextReview={deck.nextReview}
+                                                    openCard={() => navigate(`/cards/${deck.idDeck}`)}
+                                                    isReview={true}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             )}
-
-                            <ul className={styles.decksContainer}>
-                                {decks
-                                    .sort((a, b) => {
-                                        const now = new Date();
-
-                                        // Trata decks sem data (vão para o final)
-                                        if (!a.nextReview && !b.nextReview)
-                                            return 0;
-                                        if (!a.nextReview) return 1;
-                                        if (!b.nextReview) return -1;
-
-                                        const aDate = new Date(a.nextReview);
-                                        const bDate = new Date(b.nextReview);
-
-                                        // Prioritiza revisões vencidas (datas passadas)
-                                        if (aDate < now && bDate >= now)
-                                            return -1;
-                                        if (bDate < now && aDate >= now)
-                                            return 1;
-
-                                        // Ordena pela data mais próxima (crescente)
-                                        return aDate - bDate;
-                                    })
-                                    .map((deck) => (
-                                        <Deck
-                                            key={deck.idDeck}
-                                            color={deck.subject.color}
-                                            subject={deck.subject.name}
-                                            title={deck.title}
-                                            cards={deck.cards.length}
-                                            nextReview={deck.nextReview}
-                                            openCard={() =>
-                                                navigate(
-                                                    `/cards/${deck.idDeck}`
-                                                )
-                                            }
-                                        />
-                                    ))}
-                            </ul>
                         </>
                     )}
                 </div>

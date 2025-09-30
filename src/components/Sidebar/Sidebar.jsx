@@ -1,9 +1,9 @@
+// components/Sidebar/Sidebar.js
 import { Link, useLocation } from "react-router-dom";
-import { MdKeyboardDoubleArrowRight, MdHome } from "react-icons/md";
-import { FaUser, FaBookReader } from "react-icons/fa";
+import { MdKeyboardDoubleArrowRight, MdHome, MdDashboard } from "react-icons/md";
+import { FaUser, FaBookReader, FaUsers } from "react-icons/fa";
 import { RiRobot2Fill } from "react-icons/ri";
 import styles from "./Sidebar.module.css";
-import Button from "../Button/Button";
 import logo from "../../assets/logo.png";
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
@@ -47,6 +47,26 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             }
                         >
                             <MdHome /> Página inicial
+                        </Link>
+                        <Link
+                            to="/my-decks"
+                            className={
+                                location.pathname === "/my-decks"
+                                    ? styles.active
+                                    : null
+                            }
+                        >
+                            <MdDashboard /> Meus decks
+                        </Link>
+                        <Link
+                            to="/community"
+                            className={
+                                location.pathname === "/community"
+                                    ? styles.active
+                                    : null
+                            }
+                        >
+                            <FaUsers /> Comunidade
                         </Link>
                         <Link
                             to="/aiquestions"

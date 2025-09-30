@@ -78,12 +78,12 @@ body {
 } */
 
 /* Medium devices (tablets, 768px and up) */
-/* @media (min-width: 768px) {
+@media (min-width: 768px) {
     html,
     body {
         font-size: 10px;
     }
-} */
+}
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {

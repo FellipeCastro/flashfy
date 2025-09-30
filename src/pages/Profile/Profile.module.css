@@ -1,5 +1,6 @@
 .container {
     display: flex;
+    min-height: 100vh;
 }
 
 .mainContainer {
@@ -7,7 +8,191 @@
     padding: 2rem 5%;
     color: var(--text-primary-color);
     background: var(--bg-color);
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    color: var(--text-secondary-color);
+    font-size: 1rem;
+}
+
+.profileForm {
+    background: var(--secondary-color);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    margin-bottom: 2rem;
+}
+
+.formSection {
+    margin-bottom: 2rem;
+}
+
+.formSection:last-of-type {
+    margin-bottom: 0;
+}
+
+.formSection h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.passwordNote {
+    color: var(--text-secondary-color);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 2rem;
+}
+
+.editActions {
+    display: flex;
+    gap: 1rem;
+}
+
+.errorMessage {
+    background-color: var(--error-color);
+    color: var(--error-color-text);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--error-color-text);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.successMessage {
+    background-color: var(--correct-bg);
+    color: var(--correct-color);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--correct-color);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.dangerZone {
+    background: var(--secondary-color);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    border: 2px solid var(--error-color);
+}
+
+.dangerZone h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--error-color-text);
+    margin-bottom: 1.5rem;
+}
+
+.dangerActions {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1.5rem;
+}
+
+.dangerItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: rgba(244, 67, 54, 0.05);
+    border-radius: 8px;
+    border: 1px solid var(--error-color);
+}
+
+.dangerItem h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.dangerItem p {
+    color: var(--text-secondary-color);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.deleteButton {
+    background-color: var(--error-color-text) !important;
+    border-color: var(--error-color-text) !important;
+}
+
+.deleteButton:hover {
+    background-color: var(--incorrect-color) !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .mainContainer {
+        padding: 1rem 2rem;
+    }
+
+    .profileForm {
+        padding: 1.5rem;
+    }
+
+    .dangerItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .dangerItem button {
+        align-self: flex-end;
+    }
+
+    .editActions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .editActions button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .mainContainer {
+        padding: 1rem;
+    }
+
+    .profileForm {
+        padding: 1rem;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
 }

@@ -6,8 +6,11 @@ import Cards from "./pages/Cards/Cards";
 import AiQuestions from "./pages/AiQuestions/AiQuestions";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import LandingPage from "./pages/LandingPage/LandingPage";
 import api from "./constants/api.js";
 import Profile from "./pages/Profile/Profile.jsx";
+import Community from "./pages/Community/Community";
+import MyDecks from "./pages/MyDecks/MyDecks";
 
 const App = () => {
     const [decks, setDecks] = useState([]);
@@ -73,16 +76,7 @@ const App = () => {
             <Routes>
                 <Route
                     path="/"
-                    element={
-                        <Navigate
-                            to={
-                                localStorage.getItem("authToken")
-                                    ? "/home"
-                                    : "/login"
-                            }
-                            replace
-                        />
-                    }
+                    element={<LandingPage />}
                 />
 
                 <Route
@@ -117,6 +111,39 @@ const App = () => {
                                 setSelectedSubjects={setSelectedSubjects}
                                 loadData={loadData}
                                 loading={loading}
+                            />
+                        </ProtectedRoute>
+                    }
+                />
+
+               <Route
+                    path="/my-decks"
+                    element={
+                        <ProtectedRoute>
+                            <MyDecks
+                                isSidebarOpen={isSidebarOpen}
+                                setIsSidebarOpen={setIsSidebarOpen}
+                                decks={decks}
+                                progress={progress}
+                                subjects={subjects}
+                                loadData={loadData} // Adicione esta linha
+                                loading={loading}   // E esta também se quiser
+                            />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/community"
+                    element={
+                        <ProtectedRoute>
+                            <Community
+                                isSidebarOpen={isSidebarOpen}
+                                setIsSidebarOpen={setIsSidebarOpen}
+                                decks={decks}
+                                progress={progress}
+                                subjects={subjects}
+                                setDecks={setDecks}
                             />
                         </ProtectedRoute>
                     }

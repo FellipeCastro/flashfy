@@ -1,0 +1,113 @@
+.container {
+    display: flex;
+}
+
+.mainContainer {
+    width: 100%;
+    padding: 2rem 5%;
+    color: var(--text-primary-color);
+    background: var(--bg-color);
+}
+
+.titleContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+}
+
+.columnContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+}
+
+.titleContainer h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--text-primary-color);
+}
+
+.deleteSubjectBtn,
+.deleteMsg {
+    background-color: transparent;
+    border: none;
+    color: var(--text-secondary-color);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.deleteSubjectBtn {
+    cursor: pointer;
+}
+
+.deleteSubjectBtn:hover {
+    text-decoration: underline;
+}
+
+.decksContainer {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.noDecks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.msg {
+    font-weight: bold;
+    color: var(--text-secondary-color);
+}
+
+.filterContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 0.4rem;
+    margin-bottom: 0.6rem;
+}
+
+.filterContainer button {
+    background-color: transparent;
+    padding: 0.3rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.2rem;
+    color: var(--text-primary-color);
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.filterContainer button:hover,
+.active {
+    transform: translateY(-4px);
+}
+
+@media (max-width: 768px) {
+    .mainContainer {
+        padding: 1rem 2rem;
+    }
+
+    .filterContainer {
+        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    }
+
+    .decksContainer {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}

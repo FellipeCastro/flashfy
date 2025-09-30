@@ -217,11 +217,6 @@
     font-size: 2.4rem;
     color: var(--text-primary-color);
     cursor: pointer;
-    transition: 0.2s ease-in-out;
-}
-
-.navBtn:hover {
-    color: var(--text-secondary-color);
 }
 
 .msg {
@@ -229,15 +224,6 @@
     text-align: center;
     font-weight: bold;
     color: var(--text-secondary-color);
-}
-
-.finalizeBtn {
-    width: 100%;
-}
-
-.finalizeBtn button {
-    width: 100%;
-    transition: 0.5s;
 }
 
 .hidden {
