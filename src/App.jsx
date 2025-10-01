@@ -162,6 +162,7 @@ const App = () => {
                             <Profile
                                 isSidebarOpen={isSidebarOpen}
                                 setIsSidebarOpen={setIsSidebarOpen}
+                                subjects={subjects}
                             />
                         </ProtectedRoute>
                     }

@@ -26,7 +26,8 @@
     font-size: 1rem;
 }
 
-.profileForm {
+.profileForm,
+.subjectsSection {
     background: var(--secondary-color);
     padding: 2rem;
     border: 2px solid var(--border-color);
@@ -43,7 +44,8 @@
     margin-bottom: 0;
 }
 
-.formSection h2 {
+.formSection h2,
+.subjectsSection h2 {
     font-size: 1.3rem;
     font-weight: 600;
     color: var(--text-primary-color);
@@ -88,6 +90,40 @@
     margin-bottom: 1.5rem;
     border-left: 4px solid var(--correct-color);
     animation: fadeIn 0.3s ease-out;
+}
+
+.subject {
+    background-color: transparent;
+    padding: 0.6rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.2rem;
+    color: var(--text-primary-color);
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    font-weight: 500;
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
+}
+
+.deleteBtn {
+    display: grid;
+    align-items: center;
+    padding: 0.4rem;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.4s;
+    display: flex;
+    align-items: center;
+    filter: brightness(0);
+}
+
+.deleteBtn:hover {
+    filter: brightness(0.6); 
 }
 
 .dangerZone {

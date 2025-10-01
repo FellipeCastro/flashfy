@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaTrashAlt } from "react-icons/fa";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
 import FormField from "../../components/Form/FormField";
@@ -8,7 +9,7 @@ import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import styles from "./Profile.module.css";
 import api from "../../constants/api";
 
-const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
     const [userData, setUserData] = useState({
         name: "",
         email: "",
@@ -21,6 +22,9 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [deleteModal, setDeleteModal] = useState(false);
+    const [deleteSubjectModal, setDeleteSubjectModal] = useState(false);
+    const [subjectToDelete, setSubjectToDelete] = useState(null);
+    const [isDeletingSubject, setIsDeletingSubject] = useState(false);
     const navigate = useNavigate();
 
     // Carregar dados do usuário
@@ -122,16 +126,13 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
         setIsLoading(true);
 
         try {
-            // ✅ CORREÇÃO: Separar edição de perfil e alteração de senha
             if (userData.currentPassword && userData.newPassword) {
-                // Se tem senha, fazer alteração de senha separada
                 await api.put("/users/password", {
                     currentPassword: userData.currentPassword,
                     newPassword: userData.newPassword,
                 });
             }
 
-            // Sempre atualizar perfil (nome e email)
             const response = await api.put("/users/profile", {
                 name: userData.name,
                 email: userData.email,
@@ -141,7 +142,6 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 setSuccessMessage("Perfil atualizado com sucesso!");
                 setIsEditing(false);
 
-                // Limpar campos de senha
                 setUserData((prev) => ({
                     ...prev,
                     currentPassword: "",
@@ -154,7 +154,6 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
             const errorMessage =
                 error.response?.data?.error || "Erro ao atualizar perfil";
 
-            // Tratar erro específico de email duplicado
             if (
                 errorMessage.includes("email") ||
                 errorMessage.includes("Email")
@@ -172,12 +171,10 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
         try {
             setIsLoading(true);
 
-            // ✅ CORREÇÃO: Adicionar confirmação no body conforme necessário
             await api.delete("/users/profile", {
-                data: { confirmation: "CONFIRMAR_EXCLUSÃO" }, // Ajuste conforme seu backend
+                data: { confirmation: "CONFIRMAR_EXCLUSÃO" },
             });
 
-            // Limpar localStorage e redirecionar para login
             localStorage.removeItem("authToken");
             localStorage.removeItem("idUser");
             navigate("/login");
@@ -196,16 +193,41 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
         setIsEditing(false);
         setErrors({});
         setSuccessMessage("");
-        // Recarregar dados originais
         loadUserData();
 
-        // Limpar campos de senha
         setUserData((prev) => ({
             ...prev,
             currentPassword: "",
             newPassword: "",
             confirmPassword: "",
         }));
+    };
+
+    const deleteSubject = async (idSubject) => {
+        try {
+            setIsDeletingSubject(true);
+            const response = await api.delete(`/subjects/${idSubject}`);
+            if (response.data) {
+                setDeleteSubjectModal(false);
+                setSubjectToDelete(null);
+                loadData();
+            }
+        } catch (error) {
+            console.log(error);
+            setErrors({ general: "Erro ao excluir matéria" });
+        } finally {
+            setIsDeletingSubject(false);
+        }
+    };
+
+    const handleDeleteSubjectClick = (subject) => {
+        setSubjectToDelete(subject);
+        setDeleteSubjectModal(true);
+    };
+
+    const handleCancelDelete = () => {
+        setDeleteSubjectModal(false);
+        setSubjectToDelete(null);
     };
 
     const handleLogout = () => {
@@ -217,6 +239,7 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
     return (
         <>
             {isLoading && <Loading />}
+            {isDeletingSubject && <Loading />}
 
             <div className={styles.container}>
                 <Sidebar
@@ -342,6 +365,36 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         </div>
                     </form>
 
+                    {/* Seção de Matérias - Ícone da lixeira direto */}
+                    <div className={styles.subjectsSection}>
+                        <h2>Matérias cadastradas</h2>
+
+                        {subjects.map((subject) => {
+                            return (
+                                <div
+                                    className={styles.subject}
+                                    style={{
+                                        backgroundColor: subject.color,
+                                    }}
+                                >
+                                    <strong>{subject.name}</strong>
+
+                                    <button
+                                        className={styles.deleteBtn}
+                                        style={{
+                                            color: subject.color,
+                                        }}
+                                        onClick={() =>
+                                            handleDeleteSubjectClick(subject)
+                                        }
+                                    >
+                                        <FaTrashAlt />
+                                    </button>
+                                </div>
+                            );
+                        })}
+                    </div>
+
                     <div className={styles.dangerZone}>
                         <h2>Zona de Perigo</h2>
                         <div className={styles.dangerActions}>
@@ -350,9 +403,7 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     <h3>Sair da Conta</h3>
                                     <p>Faça logout da sua conta atual</p>
                                 </div>
-                                <Button onClick={handleLogout}>
-                                    Sair
-                                </Button>
+                                <Button onClick={handleLogout}>Sair</Button>
                             </div>
 
                             <div className={styles.dangerItem}>
@@ -379,11 +430,20 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen }) => {
             {deleteModal && (
                 <ConfirmModal
                     title="Excluir Conta"
-                    description="Tem certeza que deseja excluir sua conta? Todos os seus decks, cartões e dados serão permanentemente removidos. Esta ação não pode ser desfeita."
+                    description="Tem certeza que deseja excluir sua conta? Todos os seus dados serão permanentemente removidos. Esta ação não pode ser desfeita."
                     btnText="Excluir Conta"
                     onClick={handleDeleteAccount}
                     onCancel={() => setDeleteModal(false)}
-                    destructive={true}
+                />
+            )}
+
+            {deleteSubjectModal && subjectToDelete && (
+                <ConfirmModal
+                    title={"Deletar matéria"}
+                    description={`Todos os decks associados a matéria "${subjectToDelete.name}" também serão excluídos.`}
+                    btnText={"Confirmar"}
+                    onClick={() => deleteSubject(subjectToDelete.idSubject)}
+                    onCancel={handleCancelDelete}
                 />
             )}
         </>

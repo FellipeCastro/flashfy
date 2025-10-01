@@ -18,9 +18,13 @@
     margin-bottom: 2rem;
 }
 
-.progressBarContainer h2 svg {
+.fireIcon {
     color: var(--primary-color);
     font-size: 1.6rem;
+}
+
+.inative {
+    color: var(--text-secondary-color);
 }
 
 .weekDays {

@@ -9,7 +9,6 @@ import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 import Loading from "../../components/Loading/Loading";
 import styles from "./Home.module.css";
 import api from "../../constants/api";
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 
 const Home = ({
     isSidebarOpen,
@@ -26,11 +25,6 @@ const Home = ({
     const [isAddSubjectFormOpen, setIsAddSubjectFormOpen] = useState(false);
     const [isCreatingDeck, setIsCreatingDeck] = useState(false);
     const [isCreatingSubject, setIsCreatingSubject] = useState(false);
-    const [isDeletingSubject, setIsDeletingSubject] = useState(false);
-    const [selectingSubjectToDelete, setSelectingSubjectToDelete] =
-        useState(false);
-    const [deleteSubjectModal, setDeleteSubjectModal] = useState(false);
-    const [subjectToDelete, setSubjectToDelete] = useState(null);
     const navigate = useNavigate();
 
     const createDeck = async (idSubject, title) => {
@@ -69,34 +63,6 @@ const Home = ({
         }
     };
 
-    const deleteSubject = async (idSubject) => {
-        try {
-            setIsDeletingSubject(true);
-            const response = await api.delete(`/subjects/${idSubject}`);
-            if (response.data) {
-                setDeleteSubjectModal(false);
-                setSelectingSubjectToDelete(false);
-                setSubjectToDelete(null);
-                loadData();
-            }
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsDeletingSubject(false);
-        }
-    };
-
-    const handleDeleteSubjectClick = (subject) => {
-        setSubjectToDelete(subject);
-        setDeleteSubjectModal(true);
-    };
-
-    const handleCancelDelete = () => {
-        setDeleteSubjectModal(false);
-        setSubjectToDelete(null);
-        setSelectingSubjectToDelete(false);
-    };
-
     // Função que alterna a seleção de uma matéria
     const handleSubjectSelection = (subject) => {
         setSelectedSubjects((prevSubjects) =>
@@ -110,7 +76,6 @@ const Home = ({
         <>
             {isCreatingDeck && <Loading />}
             {isCreatingSubject && <Loading />}
-            {isDeletingSubject && <Loading />}
 
             <div className={styles.container}>
                 <Sidebar
@@ -119,42 +84,19 @@ const Home = ({
                 />
 
                 <div className={styles.mainContainer}>
-                    <ProgressBar progress={progress} loading={loading} />
+                    <ProgressBar progress={progress} />
 
                     {loading ? (
                         <p id="loader">Carregando dados...</p>
                     ) : (
                         <>
-                            <div className={styles.columnContainer}>
-                                <div className={styles.titleContainer}>
-                                    <h1>Meus decks</h1>
-                                    <Button
-                                        onClick={() =>
-                                            setIsAddDeckFormOpen(true)
-                                        }
-                                    >
-                                        + Novo deck
-                                    </Button>
-                                </div>
-                                {selectingSubjectToDelete ? (
-                                    <button
-                                        className={styles.deleteSubjectBtn}
-                                        onClick={() =>
-                                            setSelectingSubjectToDelete(false)
-                                        }
-                                    >
-                                        Cancelar
-                                    </button>
-                                ) : (
-                                    <button
-                                        className={styles.deleteSubjectBtn}
-                                        onClick={() =>
-                                            setSelectingSubjectToDelete(true)
-                                        }
-                                    >
-                                        Excluir matéria
-                                    </button>
-                                )}
+                            <div className={styles.titleContainer}>
+                                <h1>Meus decks</h1>
+                                <Button
+                                    onClick={() => setIsAddDeckFormOpen(true)}
+                                >
+                                    + Novo deck
+                                </Button>
                             </div>
 
                             <div className={styles.filterContainer}>
@@ -166,13 +108,9 @@ const Home = ({
                                                 backgroundColor: subject.color,
                                             }}
                                             onClick={() =>
-                                                selectingSubjectToDelete
-                                                    ? handleDeleteSubjectClick(
-                                                          subject
-                                                      )
-                                                    : handleSubjectSelection(
-                                                          subject.name
-                                                      )
+                                                handleSubjectSelection(
+                                                    subject.name
+                                                )
                                             }
                                             className={
                                                 selectedSubjects.includes(
@@ -254,16 +192,6 @@ const Home = ({
                     setIsAddDeckFormOpen={setIsAddDeckFormOpen}
                     setIsAddSubjectFormOpen={setIsAddSubjectFormOpen}
                     createSubject={createSubject}
-                />
-            )}
-
-            {deleteSubjectModal && subjectToDelete && (
-                <ConfirmModal
-                    title={"Deletar matéria"}
-                    description={`Todos os decks associados a matéria "${subjectToDelete.name}" também serão excluídos.`}
-                    btnText={"Confirmar"}
-                    onClick={() => deleteSubject(subjectToDelete.idSubject)}
-                    onCancel={handleCancelDelete}
                 />
             )}
         </>

@@ -1,7 +1,7 @@
 import { FaFire } from "react-icons/fa6";
 import styles from "./ProgressBar.module.css";
 
-const ProgressBar = ({ progress, loading }) => {
+const ProgressBar = ({ progress }) => {
     const days = ["D", "S", "T", "Q", "Q", "S", "S"];
 
     const date = new Date();
@@ -10,7 +10,7 @@ const ProgressBar = ({ progress, loading }) => {
     return (
         <div className={styles.progressBarContainer}>
             <h2>
-                <FaFire />
+                <FaFire className={progress.consecutiveDays > 0 ? `${styles.fireIcon}` : `${styles.fireIcon} ${styles.inative}`} />
                 {progress.message ? progress.message : <p id="loader">Carregando...</p>}
             </h2>
 

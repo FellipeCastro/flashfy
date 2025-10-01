@@ -13,11 +13,16 @@
     gap: 1.5rem;
 }
 
-.mainContainer h1 {
+.header h1 {
+    font-size: 2rem;
+    font-weight: bold;
     color: var(--text-primary-color);
     margin-bottom: 0.5rem;
-    font-size: 1.8rem;
-    font-weight: 700;
+}
+
+.header p {
+    color: var(--text-secondary-color);
+    font-size: 1rem;
 }
 
 .paragraph {

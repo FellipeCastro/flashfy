@@ -191,8 +191,9 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
             />
 
             <div className={styles.mainContainer}>
-                <div className={styles.titleContainer}>
-                    <h1>Gere perguntas por IA</h1>
+                <div className={styles.header}>
+                    <h1>Perguntas com IA</h1>
+                    <p>Gere perguntas usando Inteligência Artificial</p>
                 </div>
 
                 <form

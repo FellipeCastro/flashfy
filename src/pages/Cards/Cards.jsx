@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaTrashAlt } from "react-icons/fa";
-import { MdArrowLeft, MdArrowRight, MdOutlineCheck } from "react-icons/md";
+import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import Button from "../../components/Button/Button";
 import AddCardForm from "../../components/AddCardForm/AddCardForm";
 import Loading from "../../components/Loading/Loading.jsx";
