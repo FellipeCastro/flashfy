@@ -45,7 +45,7 @@
 }
 
 .formSection h2,
-.subjectsSection h2 {
+.dangerZone h2 {
     font-size: 1.3rem;
     font-weight: 600;
     color: var(--text-primary-color);
@@ -92,6 +92,37 @@
     animation: fadeIn 0.3s ease-out;
 }
 
+.flexContainer {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flexContainer h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary-color);
+}
+
+.addSubject {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.addSubject:hover {
+    color: var(--primary-color-hover);
+    text-decoration: underline;
+}
+
 .subject {
     background-color: transparent;
     padding: 0.6rem;
@@ -123,7 +154,7 @@
 }
 
 .deleteBtn:hover {
-    filter: brightness(0.6); 
+    filter: brightness(0.6);
 }
 
 .dangerZone {

@@ -100,7 +100,7 @@ const AddSubjectForm = ({
 
     const closeModal = () => {
         setIsAddSubjectFormOpen(false);
-        setIsAddDeckFormOpen(true);
+        setIsAddDeckFormOpen ? setIsAddDeckFormOpen(true) : null;
     };
 
     return (

@@ -8,6 +8,7 @@ import Loading from "../../components/Loading/Loading";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import styles from "./Profile.module.css";
 import api from "../../constants/api";
+import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 
 const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
     const [userData, setUserData] = useState({
@@ -23,8 +24,11 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
     const [successMessage, setSuccessMessage] = useState("");
     const [deleteModal, setDeleteModal] = useState(false);
     const [deleteSubjectModal, setDeleteSubjectModal] = useState(false);
+    const [logoutModal, setLogoutModal] = useState(false);
     const [subjectToDelete, setSubjectToDelete] = useState(null);
     const [isDeletingSubject, setIsDeletingSubject] = useState(false);
+    const [isAddSubjectFormOpen, setIsAddSubjectFormOpen] = useState(false);
+    const [isCreatingSubject, setIsCreatingSubject] = useState(false);
     const navigate = useNavigate();
 
     // Carregar dados do usuário
@@ -171,12 +175,9 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
         try {
             setIsLoading(true);
 
-            await api.delete("/users/profile", {
-                data: { confirmation: "CONFIRMAR_EXCLUSÃO" },
-            });
+            await api.delete("/users/profile");
 
-            localStorage.removeItem("authToken");
-            localStorage.removeItem("idUser");
+            localStorage.clear();
             navigate("/login");
         } catch (error) {
             console.error("Erro ao excluir conta:", error);
@@ -231,15 +232,36 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("idUser");
+        localStorage.clear();
         navigate("/login");
+    };
+
+    const openAddSubjectForm = () => {
+        setIsAddSubjectFormOpen(true);
+    };
+
+    const createSubject = async (name, color) => {
+        try {
+            setIsCreatingSubject(true);
+            const response = await api.post("/subjects", {
+                name,
+                color,
+            });
+            if (response.data) {
+                setIsAddSubjectFormOpen(false);
+                loadData();
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsCreatingSubject(false);
+        }
     };
 
     return (
         <>
-            {isLoading && <Loading />}
             {isDeletingSubject && <Loading />}
+            {isCreatingSubject && <Loading />}
 
             <div className={styles.container}>
                 <Sidebar
@@ -276,7 +298,7 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
                                 label="Nome completo"
                                 type="text"
                                 name="name"
-                                value={userData.name}
+                                value={isLoading ? "Carregando dados..." : userData.name}
                                 onChange={handleChange}
                                 placeholder="Seu nome completo"
                                 error={errors.name}
@@ -287,7 +309,7 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
                                 label="Email"
                                 type="email"
                                 name="email"
-                                value={userData.email}
+                                value={isLoading ? "Carregando dados..." : userData.email}
                                 onChange={handleChange}
                                 placeholder="seu@email.com"
                                 error={errors.email}
@@ -365,9 +387,17 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
                         </div>
                     </form>
 
-                    {/* Seção de Matérias - Ícone da lixeira direto */}
                     <div className={styles.subjectsSection}>
-                        <h2>Matérias cadastradas</h2>
+                        <div className={styles.flexContainer}>
+                            <h2>Matérias cadastradas</h2>
+                            <button
+                                type="button"
+                                className={styles.addSubject}
+                                onClick={openAddSubjectForm}
+                            >
+                                Adicionar matéria
+                            </button>
+                        </div>
 
                         {subjects.map((subject) => {
                             return (
@@ -403,7 +433,7 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
                                     <h3>Sair da Conta</h3>
                                     <p>Faça logout da sua conta atual</p>
                                 </div>
-                                <Button onClick={handleLogout}>Sair</Button>
+                                <Button onClick={() => setLogoutModal(true)}>Sair</Button>
                             </div>
 
                             <div className={styles.dangerItem}>
@@ -427,10 +457,20 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
                 </div>
             </div>
 
+            {logoutModal && (
+                <ConfirmModal
+                    title="Fazer Logout"
+                    description="Tem certeza que deseja sair da sua conta?"
+                    btnText="Confirmar"
+                    onClick={handleLogout}
+                    onCancel={() => setLogoutModal(false)}
+                />
+            )}
+
             {deleteModal && (
                 <ConfirmModal
                     title="Excluir Conta"
-                    description="Tem certeza que deseja excluir sua conta? Todos os seus dados serão permanentemente removidos. Esta ação não pode ser desfeita."
+                    description="Todos os seus dados serão permanentemente removidos. Tem certeza que deseja excluir sua conta?"
                     btnText="Excluir Conta"
                     onClick={handleDeleteAccount}
                     onCancel={() => setDeleteModal(false)}
@@ -444,6 +484,13 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
                     btnText={"Confirmar"}
                     onClick={() => deleteSubject(subjectToDelete.idSubject)}
                     onCancel={handleCancelDelete}
+                />
+            )}
+
+            {isAddSubjectFormOpen && (
+                <AddSubjectForm
+                    setIsAddSubjectFormOpen={setIsAddSubjectFormOpen}
+                    createSubject={createSubject}
                 />
             )}
         </>

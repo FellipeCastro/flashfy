@@ -163,6 +163,7 @@ const App = () => {
                                 isSidebarOpen={isSidebarOpen}
                                 setIsSidebarOpen={setIsSidebarOpen}
                                 subjects={subjects}
+                                loadData={loadData}
                             />
                         </ProtectedRoute>
                     }
