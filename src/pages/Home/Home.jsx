@@ -128,9 +128,27 @@ const Home = ({
 
                             {decks.length === 0 && loading === false && (
                                 <div className={styles.noDecks}>
+                                    <div className={styles.illustration}>
+                                        <div className={styles.cardStack}>
+                                            <div className={styles.card}></div>
+                                            <div className={styles.card}></div>
+                                            <div className={styles.card}></div>
+                                        </div>
+                                    </div>
+                                    <h3 className={styles.title}>
+                                        Nenhum deck criado ainda
+                                    </h3>
                                     <p className={styles.msg}>
-                                        Crie seus decks para começar a estudar!
+                                        Comece organizando seus estudos criando
+                                        seu primeiro deck!
                                     </p>
+                                    <Button
+                                        onClick={() =>
+                                            setIsAddDeckFormOpen(true)
+                                        }
+                                    >
+                                        Criar Meu Primeiro Deck
+                                    </Button>
                                 </div>
                             )}
 

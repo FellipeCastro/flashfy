@@ -506,10 +506,7 @@ const Profile = ({
                                         removidos.
                                     </p>
                                 </div>
-                                <Button
-                                    onClick={() => setDeleteModal(true)}
-                                    className={styles.deleteButton}
-                                >
+                                <Button onClick={() => setDeleteModal(true)}>
                                     Excluir Conta
                                 </Button>
                             </div>

@@ -195,7 +195,47 @@ const Cards = ({ decks, loadData }) => {
 
             <div className={styles.mainContainer}>
                 {currentDeck.cards.length === 0 ? (
-                    <p className={styles.msg}>Crie cards para responder!</p>
+                    <div className={styles.noCards}>
+                        <div className={styles.illustration}>
+                            <div className={styles.emptyCard}>
+                                <div className={styles.cardIcon}>?</div>
+                            </div>
+                            <div className={styles.floatingPlus}>+</div>
+                        </div>
+                        <h3 className={styles.title}>
+                            Nenhum card criado ainda
+                        </h3>
+                        <p className={styles.msg}>
+                            Crie seu primeiro card para começar a estudar{" "}
+                            <strong>{currentDeck.title}</strong>
+                        </p>
+                        <Button
+                            onClick={() => setIsAddCardFormOpen(true)}
+                        >
+                            + Criar Primeiro Card
+                        </Button>
+
+                        <div className={styles.tips}>
+                            <div className={styles.tip}>
+                                <span className={styles.tipNumber}>1</span>
+                                <p>
+                                    Escreva uma pergunta clara na frente do card
+                                </p>
+                            </div>
+                            <div className={styles.tip}>
+                                <span className={styles.tipNumber}>2</span>
+                                <p>
+                                    Adicione a resposta ou explicação no verso
+                                </p>
+                            </div>
+                            <div className={styles.tip}>
+                                <span className={styles.tipNumber}>3</span>
+                                <p>
+                                    Revise regularmente para melhor memorização
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 ) : (
                     <>
                         <div className={styles.progressBar}>
@@ -288,11 +328,11 @@ const Cards = ({ decks, loadData }) => {
                         showAnswer ? null : styles.hidden
                     }`}
                 >
-                {currentCardIndex === currentDeck.cards.length - 1 ? (
-                    <Button onClick={() => setStudyDeckModal(true)}>
-                        Finalizar estudo
-                    </Button>
-                ) : null}
+                    {currentCardIndex === currentDeck.cards.length - 1 ? (
+                        <Button onClick={() => setStudyDeckModal(true)}>
+                            Finalizar estudo
+                        </Button>
+                    ) : null}
                 </div>
             </div>
 
