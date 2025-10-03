@@ -13,6 +13,7 @@ const App = () => {
     const [decks, setDecks] = useState([]);
     const [progress, setProgress] = useState({});
     const [subjects, setSubjects] = useState([]);
+    const [profile, setProfile] = useState({});
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [selectedSubjects, setSelectedSubjects] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -23,21 +24,51 @@ const App = () => {
             const token = localStorage.getItem("authToken");
 
             if (token) {
-                const [decksResponse, progressResponse, subjectsResponse] =
-                    await Promise.all([
-                        api.get("/decks"),
-                        api.get("/progress"),
-                        api.get("/subjects"),
-                    ]);
+                const [
+                    decksResponse,
+                    progressResponse,
+                    subjectsResponse,
+                    profileResponse,
+                ] = await Promise.all([
+                    api.get("/decks"),
+                    api.get("/progress"),
+                    api.get("/subjects"),
+                    api.get("/users/profile"),
+                ]);
 
                 setDecks(decksResponse.data);
                 setProgress(progressResponse.data);
                 setSubjects(subjectsResponse.data);
+                setProfile(profileResponse.data);
             }
         } catch (error) {
             console.error("Erro ao carregar dados:", error.message);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const refreshProfile = async () => {
+        try {
+            const token = localStorage.getItem("authToken");
+            if (token) {
+                const response = await api.get("/users/profile");
+                setProfile(response.data);
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar perfil:", error.message);
+        }
+    };
+
+    const refreshSubjects = async () => {
+        try {
+            const token = localStorage.getItem("authToken");
+            if (token) {
+                const response = await api.get("/subjects");
+                setSubjects(response.data);
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar matérias:", error.message);
         }
     };
 
@@ -162,8 +193,11 @@ const App = () => {
                             <Profile
                                 isSidebarOpen={isSidebarOpen}
                                 setIsSidebarOpen={setIsSidebarOpen}
+                                profile={profile}
                                 subjects={subjects}
-                                loadData={loadData}
+                                refreshProfile={refreshProfile}
+                                refreshSubjects={refreshSubjects}
+                                loading={loading}
                             />
                         </ProtectedRoute>
                     }

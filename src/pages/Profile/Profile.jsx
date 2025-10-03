@@ -10,7 +10,15 @@ import styles from "./Profile.module.css";
 import api from "../../constants/api";
 import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 
-const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
+const Profile = ({
+    isSidebarOpen,
+    setIsSidebarOpen,
+    profile,
+    subjects,
+    refreshProfile,
+    refreshSubjects,
+    loading,
+}) => {
     const [userData, setUserData] = useState({
         name: "",
         email: "",
@@ -31,29 +39,16 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
     const [isCreatingSubject, setIsCreatingSubject] = useState(false);
     const navigate = useNavigate();
 
-    // Carregar dados do usuário
+    // Carregar dados do usuário quando o profile mudar
     useEffect(() => {
-        loadUserData();
-    }, []);
-
-    const loadUserData = async () => {
-        try {
-            setIsLoading(true);
-            const response = await api.get("/users/profile");
-            const user = response.data;
-
+        if (profile && profile.name) {
             setUserData((prev) => ({
                 ...prev,
-                name: user.name || "",
-                email: user.email || "",
+                name: profile.name || "",
+                email: profile.email || "",
             }));
-        } catch (error) {
-            console.error("Erro ao carregar dados do usuário:", error);
-            setErrors({ general: "Erro ao carregar dados do perfil" });
-        } finally {
-            setIsLoading(false);
         }
-    };
+    }, [profile]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -146,6 +141,8 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
                 setSuccessMessage("Perfil atualizado com sucesso!");
                 setIsEditing(false);
 
+                refreshProfile();
+
                 setUserData((prev) => ({
                     ...prev,
                     currentPassword: "",
@@ -194,10 +191,11 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
         setIsEditing(false);
         setErrors({});
         setSuccessMessage("");
-        loadUserData();
 
         setUserData((prev) => ({
             ...prev,
+            name: profile.name || "",
+            email: profile.email || "",
             currentPassword: "",
             newPassword: "",
             confirmPassword: "",
@@ -211,7 +209,7 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
             if (response.data) {
                 setDeleteSubjectModal(false);
                 setSubjectToDelete(null);
-                loadData();
+                refreshSubjects();
             }
         } catch (error) {
             console.log(error);
@@ -249,7 +247,7 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
             });
             if (response.data) {
                 setIsAddSubjectFormOpen(false);
-                loadData();
+                refreshSubjects();
             }
         } catch (error) {
             console.log(error);
@@ -298,22 +296,30 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
                                 label="Nome completo"
                                 type="text"
                                 name="name"
-                                value={isLoading ? "Carregando dados..." : userData.name}
+                                value={
+                                    loading
+                                        ? "Carregando dados..."
+                                        : userData.name
+                                }
                                 onChange={handleChange}
                                 placeholder="Seu nome completo"
                                 error={errors.name}
-                                disabled={!isEditing}
+                                disabled={!isEditing || loading}
                             />
 
                             <FormField
                                 label="Email"
                                 type="email"
                                 name="email"
-                                value={isLoading ? "Carregando dados..." : userData.email}
+                                value={
+                                    loading
+                                        ? "Carregando dados..."
+                                        : userData.email
+                                }
                                 onChange={handleChange}
                                 placeholder="seu@email.com"
                                 error={errors.email}
-                                disabled={!isEditing}
+                                disabled={!isEditing || loading}
                             />
                         </div>
 
@@ -365,8 +371,11 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
                                 <Button
                                     type="button"
                                     onClick={() => setIsEditing(true)}
+                                    disabled={loading}
                                 >
-                                    Editar Perfil
+                                    {loading
+                                        ? "Carregando..."
+                                        : "Editar Perfil"}
                                 </Button>
                             ) : (
                                 <div className={styles.editActions}>
@@ -399,30 +408,37 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
                             </button>
                         </div>
 
-                        {subjects.map((subject) => {
-                            return (
-                                <div
-                                    className={styles.subject}
-                                    style={{
-                                        backgroundColor: subject.color,
-                                    }}
-                                >
-                                    <strong>{subject.name}</strong>
-
-                                    <button
-                                        className={styles.deleteBtn}
+                        {loading ? (
+                            <p id="loader">Carregando matérias...</p>
+                        ) : (
+                            subjects.map((subject) => {
+                                return (
+                                    <div
+                                        key={subject.idSubject}
+                                        className={styles.subject}
                                         style={{
-                                            color: subject.color,
+                                            backgroundColor: subject.color,
                                         }}
-                                        onClick={() =>
-                                            handleDeleteSubjectClick(subject)
-                                        }
                                     >
-                                        <FaTrashAlt />
-                                    </button>
-                                </div>
-                            );
-                        })}
+                                        <strong>{subject.name}</strong>
+
+                                        <button
+                                            className={styles.deleteBtn}
+                                            style={{
+                                                color: subject.color,
+                                            }}
+                                            onClick={() =>
+                                                handleDeleteSubjectClick(
+                                                    subject
+                                                )
+                                            }
+                                        >
+                                            <FaTrashAlt />
+                                        </button>
+                                    </div>
+                                );
+                            })
+                        )}
                     </div>
 
                     <div className={styles.dangerZone}>
@@ -433,7 +449,9 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
                                     <h3>Sair da Conta</h3>
                                     <p>Faça logout da sua conta atual</p>
                                 </div>
-                                <Button onClick={() => setLogoutModal(true)}>Sair</Button>
+                                <Button onClick={() => setLogoutModal(true)}>
+                                    Sair
+                                </Button>
                             </div>
 
                             <div className={styles.dangerItem}>
@@ -470,7 +488,7 @@ const Profile = ({ isSidebarOpen, setIsSidebarOpen, subjects, loadData }) => {
             {deleteModal && (
                 <ConfirmModal
                     title="Excluir Conta"
-                    description="Todos os seus dados serão permanentemente removidos. Tem certeza que deseja excluir sua conta?"
+                    description="Todos os seus dados serão permanentemente removidos. Tem certeza disso?"
                     btnText="Excluir Conta"
                     onClick={handleDeleteAccount}
                     onCancel={() => setDeleteModal(false)}
