@@ -29,6 +29,7 @@ const Profile = ({
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [isChangingPassword, setIsChangingPassword] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [deleteModal, setDeleteModal] = useState(false);
     const [deleteSubjectModal, setDeleteSubjectModal] = useState(false);
@@ -84,32 +85,24 @@ const Profile = ({
             newErrors.email = "Email inválido";
         }
 
-        // Validações para senha apenas se estiver editando e alguma senha foi preenchida
-        if (isEditing) {
-            const hasAnyPassword =
-                userData.currentPassword ||
-                userData.newPassword ||
-                userData.confirmPassword;
+        // Validações para senha apenas se estiver alterando senha
+        if (isChangingPassword) {
+            if (!userData.currentPassword) {
+                newErrors.currentPassword = "Senha atual é obrigatória";
+            }
 
-            if (hasAnyPassword) {
-                if (!userData.currentPassword) {
-                    newErrors.currentPassword =
-                        "Senha atual é obrigatória para alterar a senha";
-                }
+            if (!userData.newPassword) {
+                newErrors.newPassword = "Nova senha é obrigatória";
+            } else if (userData.newPassword.length < 6) {
+                newErrors.newPassword =
+                    "Senha deve ter pelo menos 6 caracteres";
+            }
 
-                if (!userData.newPassword) {
-                    newErrors.newPassword = "Nova senha é obrigatória";
-                } else if (userData.newPassword.length < 6) {
-                    newErrors.newPassword =
-                        "Senha deve ter pelo menos 6 caracteres";
-                }
-
-                if (!userData.confirmPassword) {
-                    newErrors.confirmPassword =
-                        "Confirmação de senha é obrigatória";
-                } else if (userData.newPassword !== userData.confirmPassword) {
-                    newErrors.confirmPassword = "Senhas não coincidem";
-                }
+            if (!userData.confirmPassword) {
+                newErrors.confirmPassword =
+                    "Confirmação de senha é obrigatória";
+            } else if (userData.newPassword !== userData.confirmPassword) {
+                newErrors.confirmPassword = "Senhas não coincidem";
             }
         }
 
@@ -125,31 +118,44 @@ const Profile = ({
         setIsLoading(true);
 
         try {
-            if (userData.currentPassword && userData.newPassword) {
+            // Se estiver alterando senha, faz a requisição de senha
+            if (
+                isChangingPassword &&
+                userData.currentPassword &&
+                userData.newPassword
+            ) {
                 await api.put("/users/password", {
                     currentPassword: userData.currentPassword,
                     newPassword: userData.newPassword,
                 });
             }
 
-            const response = await api.put("/users/profile", {
-                name: userData.name,
-                email: userData.email,
-            });
+            // Se estiver editando informações pessoais, faz a requisição do perfil
+            if (isEditing) {
+                const response = await api.put("/users/profile", {
+                    name: userData.name,
+                    email: userData.email,
+                });
 
-            if (response.data) {
-                setSuccessMessage("Perfil atualizado com sucesso!");
-                setIsEditing(false);
-
-                refreshProfile();
-
-                setUserData((prev) => ({
-                    ...prev,
-                    currentPassword: "",
-                    newPassword: "",
-                    confirmPassword: "",
-                }));
+                if (response.data) {
+                    setSuccessMessage("Perfil atualizado com sucesso!");
+                    refreshProfile();
+                }
+            } else if (isChangingPassword) {
+                setSuccessMessage("Senha alterada com sucesso!");
             }
+
+            // Reseta os estados
+            setIsEditing(false);
+            setIsChangingPassword(false);
+
+            // Limpa os campos de senha
+            setUserData((prev) => ({
+                ...prev,
+                currentPassword: "",
+                newPassword: "",
+                confirmPassword: "",
+            }));
         } catch (error) {
             console.error("Erro ao atualizar perfil:", error);
             const errorMessage =
@@ -160,6 +166,12 @@ const Profile = ({
                 errorMessage.includes("Email")
             ) {
                 setErrors({ email: errorMessage });
+            } else if (
+                errorMessage.includes("senha") ||
+                errorMessage.includes("Senha") ||
+                errorMessage.includes("password")
+            ) {
+                setErrors({ currentPassword: errorMessage });
             } else {
                 setErrors({ general: errorMessage });
             }
@@ -189,6 +201,7 @@ const Profile = ({
 
     const handleCancelEdit = () => {
         setIsEditing(false);
+        setIsChangingPassword(false);
         setErrors({});
         setSuccessMessage("");
 
@@ -196,6 +209,28 @@ const Profile = ({
             ...prev,
             name: profile.name || "",
             email: profile.email || "",
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+        }));
+    };
+
+    const handleEditProfile = () => {
+        setIsEditing(true);
+        setIsChangingPassword(false);
+        setErrors({});
+        setSuccessMessage("");
+    };
+
+    const handleChangePassword = () => {
+        setIsChangingPassword(true);
+        setIsEditing(false);
+        setErrors({});
+        setSuccessMessage("");
+
+        // Limpa os campos de senha ao iniciar a alteração
+        setUserData((prev) => ({
+            ...prev,
             currentPassword: "",
             newPassword: "",
             confirmPassword: "",
@@ -323,13 +358,9 @@ const Profile = ({
                             />
                         </div>
 
-                        {isEditing && (
+                        {isChangingPassword && (
                             <div className={styles.formSection}>
                                 <h2>Alterar Senha</h2>
-                                <p className={styles.passwordNote}>
-                                    Deixe em branco se não quiser alterar a
-                                    senha
-                                </p>
 
                                 <FormField
                                     label="Senha atual"
@@ -367,21 +398,33 @@ const Profile = ({
                         )}
 
                         <div className={styles.actions}>
-                            {!isEditing ? (
-                                <Button
-                                    type="button"
-                                    onClick={() => setIsEditing(true)}
-                                    disabled={loading}
-                                >
-                                    {loading
-                                        ? "Carregando..."
-                                        : "Editar Perfil"}
-                                </Button>
+                            {!isEditing && !isChangingPassword ? (
+                                <div className={styles.editActions}>
+                                    <Button
+                                        type="button"
+                                        onClick={handleEditProfile}
+                                        disabled={loading}
+                                    >
+                                        {loading
+                                            ? "Carregando..."
+                                            : "Editar Perfil"}
+                                    </Button>
+                                    <Button
+                                        type="button"
+                                        secondary
+                                        onClick={handleChangePassword}
+                                        disabled={loading}
+                                    >
+                                        Alterar Senha
+                                    </Button>
+                                </div>
                             ) : (
                                 <div className={styles.editActions}>
                                     <Button type="submit" disabled={isLoading}>
                                         {isLoading
                                             ? "Salvando..."
+                                            : isChangingPassword
+                                            ? "Alterar Senha"
                                             : "Salvar Alterações"}
                                     </Button>
                                     <Button
