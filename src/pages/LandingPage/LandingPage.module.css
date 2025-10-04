@@ -388,6 +388,7 @@
 
 .ctaButtonContainer button:hover {
     color: var(--secondary-color);
+    background-color: transparent;
 }
 
 /* FOOTER */

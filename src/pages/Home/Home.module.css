@@ -121,7 +121,7 @@
     border-radius: 0.2rem;
     color: var(--text-primary-color);
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.2s ease-in-out;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,7 +132,7 @@
 
 .filterContainer button:hover,
 .active {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
 }
 
 @media (max-width: 768px) {

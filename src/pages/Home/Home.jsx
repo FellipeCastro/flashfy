@@ -136,7 +136,9 @@ const Home = ({
                                         </div>
                                     </div>
                                     <h3 className={styles.title}>
-                                        Nenhum deck criado ainda
+                                        {selectedSubjects.length > 0
+                                            ? "Nenhum deck criado nessa matéria"
+                                            : "Nenhum deck criado ainda"}
                                     </h3>
                                     <p className={styles.msg}>
                                         Comece organizando seus estudos criando

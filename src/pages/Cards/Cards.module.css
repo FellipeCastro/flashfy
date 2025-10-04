@@ -173,10 +173,6 @@
     line-height: 1.4;
 }
 
-.tip:hover {
-    transform: translateX(0.6rem);
-}
-
 @media (max-width: 768px) {
     .noCards {
         padding: 2rem 1rem;

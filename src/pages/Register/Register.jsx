@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 import FormField from "../../components/Form/FormField";
 import api from "../../constants/api.js";
 import styles from "./Register.module.css";
@@ -95,9 +96,21 @@ const Register = ({ loadData }) => {
         }
     };
 
+    const handleBack = () => {
+        if (window.history.state && window.history.state.idx > 0) {
+            navigate(-1); 
+        } else {
+            navigate("/"); 
+        }
+    };
+
     return (
         <div className={styles.registerContainer}>
             <div className={styles.registerCard}>
+                <button onClick={handleBack} className={styles.backBtn}>
+                    <FaArrowLeft />
+                </button>
+
                 <div className={styles.registerHeader}>
                     <h1>Criar conta</h1>
                     <p>Preencha os dados abaixo para começar a estudar</p>

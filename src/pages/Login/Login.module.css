@@ -17,6 +17,29 @@
     max-width: 450px;
     animation: slideIn 0.5s ease-out;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.backBtn {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: var(--text-secondary-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.backBtn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-primary-color);
 }
 
 .loginHeader {

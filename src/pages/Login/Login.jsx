@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 import FormField from "../../components/Form/FormField";
 import api from "../../constants/api.js";
 import styles from "./Login.module.css";
 
-const Login = ({ loadData, loading }) => {
+const Login = ({ loadData }) => {
     const [credentials, setCredentials] = useState({
         email: "",
         password: "",
@@ -80,9 +81,21 @@ const Login = ({ loadData, loading }) => {
         }
     };
 
+    const handleBack = () => {
+        if (window.history.state && window.history.state.idx > 0) {
+            navigate(-1); 
+        } else {
+            navigate("/"); 
+        }
+    };
+
     return (
         <div className={styles.loginContainer}>
             <div className={styles.loginCard}>
+                <button onClick={handleBack} className={styles.backBtn}>
+                    <FaArrowLeft />
+                </button>
+
                 <div className={styles.loginHeader}>
                     <h1>Bem-vindo de volta</h1>
                     <p>Faça login para acessar seus decks</p>
@@ -122,7 +135,7 @@ const Login = ({ loadData, loading }) => {
                             Lembrar-me
                         </label>
                         <a
-                            href="/forgot-password"
+                            href="/login"
                             className={styles.forgotPassword}
                         >
                             Esqueci minha senha
