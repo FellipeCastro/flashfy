@@ -7,8 +7,8 @@ import Deck from "../../components/Deck/Deck";
 import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
 import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 import Loading from "../../components/Loading/Loading";
-import styles from "./Home.module.css";
 import api from "../../constants/api";
+import styles from "./Home.module.css";
 
 const Home = ({
     isSidebarOpen,

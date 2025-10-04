@@ -8,6 +8,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import api from "./constants/api.js";
 import Profile from "./pages/Profile/Profile.jsx";
+import LandingPage from "./pages/LandingPage/LandingPage.jsx";
 
 const App = () => {
     const [decks, setDecks] = useState([]);
@@ -105,14 +106,11 @@ const App = () => {
                 <Route
                     path="/"
                     element={
-                        <Navigate
-                            to={
-                                localStorage.getItem("authToken")
-                                    ? "/home"
-                                    : "/login"
-                            }
-                            replace
-                        />
+                        localStorage.getItem("authToken") ? (
+                            <Navigate to="/home" replace />
+                        ) : (
+                            <LandingPage />
+                        )
                     }
                 />
 

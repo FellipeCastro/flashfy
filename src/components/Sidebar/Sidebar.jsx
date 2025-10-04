@@ -3,7 +3,6 @@ import { MdKeyboardDoubleArrowRight, MdHome } from "react-icons/md";
 import { FaUser, FaBookReader } from "react-icons/fa";
 import { RiRobot2Fill } from "react-icons/ri";
 import styles from "./Sidebar.module.css";
-import Button from "../Button/Button";
 import logo from "../../assets/logo.png";
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
