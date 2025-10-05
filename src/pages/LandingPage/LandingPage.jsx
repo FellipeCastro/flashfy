@@ -4,6 +4,7 @@ import { FaBrain, FaUsers, FaRobot, FaChartLine, FaBook, FaClock, FaTrophy, FaTi
 import { useState } from "react";
 import styles from "./LandingPage.module.css";
 import Button from "../../components/Button/Button";
+import backgroundImage from "../../assets/background-images/backgroundLandingpage.jpg"; // Certifique-se de ter uma imagem de fundo apropriada
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -130,7 +131,11 @@ const LandingPage = () => {
         </div>
       </header>
 
-      <section className={styles.hero}>
+      <section className={styles.hero}
+      style={{ 
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.7)), url(${backgroundImage})`
+        }}
+      >
         <div className={styles.heroContent}>
           <h1>Domine qualquer assunto com flashcards inteligentes</h1>
           <p>O FlashFy utiliza algoritmos de repetição espaçada e IA para transformar sua forma de estudar e maximizar sua retenção de conhecimento.</p>
