@@ -209,9 +209,7 @@ const Cards = ({ decks, loadData }) => {
                             Crie seu primeiro card para começar a estudar{" "}
                             <strong>{currentDeck.title}</strong>
                         </p>
-                        <Button
-                            onClick={() => setIsAddCardFormOpen(true)}
-                        >
+                        <Button onClick={() => setIsAddCardFormOpen(true)}>
                             + Criar Primeiro Card
                         </Button>
 
@@ -323,17 +321,17 @@ const Cards = ({ decks, loadData }) => {
                         </div>
                     </>
                 )}
-                <div
-                    className={`${styles.finalizeBtn} ${
-                        showAnswer ? null : styles.hidden
-                    }`}
-                >
-                    {currentCardIndex === currentDeck.cards.length - 1 ? (
+                {currentCardIndex === currentDeck.cards.length - 1 ? (
+                    <div
+                        className={`${styles.finalizeBtn} ${
+                            showAnswer ? null : styles.hidden
+                        }`}
+                    >
                         <Button onClick={() => setStudyDeckModal(true)}>
                             Finalizar estudo
                         </Button>
-                    ) : null}
-                </div>
+                    </div>
+                ) : null}
             </div>
 
             {isAddCardFormOpen && (
