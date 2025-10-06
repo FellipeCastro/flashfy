@@ -40,6 +40,5 @@
 }
 
 .mainContainer a {
-    font-weight: 600;
-    color: var(--text-primary-color);
+    color: var(--text-secondary-color);
 }

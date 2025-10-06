@@ -29,26 +29,47 @@ const Methodology = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     <ol>
                         <li>
                             <strong>Curva do Esquecimento</strong> – Pesquisas
-                            iniciadas por Hermann Ebbinghaus (1885) demonstraram
-                            que a memória humana tende a decair rapidamente logo
-                            após o aprendizado. Ao revisar antes que o
-                            esquecimento seja total, o conhecimento é reforçado
-                            e consolidado.
+                            iniciadas por{" "}
+                            <a
+                                href="https://en.wikipedia.org/wiki/Hermann_Ebbinghaus"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Hermann Ebbinghaus (1885)
+                            </a>{" "}
+                            demonstraram que a memória humana tende a decair
+                            rapidamente logo após o aprendizado. Ao revisar
+                            antes que o esquecimento seja total, o conhecimento
+                            é reforçado e consolidado.
                         </li>
                         <li>
                             <strong>Efeito do Espaçamento</strong> – Estudos
-                            posteriores (Cepeda et al., 2006) mostraram que
-                            distribuir as revisões ao longo do tempo é muito
-                            mais eficaz do que estudar tudo de uma só vez
-                            (cramming).
+                            posteriores{" "}
+                            <a
+                                href="https://pubmed.ncbi.nlm.nih.gov/16893288/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                (Cepeda et al., 2006)
+                            </a>{" "}
+                            mostraram que distribuir as revisões ao longo do
+                            tempo é muito mais eficaz do que estudar tudo de uma
+                            só vez (cramming).
                         </li>
                         <li>
                             <strong>Dificuldade Desejável</strong> – De acordo
-                            com Robert Bjork (1994), revisões que exigem certo
-                            esforço cognitivo aumentam a fixação do conteúdo a
-                            longo prazo. Isso significa que dificuldades não são
-                            um obstáculo, mas parte essencial do processo de
-                            aprendizagem.
+                            com{" "}
+                            <a
+                                href="https://bjorklab.psych.ucla.edu/research/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Robert Bjork (1994)
+                            </a>
+                            , revisões que exigem certo esforço cognitivo
+                            aumentam a fixação do conteúdo a longo prazo. Isso
+                            significa que dificuldades não são um obstáculo, mas
+                            parte essencial do processo de aprendizagem.
                         </li>
                     </ol>
 
@@ -86,9 +107,24 @@ const Methodology = ({ isSidebarOpen, setIsSidebarOpen }) => {
                     </ul>
                     <p>
                         Esse modelo é inspirado em algoritmos de repetição
-                        espaçada mundialmente reconhecidos, como o SM2
-                        (SuperMemo) e o utilizado pelo Anki, que ao longo de
-                        décadas provaram sua eficácia em milhões de estudantes.
+                        espaçada mundialmente reconhecidos, como o SM2{" "}
+                        <a
+                            href="https://www.supermemo.com/en/archives1990-2015/english/ol/sm2"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            (SuperMemo)
+                        </a>{" "}
+                        e o utilizado pelo{" "}
+                        <a
+                            href="https://docs.ankiweb.net"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Anki
+                        </a>
+                        , que ao longo de décadas provaram sua eficácia em
+                        milhões de estudantes.
                     </p>
 
                     <h2>Por que escolher essa metodologia?</h2>
@@ -106,52 +142,6 @@ const Methodology = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         de estudo tenha o máximo impacto na fixação do
                         conhecimento.
                     </p>
-
-                    <h2>Referências</h2>
-                    <ul>
-                        <li>
-                            <strong>Ebbinghaus, H. (1885).</strong>{" "}
-                            <em>
-                                Memory: A Contribution to Experimental
-                                Psychology
-                            </em>
-                            .
-                        </li>
-                        <li>
-                            <strong>
-                                Cepeda, N. J., Pashler, H., Vul, E., Wixted, J.
-                                T., & Rohrer, D. (2006).
-                            </strong>{" "}
-                            <em>
-                                Distributed practice in verbal recall tasks: A
-                                review and quantitative synthesis
-                            </em>
-                            . Psychological Bulletin.
-                        </li>
-                        <li>
-                            <strong>Bjork, R. A. (1994).</strong>{" "}
-                            <em>
-                                Memory and metamemory considerations in the
-                                training of human beings
-                            </em>
-                            .
-                        </li>
-                        <li>
-                            <strong>Wozniak, P. A. (1990).</strong>{" "}
-                            <em>Optimization of Learning</em>. University of
-                            Poznań.
-                        </li>
-                        <li>
-                            Anki Manual. Disponível em:{" "}
-                            <a
-                                href="https://docs.ankiweb.net"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                https://docs.ankiweb.net
-                            </a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </>
