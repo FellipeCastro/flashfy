@@ -146,18 +146,37 @@
     font-size: 0.9rem;
 }
 
+/* Link de Login com Animação */
 .loginLink a {
     color: var(--primary-color);
-    text-decoration: none;
     font-weight: 600;
-    transition: color 0.2s ease;
+    text-decoration: none;
+    margin-left: 5px;
+    transition: all 0.3s ease;
+    position: relative; /* ← IMPORTANTE para o ::after */
+}
+
+.loginLink a::after {
+    content: '';
+    position: absolute;
+    width: 0; /* ← Começa invisível */
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease; /* ← Animação suave */
 }
 
 .loginLink a:hover {
-    color: var(--primary-color-hover);
-    text-decoration: underline;
+    text-decoration: none; /* ← Remove o underline padrão */
+    transform: translateY(-2px); /* ← Bônus: levanta o link */
 }
 
+.loginLink a:hover::after {
+    width: 100%; /* ← Expandir até 100% no hover */
+}
+
+/* Animações */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -189,6 +208,7 @@
     }
 }
 
+/* Responsividade */
 @media (max-width: 480px) {
     .registerCard {
         padding: 1.8rem;

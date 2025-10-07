@@ -96,16 +96,33 @@
     cursor: pointer;
 }
 
+/* Efeito hover para "Esqueci minha senha" */
 .forgotPassword {
     color: var(--primary-color);
     text-decoration: none;
-    transition: color 0.2s ease;
     font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.forgotPassword::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
 }
 
 .forgotPassword:hover {
     color: var(--primary-color-hover);
-    text-decoration: underline;
+    text-decoration: none;
+}
+
+.forgotPassword:hover::after {
+    width: 100%;
 }
 
 .loginButton {
@@ -177,16 +194,35 @@
     font-size: 0.9rem;
 }
 
+/* Efeito hover para "Cadastre-se gratuitamente" */
 .registerLink a {
     color: var(--primary-color);
     text-decoration: none;
     font-weight: 600;
-    transition: color 0.2s ease;
+    transition: all 0.3s ease;
+    position: relative;
+    margin-left: 5px;
+}
+
+.registerLink a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
 }
 
 .registerLink a:hover {
     color: var(--primary-color-hover);
-    text-decoration: underline;
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+.registerLink a:hover::after {
+    width: 100%;
 }
 
 /* Animações */

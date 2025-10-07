@@ -34,12 +34,6 @@ const LandingPage = () => {
                 "Gere perguntas e respostas automaticamente com nossa inteligência artificial",
         },
         {
-            icon: <FaUsers />,
-            title: "Comunidade Ativa",
-            description:
-                "Compartilhe e descubra decks criados por outros estudantes",
-        },
-        {
             icon: <FaChartLine />,
             title: "Acompanhe Seu Progresso",
             description: "Métricas detalhadas mostram sua evolução nos estudos",

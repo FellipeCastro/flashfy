@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaChartBar, FaBook, FaLayerGroup, FaFileAlt, FaFire  } from "react-icons/fa";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
 import FormField from "../../components/Form/FormField";
@@ -50,6 +50,24 @@ const Profile = ({
             }));
         }
     }, [profile]);
+
+    // Função para formatar a data do último estudo
+    const formatLastStudyDate = (dateString) => {
+        if (!dateString) return "Nunca estudou";
+        
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays === 0) {
+            return "Hoje";
+        } else if (diffDays === 1) {
+            return "Ontem";
+        } else {
+            return `Há ${diffDays} dias`;
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -317,6 +335,93 @@ const Profile = ({
                     {successMessage && (
                         <div className={styles.successMessage}>
                             {successMessage}
+                        </div>
+                    )}
+
+                    {/* Nova Seção: Estatísticas do Usuário */}
+                    {profile && profile.progress && (
+                        <div className={styles.statsSection}>
+                            <h2>Estatísticas de Estudo</h2>
+                            <div className={styles.statsGrid}>
+                                <div className={styles.statCard}>
+                                    <div className={styles.statIcon}>
+                                        <FaFire 
+                                            className={`${styles.fireIcon} ${
+                                                profile.progress.consecutiveDays > 0 ? styles.active : styles.inactive
+                                            }`} 
+                                        />
+                                    </div>
+                                    <div className={styles.statInfo}>
+                                        <h3>Dias Consecutivos</h3>
+                                        <p className={styles.statValue}>
+                                            {profile.progress.consecutiveDays || 0}
+                                        </p>
+                                        <span className={styles.statLabel}>
+                                            dias seguidos estudando
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className={styles.statCard}>
+                                    <div className={styles.statIcon}>
+                                        <FaBook />
+                                    </div>
+                                    <div className={styles.statInfo}>
+                                        <h3>Decks para Estudar</h3>
+                                        <p className={styles.statValue}>
+                                            {profile.progress.decksToStudy || 0}
+                                        </p>
+                                        <span className={styles.statLabel}>
+                                            decks pendentes
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className={styles.statCard}>
+                                    <div className={styles.statIcon}>
+                                        <FaLayerGroup />
+                                    </div>
+                                    <div className={styles.statInfo}>
+                                        <h3>Decks Estudados</h3>
+                                        <p className={styles.statValue}>
+                                            {profile.progress.studiedDecks || 0}
+                                        </p>
+                                        <span className={styles.statLabel}>
+                                            decks concluídos
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className={styles.statCard}>
+                                    <div className={styles.statIcon}>
+                                        <FaFileAlt />
+                                    </div>
+                                    <div className={styles.statInfo}>
+                                        <h3>Último Estudo</h3>
+                                        <p className={styles.statValue}>
+                                            {formatLastStudyDate(profile.progress.lastStudyDate)}
+                                        </p>
+                                        <span className={styles.statLabel}>
+                                            última sessão
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className={styles.overviewStats}>
+                                <div className={styles.overviewItem}>
+                                    <span className={styles.overviewLabel}>Total de Matérias:</span>
+                                    <span className={styles.overviewValue}>{profile.subjects || 0}</span>
+                                </div>
+                                <div className={styles.overviewItem}>
+                                    <span className={styles.overviewLabel}>Total de Decks:</span>
+                                    <span className={styles.overviewValue}>{profile.decks || 0}</span>
+                                </div>
+                                <div className={styles.overviewItem}>
+                                    <span className={styles.overviewLabel}>Total de Cards:</span>
+                                    <span className={styles.overviewValue}>{profile.cards || 0}</span>
+                                </div>
+                            </div>
                         </div>
                     )}
 
