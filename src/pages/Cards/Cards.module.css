@@ -88,7 +88,11 @@
 .emptyCard {
     width: 120px;
     height: 80px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(
+        135deg,
+        var(--primary-color),
+        var(--secondary-color)
+    );
     border-radius: 0.2rem;
     display: flex;
     align-items: center;
@@ -118,12 +122,17 @@
     color: var(--secondary-color);
     font-weight: bold;
     animation: float 2s ease-in-out infinite;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-5px) rotate(5deg); }
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-5px) rotate(5deg);
+    }
 }
 
 .title {
@@ -156,7 +165,6 @@
     transition: 0.5s;
 }
 
-
 .tipNumber {
     background: var(--primary-color);
     color: var(--secondary-color);
@@ -183,15 +191,15 @@
         padding: 2rem 1rem;
         margin: 0.5rem 0;
     }
-    
+
     .title {
         font-size: 1.3rem;
     }
-    
+
     .msg {
         font-size: 0.9rem;
     }
-    
+
     .tip {
         flex-direction: column;
         text-align: center;
@@ -199,7 +207,7 @@
         border-top: 3px solid var(--primary-color);
         gap: 0.5rem;
     }
-    
+
     .tips {
         gap: 0.8rem;
     }
@@ -271,22 +279,27 @@
     left: 0;
     padding: 2rem;
     border-radius: 0.2rem;
-}
-
-.front {
-    text-align: center;
-    transform: rotateY(180deg);
-    backface-visibility: hidden;
-}
-
-.back {
     display: grid;
     place-items: center;
     backface-visibility: hidden;
 }
 
+.front {
+    text-align: center;
+    transform: rotateY(180deg);
+}
+
+.back {
+    background: linear-gradient(
+        45deg,
+        var(--primary-color),
+        var(--primary-color-hover)
+    );
+    color: var(--secondary-color);
+}
+
 .back p {
-    font-weight: 500;
+    font-weight: bold;
 }
 
 .showAnswer {
