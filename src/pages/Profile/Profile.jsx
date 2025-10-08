@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaTrashAlt } from "react-icons/fa";
+import {
+    FaTrashAlt,
+    FaBook,
+    FaLayerGroup,
+    FaFileAlt,
+} from "react-icons/fa";
+import { FaFire } from "react-icons/fa6";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
 import FormField from "../../components/Form/FormField";
@@ -18,6 +24,7 @@ const Profile = ({
     refreshProfile,
     refreshSubjects,
     loading,
+    progress
 }) => {
     const [userData, setUserData] = useState({
         name: "",
@@ -50,6 +57,24 @@ const Profile = ({
             }));
         }
     }, [profile]);
+
+    // Função para formatar a data do último estudo
+    const formatLastStudyDate = (dateString) => {
+        if (!dateString) return "Nunca estudou";
+
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 0) {
+            return "Hoje";
+        } else if (diffDays === 1) {
+            return "Ontem";
+        } else {
+            return `Há ${diffDays} dias`;
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -438,6 +463,109 @@ const Profile = ({
                             )}
                         </div>
                     </form>
+                    {progress && (
+                        <div className={styles.statsSection}>
+                            <h2>Estatísticas de Estudo</h2>
+                            <div className={styles.statsGrid}>
+                                <div className={styles.statCard}>
+                                    <div className={styles.statIcon}>
+                                        <FaFire
+                                            className={`${styles.fireIcon} ${
+                                                progress
+                                                    .consecutiveDays > 0
+                                                    ? styles.active
+                                                    : styles.inactive
+                                            }`}
+                                        />
+                                    </div>
+                                    <div className={styles.statInfo}>
+                                        <h3>Dias Consecutivos</h3>
+                                        <p className={styles.statValue}>
+                                            {progress.consecutiveDays ||
+                                                0}
+                                        </p>
+                                        <span className={styles.statLabel}>
+                                            dias seguidos estudando
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className={styles.statCard}>
+                                    <div className={styles.statIcon}>
+                                        <FaBook />
+                                    </div>
+                                    <div className={styles.statInfo}>
+                                        <h3>Decks para Estudar</h3>
+                                        <p className={styles.statValue}>
+                                            {progress.decksToStudy || 0}
+                                        </p>
+                                        <span className={styles.statLabel}>
+                                            decks pendentes
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className={styles.statCard}>
+                                    <div className={styles.statIcon}>
+                                        <FaLayerGroup />
+                                    </div>
+                                    <div className={styles.statInfo}>
+                                        <h3>Decks Estudados</h3>
+                                        <p className={styles.statValue}>
+                                            {progress.studiedDecks || 0}
+                                        </p>
+                                        <span className={styles.statLabel}>
+                                            decks concluídos
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className={styles.statCard}>
+                                    <div className={styles.statIcon}>
+                                        <FaFileAlt />
+                                    </div>
+                                    <div className={styles.statInfo}>
+                                        <h3>Último Estudo</h3>
+                                        <p className={`${styles.statValue} ${styles.lastStudy}`}>
+                                            {formatLastStudyDate(
+                                                progress.lastStudyDate
+                                            )}
+                                        </p>
+                                        <span className={styles.statLabel}>
+                                            última sessão
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className={styles.overviewStats}>
+                                <div className={styles.overviewItem}>
+                                    <span className={styles.overviewLabel}>
+                                        Total de Matérias:
+                                    </span>
+                                    <span className={styles.overviewValue}>
+                                        {profile.subjects || 0}
+                                    </span>
+                                </div>
+                                <div className={styles.overviewItem}>
+                                    <span className={styles.overviewLabel}>
+                                        Total de Decks:
+                                    </span>
+                                    <span className={styles.overviewValue}>
+                                        {profile.decks || 0}
+                                    </span>
+                                </div>
+                                <div className={styles.overviewItem}>
+                                    <span className={styles.overviewLabel}>
+                                        Total de Cards:
+                                    </span>
+                                    <span className={styles.overviewValue}>
+                                        {profile.cards || 0}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     <div className={styles.subjectsSection}>
                         <div className={styles.flexContainer}>
@@ -454,33 +582,35 @@ const Profile = ({
                         {loading ? (
                             <p id="loader">Carregando matérias...</p>
                         ) : (
-                            subjects.map((subject) => {
-                                return (
-                                    <div
-                                        key={subject.idSubject}
-                                        className={styles.subject}
-                                        style={{
-                                            backgroundColor: subject.color,
-                                        }}
-                                    >
-                                        <strong>{subject.name}</strong>
-
-                                        <button
-                                            className={styles.deleteBtn}
-                                            style={{
-                                                color: subject.color,
-                                            }}
-                                            onClick={() =>
-                                                handleDeleteSubjectClick(
-                                                    subject
-                                                )
-                                            }
+                            <div className={styles.subjectsGrid}>
+                                {subjects.map((subject) => {
+                                    return (
+                                        <div
+                                            key={subject.idSubject}
+                                            className={styles.subject}
                                         >
-                                            <FaTrashAlt />
-                                        </button>
-                                    </div>
-                                );
-                            })
+                                            <div
+                                                className={styles.subjectColor}
+                                                style={{
+                                                    backgroundColor:
+                                                        subject.color,
+                                                }}
+                                            ></div>
+                                            <strong>{subject.name}</strong>
+                                            <button
+                                                className={styles.deleteBtn}
+                                                onClick={() =>
+                                                    handleDeleteSubjectClick(
+                                                        subject
+                                                    )
+                                                }
+                                            >
+                                                <FaTrashAlt />
+                                            </button>
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         )}
                     </div>
 
@@ -538,7 +668,7 @@ const Profile = ({
             {deleteSubjectModal && subjectToDelete && (
                 <ConfirmModal
                     title={"Deletar matéria"}
-                    description={`Todos os decks associados a matéria "${subjectToDelete.name}" também serão excluídos.`}
+                    description={`Todos os decks associados à matéria "${subjectToDelete.name}" também serão excluídos.`}
                     btnText={"Confirmar"}
                     onClick={() => deleteSubject(subjectToDelete.idSubject)}
                     onCancel={handleCancelDelete}

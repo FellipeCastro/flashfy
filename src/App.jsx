@@ -196,6 +196,7 @@ const App = () => {
                                 refreshProfile={refreshProfile}
                                 refreshSubjects={refreshSubjects}
                                 loading={loading}
+                                progress={progress}
                             />
                         </ProtectedRoute>
                     }
