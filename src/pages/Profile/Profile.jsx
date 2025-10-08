@@ -338,97 +338,11 @@ const Profile = ({
                         </div>
                     )}
 
-                    {/* Nova Seção: Estatísticas do Usuário */}
-                    {profile && profile.progress && (
-                        <div className={styles.statsSection}>
-                            <h2>Estatísticas de Estudo</h2>
-                            <div className={styles.statsGrid}>
-                                <div className={styles.statCard}>
-                                    <div className={styles.statIcon}>
-                                        <FaFire 
-                                            className={`${styles.fireIcon} ${
-                                                profile.progress.consecutiveDays > 0 ? styles.active : styles.inactive
-                                            }`} 
-                                        />
-                                    </div>
-                                    <div className={styles.statInfo}>
-                                        <h3>Dias Consecutivos</h3>
-                                        <p className={styles.statValue}>
-                                            {profile.progress.consecutiveDays || 0}
-                                        </p>
-                                        <span className={styles.statLabel}>
-                                            dias seguidos estudando
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div className={styles.statCard}>
-                                    <div className={styles.statIcon}>
-                                        <FaBook />
-                                    </div>
-                                    <div className={styles.statInfo}>
-                                        <h3>Decks para Estudar</h3>
-                                        <p className={styles.statValue}>
-                                            {profile.progress.decksToStudy || 0}
-                                        </p>
-                                        <span className={styles.statLabel}>
-                                            decks pendentes
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div className={styles.statCard}>
-                                    <div className={styles.statIcon}>
-                                        <FaLayerGroup />
-                                    </div>
-                                    <div className={styles.statInfo}>
-                                        <h3>Decks Estudados</h3>
-                                        <p className={styles.statValue}>
-                                            {profile.progress.studiedDecks || 0}
-                                        </p>
-                                        <span className={styles.statLabel}>
-                                            decks concluídos
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div className={styles.statCard}>
-                                    <div className={styles.statIcon}>
-                                        <FaFileAlt />
-                                    </div>
-                                    <div className={styles.statInfo}>
-                                        <h3>Último Estudo</h3>
-                                        <p className={styles.statValue}>
-                                            {formatLastStudyDate(profile.progress.lastStudyDate)}
-                                        </p>
-                                        <span className={styles.statLabel}>
-                                            última sessão
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className={styles.overviewStats}>
-                                <div className={styles.overviewItem}>
-                                    <span className={styles.overviewLabel}>Total de Matérias:</span>
-                                    <span className={styles.overviewValue}>{profile.subjects || 0}</span>
-                                </div>
-                                <div className={styles.overviewItem}>
-                                    <span className={styles.overviewLabel}>Total de Decks:</span>
-                                    <span className={styles.overviewValue}>{profile.decks || 0}</span>
-                                </div>
-                                <div className={styles.overviewItem}>
-                                    <span className={styles.overviewLabel}>Total de Cards:</span>
-                                    <span className={styles.overviewValue}>{profile.cards || 0}</span>
-                                </div>
-                            </div>
-                        </div>
-                    )}
 
                     <form
                         onSubmit={handleSubmit}
                         className={styles.profileForm}
-                    >
+                        >
                         <div className={styles.formSection}>
                             <h2>Informações Pessoais</h2>
 
@@ -445,7 +359,7 @@ const Profile = ({
                                 placeholder="Seu nome completo"
                                 error={errors.name}
                                 disabled={!isEditing || loading}
-                            />
+                                />
 
                             <FormField
                                 label="Email"
@@ -453,14 +367,14 @@ const Profile = ({
                                 name="email"
                                 value={
                                     loading
-                                        ? "Carregando dados..."
-                                        : userData.email
+                                    ? "Carregando dados..."
+                                    : userData.email
                                 }
                                 onChange={handleChange}
                                 placeholder="seu@email.com"
                                 error={errors.email}
                                 disabled={!isEditing || loading}
-                            />
+                                />
                         </div>
 
                         {isChangingPassword && (
@@ -476,7 +390,7 @@ const Profile = ({
                                     placeholder="Sua senha atual"
                                     error={errors.currentPassword}
                                     showPasswordToggle={true}
-                                />
+                                    />
 
                                 <FormField
                                     label="Nova senha"
@@ -487,7 +401,7 @@ const Profile = ({
                                     placeholder="Sua nova senha"
                                     error={errors.newPassword}
                                     showPasswordToggle={true}
-                                />
+                                    />
 
                                 <FormField
                                     label="Confirmar nova senha"
@@ -498,7 +412,7 @@ const Profile = ({
                                     placeholder="Confirme sua nova senha"
                                     error={errors.confirmPassword}
                                     showPasswordToggle={true}
-                                />
+                                    />
                             </div>
                         )}
 
@@ -509,7 +423,7 @@ const Profile = ({
                                         type="button"
                                         onClick={handleEditProfile}
                                         disabled={loading}
-                                    >
+                                        >
                                         {loading
                                             ? "Carregando..."
                                             : "Editar Perfil"}
@@ -519,7 +433,7 @@ const Profile = ({
                                         secondary
                                         onClick={handleChangePassword}
                                         disabled={loading}
-                                    >
+                                        >
                                         Alterar Senha
                                     </Button>
                                 </div>
@@ -536,58 +450,141 @@ const Profile = ({
                                         type="button"
                                         secondary
                                         onClick={handleCancelEdit}
-                                    >
+                                        >
                                         Cancelar
                                     </Button>
                                 </div>
                             )}
                         </div>
                     </form>
+                            {/* Nova Seção: Estatísticas do Usuário */}
+                            {profile && profile.progress && (
+                                <div className={styles.statsSection}>
+                                    <h2>Estatísticas de Estudo</h2>
+                                    <div className={styles.statsGrid}>
+                                        <div className={styles.statCard}>
+                                            <div className={styles.statIcon}>
+                                                <FaFire 
+                                                    className={`${styles.fireIcon} ${
+                                                        profile.progress.consecutiveDays > 0 ? styles.active : styles.inactive
+                                                    }`} 
+                                                />
+                                            </div>
+                                            <div className={styles.statInfo}>
+                                                <h3>Dias Consecutivos</h3>
+                                                <p className={styles.statValue}>
+                                                    {profile.progress.consecutiveDays || 0}
+                                                </p>
+                                                <span className={styles.statLabel}>
+                                                    dias seguidos estudando
+                                                </span>
+                                            </div>
+                                        </div>
+        
+                                        <div className={styles.statCard}>
+                                            <div className={styles.statIcon}>
+                                                <FaBook />
+                                            </div>
+                                            <div className={styles.statInfo}>
+                                                <h3>Decks para Estudar</h3>
+                                                <p className={styles.statValue}>
+                                                    {profile.progress.decksToStudy || 0}
+                                                </p>
+                                                <span className={styles.statLabel}>
+                                                    decks pendentes
+                                                </span>
+                                            </div>
+                                        </div>
+        
+                                        <div className={styles.statCard}>
+                                            <div className={styles.statIcon}>
+                                                <FaLayerGroup />
+                                            </div>
+                                            <div className={styles.statInfo}>
+                                                <h3>Decks Estudados</h3>
+                                                <p className={styles.statValue}>
+                                                    {profile.progress.studiedDecks || 0}
+                                                </p>
+                                                <span className={styles.statLabel}>
+                                                    decks concluídos
+                                                </span>
+                                            </div>
+                                        </div>
+        
+                                        <div className={styles.statCard}>
+                                            <div className={styles.statIcon}>
+                                                <FaFileAlt />
+                                            </div>
+                                            <div className={styles.statInfo}>
+                                                <h3>Último Estudo</h3>
+                                                <p className={styles.statValue}>
+                                                    {formatLastStudyDate(profile.progress.lastStudyDate)}
+                                                </p>
+                                                <span className={styles.statLabel}>
+                                                    última sessão
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div className={styles.overviewStats}>
+                                        <div className={styles.overviewItem}>
+                                            <span className={styles.overviewLabel}>Total de Matérias:</span>
+                                            <span className={styles.overviewValue}>{profile.subjects || 0}</span>
+                                        </div>
+                                        <div className={styles.overviewItem}>
+                                            <span className={styles.overviewLabel}>Total de Decks:</span>
+                                            <span className={styles.overviewValue}>{profile.decks || 0}</span>
+                                        </div>
+                                        <div className={styles.overviewItem}>
+                                            <span className={styles.overviewLabel}>Total de Cards:</span>
+                                            <span className={styles.overviewValue}>{profile.cards || 0}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
 
-                    <div className={styles.subjectsSection}>
-                        <div className={styles.flexContainer}>
-                            <h2>Matérias cadastradas</h2>
-                            <button
-                                type="button"
-                                className={styles.addSubject}
-                                onClick={openAddSubjectForm}
-                            >
-                                Adicionar matéria
-                            </button>
-                        </div>
+                <div className={styles.subjectsSection}>
+                    <div className={styles.flexContainer}>
+                        <h2>Matérias cadastradas</h2>
+                        <button
+                            type="button"
+                            className={styles.addSubject}
+                            onClick={openAddSubjectForm}
+                        >
+                            Adicionar matéria
+                        </button>
+                    </div>
 
-                        {loading ? (
-                            <p id="loader">Carregando matérias...</p>
-                        ) : (
-                            subjects.map((subject) => {
+                    {loading ? (
+                        <p id="loader">Carregando matérias...</p>
+                    ) : (
+                        <div className={styles.subjectsGrid}>
+                            {subjects.map((subject) => {
                                 return (
                                     <div
                                         key={subject.idSubject}
                                         className={styles.subject}
-                                        style={{
-                                            backgroundColor: subject.color,
-                                        }}
                                     >
+                                        <div 
+                                            className={styles.subjectColor}
+                                            style={{ backgroundColor: subject.color }}
+                                        ></div>
                                         <strong>{subject.name}</strong>
-
                                         <button
                                             className={styles.deleteBtn}
-                                            style={{
-                                                color: subject.color,
-                                            }}
                                             onClick={() =>
-                                                handleDeleteSubjectClick(
-                                                    subject
-                                                )
+                                                handleDeleteSubjectClick(subject)
                                             }
                                         >
                                             <FaTrashAlt />
                                         </button>
                                     </div>
                                 );
-                            })
-                        )}
-                    </div>
+                            })}
+                        </div>
+                    )}
+                </div>
 
                     <div className={styles.dangerZone}>
                         <h2>Zona de Perigo</h2>
@@ -643,7 +640,7 @@ const Profile = ({
             {deleteSubjectModal && subjectToDelete && (
                 <ConfirmModal
                     title={"Deletar matéria"}
-                    description={`Todos os decks associados a matéria "${subjectToDelete.name}" também serão excluídos.`}
+                    description={`Todos os decks associados à matéria "${subjectToDelete.name}" também serão excluídos.`}
                     btnText={"Confirmar"}
                     onClick={() => deleteSubject(subjectToDelete.idSubject)}
                     onCancel={handleCancelDelete}
