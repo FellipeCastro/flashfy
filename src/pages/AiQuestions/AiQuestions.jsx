@@ -1,4 +1,11 @@
 import { useEffect, useState } from "react";
+import {
+    RiRobot2Fill,
+    RiFocus3Line,
+    RiFlashlightLine,
+    RiBarChartLine,
+    RiLightbulbFlashLine,
+} from "react-icons/ri";
 import { GoAlertFill } from "react-icons/go";
 import Button from "../../components/Button/Button";
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -309,7 +316,7 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         </div>
                     )}
 
-                {aiResponse.questions.length > 0 ? (
+                {aiResponse.questions.length > 0 && (
                     <>
                         <div className={styles.titleContainer}>
                             <h2>{aiResponse.theme}</h2>
@@ -505,14 +512,107 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                             </div>
                         )}
                     </>
-                ) : (
-                    !errorMessage.main &&
-                    !isLoading && (
-                        <div className={styles.emptyState}>
-                            {/* Conteúdo do empty state */}
-                        </div>
-                    )
                 )}
+                {!errorMessage.main &&
+                    !isLoading &&
+                    aiResponse.questions.length === 0 && (
+                        <div className={styles.emptyState}>
+                            <div className={styles.illustration}>
+                                <div className={styles.aiIcon}>
+                                    <RiRobot2Fill />
+                                </div>
+                            </div>
+
+                            <h3 className={styles.emptyTitle}>
+                                Pronto para testar seus conhecimentos?
+                            </h3>
+                            <p className={styles.emptyDescription}>
+                                A IA vai gerar questões personalizadas baseadas
+                                no tema e dificuldade que você escolher. É uma
+                                forma divertida de aprender e revisar conteúdos!
+                            </p>
+
+                            <div className={styles.features}>
+                                <div className={styles.feature}>
+                                    <div className={styles.featureIcon}>
+                                        <RiFocus3Line />
+                                    </div>
+                                    <div className={styles.featureText}>
+                                        <h4>Questões personalizadas</h4>
+                                        <p>
+                                            Geradas especificamente para seu
+                                            nível
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className={styles.feature}>
+                                    <div className={styles.featureIcon}>
+                                        <RiFlashlightLine />
+                                    </div>
+                                    <div className={styles.featureText}>
+                                        <h4>Feedback instantâneo</h4>
+                                        <p>
+                                            Verifique suas respostas
+                                            imediatamente
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className={styles.feature}>
+                                    <div className={styles.featureIcon}>
+                                        <RiBarChartLine />
+                                    </div>
+                                    <div className={styles.featureText}>
+                                        <h4>Acompanhe seu progresso</h4>
+                                        <p>Veja quantas questões acertou</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className={styles.tips}>
+                                <div className={styles.tipsHeader}>
+                                    <div className={styles.tipsIcon}>
+                                        <RiLightbulbFlashLine />
+                                    </div>
+                                    <h4>Dicas para melhores resultados:</h4>
+                                </div>
+                                <ul className={styles.tipsList}>
+                                    <li>
+                                        Seja específico no tema (ex:
+                                        "Fotossíntese" em vez de "Biologia")
+                                    </li>
+                                    <li>
+                                        Comece com dificuldade fácil e aumente
+                                        gradualmente
+                                    </li>
+                                    <li>
+                                        Use temas que você está estudando
+                                        atualmente
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    )}
+                {isLoading && (
+                        <div className={styles.loadingState}>
+                            <div className={styles.simpleAnimation}>
+                                <div className={styles.aiIcon}>
+                                    <RiRobot2Fill />
+                                </div>
+                                <div className={styles.thinkingDots}>
+                                    <div className={styles.dot}></div>
+                                    <div className={styles.dot}></div>
+                                    <div className={styles.dot}></div>
+                                </div>
+                            </div>
+
+                            <h3 className={styles.loadingTitle}>
+                                Aguardando suas questões...
+                            </h3>
+                            <p className={styles.loadingDescription}>
+                                Suas questões estão sendo geradas pela inteligência artificual, aguarde alguns instantes!
+                            </p>
+                        </div>
+                    )}
             </div>
         </div>
     );

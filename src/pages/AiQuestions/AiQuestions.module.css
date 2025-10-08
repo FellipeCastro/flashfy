@@ -383,7 +383,7 @@
 
 .resultsFeedback {
     background-color: rgba(1, 165, 228, 0.05);
-    border-radius: 8px;
+    border-radius: 0.2rem;
     padding: 1.4rem;
     font-size: 1.1rem;
     color: var(--text-secondary-color);
@@ -412,9 +412,251 @@
     margin-top: 2rem;
 }
 
-.noQuestions {
-    color: var(--text-secondary-color);
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+}
+
+.illustration {
+    position: relative;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.aiIcon svg {
+    font-size: 4rem;
+    color: var(--primary-color);
+}
+
+.emptyTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-primary-color);
+    margin-bottom: 1rem;
+}
+
+.emptyDescription {
+    color: var(--text-secondary-color);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    text-align: left;
+    padding: 1.5rem;
+    background: linear-gradient(
+        45deg,
+        var(--primary-color),
+        var(--primary-color-hover)
+    );
+    color: var(--secondary-color);
+    border-radius: 0.2rem;
+    transition: 0.2s ease;
+}
+
+.feature:hover {
+    transform: translateY(-4px);
+}
+
+.featureIcon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.featureText h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.featureText p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.tips {
+    background: var(--bg-secondary-color);
+    padding: 1.5rem;
+    border-radius: 0.6rem;
+    text-align: left;
+    width: 100%;
+    border: 2px dashed var(--border-color);
+}
+
+.tipsHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.tipsIcon svg {
+    font-size: 1.2rem;
+}
+
+.tipsHeader h4 {
+    margin: 0;
+    color: var(--text-primary-color);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.tipsList {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--text-secondary-color);
+}
+
+.tipsList li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+    font-size: 0.9rem;
+}
+
+.tipsList li:last-child {
+    margin-bottom: 0;
+}
+
+.loadingState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    text-align: center;
+    background: rgba(1, 165, 228, 0.05);
+    border-radius: 0.4rem;
+    border: 2px dashed var(--primary-color);
+    min-height: 300px;
+}
+
+.simpleAnimation {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.thinkingDots {
+    margin-top: 0.8rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    animation: thinking 1.4s ease-in-out infinite both;
+}
+
+.dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0s;
+}
+
+.loadingTitle {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--text-primary-color);
+    margin-bottom: 0.8rem;
+}
+
+.loadingDescription {
+    color: var(--text-secondary-color);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 400px;
+}
+
+@keyframes thinking {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .emptyState {
+        padding: 2rem 1rem;
+        min-height: 250px;
+    }
+    
+    .aiIcon {
+        font-size: 2.5rem;
+    }
+    
+    .emptyTitle {
+        font-size: 1.2rem;
+    }
+    
+    .emptyDescription {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .emptyState {
+        padding: 2rem 1rem;
+        margin: 1rem 0;
+    }
+    
+    .features {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .feature {
+        padding: 1rem;
+    }
+    
+    .aiIcon {
+        font-size: 3rem;
+    }
+    
+    .questionMark {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .emptyTitle {
+        font-size: 1.3rem;
+    }
+    
+    .emptyDescription {
+        font-size: 0.9rem;
+    }
 }
 
 @keyframes fadeIn {
