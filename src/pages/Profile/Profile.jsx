@@ -485,7 +485,7 @@ const Profile = ({
                                                 0}
                                         </p>
                                         <span className={styles.statLabel}>
-                                            dias seguidos estudando
+                                            dia{progress.consecutiveDays === 1 ? null : "s"}{" "}{progress.consecutiveDays === 1 ? null : "consecutivos"}  estudando
                                         </span>
                                     </div>
                                 </div>
@@ -500,7 +500,7 @@ const Profile = ({
                                             {progress.decksToStudy || 0}
                                         </p>
                                         <span className={styles.statLabel}>
-                                            decks pendentes
+                                            deck{progress.decksToStudy === 1 ? null : "s"}{" "}pendente{progress.decksToStudy === 1 ? null : "s"}
                                         </span>
                                     </div>
                                 </div>
@@ -515,7 +515,7 @@ const Profile = ({
                                             {progress.studiedDecks || 0}
                                         </p>
                                         <span className={styles.statLabel}>
-                                            decks concluídos
+                                            deck{progress.studiedDecks === 1 ? null : "s"}{" "}concluído{progress.studiedDecks === 1 ? null : "s"}
                                         </span>
                                     </div>
                                 </div>
