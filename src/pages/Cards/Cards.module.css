@@ -227,7 +227,7 @@
     background: linear-gradient(
         to right,
         var(--primary-color),
-        var(--primary-color-hover)
+        var(--gradient-primary-color)
     );
     border-radius: 2rem;
 }
@@ -291,9 +291,9 @@
 
 .back {
     background: linear-gradient(
-        45deg,
+        135deg,
         var(--primary-color),
-        var(--primary-color-hover)
+        var(--gradient-primary-color)
     );
     color: var(--secondary-color);
 }

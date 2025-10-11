@@ -238,7 +238,6 @@
 
 .dangerItem button {
     background-color: var(--error-color-text) !important;
-    transition: 0.3s ease-in-out;
 }
 
 .dangerItem button:hover {
