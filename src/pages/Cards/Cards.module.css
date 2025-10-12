@@ -51,6 +51,7 @@
     transition: 0.4s;
     display: flex;
     align-items: center;
+    color: var(--text-primary-color);
 }
 
 .deleteBtn:hover {
@@ -77,7 +78,6 @@
     background: var(--bg-color);
     border-radius: 0.4rem;
     margin: 1rem 0;
-    /* border: 2px dashed var(--border-color); */
 }
 
 .illustration {
@@ -186,31 +186,8 @@
     line-height: 1.4;
 }
 
-@media (max-width: 768px) {
-    .noCards {
-        padding: 2rem 1rem;
-        margin: 0.5rem 0;
-    }
-
-    .title {
-        font-size: 1.3rem;
-    }
-
-    .msg {
-        font-size: 0.9rem;
-    }
-
-    .tip {
-        flex-direction: column;
-        text-align: center;
-        border-left: none;
-        border-top: 3px solid var(--primary-color);
-        gap: 0.5rem;
-    }
-
-    .tips {
-        gap: 0.8rem;
-    }
+.cardContainer {
+    width: 100%;
 }
 
 .progressBar {
@@ -227,7 +204,7 @@
     background: linear-gradient(
         to right,
         var(--primary-color),
-        var(--gradient-primary-color)
+        var(--primary-color-hover)
     );
     border-radius: 2rem;
 }
@@ -252,12 +229,32 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    position: relative;
 }
 
 .question {
     width: 100%;
     font-size: 1rem;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.deleteCardBtn {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+    transition: 0.3s ease;
+    color: var(--text-primary-color);
+    font-size: 0.9rem;
+}
+
+.deleteCardBtn:hover {
+    color: var(--text-secondary-color);
 }
 
 .answer {
@@ -293,7 +290,7 @@
     background: linear-gradient(
         135deg,
         var(--primary-color),
-        var(--gradient-primary-color)
+        var(--primary-color-hover)
     );
     color: var(--secondary-color);
 }
@@ -382,6 +379,11 @@
     color: var(--text-secondary-color);
 }
 
+.navBtn:disabled {
+    color: var(--border-color);
+    cursor: not-allowed;
+}
+
 .finalizeBtn {
     width: 100%;
     transition: 1s ease-in-out;
@@ -395,4 +397,93 @@
     opacity: 0;
     pointer-events: none;
     transition: 0.5s;
+}
+
+@media (max-width: 768px) {
+    .noCards {
+        padding: 2rem 1rem;
+        margin: 0.5rem 0;
+    }
+
+    .title {
+        font-size: 1.3rem;
+    }
+
+    .msg {
+        font-size: 0.9rem;
+    }
+
+    .tip {
+        flex-direction: column;
+        text-align: center;
+        border-left: none;
+        border-top: 3px solid var(--primary-color);
+        gap: 0.5rem;
+    }
+
+    .tips {
+        gap: 0.8rem;
+    }
+
+    .deleteCardBtn {
+        top: 0.5rem;
+        right: 0.5rem;
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.8rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .titleContainer {
+        justify-content: center;
+    }
+
+    .btnsContainer {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .deleteCardBtn {
+        top: 0.3rem;
+        right: 0.3rem;
+        width: 1.8rem;
+        height: 1.8rem;
+        font-size: 0.7rem;
+    }
+
+    .answer {
+        height: 150px;
+    }
+
+    .face {
+        height: 150px;
+        padding: 1rem;
+    }
+
+    .progressBar {
+        height: 1.5rem;
+    }
+
+    .progressText {
+        font-size: 0.7rem;
+    }
+
+    .difficulty li {
+        padding: 0.4rem;
+        font-size: 0.9rem;
+    }
+
+    .navBtn {
+        font-size: 2rem;
+    }
 }

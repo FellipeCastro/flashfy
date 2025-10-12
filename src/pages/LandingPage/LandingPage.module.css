@@ -173,7 +173,7 @@
     background: linear-gradient(
         45deg,
         var(--primary-color),
-        var(--primary-color-hover)
+        var(--gradient-primary-color)
     );
     color: var(--secondary-color);
 }

@@ -20,12 +20,15 @@ const Cards = ({ decks, loadData }) => {
     const [currentDeck, setCurrentDeck] = useState(null);
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
     const [isAddCardFormOpen, setIsAddCardFormOpen] = useState(false);
-    const [difficulties, setDifficulties] = useState([]); // Começa vazio
+    const [difficulties, setDifficulties] = useState([]);
     const [isCreatingCard, setIsCreatingCard] = useState(false);
     const [isStudyingDeck, setIsStudyingDeck] = useState(false);
     const [isDeletingDeck, setIsDeletingDeck] = useState(false);
+    const [isDeletingCard, setIsDeletingCard] = useState(false);
+    const [deleteCardModal, setDeleteCardModal] = useState(false);
     const [deleteDeckModal, setDeleteDeckModal] = useState(false);
     const [studyDeckModal, setStudyDeckModal] = useState(false);
+    const [cardToDelete, setCardToDelete] = useState(null);
 
     useEffect(() => {
         setCurrentDeck(selectedDeck);
@@ -33,7 +36,6 @@ const Cards = ({ decks, loadData }) => {
         setShowAnswer(false);
         setSelectedDifficulty(null);
 
-        // Inicializa o array de dificuldades vazio, com o mesmo tamanho do número de cards
         if (selectedDeck?.cards) {
             setDifficulties(new Array(selectedDeck.cards.length).fill(null));
         }
@@ -75,12 +77,9 @@ const Cards = ({ decks, loadData }) => {
     };
 
     const handleSetDifficulty = (level) => {
-        // Atualiza apenas o array local de dificuldades
         const updatedDifficulties = [...difficulties];
         updatedDifficulties[currentCardIndex] = level;
         setDifficulties(updatedDifficulties);
-
-        // Atualiza a dificuldade selecionada apenas para feedback visual
         setSelectedDifficulty(level);
     };
 
@@ -121,6 +120,32 @@ const Cards = ({ decks, loadData }) => {
         }
     };
 
+    const deleteCard = async (idCard) => {
+        try {
+            setIsDeletingCard(true);
+            const response = await api.delete(`/cards/${idCard}`);
+            if (response.data) {
+                loadData();
+                setDeleteCardModal(false);
+                setCardToDelete(null);
+
+                // Se era o último card, volta para o primeiro
+                if (currentCardIndex >= currentDeck.cards.length - 1) {
+                    setCurrentCardIndex(0);
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsDeletingCard(false);
+        }
+    };
+
+    const handleOpenDeleteCardModal = (idCard) => {
+        setCardToDelete(idCard);
+        setDeleteCardModal(true);
+    };
+
     if (!currentDeck) {
         return (
             <>
@@ -141,8 +166,6 @@ const Cards = ({ decks, loadData }) => {
 
     const currentCard = currentDeck.cards[currentCardIndex];
     const progress = ((currentCardIndex + 1) / currentDeck.cards.length) * 100;
-
-    // Verifica a dificuldade atual baseada no array local
     const currentDifficulty = difficulties[currentCardIndex];
 
     return (
@@ -150,6 +173,7 @@ const Cards = ({ decks, loadData }) => {
             {isCreatingCard && <Loading />}
             {isStudyingDeck && <Loading />}
             {isDeletingDeck && <Loading />}
+            {isDeletingCard && <Loading />}
 
             {deleteDeckModal && (
                 <ConfirmModal
@@ -158,6 +182,19 @@ const Cards = ({ decks, loadData }) => {
                     btnText={"Confirmar"}
                     onClick={deleteDeck}
                     onCancel={() => setDeleteDeckModal(false)}
+                />
+            )}
+
+            {deleteCardModal && (
+                <ConfirmModal
+                    title={"Deletar Card"}
+                    description={"Tem certeza que deseja excluir esse card?"}
+                    btnText={"Confirmar"}
+                    onClick={() => deleteCard(cardToDelete)}
+                    onCancel={() => {
+                        setDeleteCardModal(false);
+                        setCardToDelete(null);
+                    }}
                 />
             )}
 
@@ -181,6 +218,7 @@ const Cards = ({ decks, loadData }) => {
                     <button
                         className={styles.deleteBtn}
                         onClick={() => setDeleteDeckModal(true)}
+                        title={"Deletar deck"}
                     >
                         <FaTrashAlt />
                     </button>
@@ -246,25 +284,39 @@ const Cards = ({ decks, loadData }) => {
                                 {currentDeck.cards.length}
                             </span>
                         </div>
-                        <div className={styles.card}>
-                            <p className={styles.question}>
-                                {currentCard.question}
-                            </p>
-                            <div
-                                className={`${styles.answer} ${
-                                    showAnswer ? styles.showAnswer : null
-                                }`}
-                                onClick={() => setShowAnswer(!showAnswer)}
-                            >
+
+                        <div className={styles.cardContainer}>
+                            <div className={styles.card}>
+                                <p className={styles.question}>
+                                    {currentCard.question}
+                                    <button
+                                        className={styles.deleteCardBtn}
+                                        onClick={() =>
+                                            handleOpenDeleteCardModal(
+                                                currentCard.idCard
+                                            )
+                                        }
+                                        title="Deletar card"
+                                    >
+                                        <FaTrashAlt />
+                                    </button>
+                                </p>
                                 <div
-                                    className={`${styles.face} ${styles.back}`}
+                                    className={`${styles.answer} ${
+                                        showAnswer ? styles.showAnswer : null
+                                    }`}
+                                    onClick={() => setShowAnswer(!showAnswer)}
                                 >
-                                    <p>Clique para ver a resposta</p>
-                                </div>
-                                <div
-                                    className={`${styles.face} ${styles.front}`}
-                                >
-                                    <p>{currentCard.answer}</p>
+                                    <div
+                                        className={`${styles.face} ${styles.back}`}
+                                    >
+                                        <p>Clique para ver a resposta</p>
+                                    </div>
+                                    <div
+                                        className={`${styles.face} ${styles.front}`}
+                                    >
+                                        <p>{currentCard.answer}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

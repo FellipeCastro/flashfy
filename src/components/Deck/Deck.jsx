@@ -77,7 +77,7 @@ const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
 
             <h3>{title}</h3>
 
-            <p className={styles.cards}>{cards} cards</p>
+            <p className={styles.cards}>{cards} card{cards === 1 ? null : "s"}</p>
 
             <p className={styles.nextReview}>
                 <strong>Próxima revisão:</strong>{" "}
