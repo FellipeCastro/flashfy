@@ -23,10 +23,19 @@ const Register = ({ loadData }) => {
             [name]: value,
         }));
 
+        // Limpar erro específico quando o usuário começar a digitar
         if (errors[name]) {
             setErrors((prev) => ({
                 ...prev,
                 [name]: "",
+            }));
+        }
+
+        // Limpar erro geral também
+        if (errors.general) {
+            setErrors((prev) => ({
+                ...prev,
+                general: "",
             }));
         }
     };
@@ -66,42 +75,42 @@ const Register = ({ loadData }) => {
         if (!validateForm()) return;
 
         setIsLoading(true);
-
-        let isAuthenticated = false;
+        setErrors({}); // Limpar erros anteriores
 
         try {
             const response = await api.post("/users/register", {
                 name: formData.name,
                 email: formData.email,
-                password: formData.confirmPassword,
+                password: formData.password, // Use a senha original, não a confirmação
             });
 
             const result = response.data;
             localStorage.setItem("authToken", result.token);
             localStorage.setItem("idUser", result.idUser);
-            isAuthenticated = true;
-            loadData();
+
+            // Carregar dados do usuário
+            await loadData();
+
+            // Navegar apenas após sucesso
+            navigate("/home");
         } catch (error) {
-            localStorage.removeItem("authToken");
-            localStorage.removeItem("idUser");
+            // CORREÇÃO: Acessar a mensagem de erro corretamente
+            const errorMessage =
+                error.response?.data?.error ||
+                error.message ||
+                "Erro ao criar conta";
+
             setErrors({
-                general: error.message,
+                general: errorMessage,
             });
             console.error("Erro ao realizar cadastro: ", error);
         } finally {
             setIsLoading(false);
-            if (isAuthenticated) {
-                navigate("/home");
-            }
         }
     };
 
     const handleBack = () => {
-        if (window.history.state && window.history.state.idx > 0) {
-            navigate(-1); 
-        } else {
-            navigate("/"); 
-        }
+        navigate("/");
     };
 
     return (

@@ -21,10 +21,19 @@ const Login = ({ loadData }) => {
             [name]: value,
         }));
 
+        // Limpar erro específico quando o usuário começar a digitar
         if (errors[name]) {
             setErrors((prev) => ({
                 ...prev,
                 [name]: "",
+            }));
+        }
+
+        // Limpar erro geral também
+        if (errors.general) {
+            setErrors((prev) => ({
+                ...prev,
+                general: "",
             }));
         }
     };
@@ -52,8 +61,7 @@ const Login = ({ loadData }) => {
         if (!validateForm()) return;
 
         setIsLoading(true);
-
-        let isAuthenticated = false;
+        setErrors({}); // Limpar erros anteriores
 
         try {
             const response = await api.post("/users/login", {
@@ -64,29 +72,29 @@ const Login = ({ loadData }) => {
             const result = response.data;
             localStorage.setItem("authToken", result.token);
             localStorage.setItem("idUser", result.idUser);
-            isAuthenticated = true;
-            loadData();
+
+            // Carregar dados do usuário
+            await loadData();
+
+            // Navegar apenas após sucesso
+            navigate("/home");
         } catch (error) {
-            localStorage.removeItem("authToken");
-            localStorage.removeItem("idUser");
+            const errorMessage =
+                error.response?.data?.error ||
+                error.message ||
+                "Erro ao fazer login";
+
             setErrors({
-                general: error.message,
+                general: errorMessage,
             });
             console.error("Erro ao realizar login: ", error);
         } finally {
             setIsLoading(false);
-            if (isAuthenticated) {
-                navigate("/home");
-            }
         }
     };
 
     const handleBack = () => {
-        if (window.history.state && window.history.state.idx > 0) {
-            navigate(-1); 
-        } else {
-            navigate("/"); 
-        }
+        navigate("/");
     };
 
     return (
@@ -135,7 +143,7 @@ const Login = ({ loadData }) => {
                             Lembrar-me
                         </label>
                         <a
-                            href="/login"
+                            href="/forgot-password"
                             className={styles.forgotPassword}
                         >
                             Esqueci minha senha

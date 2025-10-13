@@ -118,7 +118,7 @@ const App = () => {
                     path="/login"
                     element={
                         <GuestRoute>
-                            <Login loadData={loadData} loading={loading} />
+                            <Login loadData={loadData} />
                         </GuestRoute>
                     }
                 />
@@ -127,7 +127,7 @@ const App = () => {
                     path="/register"
                     element={
                         <GuestRoute>
-                            <Register loadData={loadData} loading={loading} />
+                            <Register loadData={loadData} />
                         </GuestRoute>
                     }
                 />
