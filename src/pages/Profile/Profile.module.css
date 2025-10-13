@@ -73,10 +73,10 @@
 }
 
 .errorMessage {
-    background-color: var(--error-color);
+    background-color: var(--incorrect-bg);
     color: var(--error-color-text);
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 0.2rem;
     margin-bottom: 1.5rem;
     border-left: 4px solid var(--error-color-text);
     animation: fadeIn 0.3s ease-out;
@@ -86,7 +86,7 @@
     background-color: var(--correct-bg);
     color: var(--correct-color);
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 0.2rem;
     margin-bottom: 1.5rem;
     border-left: 4px solid var(--correct-color);
     animation: fadeIn 0.3s ease-out;

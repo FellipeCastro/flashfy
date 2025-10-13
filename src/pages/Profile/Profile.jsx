@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-    FaTrashAlt,
-    FaBook,
-    FaLayerGroup,
-    FaFileAlt,
-} from "react-icons/fa";
+import { FaTrashAlt, FaBook, FaLayerGroup, FaFileAlt } from "react-icons/fa";
 import { FaFire } from "react-icons/fa6";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
@@ -24,7 +19,7 @@ const Profile = ({
     refreshProfile,
     refreshSubjects,
     loading,
-    progress
+    progress,
 }) => {
     const [userData, setUserData] = useState({
         name: "",
@@ -143,26 +138,21 @@ const Profile = ({
         setIsLoading(true);
 
         try {
-            // Se estiver alterando senha, faz a requisição de senha
-            if (
-                isChangingPassword &&
-                userData.currentPassword &&
-                userData.newPassword
-            ) {
-                await api.put("/users/password", {
-                    currentPassword: userData.currentPassword,
-                    newPassword: userData.newPassword,
-                });
-            }
-
             // Se estiver editando informações pessoais, faz a requisição do perfil
             if (isEditing) {
                 const response = await api.put("/users/profile", {
                     name: userData.name,
                     email: userData.email,
+                    // Se estiver alterando senha, faz a requisição de senha
+                    password:
+                        isChangingPassword &&
+                        userData.currentPassword &&
+                        userData.newPassword
+                            ? userData.newPassword
+                            : null,
                 });
 
-                if (response.data) {
+                if (response) {
                     setSuccessMessage("Perfil atualizado com sucesso!");
                     refreshProfile();
                 }
@@ -471,8 +461,7 @@ const Profile = ({
                                     <div className={styles.statIcon}>
                                         <FaFire
                                             className={`${styles.fireIcon} ${
-                                                progress
-                                                    .consecutiveDays > 0
+                                                progress.consecutiveDays > 0
                                                     ? styles.active
                                                     : styles.inactive
                                             }`}
@@ -481,11 +470,17 @@ const Profile = ({
                                     <div className={styles.statInfo}>
                                         <h3>Dias Consecutivos</h3>
                                         <p className={styles.statValue}>
-                                            {progress.consecutiveDays ||
-                                                0}
+                                            {progress.consecutiveDays || 0}
                                         </p>
                                         <span className={styles.statLabel}>
-                                            dia{progress.consecutiveDays === 1 ? null : "s"}{" "}{progress.consecutiveDays === 1 ? null : "consecutivos"}  estudando
+                                            dia
+                                            {progress.consecutiveDays === 1
+                                                ? null
+                                                : "s"}{" "}
+                                            {progress.consecutiveDays === 1
+                                                ? null
+                                                : "consecutivos"}{" "}
+                                            estudando
                                         </span>
                                     </div>
                                 </div>
@@ -500,7 +495,14 @@ const Profile = ({
                                             {progress.decksToStudy || 0}
                                         </p>
                                         <span className={styles.statLabel}>
-                                            deck{progress.decksToStudy === 1 ? null : "s"}{" "}pendente{progress.decksToStudy === 1 ? null : "s"}
+                                            deck
+                                            {progress.decksToStudy === 1
+                                                ? null
+                                                : "s"}{" "}
+                                            pendente
+                                            {progress.decksToStudy === 1
+                                                ? null
+                                                : "s"}
                                         </span>
                                     </div>
                                 </div>
@@ -515,7 +517,14 @@ const Profile = ({
                                             {progress.studiedDecks || 0}
                                         </p>
                                         <span className={styles.statLabel}>
-                                            deck{progress.studiedDecks === 1 ? null : "s"}{" "}concluído{progress.studiedDecks === 1 ? null : "s"}
+                                            deck
+                                            {progress.studiedDecks === 1
+                                                ? null
+                                                : "s"}{" "}
+                                            concluído
+                                            {progress.studiedDecks === 1
+                                                ? null
+                                                : "s"}
                                         </span>
                                     </div>
                                 </div>
@@ -526,7 +535,9 @@ const Profile = ({
                                     </div>
                                     <div className={styles.statInfo}>
                                         <h3>Último Estudo</h3>
-                                        <p className={`${styles.statValue} ${styles.lastStudy}`}>
+                                        <p
+                                            className={`${styles.statValue} ${styles.lastStudy}`}
+                                        >
                                             {formatLastStudyDate(
                                                 progress.lastStudyDate
                                             )}
