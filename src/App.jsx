@@ -104,7 +104,7 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route
-                    path="/"
+                    exact path="/"
                     element={
                         localStorage.getItem("authToken") ? (
                             <Navigate to="/home" replace />
