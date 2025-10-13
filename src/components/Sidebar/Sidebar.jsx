@@ -67,7 +67,14 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                         >
                             <FaBookReader /> Nossa metodologia
                         </Link>
-                        <Link to="/profile" className={location.pathname === "/profile" ? styles.active : null}>
+                        <Link
+                            to="/profile"
+                            className={
+                                location.pathname === "/profile"
+                                    ? styles.active
+                                    : null
+                            }
+                        >
                             <FaUser /> Ver Perfil
                         </Link>
                     </div>

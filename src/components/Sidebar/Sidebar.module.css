@@ -21,11 +21,11 @@
 .logoContainer {
     display: flex;
     align-items: center;
+    gap: 0.4rem;
 }
 
 .logoImg {
-    width: 40px;
-    height: 40px;
+    width: 35px;
 }
 
 .logoText {
@@ -47,7 +47,7 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    transition: 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .sidebarBtn:hover {
