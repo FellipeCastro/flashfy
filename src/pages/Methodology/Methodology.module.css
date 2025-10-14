@@ -1,44 +1,178 @@
-.container {
+.pageWrapper {
     display: flex;
+    background-color: var(--bg-color);
 }
 
 .mainContainer {
     width: 100%;
     padding: 2rem 5%;
     color: var(--text-primary-color);
-    background: var(--bg-color);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
 }
 
-.mainContainer h1,
-.mainContainer h2 {
-    margin-top: 1rem;
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
     color: var(--text-primary-color);
-    line-height: 1.6;
+    margin-bottom: 1rem;
+    line-height: 1.2;
 }
 
-.mainContainer p,
-.mainContainer li {
+.subtitle {
+    font-size: 1.1rem;
     color: var(--text-secondary-color);
-    text-align: justify;
     line-height: 1.6;
 }
 
-.mainContainer strong {
-    color: var(--text-primary-color);
+.section {
+    margin-bottom: 3.5rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sectionTitle {
+    font-size: 1.8rem;
     font-weight: 600;
+    color: var(--text-primary-color);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
 }
 
-.mainContainer ul, 
-.mainContainer ol {
-    margin-left: 2rem;
+.sectionTitle svg {
+    color: var(--primary-color);
+}
+
+/* Pilares Científicos */
+.pillarsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.pillarCard {
+    background: var(--bg-color);
+    padding: 2rem;
+    border: 2px dashed var(--border-color);
+    border-radius: 0.2rem;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
 }
 
-.mainContainer a {
+.pillarIcon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.pillarTitle {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+.pillarDescription {
     color: var(--text-secondary-color);
+    line-height: 1.6;
+    flex-grow: 1;
+    font-size: 0.95rem;
+}
+
+.pillarLink {
+    margin-top: 1.5rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.4s;
+    margin-top: 2rem;
+}
+
+.pillarLink:hover {
+    color: var(--primary-color-hover);
+    text-decoration: underline;
+}
+
+/* Como Funciona */
+.howItWorksCard {
+    background: var(--secondary-color);
+    padding: 2.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.2rem;
+    box-shadow: -4px 4px 0px var(--border-color);
+}
+
+.howItWorksCard p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary-color);
+    margin-bottom: 1.5rem;
+}
+
+.difficultyList {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.difficultyList li {
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.difficultyList li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.difficultyList li strong {
+    color: var(--text-primary-color);
+}
+
+.finalParagraph {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .mainContainer {
+        padding: 2rem 1.5rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.5rem;
+    }
+
+    .howItWorksCard {
+        padding: 1.5rem;
+    }
 }
