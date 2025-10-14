@@ -81,8 +81,7 @@ const Login = ({ loadData }) => {
         } catch (error) {
             const errorMessage =
                 error.response?.data?.error ||
-                error.message ||
-                "Erro ao fazer login";
+                "Erro no servidor. Tente novamente mais tarde!";
 
             setErrors({
                 general: errorMessage,

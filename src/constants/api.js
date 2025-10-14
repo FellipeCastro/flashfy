@@ -17,22 +17,4 @@ api.interceptors.request.use(
     }
 );
 
-api.interceptors.response.use(
-    (response) => response,
-    (error) => {
-        // Não redirecionar se já estiver na página de login
-        const isLoginPage = window.location.pathname === '/login';
-        
-        if (error.response?.status === 401 && !isLoginPage) {
-            console.warn(
-                "Token inválido ou expirado. Redirecionando para login..."
-            );
-            localStorage.removeItem("authToken");
-            localStorage.removeItem("idUser");
-            window.location.href = "/login";
-        }
-        return Promise.reject(error);
-    }
-);
-
 export default api;

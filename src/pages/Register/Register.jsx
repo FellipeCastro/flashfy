@@ -94,11 +94,9 @@ const Register = ({ loadData }) => {
             // Navegar apenas após sucesso
             navigate("/home");
         } catch (error) {
-            // CORREÇÃO: Acessar a mensagem de erro corretamente
             const errorMessage =
                 error.response?.data?.error ||
-                error.message ||
-                "Erro ao criar conta";
+                "Erro no servidor. Tente novamente mais tarde!";
 
             setErrors({
                 general: errorMessage,

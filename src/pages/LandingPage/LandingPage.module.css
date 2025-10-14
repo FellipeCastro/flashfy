@@ -258,44 +258,42 @@
 .step {
     text-align: center;
     padding: 2rem;
-    background: var(--secondary-color);
-    border: 3px dashed var(--border-color);
+    background: linear-gradient(
+        45deg,
+        var(--primary-color),
+        var(--primary-color-hover)
+    );
+    color: var(--secondary-color);
     border-radius: 0.2rem;
+    box-shadow: 0 0 20px var(--shadow-color);
     transition: all 0.3s ease;
-}
-
-.step:hover {
-    transform: translateY(-4px);
 }
 
 .stepNumber {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: var(--primary-color);
+    background: transparent;
     color: var(--secondary-color);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     margin: 0 auto 2rem;
-    border: 2px solid var(--border-color);
+    border: 2px solid var(--secondary-color);
 }
 
 .stepIcon {
     font-size: 2rem;
-    color: var(--primary-color);
     margin-bottom: 1rem;
 }
 
 .step h3 {
     font-size: 1.3rem;
     margin-bottom: 1rem;
-    color: var(--text-secondary-color);
 }
 
 .step p {
-    color: var(--text-secondary-color);
     line-height: 1.6;
 }
 
