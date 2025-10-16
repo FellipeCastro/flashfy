@@ -533,8 +533,8 @@
 .headerTop {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 2rem;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 
 .historyButton {
@@ -542,9 +542,28 @@
     align-items: center;
     gap: 0.5rem;
     white-space: nowrap;
+    padding: 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary-color);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.historyButton:hover {
+    color: var(--text-primary-color);
 }
 
 /* Container do histórico */
+
+.historyContainer {
+    background: var(--secondary-color);
+    padding: 2rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.2rem;
+    box-shadow: -4px 4px 0px var(--border-color);
+}
 
 .historyHeader {
     display: flex;
@@ -602,11 +621,15 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
-    background: var(--secondary-color);
+    background: var(--bg-color);
     border-radius: 0.2rem;
     border: 2px dashed var(--border-color);
     transition: all 0.2s;
     cursor: pointer;
+}
+
+.historyItem:hover {
+    transform: translateY(-4px);
 }
 
 .historyItemContent {
@@ -662,7 +685,7 @@
 
 .score {
     font-weight: 600;
-    color: #2d3748 !important;
+    color: var(--text-primary-color) !important;
 }
 
 .date {

@@ -243,7 +243,6 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
             setErrorMessage((prev) => ({
                 ...prev,
                 main:
-                    error.response?.data?.error ||
                     "Tente gerar as questões novamente!",
             }));
         } finally {
@@ -329,7 +328,7 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     Artificial
                                 </p>
                             </div>
-                            <Button
+                            <button
                                 onClick={() => setShowHistory(!showHistory)}
                                 className={styles.historyButton}
                             >
@@ -344,7 +343,7 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                         Fechar ({history.length})
                                     </>
                                 )}
-                            </Button>
+                            </button>
                         </div>
                     </div>
 
@@ -433,10 +432,10 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                                             styles.quantity
                                                         }
                                                     >
-                                                        {item.quantity} questão
+                                                        {item.quantity}{" "}
                                                         {item.quantity > 1
-                                                            ? "ões"
-                                                            : ""}
+                                                            ? "questões"
+                                                            : "questão"}
                                                     </span>
                                                     {item.score !== null && (
                                                         <span
