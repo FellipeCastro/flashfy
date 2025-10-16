@@ -54,7 +54,7 @@ const Methodology = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
                 <section className={styles.section}>
                     <h2 className={styles.sectionTitle}>
-                        <GoGoal /> Nossos Pilares Científicos
+                        Nossos Pilares Científicos
                     </h2>
                     <div className={styles.pillarsGrid}>
                         {scientificPillars.map((pillar, index) => (
@@ -83,7 +83,7 @@ const Methodology = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
                 <section className={styles.section}>
                     <h2 className={styles.sectionTitle}>
-                        <FaQuestionCircle /> Como Funciona na Prática?
+                        Como Funciona na Prática?
                     </h2>
                     <div className={styles.howItWorksCard}>
                         <p>
