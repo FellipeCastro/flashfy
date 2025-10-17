@@ -10,6 +10,7 @@ import {
     FaTrophy,
     FaTimes,
     FaBars,
+    FaChevronDown,
 } from "react-icons/fa";
 import { useState } from "react";
 import styles from "./LandingPage.module.css";
@@ -89,6 +90,26 @@ const LandingPage = () => {
             name: "Marina Costa",
             role: "Estudante de Engenharia",
             text: "A comunidade é incrível! Baixei vários decks de cálculo e física que me salvaram nas provas.",
+        },
+    ];
+
+    // NOVO: Dados para a seção de FAQ
+    const faqData = [
+        {
+            question: "O FlashFy é gratuito?",
+            answer: "Sim! O FlashFy oferece um plano gratuito completo com todas as funcionalidades essenciais. No futuro, poderemos oferecer planos premium com recursos avançados, mas o núcleo da plataforma permanecerá acessível a todos.",
+        },
+        {
+            question: "Como funciona a 'repetição espaçada'?",
+            answer: "É um método de aprendizado cientificamente comprovado. Nosso algoritmo calcula o momento exato em que você está prestes a esquecer uma informação e agenda uma revisão, fortalecendo sua memória de longo prazo de forma muito mais eficiente do que estudar aleatoriamente.",
+        },
+        {
+            question: "Posso usar o FlashFy em meu celular?",
+            answer: "O FlashFy é uma aplicação web responsiva, o que significa que funciona perfeitamente em navegadores de celulares e tablets. No futuro, planejamos lançar aplicativos nativos para iOS e Android.",
+        },
+        {
+            question: "A geração de decks por IA tem algum custo?",
+            answer: "No momento, a geração de decks e perguntas por IA está incluída no nosso plano gratuito, com um limite de uso justo para garantir a disponibilidade para todos. Estamos sempre trabalhando para tornar essa tecnologia cada vez mais acessível.",
         },
     ];
 
@@ -269,6 +290,26 @@ const LandingPage = () => {
                                     <span>{testimonial.role}</span>
                                 </div>
                             </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* NOVO: Seção de FAQ adicionada aqui */}
+            <section id="faq" className={styles.faq}>
+                <div className={styles.container}>
+                    <h2>Perguntas Frequentes</h2>
+                    <div className={styles.faqContainer}>
+                        {faqData.map((item, index) => (
+                            <details key={index} className={styles.faqItem}>
+                                <summary className={styles.faqQuestion}>
+                                    {item.question}
+                                    <FaChevronDown className={styles.faqIcon} />
+                                </summary>
+                                <p className={styles.faqAnswer}>
+                                    {item.answer}
+                                </p>
+                            </details>
                         ))}
                     </div>
                 </div>
