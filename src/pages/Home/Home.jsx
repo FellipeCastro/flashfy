@@ -6,9 +6,11 @@ import Button from "../../components/Button/Button";
 import Deck from "../../components/Deck/Deck";
 import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
 import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
+import AddDeckWithAIForm from "../../components/AddDeckWithAIForm/AddDeckWithAIForm";
 import Loading from "../../components/Loading/Loading";
 import api from "../../constants/api";
 import styles from "./Home.module.css";
+
 
 const Home = ({
     isSidebarOpen,
@@ -22,11 +24,14 @@ const Home = ({
     loading,
 }) => {
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
+    const [isAddDeckWithAIFormOpen, setIsAddDeckWithAIFormOpen] = useState(false);
     const [isAddSubjectFormOpen, setIsAddSubjectFormOpen] = useState(false);
     const [isCreatingDeck, setIsCreatingDeck] = useState(false);
     const [isCreatingSubject, setIsCreatingSubject] = useState(false);
     const navigate = useNavigate();
 
+    // MUDANÇA 1: A função createDeck voltou ao normal.
+    // Ela agora só se preocupa com o modal de criação manual.
     const createDeck = async (idSubject, title) => {
         try {
             setIsCreatingDeck(true);
@@ -35,13 +40,34 @@ const Home = ({
                 title,
             });
             if (response.data) {
-                setIsAddDeckFormOpen(false);
+                setIsAddDeckFormOpen(false); // Apenas fecha o modal de formulário manual
                 loadData();
             }
         } catch (error) {
             console.log(error);
         } finally {
             setIsCreatingDeck(false);
+        }
+    };
+    
+   const generateDeckWithAI = async (idSubject, theme, quantity) => {
+        // Esta função será chamada pelo modal AddDeckWithAIForm
+        try {
+            // Reutilizamos o estado de loading para dar feedback visual ao usuário
+            setIsCreatingDeck(true); 
+            
+            // Esta é a chamada REAL para a sua nova rota no backend
+            await api.post("/ai/create-deck", { idSubject, theme, quantity });
+            
+            // Se a chamada for bem-sucedida, atualizamos os dados e fechamos o modal
+            loadData();
+            setIsAddDeckWithAIFormOpen(false);
+        } catch (error) {
+            console.error("Erro ao gerar deck com IA:", error);
+            // O ideal é passar uma função de erro para o modal exibir a mensagem
+            // Mas por enquanto, um alerta ou log é suficiente.
+        } finally {
+            setIsCreatingDeck(false); // Garante que o loading pare, mesmo se der erro
         }
     };
 
@@ -63,7 +89,6 @@ const Home = ({
         }
     };
 
-    // Função que alterna a seleção de uma matéria
     const handleSubjectSelection = (subject) => {
         setSelectedSubjects((prevSubjects) =>
             prevSubjects.includes(subject)
@@ -92,11 +117,19 @@ const Home = ({
                         <>
                             <div className={styles.titleContainer}>
                                 <h1>Meus decks</h1>
-                                <Button
-                                    onClick={() => setIsAddDeckFormOpen(true)}
-                                >
-                                    + Novo deck
-                                </Button>
+                                {/* A div dos botões foi mantida como no seu código */}
+                                <div className={styles.buttons}>
+                                    <Button
+                                        onClick={() => setIsAddDeckFormOpen(true)}
+                                    >
+                                        + Novo deck
+                                    </Button>
+                                    <Button
+                                        onClick={() => setIsAddDeckWithAIFormOpen(true)}
+                                    >
+                                        + Novo deck Por IA
+                                    </Button>
+                                </div>
                             </div>
 
                             <div className={styles.filterContainer}>
@@ -158,23 +191,16 @@ const Home = ({
                                 {decks
                                     .sort((a, b) => {
                                         const now = new Date();
-
-                                        // Trata decks sem data (vão para o final)
                                         if (!a.nextReview && !b.nextReview)
                                             return 0;
                                         if (!a.nextReview) return 1;
                                         if (!b.nextReview) return -1;
-
                                         const aDate = new Date(a.nextReview);
                                         const bDate = new Date(b.nextReview);
-
-                                        // Prioritiza revisões vencidas (datas passadas)
                                         if (aDate < now && bDate >= now)
                                             return -1;
                                         if (bDate < now && aDate >= now)
                                             return 1;
-
-                                        // Ordena pela data mais próxima (crescente)
                                         return aDate - bDate;
                                     })
                                     .map((deck) => (
@@ -204,6 +230,16 @@ const Home = ({
                     setIsAddSubjectFormOpen={setIsAddSubjectFormOpen}
                     subjects={subjects}
                     createDeck={createDeck}
+                />
+            )}
+            
+            {/* MUDANÇA 3: Adicionamos a renderização do novo modal aqui. */}
+            {isAddDeckWithAIFormOpen && (
+                <AddDeckWithAIForm
+                    setIsAddDeckWithAIFormOpen={setIsAddDeckWithAIFormOpen}
+                    subjects={subjects}
+                    generateDeckWithAI={generateDeckWithAI}
+                    loadData={loadData}
                 />
             )}
 
