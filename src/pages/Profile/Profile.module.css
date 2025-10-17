@@ -1,452 +1,348 @@
 .container {
-    display: flex;
-    min-height: 100vh;
+display: flex;
+min-height: 100vh;
 }
 
 .mainContainer {
-    width: 100%;
-    padding: 2rem 5%;
-    color: var(--text-primary-color);
-    background: var(--bg-color);
+width: 100%;
+padding: 2rem 5%;
+color: var(--text-primary-color);
+background: var(--bg-color);
 }
 
 .header {
-    margin-bottom: 2rem;
+margin-bottom: 2rem;
 }
 
 .header h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--text-primary-color);
-    margin-bottom: 0.5rem;
+font-size: 2rem;
+font-weight: bold;
+color: var(--text-primary-color);
+margin-bottom: 0.5rem;
 }
 
 .header p {
-    color: var(--text-secondary-color);
-    font-size: 1rem;
+color: var(--text-secondary-color);
+font-size: 1rem;
 }
 
 .profileForm,
 .subjectsSection {
-    background: var(--secondary-color);
-    padding: 2rem;
-    border: 2px solid var(--border-color);
-    border-radius: 0.2rem;
-    box-shadow: -4px 4px 0px var(--border-color);
-    margin-bottom: 2rem;
+background: var(--secondary-color);
+padding: 2rem;
+border: 2px solid var(--border-color);
+border-radius: 0.2rem;
+box-shadow: -4px 4px 0px var(--border-color);
+margin-bottom: 2rem;
 }
 
 .formSection {
-    margin-bottom: 2rem;
+margin-bottom: 2rem;
 }
 
 .formSection:last-of-type {
-    margin-bottom: 0;
+margin-bottom: 0;
 }
 
 .formSection h2,
 .dangerZone h2 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--text-primary-color);
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--border-color);
+font-size: 1.3rem;
+font-weight: 600;
+color: var(--text-primary-color);
+margin-bottom: 1.5rem;
+padding-bottom: 0.5rem;
+border-bottom: 2px solid var(--border-color);
 }
 
 .passwordNote {
-    color: var(--text-secondary-color);
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-    font-style: italic;
+color: var(--text-secondary-color);
+font-size: 0.9rem;
+margin-bottom: 1.5rem;
+font-style: italic;
 }
 
 .actions {
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 2rem;
+display: flex;
+justify-content: flex-start;
+margin-top: 2rem;
 }
 
 .editActions {
-    display: flex;
-    gap: 1rem;
+display: flex;
+gap: 1rem;
 }
 
 .errorMessage {
-    background-color: var(--incorrect-bg);
-    color: var(--error-color-text);
-    padding: 1rem;
-    border-radius: 0.2rem;
-    margin-bottom: 1.5rem;
-    border-left: 4px solid var(--error-color-text);
-    animation: fadeIn 0.3s ease-out;
+background-color: var(--incorrect-bg);
+color: var(--error-color-text);
+padding: 1rem;
+border-radius: 0.2rem;
+margin-bottom: 1.5rem;
+border-left: 4px solid var(--error-color-text);
+animation: fadeIn 0.3s ease-out;
 }
 
 .successMessage {
-    background-color: var(--correct-bg);
-    color: var(--correct-color);
-    padding: 1rem;
-    border-radius: 0.2rem;
-    margin-bottom: 1.5rem;
-    border-left: 4px solid var(--correct-color);
-    animation: fadeIn 0.3s ease-out;
+background-color: var(--correct-bg);
+color: var(--correct-color);
+padding: 1rem;
+border-radius: 0.2rem;
+margin-bottom: 1.5rem;
+border-left: 4px solid var(--correct-color);
+animation: fadeIn 0.3s ease-out;
 }
 
 .flexContainer {
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+margin-bottom: 1.5rem;
+padding-bottom: 0.5rem;
+border-bottom: 2px solid var(--border-color);
+display: flex;
+align-items: center;
+justify-content: space-between;
 }
 
 .flexContainer h2 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--text-primary-color);
+font-size: 1.3rem;
+font-weight: 600;
+color: var(--text-primary-color);
+margin-bottom: 0;
 }
 
 .subjectsSection {
-    background: var(--secondary-color);
-    padding: 2rem;
-    border: 2px solid var(--border-color);
-    border-radius: 0.2rem;
-    box-shadow: -4px 4px 0px var(--border-color);
-    margin-bottom: 2rem;
-}
-
-.flexContainer {
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.flexContainer h2 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--text-primary-color);
+background: var(--secondary-color);
+padding: 2rem;
+border: 2px solid var(--border-color);
+border-radius: 0.2rem;
+box-shadow: -4px 4px 0px var(--border-color);
+margin-bottom: 2rem;
 }
 
 .addSubject {
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-radius: 4px;
-    transition: all 0.2s ease;
+background: none;
+border: none;
+color: var(--primary-color);
+cursor: pointer;
+font-size: 0.9rem;
+font-weight: 500;
+border-radius: 4px;
+transition: all 0.2s ease;
 }
 
 .addSubject:hover {
-    color: var(--primary-color-hover);
-    text-decoration: underline;
+color: var(--primary-color-hover);
+text-decoration: underline;
 }
 
 .subjectsGrid {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+display: flex;
+flex-direction: column;
+gap: 0.5rem;
 }
 
 .subject {
-    background-color: var(--bg-color);
-    padding: 1rem;
-    border: 2px dashed var(--border-color);
-    border-radius: 0.2rem;
-    color: var(--text-primary-color);
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: 0.3s ease-in-out;
+background-color: var(--bg-color);
+padding: 1rem;
+border: 2px dashed var(--border-color);
+border-radius: 0.2rem;
+color: var(--text-primary-color);
+display: flex;
+align-items: center;
+gap: 0.6rem;
+font-weight: 500;
+font-size: 0.9rem;
+transition: 0.3s ease-in-out;
 }
 
 .subjectColor {
-    width: 1.8rem;
-    height: 1.8rem;
-    border-radius: 0.2rem;
-    border: 2px solid var(--border-color);
-    flex-shrink: 0;
+width: 1.8rem;
+height: 1.8rem;
+border-radius: 0.2rem;
+border: 2px solid var(--border-color);
+flex-shrink: 0;
 }
 
 .deleteBtn {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem;
-    border: none;
-    background: transparent;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: 0.4s ease-in-out;
-    color: var(--text-secondary-color);
-    border-radius: 0.2rem;
-    margin-left: auto;
+display: flex;
+align-items: center;
+padding: 0.5rem;
+border: none;
+background: transparent;
+font-size: 1.1rem;
+cursor: pointer;
+transition: 0.4s ease-in-out;
+color: var(--text-secondary-color);
+border-radius: 0.2rem;
+margin-left: auto;
 }
 
 .deleteBtn:hover {
-    color: var(--text-primary-color);
+color: var(--text-primary-color);
 }
 
 .dangerZone {
-    background: var(--secondary-color);
-    padding: 2rem;
-    border: 2px solid var(--border-color);
-    border-radius: 0.2rem;
-    box-shadow: -4px 4px 0px var(--border-color);
+background: var(--secondary-color);
+padding: 2rem;
+border: 2px solid var(--border-color);
+border-radius: 0.2rem;
+box-shadow: -4px 4px 0px var(--border-color);
 }
 
 .dangerZone h2 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--error-color-text);
-    margin-bottom: 1.5rem;
+font-size: 1.3rem;
+font-weight: 600;
+color: var(--error-color-text);
+margin-bottom: 1.5rem;
 }
 
 .dangerActions {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+display: flex;
+flex-direction: column;
+gap: 1.5rem;
 }
 
 .dangerItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem;
-    background: rgba(244, 67, 54, 0.05);
-    border-radius: 0.4rem;
-    border: 1px solid var(--error-color-text);
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 1.5rem;
+background: rgba(244, 67, 54, 0.05);
+border-radius: 0.4rem;
+border: 1px solid var(--error-color-text);
 }
 
 .dangerItem h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-primary-color);
-    margin-bottom: 0.5rem;
+font-size: 1.1rem;
+font-weight: 600;
+color: var(--text-primary-color);
+margin-bottom: 0.5rem;
 }
 
 .dangerItem p {
-    color: var(--text-secondary-color);
-    font-size: 0.9rem;
-    margin: 0;
+color: var(--text-secondary-color);
+font-size: 0.9rem;
+margin: 0;
 }
 
 .dangerItem button {
-    background-color: var(--error-color-text) !important;
+background-color: var(--error-color-text) !important;
 }
 
 .dangerItem button:hover {
-    background-color: var(--error-color) !important;
+background-color: var(--error-color) !important;
 }
 
 .statsSection {
-    background: var(--secondary-color);
-    padding: 2rem;
-    border: 2px solid var(--border-color);
-    border-radius: 0.2rem;
-    box-shadow: -4px 4px 0px var(--border-color);
-    margin-bottom: 2rem;
+background: var(--secondary-color);
+padding: 2rem;
+border: 2px solid var(--border-color);
+border-radius: 0.2rem;
+box-shadow: -4px 4px 0px var(--border-color);
+margin-bottom: 2rem;
 }
 
-.statsSection h2 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--text-primary-color);
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--border-color);
+.statsLink {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+color: var(--primary-color);
+text-decoration: none;
+font-weight: 500;
+font-size: 0.9rem;
+transition: color 0.2s;
 }
 
-.statsGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.statCard {
-    background: var(--bg-color);
-    border: 2px dashed var(--border-color);
-    border-radius: 0.4rem;
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    transition: 0.2s ease-in-out;
-}
-
-.statCard:hover > .statInfo h3 {
-    color: var(--text-primary-color);
-}
-
-.statIcon {
-    background: var(--primary-color);
-    color: var(--secondary-color);
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-}
-
-.statInfo h3 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-secondary-color);
-    margin-bottom: 0.25rem;
-    transition: 0.4s ease-in-out;
-}
-
-.statValue {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--text-primary-color);
-    margin: 0;
-    line-height: 1;
-}
-
-.lastStudy {
-    font-size: 1.2rem;
-}
-
-.statLabel {
-    font-size: 0.8rem;
-    color: var(--text-secondary-color);
+.statsLink:hover {
+color: var(--primary-color-hover);
 }
 
 .overviewStats {
-    display: flex;
-    gap: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
-    flex-wrap: wrap;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+gap: 1.5rem;
+padding-top: 1.5rem;
 }
 
 .overviewItem {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+display: flex;
+flex-direction: column;
+text-align: left;
 }
 
 .overviewLabel {
-    font-size: 0.9rem;
-    color: var(--text-secondary-color);
-    margin-bottom: 0.25rem;
+font-size: 0.9rem;
+color: var(--text-secondary-color);
+margin-bottom: 0.25rem;
 }
 
 .overviewValue {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--text-primary-color);
-}
-
-/* Responsividade para estatísticas */
-@media (max-width: 768px) {
-    .statsGrid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
-    }
-
-    .statCard {
-        padding: 1rem;
-        flex-direction: column;
-        text-align: center;
-        gap: 0.75rem;
-    }
-
-    .statIcon {
-        width: 2.5rem;
-        height: 2.5rem;
-        font-size: 1rem;
-    }
-
-    .statValue {
-        font-size: 1.3rem;
-    }
-
-    .overviewStats {
-        gap: 1rem;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .statsGrid {
-        grid-template-columns: 1fr;
-    }
-
-    .overviewStats {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    .overviewItem {
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
-    }
+font-size: 1.5rem;
+font-weight: bold;
+color: var(--text-primary-color);
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+from {
+opacity: 0;
+transform: translateY(-10px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
-    .mainContainer {
-        padding: 1rem 2rem;
-    }
+.mainContainer {
+padding: 1rem 2rem;
+}
 
-    .profileForm {
-        padding: 1.5rem;
-    }
+.profileForm {
+    padding: 1.5rem;
+}
 
-    .dangerItem {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
+.dangerItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
 
-    .dangerItem button {
-        align-self: flex-end;
-    }
+.dangerItem button {
+    align-self: flex-end;
+}
 
-    .editActions {
-        flex-direction: column;
-        width: 100%;
-    }
+.editActions {
+    flex-direction: column;
+    width: 100%;
+}
 
-    .editActions button {
-        width: 100%;
-    }
+.editActions button {
+    width: 100%;
+}
+
+.overviewStats {
+    gap: 1rem;
+}
+
 }
 
 @media (max-width: 480px) {
-    .mainContainer {
-        padding: 1rem;
-    }
+.mainContainer {
+padding: 1rem;
+}
 
-    .profileForm {
-        padding: 1rem;
-    }
+.profileForm {
+    padding: 1rem;
+}
 
-    .header h1 {
-        font-size: 1.5rem;
-    }
+.header h1 {
+    font-size: 1.5rem;
+}
+
+.flexContainer {
+   flex-direction: column;
+   align-items: flex-start;
+   gap: 0.5rem;
+}
+
 }
