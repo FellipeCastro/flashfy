@@ -645,17 +645,186 @@
     border-top: 1px solid var(--border-color);
     margin-top: -0.5rem;
 }
-
 @media (max-width: 768px) {
-    .faq h2 {
+    /* --- Header e Navegação --- */
+    .navbar {
+        flex-wrap: wrap;
+    }
+
+    .nav {
+        display: none;
+        width: 100%;
+        order: 3;
+        margin-top: 1rem;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem; /* Aumentado */
+        padding: 1.5rem 0;
+        background: var(--secondary-color);
+        border-top: 1px solid var(--border-color);
+        position: static;
+        transform: none;
+        left: auto;
+    }
+    
+    .nav a {
+        font-size: 1.4rem; /* Aumentado */
+    }
+
+    .authButtons {
+        display: none;
+        width: 100%;
+        order: 4;
+        flex-direction: column;
+        margin-top: 1rem;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+    
+    .mobileMenuButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem; /* Aumentado */
+    }
+    
+    .nav.active, .authButtons.active {
+        display: flex;
+    }
+
+    /* --- Seção Hero --- */
+    .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        height: 100vh;
+        padding-top: 6rem; /* Ajuste para não sobrepor header */
+    }
+
+    .heroContent h1 {
+        font-size: 3.2rem;
+    }
+
+    .heroContent p {
+        font-size: 2rem;
+        line-height: 1.6;
+    }
+
+    .heroButtons {
+        justify-content: center;
+        transform: scale(1.2); /* Botões maiores */
+    }
+
+    /* --- Flashcard Demo --- */
+    .flashcard {
+        width: 400px;
+        height: 300px;
+    }
+
+    .flashcard h3 {
         font-size: 2rem;
     }
+
+    .flashcard p {
+        font-size: 2rem;
+    }
+
+    /* --- Seções de Conteúdo (Features, HowItWorks, Testimonials) --- */
+    .features, .howItWorks, .testimonials {
+        padding: 4rem 0;
+    }
+    
+    .features h2,
+    .howItWorks h2,
+    .testimonials h2 {
+        font-size: 3rem; /* Aumentado */
+    }
+
+    .featureCard h3, .step h3 {
+        font-size: 1.8rem; /* Aumentado */
+    }
+
+    .featureCard p, .step p, .testimonialContent p {
+        font-size: 1.6rem; /* Aumentado */
+        line-height: 1.6;
+    }
+
+    .testimonialAuthor h4 {
+        font-size: 1.5rem;
+    }
+    .testimonialAuthor span {
+        font-size: 1.5rem;
+    }
+
+
+    /* --- Seção CTA (Call to Action) --- */
+    .cta h2 {
+        font-size: 2.5rem; /* Aumentado */
+    }
+    .cta p {
+        font-size: 1.8rem; /* Aumentado */
+    }
+    /* --- Seções de Conteúdo (Features, HowItWorks, Testimonials) --- */
+    .features, .howItWorks, .testimonials, .faq {
+        padding: 4rem 1.5rem;
+    }
+    
+    .features h2,
+    .howItWorks h2,
+    .testimonials h2,
+    .faq h2 {
+        font-size: 2.5rem; /* Aplicando seu tamanho */
+    }
+
+    /* ... (outros estilos) ... */
+
+    /* --- Seção FAQ --- */
     .faqQuestion {
-        font-size: 1rem;
+        font-size: 1.6rem;
         padding: 1rem;
     }
+
     .faqAnswer {
         padding: 0 1rem 1rem;
-        font-size: 0.9rem;
+        font-size: 1.5rem;
     }
+    /* --- Rodapé --- */
+    .footerContent {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+    }
+    
+    .footerBrand {
+        align-items: center;
+    }
+
+    .footerLinks {
+        grid-template-columns: 1fr; /* Alterado para 1 coluna */
+        gap: 2rem;
+    }
+
+    .footerSection h4 {
+        font-size: 1.8rem; /* Aumentado */
+    }
+
+    .footerSection a {
+        font-size: 1.4rem; /* Aumentado */
+    }
+    
+    .footerBottom p {
+        font-size: 1.1rem;
+    }
+}
+@media (max-width: 480px) {
+     .flashcard {
+        width: 300px;
+        height: 250px;
+    }
+   .faqQuestion {
+        font-size: 1.4rem;
+        padding: 0.8rem;
+    }
+
 }

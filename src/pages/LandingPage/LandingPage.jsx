@@ -96,10 +96,6 @@ const LandingPage = () => {
     // NOVO: Dados para a seção de FAQ
     const faqData = [
         {
-            question: "O FlashFy é gratuito?",
-            answer: "Sim! O FlashFy oferece um plano gratuito completo com todas as funcionalidades essenciais. No futuro, poderemos oferecer planos premium com recursos avançados, mas o núcleo da plataforma permanecerá acessível a todos.",
-        },
-        {
             question: "Como funciona a 'repetição espaçada'?",
             answer: "É um método de aprendizado cientificamente comprovado. Nosso algoritmo calcula o momento exato em que você está prestes a esquecer uma informação e agenda uma revisão, fortalecendo sua memória de longo prazo de forma muito mais eficiente do que estudar aleatoriamente.",
         },
