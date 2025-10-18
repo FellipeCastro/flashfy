@@ -1,60 +1,60 @@
 # FlashFy
 
-FlashFy is an intelligent flashcard application designed to optimize your studies using spaced repetition and Artificial Intelligence.
+FlashFy é um aplicativo de flashcards inteligente projetado para otimizar seus estudos usando repetição espaçada e Inteligência Artificial.
 
 ![FlashFy](https://raw.githubusercontent.com/fellipecastro/flashfy/main/src/assets/logo.png)
 
-## 🚀 Features
+## 🚀 Funcionalidades
 
-* **Intelligent Flashcards:** Utilizes a spaced repetition system to maximize knowledge retention
-* **Integrated AI:** Automatically generates questions and answers with our AI
-* **Progress Tracking:** Detailed metrics to show your evolution in studies
+* **Flashcards Inteligentes:** Utiliza um sistema de repetição espaçada para maximizar a retenção de conhecimento
+* **IA Integrada:** Gera automaticamente perguntas e respostas com nossa IA
+* **Acompanhamento de Progresso:** Métricas detalhadas para mostrar sua evolução nos estudos
 
-## 💻 Technologies Used
+## 💻 Tecnologias Utilizadas
 
 * **Frontend:** React, Vite
-* **Styling:** CSS Modules
-* **API Communication:** Axios
+* **Estilização:** CSS Modules
+* **Comunicação com API:** Axios
 * **Linting:** ESLint
 
-## ⚙ Getting Started
+## ⚙ Começando
 
-### Prerequisites
+### Pré-requisitos
 
-* Node.js (v18.0.0 or higher)
-* npm (v8.0.0 or higher)
+* Node.js (v18.0.0 ou superior)
+* npm (v8.0.0 ou superior)
 
-### Installation and Setup
+### Instalação e Configuração
 
-1. Clone the repository:
+1. Clone o repositório:
 ```bash
 git clone https://github.com/fellipecastro/flashfy.git
 ```
 
-2. Navigate to the project directory:
+2. Acesse o diretório do projeto:
 ```bash
 cd flashfy
 ```
 
-3. Install the dependencies:
+3. Instale as dependências:
 ```bash
 npm install
 ```
 
-4. Start the development server:
+4. Inicie o servidor de desenvolvimento:
 ```bash
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`.
+O aplicativo estará disponível em `http://localhost:5173`.
 
-### Available Scripts
+### Scripts Disponíveis
 
-* `npm run dev`: Starts the development server
-* `npm run build`: Builds the application for production
-* `npm run lint`: Lints the code using ESLint
-* `npm run preview`: Serves the production build locally for preview
+* `npm run dev`: Inicia o servidor de desenvolvimento
+* `npm run build`: Constrói o aplicativo para produção
+* `npm run lint`: Executa análise de código usando ESLint
+* `npm run preview`: Serve a build de produção localmente para preview
 
-## 📄 License
+## 📄 Licença
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+Este projeto está licenciado sob a Licença MIT. Veja o arquivo LICENSE para mais detalhes.
