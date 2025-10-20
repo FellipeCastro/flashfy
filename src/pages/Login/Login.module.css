@@ -222,9 +222,13 @@
 }
 
 /* Responsividade */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .loginCard {
-        padding: 1.8rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100vw;
+        height: 40vh;
     }
 
     .rememberForgot {

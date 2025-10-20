@@ -210,7 +210,7 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
         try {
             setIsLoading(true);
-            const response = await api.post("/ai-questions", {
+            const response = await api.post("/ai/questions", {
                 theme: formData.theme,
                 difficulty: formData.difficulty,
                 quantity: formData.quantity,

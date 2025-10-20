@@ -16,7 +16,11 @@
     justify-content: space-between;
     margin-bottom: 1.2rem;
 }
-
+.buttons    {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
 .columnContainer {
     display: flex;
     flex-direction: column;
