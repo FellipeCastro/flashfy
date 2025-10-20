@@ -30,8 +30,6 @@ const Home = ({
     const [isCreatingSubject, setIsCreatingSubject] = useState(false);
     const navigate = useNavigate();
 
-    // MUDANÇA 1: A função createDeck voltou ao normal.
-    // Ela agora só se preocupa com o modal de criação manual.
     const createDeck = async (idSubject, title) => {
         try {
             setIsCreatingDeck(true);
@@ -40,7 +38,7 @@ const Home = ({
                 title,
             });
             if (response.data) {
-                setIsAddDeckFormOpen(false); // Apenas fecha o modal de formulário manual
+                setIsAddDeckFormOpen(false); 
                 loadData();
             }
         } catch (error) {
@@ -51,23 +49,17 @@ const Home = ({
     };
     
    const generateDeckWithAI = async (idSubject, theme, quantity) => {
-        // Esta função será chamada pelo modal AddDeckWithAIForm
         try {
-            // Reutilizamos o estado de loading para dar feedback visual ao usuário
             setIsCreatingDeck(true); 
             
-            // Esta é a chamada REAL para a sua nova rota no backend
             await api.post("/ai/create-deck", { idSubject, theme, quantity });
             
-            // Se a chamada for bem-sucedida, atualizamos os dados e fechamos o modal
             loadData();
             setIsAddDeckWithAIFormOpen(false);
         } catch (error) {
             console.error("Erro ao gerar deck com IA:", error);
-            // O ideal é passar uma função de erro para o modal exibir a mensagem
-            // Mas por enquanto, um alerta ou log é suficiente.
         } finally {
-            setIsCreatingDeck(false); // Garante que o loading pare, mesmo se der erro
+            setIsCreatingDeck(false); 
         }
     };
 
@@ -117,17 +109,17 @@ const Home = ({
                         <>
                             <div className={styles.titleContainer}>
                                 <h1>Meus decks</h1>
-                                {/* A div dos botões foi mantida como no seu código */}
                                 <div className={styles.buttons}>
+                                    <Button
+                                        onClick={() => setIsAddDeckWithAIFormOpen(true)}
+                                        secondary
+                                    >
+                                        + Deck Por IA
+                                    </Button>
                                     <Button
                                         onClick={() => setIsAddDeckFormOpen(true)}
                                     >
                                         + Novo deck
-                                    </Button>
-                                    <Button
-                                        onClick={() => setIsAddDeckWithAIFormOpen(true)}
-                                    >
-                                        + Novo deck Por IA
                                     </Button>
                                 </div>
                             </div>
@@ -233,7 +225,6 @@ const Home = ({
                 />
             )}
             
-            {/* MUDANÇA 3: Adicionamos a renderização do novo modal aqui. */}
             {isAddDeckWithAIFormOpen && (
                 <AddDeckWithAIForm
                     setIsAddDeckWithAIFormOpen={setIsAddDeckWithAIFormOpen}

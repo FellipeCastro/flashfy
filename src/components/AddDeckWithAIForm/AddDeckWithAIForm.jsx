@@ -1,21 +1,18 @@
-// src/components/AddDeckWithAIForm/AddDeckWithAIForm.jsx
-
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
-import Loading from "../Loading/Loading"; // Vamos precisar do Loading
-import styles from "./AddDeckWithAIForm.module.css"; // Use o seu CSS novo/copiado
+import Loading from "../Loading/Loading"; 
+import styles from "./AddDeckWithAIForm.module.css"; 
 
-// MUDANÇA: Renomeie o componente e ajuste as props que ele recebe
 const AddDeckWithAIForm = ({
     setIsAddDeckWithAIFormOpen,
     subjects,
-    generateDeckWithAI, // Recebe a nova função da Home
+    generateDeckWithAI, 
     loadData,
 }) => {
     const [idSubject, setIdSubject] = useState("");
     const [theme, setTheme] = useState("");
-    const [quantity, setQuantity] = useState(5); // Valor inicial padrão
+    const [quantity, setQuantity] = useState(5); 
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState({
         idSubject: "",
@@ -23,7 +20,6 @@ const AddDeckWithAIForm = ({
         main: "",
     });
 
-    // MUDANÇA: Validar 'theme' em vez de 'title'
     const validateForm = () => {
         const newErrors = {
             idSubject: "",
@@ -50,7 +46,6 @@ const AddDeckWithAIForm = ({
         return isValid;
     };
 
-    // MUDANÇA: Lidar com os novos inputs 'theme' e 'quantity'
     const handleInputChange = (field, value) => {
         if (field === "idSubject") {
             setIdSubject(value);
@@ -69,7 +64,6 @@ const AddDeckWithAIForm = ({
         }
     };
 
-    // MUDANÇA: A lógica de submissão agora chama a IA
     const onSubmit = async (e) => {
         e.preventDefault();
         
@@ -98,7 +92,6 @@ const AddDeckWithAIForm = ({
 
     return (
         <>
-            {/* Se estiver carregando, mostra o spinner */}
             {isLoading && <Loading />} 
             <div className={styles.fade} onClick={closeModal}></div>
             <div className={styles.formContainer}>
@@ -115,7 +108,6 @@ const AddDeckWithAIForm = ({
                     onSubmit={onSubmit}
                     className={styles.form}
                 >
-                    {/* CAMPO DE TEMA */}
                     <div className={styles.inputContainer}>
                         <label htmlFor="theme">Qual é o tema para a IA?</label>
                         <input
@@ -136,7 +128,6 @@ const AddDeckWithAIForm = ({
                         )}
                     </div>
 
-                    {/* CAMPO DE MATÉRIA */}
                     <div className={styles.inputContainer}>
                         <label htmlFor="subject">Associar à matéria</label>
                         <select
@@ -162,7 +153,6 @@ const AddDeckWithAIForm = ({
                         )}
                     </div>
 
-                    {/* CAMPO DE QUANTIDADE */}
                     <div className={styles.inputContainer}>
                         <label htmlFor="quantity">Quantidade de Cards</label>
                         <select
@@ -188,7 +178,7 @@ const AddDeckWithAIForm = ({
                     )}
 
                     <Button type="submit" disabled={isLoading}>
-                        {isLoading ? 'Gerando...' : 'Gerar Deck'}
+                        Gerar Deck
                     </Button>
                 </form>
             </div>
