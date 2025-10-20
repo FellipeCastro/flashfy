@@ -176,7 +176,7 @@ const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
                         </div>
                     )}
 
-                    <Button type="submit">Criar Card</Button>
+                    <Button type="submit">+ Criar Card</Button>
                 </form>
             </div>
         </>

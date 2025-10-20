@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { BsStars } from 'react-icons/bs';
 import Button from "../Button/Button";
 import Loading from "../Loading/Loading"; 
 import styles from "./AddDeckWithAIForm.module.css"; 
 
 const AddDeckWithAIForm = ({
     setIsAddDeckWithAIFormOpen,
+    setIsAddSubjectFormOpen,
     subjects,
     generateDeckWithAI, 
     loadData,
@@ -71,19 +73,23 @@ const AddDeckWithAIForm = ({
             return;
         }
 
-        setIsLoading(true); // Ativa o loading
+        setIsLoading(true); 
         try {
-            // Chama a função que veio da Home para se comunicar com a API
             await generateDeckWithAI(idSubject, theme, quantity);
             
-            loadData(); // Atualiza os decks na página principal
-            setIsAddDeckWithAIFormOpen(false); // Fecha o modal com sucesso
+            loadData(); 
+            setIsAddDeckWithAIFormOpen(false);
         } catch (error) {
             console.error("Erro ao gerar deck com IA:", error);
             setErrorMessage({ main: "Ocorreu um erro ao gerar o deck. Tente novamente." });
         } finally {
-            setIsLoading(false); // Desativa o loading
+            setIsLoading(false); 
         }
+    };
+
+    const openAddSubjectForm = () => {
+        setIsAddDeckWithAIFormOpen(false);
+        setIsAddSubjectFormOpen(true);
     };
 
     const closeModal = () => {
@@ -109,7 +115,7 @@ const AddDeckWithAIForm = ({
                     className={styles.form}
                 >
                     <div className={styles.inputContainer}>
-                        <label htmlFor="theme">Qual é o tema para a IA?</label>
+                        <label htmlFor="theme">Tema</label>
                         <input
                             type="text"
                             name="theme"
@@ -129,7 +135,16 @@ const AddDeckWithAIForm = ({
                     </div>
 
                     <div className={styles.inputContainer}>
-                        <label htmlFor="subject">Associar à matéria</label>
+                        <div className={styles.addSubjectContainer}>
+                            <label htmlFor="subject">Matéria</label>
+                            <button
+                                type="button"
+                                className={styles.addSubject}
+                                onClick={openAddSubjectForm}
+                            >
+                                Adicionar matéria
+                            </button>
+                        </div>
                         <select
                             name="subject"
                             id="subject"
@@ -154,7 +169,7 @@ const AddDeckWithAIForm = ({
                     </div>
 
                     <div className={styles.inputContainer}>
-                        <label htmlFor="quantity">Quantidade de Cards</label>
+                        <label htmlFor="quantity">Quantidade</label>
                         <select
                             name="quantity"
                             id="quantity"
@@ -178,7 +193,7 @@ const AddDeckWithAIForm = ({
                     )}
 
                     <Button type="submit" disabled={isLoading}>
-                        Gerar Deck
+                        <BsStars /> Gerar Deck
                     </Button>
                 </form>
             </div>

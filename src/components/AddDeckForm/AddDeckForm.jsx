@@ -110,6 +110,28 @@ const AddDeckForm = ({
                     className={styles.form}
                 >
                     <div className={styles.inputContainer}>
+                        <label htmlFor="title">Título</label>
+                        <input
+                            type="text"
+                            name="title"
+                            id="title"
+                            placeholder="Digite o título do deck aqui"
+                            onChange={(e) =>
+                                handleInputChange("title", e.target.value)
+                            }
+                            value={title}
+                            className={
+                                errorMessage.title ? styles.inputError : ""
+                            }
+                        />
+                        {errorMessage.title && (
+                            <span className={styles.fieldError}>
+                                {errorMessage.title}
+                            </span>
+                        )}
+                    </div>
+
+                    <div className={styles.inputContainer}>
                         <div className={styles.addSubjectContainer}>
                             <label htmlFor="subject">Matéria</label>
                             <button
@@ -150,28 +172,6 @@ const AddDeckForm = ({
                         )}
                     </div>
 
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="title">Título</label>
-                        <input
-                            type="text"
-                            name="title"
-                            id="title"
-                            placeholder="Digite o título do deck aqui"
-                            onChange={(e) =>
-                                handleInputChange("title", e.target.value)
-                            }
-                            value={title}
-                            className={
-                                errorMessage.title ? styles.inputError : ""
-                            }
-                        />
-                        {errorMessage.title && (
-                            <span className={styles.fieldError}>
-                                {errorMessage.title}
-                            </span>
-                        )}
-                    </div>
-
                     {errorMessage.main && (
                         <div className={styles.errorContainer}>
                             <div className={styles.errorText}>
@@ -180,7 +180,7 @@ const AddDeckForm = ({
                         </div>
                     )}
 
-                    <Button type="submit">Criar Deck</Button>
+                    <Button type="submit">+ Criar Deck</Button>
                 </form>
             </div>
         </>

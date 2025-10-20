@@ -4,7 +4,6 @@ import Button from "../Button/Button";
 import styles from "./AddSubjectForm.module.css";
 
 const AddSubjectForm = ({
-    setIsAddDeckFormOpen,
     setIsAddSubjectFormOpen,
     createSubject,
 }) => {
@@ -100,7 +99,6 @@ const AddSubjectForm = ({
 
     const closeModal = () => {
         setIsAddSubjectFormOpen(false);
-        setIsAddDeckFormOpen ? setIsAddDeckFormOpen(true) : null;
     };
 
     return (

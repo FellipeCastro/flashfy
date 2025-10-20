@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { BsStars } from 'react-icons/bs';
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
@@ -114,7 +115,7 @@ const Home = ({
                                         onClick={() => setIsAddDeckWithAIFormOpen(true)}
                                         secondary
                                     >
-                                        + Deck Por IA
+                                        <BsStars /> Deck Por IA
                                     </Button>
                                     <Button
                                         onClick={() => setIsAddDeckFormOpen(true)}
@@ -228,6 +229,7 @@ const Home = ({
             {isAddDeckWithAIFormOpen && (
                 <AddDeckWithAIForm
                     setIsAddDeckWithAIFormOpen={setIsAddDeckWithAIFormOpen}
+                    setIsAddSubjectFormOpen={setIsAddSubjectFormOpen}
                     subjects={subjects}
                     generateDeckWithAI={generateDeckWithAI}
                     loadData={loadData}
