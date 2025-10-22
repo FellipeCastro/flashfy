@@ -638,7 +638,7 @@
     padding: 1rem 1.5rem;
     color: var(--text-secondary-color);
     line-height: 1.7;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px dashed var(--border-color);
 }
 
 @media (max-width: 768px) {
