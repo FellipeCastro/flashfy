@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 import FormField from "../../components/Form/FormField";
 import api from "../../constants/api.js";
 import styles from "./Register.module.css";
@@ -14,6 +16,7 @@ const Register = ({ loadData }) => {
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [isGoogleLoading, setIsGoogleLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -107,6 +110,43 @@ const Register = ({ loadData }) => {
         }
     };
 
+    const handleGoogleSuccess = async (credentialResponse) => {
+        setIsGoogleLoading(true);
+        try {
+            const decoded = jwtDecode(credentialResponse.credential);
+
+            const response = await api.post("/users/google-auth", {
+                token: credentialResponse.credential,
+                email: decoded.email,
+                name: decoded.name,
+                googleId: decoded.sub,
+            });
+
+            const result = response.data;
+            localStorage.setItem("authToken", result.token);
+            localStorage.setItem("idUser", result.idUser);
+
+            await loadData();
+            navigate("/home");
+        } catch (error) {
+            const errorMessage =
+                error.response?.data?.error ||
+                "Erro ao fazer login com Google. Tente novamente!";
+
+            setErrors({
+                general: errorMessage,
+            });
+        } finally {
+            setIsGoogleLoading(false);
+        }
+    };
+
+    const handleGoogleError = () => {
+        setErrors({
+            general: "Falha no login com Google. Tente novamente.",
+        });
+    };
+
     const handleBack = () => {
         navigate("/");
     };
@@ -192,6 +232,23 @@ const Register = ({ loadData }) => {
 
                 <div className={styles.divider}>
                     <span>ou</span>
+                </div>
+
+                <div className={styles.googleLoginContainer}>
+                    <GoogleLogin
+                        onSuccess={handleGoogleSuccess}
+                        onError={handleGoogleError}
+                        disabled={isLoading || isGoogleLoading}
+                        locale="pt_BR"
+                        shape="rectangular"
+                        size="large"
+                        text="continue_with"
+                    />
+                    {isGoogleLoading && (
+                        <div className={styles.googleLoading}>
+                            <p id="loader">Entrando com Google...</p>
+                        </div>
+                    )}
                 </div>
 
                 <div className={styles.loginLink}>

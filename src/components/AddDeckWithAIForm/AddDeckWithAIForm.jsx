@@ -115,7 +115,7 @@ const AddDeckWithAIForm = ({
                     className={styles.form}
                 >
                     <div className={styles.inputContainer}>
-                        <label htmlFor="theme">Tema</label>
+                        <label htmlFor="theme">Título</label>
                         <input
                             type="text"
                             name="theme"

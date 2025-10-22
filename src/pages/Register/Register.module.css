@@ -158,6 +158,15 @@
     text-decoration: underline;
 }
 
+.googleLoginContainer {
+    margin-bottom: 1rem;
+}
+
+.googleLoading {
+    text-align: center;
+    margin-top: 1rem;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

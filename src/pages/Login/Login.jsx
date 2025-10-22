@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode"; // Importante: para decodificar o token
 import FormField from "../../components/Form/FormField";
 import api from "../../constants/api.js";
 import styles from "./Login.module.css";
@@ -12,6 +14,7 @@ const Login = ({ loadData }) => {
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [isGoogleLoading, setIsGoogleLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -61,7 +64,7 @@ const Login = ({ loadData }) => {
         if (!validateForm()) return;
 
         setIsLoading(true);
-        setErrors({}); // Limpar erros anteriores
+        setErrors({});
 
         try {
             const response = await api.post("/users/login", {
@@ -73,10 +76,7 @@ const Login = ({ loadData }) => {
             localStorage.setItem("authToken", result.token);
             localStorage.setItem("idUser", result.idUser);
 
-            // Carregar dados do usuário
             await loadData();
-
-            // Navegar apenas após sucesso
             navigate("/home");
         } catch (error) {
             const errorMessage =
@@ -90,6 +90,43 @@ const Login = ({ loadData }) => {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const handleGoogleSuccess = async (credentialResponse) => {
+        setIsGoogleLoading(true);
+        try {
+            const decoded = jwtDecode(credentialResponse.credential);
+
+            const response = await api.post("/users/google-auth", {
+                token: credentialResponse.credential,
+                email: decoded.email,
+                name: decoded.name,
+                googleId: decoded.sub,
+            });
+
+            const result = response.data;
+            localStorage.setItem("authToken", result.token);
+            localStorage.setItem("idUser", result.idUser);
+
+            await loadData();
+            navigate("/home");
+        } catch (error) {
+            const errorMessage =
+                error.response?.data?.error ||
+                "Erro ao fazer login com Google. Tente novamente!";
+
+            setErrors({
+                general: errorMessage,
+            });
+        } finally {
+            setIsGoogleLoading(false);
+        }
+    };
+
+    const handleGoogleError = () => {
+        setErrors({
+            general: "Falha no login com Google. Tente novamente.",
+        });
     };
 
     const handleBack = () => {
@@ -123,6 +160,7 @@ const Login = ({ loadData }) => {
                         onChange={handleChange}
                         placeholder="seu@email.com"
                         error={errors.email}
+                        disabled={isLoading || isGoogleLoading}
                     />
 
                     <FormField
@@ -134,19 +172,23 @@ const Login = ({ loadData }) => {
                         placeholder="Sua senha"
                         error={errors.password}
                         showPasswordToggle={true}
+                        disabled={isLoading || isGoogleLoading}
                     />
 
                     <div className={styles.rememberForgot}>
                         <label className={styles.rememberMe}>
-                            <input type="checkbox" />
+                            <input
+                                type="checkbox"
+                                disabled={isLoading || isGoogleLoading}
+                            />
                             Lembrar-me
                         </label>
-                        <a
-                            href="/forgot-password"
+                        <Link
+                            to="/forgot-password"
                             className={styles.forgotPassword}
                         >
                             Esqueci minha senha
-                        </a>
+                        </Link>
                     </div>
 
                     <button
@@ -154,7 +196,7 @@ const Login = ({ loadData }) => {
                         className={`${styles.loginButton} ${
                             isLoading ? styles.loading : ""
                         }`}
-                        disabled={isLoading}
+                        disabled={isLoading || isGoogleLoading}
                     >
                         {isLoading ? (
                             <>
@@ -169,6 +211,23 @@ const Login = ({ loadData }) => {
 
                 <div className={styles.divider}>
                     <span>ou</span>
+                </div>
+
+                <div className={styles.googleLoginContainer}>
+                    <GoogleLogin
+                        onSuccess={handleGoogleSuccess}
+                        onError={handleGoogleError}
+                        disabled={isLoading || isGoogleLoading}
+                        locale="pt_BR"
+                        shape="rectangular"
+                        size="large"
+                        text="continue_with"
+                    />
+                    {isGoogleLoading && (
+                        <div className={styles.googleLoading}>
+                            <p id="loader">Entrando com Google...</p>
+                        </div>
+                    )}
                 </div>
 
                 <div className={styles.registerLink}>
