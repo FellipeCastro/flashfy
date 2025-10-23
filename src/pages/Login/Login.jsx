@@ -219,8 +219,9 @@ const Login = ({ loadData }) => {
                         onError={handleGoogleError}
                         disabled={isLoading || isGoogleLoading}
                         locale="pt_BR"
-                        shape="rectangular"
+                        shape="retangular"
                         size="large"
+                        width="400"
                         text="continue_with"
                     />
                     {isGoogleLoading && (

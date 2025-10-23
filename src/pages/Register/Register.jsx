@@ -242,6 +242,7 @@ const Register = ({ loadData }) => {
                         locale="pt_BR"
                         shape="rectangular"
                         size="large"
+                        width="400"
                         text="continue_with"
                     />
                     {isGoogleLoading && (
