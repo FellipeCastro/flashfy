@@ -824,3 +824,47 @@
     }
 
 }
+/* Add this to LandingPage.module.css */
+.themeToggleButton {
+    background: none;
+    border: none;
+    color: var(--text-primary-color); /* Use theme color */
+    cursor: pointer;
+    font-size: 1.5rem; /* Adjust size as needed */
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s;
+    margin-left: auto; /* Push it towards the right before auth buttons */
+    margin-right: 1rem; /* Space before auth buttons */
+}
+
+.themeToggleButton:hover {
+    background-color: var(--shadow-color); /* Subtle hover effect */
+}
+
+/* Ensure it's placed correctly relative to mobile menu */
+@media (max-width: 768px) {
+    .themeToggleButton {
+         margin-left: 0;
+         margin-right: 1rem; /* Space before mobile menu button */
+         order: 1; /* Position before mobile menu button */
+    }
+     .mobileMenuButton {
+        order: 2; /* Ensure mobile menu button is last */
+    }
+     .authButtons {
+        order: 4; /* Keep auth buttons last when menu is open */
+    }
+     .nav {
+        order: 3; /* Keep nav links after buttons when menu is open */
+    }
+}
+
+@media (min-width: 769px) {
+  .themeToggleButton {
+    order: 0; /* Default order on larger screens */
+  }
+}

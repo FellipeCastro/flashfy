@@ -10,18 +10,22 @@ import {
     FaTimes,
     FaBars,
     FaChevronDown,
+    FaSun, // Icon for light mode
+    FaMoon, // Icon for dark mode
 } from "react-icons/fa";
 import { useState } from "react";
 import styles from "./LandingPage.module.css";
 import Button from "../../components/Button/Button";
 import logo from "../../assets/logo.png";
 
-const LandingPage = () => {
+// Accept theme and toggleTheme props
+const LandingPage = ({ theme, toggleTheme }) => {
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const features = [
-        {
+        // ... (keep features array as is)
+         {
             icon: <FaBrain />,
             title: "Algoritmo de Repetição Espaçada",
             description:
@@ -48,6 +52,7 @@ const LandingPage = () => {
     ];
 
     const steps = [
+        // ... (keep steps array as is)
         {
             step: "1",
             title: "Criação Inteligente",
@@ -79,7 +84,8 @@ const LandingPage = () => {
     ];
 
     const testimonials = [
-        {
+        // ... (keep testimonials array as is)
+         {
             name: "Ana Silva",
             role: "Estudante de Medicina",
             text: "Reduzi 41% do tempo de estudo com a FlashFy e aumentei 47% minha performance nos exames. A IA para gerar decks de anatomia é incrível!",
@@ -97,7 +103,8 @@ const LandingPage = () => {
     ];
 
     const faqData = [
-        {
+        // ... (keep faqData array as is)
+         {
             question:
                 "Como a repetição espaçada aumenta minha retenção em 400%?",
             answer: "Nosso algoritmo baseado no método SuperMemo-2 identifica o momento exato antes do esquecimento e agenda revisões estratégicas. Estudos comprovam que esta técnica aumenta a retenção em até 400% comparado a métodos tradicionais, economizando 35% do seu tempo de estudo.",
@@ -133,7 +140,16 @@ const LandingPage = () => {
     const scrollToSection = (sectionId) => {
         const element = document.getElementById(sectionId);
         if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
+            // Adjust scroll position to account for fixed header height
+            const headerOffset = 70; // Adjust this value based on your header's actual height
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+             window.scrollTo({
+                 top: offsetPosition,
+                 behavior: "smooth"
+            });
+            // element.scrollIntoView({ behavior: "smooth" }); // Original behavior
         }
         setIsMenuOpen(false);
     };
@@ -155,7 +171,8 @@ const LandingPage = () => {
                             isMenuOpen ? styles.active : ""
                         }`}
                     >
-                        <a
+                        {/* ... nav links ... */}
+                         <a
                             href="#features"
                             onClick={(e) => {
                                 e.preventDefault();
@@ -182,7 +199,19 @@ const LandingPage = () => {
                         >
                             Depoimentos
                         </a>
+                         <a
+                            href="#faq"
+                            onClick={(e) => { e.preventDefault(); scrollToSection("faq"); }}
+                        >
+                            FAQ
+                        </a>
                     </nav>
+
+                     {/* Add Theme Toggle Button */}
+                     <button onClick={toggleTheme} className={styles.themeToggleButton} aria-label="Toggle dark mode">
+                        {theme === 'light' ? <FaMoon /> : <FaSun />}
+                    </button>
+
                     <div
                         className={`${styles.authButtons} ${
                             isMenuOpen ? styles.active : ""
@@ -203,7 +232,8 @@ const LandingPage = () => {
                 </div>
             </header>
 
-            <section className={styles.hero}>
+            {/* ... rest of the LandingPage component (Hero, Features, etc.) ... */}
+             <section className={styles.hero}>
                 <div className={styles.heroContent}>
                     <h1>Domine qualquer assunto com flashcards inteligentes</h1>
                     <p>
@@ -378,15 +408,23 @@ const LandingPage = () => {
                                 >
                                     Depoimentos
                                 </a>
+                                 <a
+                                    href="#faq"
+                                    onClick={(e) => { e.preventDefault(); scrollToSection("faq"); }}
+                                >
+                                    FAQ
+                                </a>
                             </div>
                             <div className={styles.footerSection}>
                                 <h4>Suporte</h4>
+                                {/* Use links placeholder ou reais */}
                                 <a href="#">Central de Ajuda</a>
                                 <a href="#">Contato</a>
                                 <a href="#">Política de Privacidade</a>
                             </div>
                             <div className={styles.footerSection}>
                                 <h4>Comunidade</h4>
+                                {/* Use links placeholder ou reais */}
                                 <a href="#">Discord</a>
                                 <a href="#">Instagram</a>
                                 <a href="#">Twitter</a>
@@ -395,7 +433,7 @@ const LandingPage = () => {
                     </div>
                     <div className={styles.footerBottom}>
                         <p>
-                            &copy; 2025 FlashFy. Todos os direitos reservados.
+                            &copy; {new Date().getFullYear()} FlashFy. Todos os direitos reservados.
                         </p>
                     </div>
                 </div>

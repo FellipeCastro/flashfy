@@ -25,7 +25,80 @@
     --difficulty-hard: #f44336;
     --difficulty-hard-bg: rgba(244, 67, 54, 0.1);
     --difficulty-hard-light: #ffebee;
+
+    /* Light Theme Input */
+    --input-bg-color: #fafafa;
+    --input-focus-bg-color: #fff;
+    --input-text-color: var(--text-primary-color);
+    --input-placeholder-color: var(--text-secondary-color);
+    --input-border-color: var(--border-color);
+    --select-arrow-color: '%23666';
+
+    /* --- Dark Mode Variables --- */
+    --dark-secondary-color: #1e1e1e;
+    --dark-bg-color: #121212;
+    --dark-text-primary-color: #e0e0e0;
+    --dark-text-secondary-color: #a0a0a0;
+    --dark-border-color: rgba(255, 255, 255, 0.25);
+    --dark-shadow-color: rgba(255, 255, 255, 0.08);
+    --dark-input-bg: #2a2a2a;
+    --dark-input-focus-bg-color: #333333;
+    --dark-error-color: #5c1f1f;
+    --dark-error-color-text: #ff9e9e;
+    --dark-select-arrow-color: '%23a0a0a0';
 }
+
+/* --- Dark Mode Overrides --- */
+[data-theme='dark'] {
+    --secondary-color: var(--dark-secondary-color);
+    --bg-color: var(--dark-bg-color);
+    --text-primary-color: var(--dark-text-primary-color);
+    --text-secondary-color: var(--dark-text-secondary-color);
+    --border-color: var(--dark-border-color);
+    --shadow-color: var(--dark-shadow-color);
+    --error-color: var(--dark-error-color);
+    --error-color-text: var(--dark-error-color-text);
+
+    /* Input Overrides for Dark Mode */
+    --input-bg-color: var(--dark-input-bg);
+    --input-focus-bg-color: var(--dark-input-focus-bg-color);
+    --input-text-color: var(--dark-text-primary-color);
+    --input-placeholder-color: var(--dark-text-secondary-color);
+    --input-border-color: var(--dark-border-color);
+    --select-arrow-color: var(--dark-select-arrow-color);
+
+    /* Force input background/color/border in dark mode if needed */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    select {
+        background-color: var(--input-bg-color) !important;
+        color: var(--input-text-color) !important;
+        border-color: var(--input-border-color) !important;
+    }
+
+     input[type="color"] {
+        background-color: var(--input-bg-color) !important;
+        border-color: var(--input-border-color) !important;
+    }
+     input[type="color"]::-webkit-color-swatch {
+         border: 1px solid var(--border-color);
+    }
+     input[type="color"]::-moz-color-swatch {
+         border: 1px solid var(--border-color);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: var(--input-placeholder-color) !important;
+    }
+
+    select {
+       background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='var(--select-arrow-color)' d='m0 1 2 2 2-2z'/></svg>") !important;
+    }
+}
+/* --- End Dark Mode Overrides --- */
 
 * {
     margin: 0;
@@ -40,7 +113,87 @@ body {
     background: var(--bg-color);
     color: var(--text-primary-color);
     font-size: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* --- Base Input Styles using Variables (Applied Globally) --- */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    /* Dimensions and basic appearance */
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 0.2rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+    appearance: none; /* Important to reset browser defaults */
+
+    /* Colors and borders using variables */
+    background-color: var(--input-bg-color);
+    color: var(--input-text-color);
+    border: 1px solid var(--input-border-color);
+
+    /* Transitions */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Base style for color input */
+input[type="color"] {
+    min-width: 60px;
+    height: 50px;
+    border: 1px solid var(--input-border-color); /* Use variable */
+    border-radius: 0.2rem;
+    cursor: pointer;
+    background: var(--input-bg-color); /* Use variable */
+    padding: 0 !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    transition: all 0.3s ease;
+    vertical-align: middle;
+}
+input[type="color"]::-webkit-color-swatch,
+input[type="color"]::-moz-color-swatch {
+    border: none;
+    border-radius: 0.2rem;
+    padding: 0;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border: none;
+}
+
+
+/* Specific style for select dropdown arrow */
+select {
+    background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'><path fill='var(--select-arrow-color)' d='m0 1 2 2 2-2z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px;
+    padding-right: 2.5rem;
+}
+
+/* Placeholder styling */
+input::placeholder,
+textarea::placeholder {
+    color: var(--input-placeholder-color); /* Use variable */
+}
+
+/* Focus styles using variables */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus,
+input[type="color"]:focus {
+    outline: none;
+    border-color: var(--primary-color); /* Keep primary color for focus border */
+    box-shadow: 0 0 0 3px rgba(1, 165, 228, 0.1);
+    background-color: var(--input-focus-bg-color); /* Use focus variable */
+}
+/* --- End Base Input Styles --- */
 
 #loader {
     font-weight: bold;
@@ -49,62 +202,12 @@ body {
 }
 
 @keyframes colorChange {
-    0% {
-        color: lightgray;
-    }
-    50% {
-        color: gray;
-    }
-    100% {
-        color: lightgray;
-    }
+    0% { color: #d3d3d3; } /* lightgray */
+    50% { color: #808080; } /* gray */
+    100% { color: #d3d3d3; } /* lightgray */
 }
 
-/* 
-    xs: 0,
-    sm: 576px,
-    md: 768px,
-    lg: 992px,
-    xl: 1200px,
-    xxl: 1400px 
-*/
-
-/* Small devices (landscape phones, 576px and up) */
-/* @media (min-width: 576px) {
-    html,
-    body {
-        font-size: 10px;
-    }
-} */
-
-/* Medium devices (tablets, 768px and up) */
-/* @media (min-width: 768px) {
-    html,
-    body {
-        font-size: 10px;
-    }
-} */
-
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-    html,
-    body {
-        font-size: 12px;
-    }
-}
-
-/* X-Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-    html,
-    body {
-        font-size: 14px;
-    }
-}
-
-/* XX-Large devices (larger desktops, 1400px and up) */
-@media (min-width: 1400px) {
-    html,
-    body {
-        font-size: 16px;
-    }
-}
+/* Media Queries */
+@media (min-width: 992px) { html, body { font-size: 12px; } }
+@media (min-width: 1200px) { html, body { font-size: 14px; } }
+@media (min-width: 1400px) { html, body { font-size: 16px; } }

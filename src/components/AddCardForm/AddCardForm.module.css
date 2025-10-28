@@ -112,14 +112,12 @@ textarea {
     min-height: 100px;
     transition: all 0.3s ease;
     box-sizing: border-box;
-    background-color: #fafafa;
 }
 
 textarea:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(1, 165, 228, 0.1);
-    background-color: #fff;
 }
 
 .inputError {

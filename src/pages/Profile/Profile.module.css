@@ -450,3 +450,203 @@
         font-size: 1.5rem;
     }
 }
+/* src/pages/Profile/Profile.module.css */
+
+/* ... (todos os estilos existentes) ... */
+
+/* --- Estilos para a Seção de Aparência --- */
+.appearanceSection {
+    background: var(--secondary-color);
+    padding: 2rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.2rem;
+    box-shadow: -4px 4px 0px var(--border-color);
+    margin-bottom: 2rem; /* Espaçamento igual às outras seções */
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.appearanceSection h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.themeToggleItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0; /* Apenas padding vertical */
+}
+
+.themeToggleItem h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary-color);
+    margin-bottom: 0.3rem;
+    transition: color 0.3s ease;
+}
+
+.themeToggleItem p {
+    color: var(--text-secondary-color);
+    font-size: 0.9rem;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+/* Estilo específico para o botão de toggle no perfil */
+.themeToggleButtonProfile {
+    /* Reutiliza parte do estilo do Button mas com ajustes */
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    border-radius: 2rem;
+    padding: 0.8rem 1.5rem; /* Um pouco menor que o botão padrão */
+    text-decoration: none;
+    font-size: 0.9rem; /* Tamanho de fonte consistente */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem; /* Espaço entre ícone e texto */
+    min-width: 120px; /* Largura mínima para evitar quebra de texto */
+}
+
+.themeToggleButtonProfile:hover {
+    background: var(--primary-color-hover);
+}
+
+/* Oculta o texto em telas muito pequenas se necessário (opcional) */
+/*
+@media (max-width: 480px) {
+    .themeToggleText {
+        display: none;
+    }
+    .themeToggleButtonProfile {
+        padding: 0.8rem;
+        min-width: auto;
+    }
+}
+*/
+
+/* Adiciona estilos para .active e .inactive no ícone de fogo se não existirem */
+.fireIcon.active {
+     color: orange; /* Ou a cor desejada para ativo */
+}
+
+.fireIcon.inactive {
+     color: var(--text-secondary-color); /* Cor para inativo */
+}
+
+/* Mensagem caso não haja matérias */
+.noSubjectsMessage {
+    color: var(--text-secondary-color);
+    font-style: italic;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+/* Ajuste botão de excluir conta na Zona de Perigo */
+.deleteAccountButton {
+     background-color: var(--error-color-text) !important; /* Força cor vermelha */
+     border-color: var(--error-color-text) !important;
+     color: var(--secondary-color) !important;
+}
+
+.deleteAccountButton:hover {
+    background-color: var(--error-color) !important; /* Vermelho mais escuro no hover */
+     border-color: var(--error-color) !important;
+}
+
+
+/* Adiciona transições aos elementos que mudam de cor com o tema */
+.profileForm,
+.subjectsSection,
+.dangerZone,
+.statsSection,
+.statCard {
+     transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header h1,
+.header p,
+.formSection h2,
+.dangerZone h2, /* Adicionado */
+.statsSection h2, /* Adicionado */
+.subjectsSection h2, /* Adicionado */
+.statInfo h3,
+.statValue,
+.statLabel, /* Adicionado */
+.overviewLabel, /* Adicionado */
+.overviewValue, /* Adicionado */
+.subject strong, /* Adicionado */
+.dangerItem h3, /* Adicionado */
+.dangerItem p, /* Adicionado */
+.label, /* Label do FormField */
+.passwordNote, /* Adicionado */
+.addSubject, /* Adicionado */
+.deleteBtn, /* Adicionado */
+.backBtn, /* Adicionado nos forms de login/register */
+.loginHeader p, /* Adicionado */
+.registerHeader p, /* Adicionado */
+.rememberMe, /* Adicionado */
+.registerLink, /* Adicionado */
+.loginLink /* Adicionado */
+ {
+     transition: color 0.3s ease;
+}
+
+.profileForm,
+.subjectsSection,
+.dangerZone,
+.statsSection {
+    border: 2px solid var(--border-color);
+    box-shadow: -4px 4px 0px var(--border-color);
+}
+
+.formSection h2,
+.dangerZone h2,
+.statsSection h2,
+.subjectsSection h2, /* Adicionado */
+.flexContainer h2, /* Adicionado */
+.overviewStats /* Adicionado */
+ {
+    border-bottom-color: var(--border-color);
+     transition: border-color 0.3s ease;
+}
+.statCard,
+.subject /* Adicionado */
+ {
+    border: 2px dashed var(--border-color);
+     transition: border-color 0.3s ease;
+}
+
+.dangerItem {
+    border-color: var(--error-color-text); /* Manter borda de erro */
+     transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+[data-theme='dark'] .dangerItem {
+    border-color: var(--dark-error-color-text); /* Cor de erro escura */
+}
+
+.errorMessage,
+.successMessage {
+     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.errorMessage {
+    border-left-color: var(--error-color-text);
+}
+.successMessage {
+     border-left-color: var(--correct-color); /* Assumindo que --correct-color está definido */
+}
+[data-theme='dark'] .errorMessage {
+    border-left-color: var(--dark-error-color-text);
+}
+/* Adicione aqui a variável para --dark-correct-color se necessário e aplique */
+/* [data-theme='dark'] .successMessage { border-left-color: var(--dark-correct-color); } */
