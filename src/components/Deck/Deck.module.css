@@ -60,3 +60,68 @@
     align-items: center;
     justify-content: space-between;
 }
+@media (max-width: 768px) {
+    .deck {
+        padding: 1.5rem; /* Padding maior */
+        gap: 0.8rem; /* Mais espaço interno */
+    }
+
+    .subject {
+        font-size: 1.2rem; /* Tag maior */
+        padding: 0.4rem 0.8rem;
+    }
+
+    .deck h3 {
+        font-size: 1.4rem; /* Título maior */
+    }
+
+    .cards {
+        font-size: 1rem; /* Contador maior */
+    }
+
+     .toDo {
+        width: 1.8rem;
+        height: 1.8rem;
+        font-size: 0.8rem;
+        top: 0.6rem;
+        right: 0.6rem;
+     }
+
+    .nextReview {
+        font-size: 1rem; /* Revisão maior */
+        margin-top: 0.8rem;
+        padding-top: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+     .deck {
+        padding: 1.2rem; /* Ajusta padding para celular */
+        gap: 0.6rem;
+    }
+
+     .subject {
+        font-size: 0.8rem; /* Leve ajuste se necessário */
+        padding: 0.3rem 0.6rem;
+    }
+
+     .deck h3 {
+        font-size: 1.3rem; /* Título ainda grande */
+    }
+
+     .cards {
+        font-size: 0.9rem; /* Contador ajustado */
+    }
+
+    .toDo {
+        width: 1.7rem;
+        height: 1.7rem;
+        font-size: 0.75rem;
+    }
+
+    .nextReview {
+        font-size: 0.9rem; /* Revisão ajustada */
+        margin-top: 0.6rem;
+        padding-top: 0.6rem;
+    }
+}

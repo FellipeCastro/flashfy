@@ -15,11 +15,14 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1.2rem;
+    flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+    gap: 1rem; /* Adiciona espaço caso quebre linha */
 }
 .buttons    {
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    flex-wrap: wrap; /* Permite quebrar linha nos botões */
 }
 .columnContainer {
     display: flex;
@@ -52,8 +55,6 @@
     background: var(--bg-secondary-color);
     border-radius: 0.4rem;
     margin: 1rem 0;
-    /* border: 2px dashed var(--border-color); */
-
 }
 
 .illustration {
@@ -136,19 +137,117 @@
 
 .filterContainer button:hover,
 .active {
-    transform: translateY(-6px);
+    transform: translateY(-6px); /* Mantido efeito hover */
+    background-color: rgba(0, 0, 0, 0.05); /* Leve feedback visual no hover/ativo */
 }
 
+/* ===== AJUSTES PARA TELAS MENORES ===== */
 @media (max-width: 768px) {
     .mainContainer {
-        padding: 1rem 2rem;
+        padding: 1.5rem 1rem; /* Padding ajustado */
+    }
+
+    .titleContainer {
+        margin-bottom: 1.5rem; /* Mais espaço abaixo do título */
+    }
+
+    .titleContainer h1 {
+        font-size: 2.2rem; /* Título maior */
+    }
+
+    /* Ajusta tamanho dos botões principais */
+    .buttons button {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
     }
 
     .filterContainer {
-        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Botões de filtro maiores */
+        gap: 0.8rem 0.6rem; /* Mais espaçamento */
+        margin-bottom: 1.5rem; /* Mais espaço abaixo dos filtros */
+    }
+
+    .filterContainer button {
+        padding: 0.6rem; /* Padding maior nos botões de filtro */
+        font-size: 1rem; /* Fonte maior */
+        border-width: 2px; /* Borda mais visível */
+    }
+
+    /* Ajusta layout dos decks */
+    .decksContainer {
+        grid-template-columns: 1fr; /* Uma coluna em tablet/mobile */
+        gap: 1.5rem; /* Mais espaço entre decks */
+    }
+
+    /* Estado 'sem decks' */
+     .noDecks {
+        padding: 4rem 1.5rem; /* Mais padding */
+    }
+
+    .title {
+        font-size: 1.8rem; /* Título maior */
+    }
+
+    .msg {
+        font-size: 1.2rem; /* Mensagem maior */
+        margin-bottom: 1.5rem;
+    }
+
+    /* Botão 'Criar Deck' no estado vazio */
+     .noDecks button {
+        padding: 1.2rem 2rem;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+     .mainContainer {
+        padding: 1rem 0.8rem; /* Padding menor */
+    }
+
+     .titleContainer h1 {
+        font-size: 2rem; /* Título ligeiramente menor que tablet */
+    }
+
+    .buttons {
+        gap: 0.5rem; /* Menos gap entre botões */
+    }
+
+    /* Botões principais menores que tablet, mas maiores que original */
+     .buttons button {
+        padding: 0.9rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .filterContainer {
+         grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); /* Volta a permitir mais botões por linha */
+        gap: 0.6rem 0.4rem;
+    }
+
+     .filterContainer button {
+        padding: 0.5rem;
+        font-size: 0.9rem; /* Fonte ligeiramente menor que tablet */
     }
 
     .decksContainer {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.2rem; /* Espaço entre decks ligeiramente menor */
+    }
+
+     .noDecks {
+        padding: 3rem 1rem;
+    }
+
+    .title {
+        font-size: 1.6rem;
+    }
+
+    .msg {
+        font-size: 1.1rem;
+    }
+
+    .noDecks button {
+        padding: 1rem 1.8rem;
+        font-size: 1rem;
     }
 }
+/* ===== FIM DOS AJUSTES ===== */
