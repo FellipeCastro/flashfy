@@ -290,7 +290,6 @@ const Profile = ({
 
     const createSubject = async (name, color) => {
         try {
-            setIsCreatingSubject(true);
             const response = await api.post("/subjects", {
                 name,
                 color,
@@ -301,15 +300,11 @@ const Profile = ({
             }
         } catch (error) {
             console.log(error);
-        } finally {
-            setIsCreatingSubject(false);
-        }
+        } 
     };
 
     return (
         <>
-            {isDeletingSubject && <Loading />}
-            {isCreatingSubject && <Loading />}
 
             <div className={styles.container}>
                 <Sidebar
@@ -673,6 +668,8 @@ const Profile = ({
                     btnText="Excluir Conta"
                     onClick={handleDeleteAccount}
                     onCancel={() => setDeleteModal(false)}
+                    isLoading={isLoading}
+                    loadingText={"Excluindo conta..."}
                 />
             )}
 
@@ -683,6 +680,8 @@ const Profile = ({
                     btnText={"Confirmar"}
                     onClick={() => deleteSubject(subjectToDelete.idSubject)}
                     onCancel={handleCancelDelete}
+                    isLoading={isDeletingSubject}
+                    loadingText={"Deletando matéria..."}
                 />
             )}
 
