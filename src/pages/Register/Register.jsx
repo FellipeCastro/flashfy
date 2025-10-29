@@ -215,11 +215,11 @@ const Register = ({ loadData }) => {
                     <button
                         type="submit"
                         className={`${styles.registerButton} ${
-                            isLoading ? styles.loading : ""
+                            isLoading || isGoogleLoading ? styles.loading : ""
                         }`}
-                        disabled={isLoading}
+                        disabled={isLoading || isGoogleLoading}
                     >
-                        {isLoading ? (
+                        {isLoading || isGoogleLoading ? (
                             <>
                                 <span className={styles.spinner}></span>
                                 Criando conta...
@@ -245,11 +245,6 @@ const Register = ({ loadData }) => {
                         width="400"
                         text="continue_with"
                     />
-                    {isGoogleLoading && (
-                        <div className={styles.googleLoading}>
-                            <p id="loader">Entrando com Google...</p>
-                        </div>
-                    )}
                 </div>
 
                 <div className={styles.loginLink}>

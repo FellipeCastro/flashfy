@@ -6,6 +6,7 @@ import styles from "./AddCardForm.module.css";
 const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
     const [question, setQuestion] = useState("");
     const [answer, setAnswer] = useState("");
+    const [isLoading, setIsLoading] = useState(false); 
     const [errorMessage, setErrorMessage] = useState({
         question: "",
         answer: "",
@@ -62,7 +63,7 @@ const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
         }
     };
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => { 
         e.preventDefault();
 
         // Limpa mensagens de erro anteriores
@@ -77,7 +78,19 @@ const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
             return;
         }
 
-        createCard(question, answer);
+        setIsLoading(true); 
+        
+        try {
+            await createCard(question, answer); 
+            setIsAddCardFormOpen(false); 
+        } catch (error) {
+            console.error("Erro ao criar card:", error);
+            setErrorMessage({ 
+                main: "Ocorreu um erro ao criar o card. Tente novamente." 
+            }); 
+        } finally {
+            setIsLoading(false); 
+        }
     };
 
     const closeModal = () => {
@@ -176,7 +189,13 @@ const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
                         </div>
                     )}
 
-                    <Button type="submit">+ Criar Card</Button>
+                    <Button 
+                        type="submit" 
+                        isLoading={isLoading} 
+                        loadingText="Criando Card..."
+                    >
+                        + Criar Card
+                    </Button>
                 </form>
             </div>
         </>

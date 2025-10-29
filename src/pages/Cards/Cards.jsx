@@ -4,7 +4,6 @@ import { FaArrowLeft, FaTrashAlt } from "react-icons/fa";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import Button from "../../components/Button/Button";
 import AddCardForm from "../../components/AddCardForm/AddCardForm";
-import Loading from "../../components/Loading/Loading.jsx";
 import api from "../../constants/api.js";
 import styles from "./Cards.module.css";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal.jsx";
@@ -21,7 +20,6 @@ const Cards = ({ decks, loadData }) => {
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
     const [isAddCardFormOpen, setIsAddCardFormOpen] = useState(false);
     const [difficulties, setDifficulties] = useState([]);
-    const [isCreatingCard, setIsCreatingCard] = useState(false);
     const [isStudyingDeck, setIsStudyingDeck] = useState(false);
     const [isDeletingDeck, setIsDeletingDeck] = useState(false);
     const [isDeletingCard, setIsDeletingCard] = useState(false);
@@ -43,7 +41,6 @@ const Cards = ({ decks, loadData }) => {
 
     const createCard = async (question, answer) => {
         try {
-            setIsCreatingCard(true);
             const response = await api.post("/cards", {
                 idDeck: id,
                 question,
@@ -55,9 +52,7 @@ const Cards = ({ decks, loadData }) => {
             }
         } catch (error) {
             console.log(error);
-        } finally {
-            setIsCreatingCard(false);
-        }
+        } 
     };
 
     const handleNextCard = () => {
@@ -170,11 +165,6 @@ const Cards = ({ decks, loadData }) => {
 
     return (
         <>
-            {isCreatingCard && <Loading />}
-            {isStudyingDeck && <Loading />}
-            {isDeletingDeck && <Loading />}
-            {isDeletingCard && <Loading />}
-
             {deleteDeckModal && (
                 <ConfirmModal
                     title={"Deletar Deck"}
@@ -182,6 +172,8 @@ const Cards = ({ decks, loadData }) => {
                     btnText={"Confirmar"}
                     onClick={deleteDeck}
                     onCancel={() => setDeleteDeckModal(false)}
+                    isLoading={isDeletingDeck}
+                    loadingText={"Deletando Deck..."}
                 />
             )}
 
@@ -195,6 +187,8 @@ const Cards = ({ decks, loadData }) => {
                         setDeleteCardModal(false);
                         setCardToDelete(null);
                     }}
+                    isLoading={isDeletingCard}
+                    loadingText={"Deletando Card..."}
                 />
             )}
 
@@ -205,6 +199,8 @@ const Cards = ({ decks, loadData }) => {
                     btnText={"Confirmar"}
                     onClick={handleFinalize}
                     onCancel={() => setStudyDeckModal(false)}
+                    isLoading={isStudyingDeck}
+                    loadingText={"Finalizando.."}
                     success
                 />
             )}

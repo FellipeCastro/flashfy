@@ -2,7 +2,6 @@ import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { BsStars } from 'react-icons/bs';
 import Button from "../Button/Button";
-import Loading from "../Loading/Loading"; 
 import styles from "./AddDeckWithAIForm.module.css"; 
 
 const AddDeckWithAIForm = ({
@@ -77,7 +76,7 @@ const AddDeckWithAIForm = ({
         try {
             await generateDeckWithAI(idSubject, theme, quantity);
             
-            loadData(); 
+            await loadData(); 
             setIsAddDeckWithAIFormOpen(false);
         } catch (error) {
             console.error("Erro ao gerar deck com IA:", error);
@@ -98,7 +97,6 @@ const AddDeckWithAIForm = ({
 
     return (
         <>
-            {isLoading && <Loading />} 
             <div className={styles.fade} onClick={closeModal}></div>
             <div className={styles.formContainer}>
                 <div className={styles.flexContainer}>
@@ -192,7 +190,7 @@ const AddDeckWithAIForm = ({
                         </div>
                     )}
 
-                    <Button type="submit" disabled={isLoading}>
+                    <Button onClick={onSubmit} isLoading={isLoading} loadingText="Gerando Deck...">
                         <BsStars /> Gerar Deck
                     </Button>
                 </form>

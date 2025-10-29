@@ -7,6 +7,8 @@ const ConfirmModal = ({
     btnText,
     onClick,
     onCancel,
+    isLoading = null,
+    loadingText = null,
     success,
 }) => {
     return (
@@ -26,11 +28,19 @@ const ConfirmModal = ({
                     </button>
                     <button
                         className={`${styles.confirmBtn} ${
-                            success ? styles.success : null
-                        }`}
+                            isLoading ? styles.loading : ""
+                        } ${success ? styles.success : null}`}
+                        disabled={isLoading}
                         onClick={onClick}
                     >
-                        {btnText}
+                        {isLoading ? (
+                            <>
+                                <span className={styles.spinner}></span>
+                                {loadingText}
+                            </>
+                        ) : (
+                            btnText
+                        )}
                     </button>
                 </div>
             </div>

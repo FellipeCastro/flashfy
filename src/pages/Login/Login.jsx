@@ -194,11 +194,11 @@ const Login = ({ loadData }) => {
                     <button
                         type="submit"
                         className={`${styles.loginButton} ${
-                            isLoading ? styles.loading : ""
+                            isLoading || isGoogleLoading ? styles.loading : ""
                         }`}
                         disabled={isLoading || isGoogleLoading}
                     >
-                        {isLoading ? (
+                        {isLoading || isGoogleLoading ? (
                             <>
                                 <span className={styles.spinner}></span>
                                 Entrando...
@@ -224,11 +224,6 @@ const Login = ({ loadData }) => {
                         width="400"
                         text="continue_with"
                     />
-                    {isGoogleLoading && (
-                        <div className={styles.googleLoading}>
-                            <p id="loader">Entrando com Google...</p>
-                        </div>
-                    )}
                 </div>
 
                 <div className={styles.registerLink}>

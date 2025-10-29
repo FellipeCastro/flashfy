@@ -557,14 +557,6 @@
 
 /* Container do histórico */
 
-.historyContainer {
-    background: var(--secondary-color);
-    padding: 2rem;
-    border: 2px solid var(--border-color);
-    border-radius: 0.2rem;
-    box-shadow: -4px 4px 0px var(--border-color);
-}
-
 .historyHeader {
     display: flex;
     justify-content: space-between;
@@ -621,7 +613,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
-    background: var(--bg-color);
+    background: transparent;
     border-radius: 0.2rem;
     border: 2px dashed var(--border-color);
     transition: all 0.2s;

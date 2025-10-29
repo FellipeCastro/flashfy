@@ -3,12 +3,10 @@ import { IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
 import styles from "./AddSubjectForm.module.css";
 
-const AddSubjectForm = ({
-    setIsAddSubjectFormOpen,
-    createSubject,
-}) => {
+const AddSubjectForm = ({ setIsAddSubjectFormOpen, createSubject }) => {
     const [name, setName] = useState("");
     const [color, setColor] = useState("#ffffff");
+    const [isLoading, setIsLoading] = useState(false); 
     const [errorMessage, setErrorMessage] = useState({
         name: "",
         color: "",
@@ -35,7 +33,7 @@ const AddSubjectForm = ({
         }
 
         // Validação da cor
-        if (!color || color === "#ffffff") {
+        if (!color) {
             newErrors.color = "Selecione uma cor";
             isValid = false;
         }
@@ -76,7 +74,7 @@ const AddSubjectForm = ({
         return `rgba(${r}, ${g}, ${b}, ${opacity})`;
     };
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
         // Limpa mensagens de erro anteriores
@@ -91,10 +89,22 @@ const AddSubjectForm = ({
             return;
         }
 
-        // Converter a cor para RGBA com opacidade 0.4
-        const colorWithOpacity = hexToRgba(color, 0.4);
+        setIsLoading(true); 
 
-        createSubject(name, colorWithOpacity);
+        try {
+            // Converter a cor para RGBA com opacidade 0.4
+            const colorWithOpacity = hexToRgba(color, 0.4);
+
+            await createSubject(name, colorWithOpacity); 
+            setIsAddSubjectFormOpen(false); 
+        } catch (error) {
+            console.error("Erro ao criar matéria:", error);
+            setErrorMessage({
+                main: "Ocorreu um erro ao criar a matéria. Tente novamente.",
+            }); 
+        } finally {
+            setIsLoading(false); 
+        }
     };
 
     const closeModal = () => {
@@ -175,7 +185,13 @@ const AddSubjectForm = ({
                         </div>
                     )}
 
-                    <Button type="submit">Criar Matéria</Button>
+                    <Button
+                        type="submit"
+                        isLoading={isLoading}
+                        loadingText="Criando Matéria..."
+                    >
+                        Criar Matéria
+                    </Button>
                 </form>
             </div>
         </>

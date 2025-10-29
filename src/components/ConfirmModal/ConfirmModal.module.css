@@ -66,7 +66,7 @@
     padding: 0.8rem 1.5rem;
     border-radius: 2rem;
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -88,8 +88,18 @@
     border: none;
 }
 
-.confirmBtn:hover {
+.confirmBtn.loading {
     background-color: var(--error-color);
+}
+
+.confirmBtn:hover:not(:disabled) {
+    background-color: var(--error-color);
+}
+
+.confirmBtn:disabled,
+.confirmBtn.success:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 .confirmBtn.success {
@@ -97,8 +107,21 @@
     border-color: var(--primary-color);
 }
 
-.confirmBtn.success:hover {
+.confirmBtn.success.loading {
     background-color: var(--primary-color-hover);
+}
+
+.confirmBtn.success:hover:not(:disabled) {
+    background-color: var(--primary-color-hover);
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--secondary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
 /* Animações */
@@ -119,6 +142,15 @@
     to {
         opacity: 1;
         transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }
 

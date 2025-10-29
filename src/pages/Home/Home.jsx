@@ -27,13 +27,10 @@ const Home = ({
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
     const [isAddDeckWithAIFormOpen, setIsAddDeckWithAIFormOpen] = useState(false);
     const [isAddSubjectFormOpen, setIsAddSubjectFormOpen] = useState(false);
-    const [isCreatingDeck, setIsCreatingDeck] = useState(false);
-    const [isCreatingSubject, setIsCreatingSubject] = useState(false);
     const navigate = useNavigate();
 
     const createDeck = async (idSubject, title) => {
         try {
-            setIsCreatingDeck(true);
             const response = await api.post("/decks", {
                 idSubject,
                 title,
@@ -44,29 +41,22 @@ const Home = ({
             }
         } catch (error) {
             console.log(error);
-        } finally {
-            setIsCreatingDeck(false);
-        }
+        } 
     };
     
    const generateDeckWithAI = async (idSubject, theme, quantity) => {
-        try {
-            setIsCreatingDeck(true); 
-            
+        try {            
             await api.post("/ai/create-deck", { idSubject, theme, quantity });
             
             loadData();
             setIsAddDeckWithAIFormOpen(false);
         } catch (error) {
             console.error("Erro ao gerar deck com IA:", error);
-        } finally {
-            setIsCreatingDeck(false); 
-        }
+        } 
     };
 
     const createSubject = async (name, color) => {
         try {
-            setIsCreatingSubject(true);
             const response = await api.post("/subjects", {
                 name,
                 color,
@@ -77,8 +67,6 @@ const Home = ({
             }
         } catch (error) {
             console.log(error);
-        } finally {
-            setIsCreatingSubject(false);
         }
     };
 
@@ -92,9 +80,6 @@ const Home = ({
 
     return (
         <>
-            {isCreatingDeck && <Loading />}
-            {isCreatingSubject && <Loading />}
-
             <div className={styles.container}>
                 <Sidebar
                     isSidebarOpen={isSidebarOpen}

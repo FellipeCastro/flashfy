@@ -11,6 +11,7 @@ const AddDeckForm = ({
 }) => {
     const [idSubject, setIdSubject] = useState("");
     const [title, setTitle] = useState("");
+    const [isLoading, setIsLoading] = useState(false); 
     const [errorMessage, setErrorMessage] = useState({
         idSubject: "",
         title: "",
@@ -69,7 +70,7 @@ const AddDeckForm = ({
         setIsAddSubjectFormOpen(true);
     };
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
         // Limpa mensagens de erro anteriores
@@ -84,7 +85,18 @@ const AddDeckForm = ({
             return;
         }
 
-        createDeck(idSubject, title);
+        setIsLoading(true); 
+        try {
+            await createDeck(idSubject, title); 
+            setIsAddDeckFormOpen(false); 
+        } catch (error) {
+            console.error("Erro ao criar deck:", error);
+            setErrorMessage({
+                main: "Ocorreu um erro ao criar o deck. Tente novamente.",
+            });
+        } finally {
+            setIsLoading(false); 
+        }
     };
 
     const closeModal = () => {
@@ -180,7 +192,13 @@ const AddDeckForm = ({
                         </div>
                     )}
 
-                    <Button type="submit">+ Criar Deck</Button>
+                    <Button
+                        type="submit"
+                        isLoading={isLoading}
+                        loadingText="Criando Deck..."
+                    >
+                        + Criar Deck
+                    </Button>
                 </form>
             </div>
         </>
