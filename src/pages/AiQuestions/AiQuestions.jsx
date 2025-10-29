@@ -242,8 +242,7 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
             console.error("Erro no submit:", error);
             setErrorMessage((prev) => ({
                 ...prev,
-                main:
-                    "Tente gerar as questões novamente!",
+                main: "Tente gerar as questões novamente!",
             }));
         } finally {
             setIsLoading(false);
@@ -332,17 +331,10 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                 onClick={() => setShowHistory(!showHistory)}
                                 className={styles.historyButton}
                             >
-                                {!showHistory ? (
-                                    <>
-                                        <RiHistoryLine />
-                                        Histórico ({history.length})
-                                    </>
-                                ) : (
-                                    <>
-                                        <RiHistoryLine />
-                                        Fechar ({history.length})
-                                    </>
-                                )}
+                                <RiHistoryLine />
+                                {!showHistory
+                                    ? `Histórico (${history.length})`
+                                    : `Fechar (${history.length})`}
                             </button>
                         </div>
                     </div>
@@ -356,7 +348,6 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                         onClick={() =>
                                             setClearHistoryModal(true)
                                         }
-                                        className={styles.clearHistoryButton}
                                     >
                                         Limpar Histórico
                                     </Button>
@@ -559,24 +550,13 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     </div>
                                 </div>
 
-                                <button
+                                <Button
                                     type="submit"
-                                    className={`${styles.submitButton} ${
-                                        isLoading ? styles.loading : ""
-                                    }`}
-                                    disabled={isLoading}
+                                    isLoading={isLoading}
+                                    loadingText="Gerando questões..."
                                 >
-                                    {isLoading ? (
-                                        <>
-                                            <span
-                                                className={styles.spinner}
-                                            ></span>
-                                            Gerando questões...
-                                        </>
-                                    ) : (
-                                        "Gerar questões"
-                                    )}
-                                </button>
+                                    Gerar questões
+                                </Button>
                             </form>
 
                             {errorMessage.main &&
@@ -784,41 +764,39 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     </div>
 
                                     {!answersVerified ? (
-                                        <>
-                                            <Button
-                                                onClick={() => {
-                                                    setAnswersVerified(true);
-                                                    // Atualiza o histórico com a pontuação
-                                                    const updatedHistory =
-                                                        history.map((item) => {
-                                                            if (
-                                                                item.theme ===
-                                                                    aiResponse.theme &&
-                                                                item.difficulty ===
-                                                                    aiResponse.difficulty &&
-                                                                item.quantity ===
-                                                                    aiResponse.quantity
-                                                            ) {
-                                                                return {
-                                                                    ...item,
-                                                                    score: correctCount,
-                                                                };
-                                                            }
-                                                            return item;
-                                                        });
-                                                    setHistory(updatedHistory);
-                                                    localStorage.setItem(
-                                                        "aiQuestionsHistory",
-                                                        JSON.stringify(
-                                                            updatedHistory
-                                                        )
-                                                    );
-                                                }}
-                                                disabled={!allQuestionsAnswered}
-                                            >
-                                                Verificar respostas
-                                            </Button>
-                                        </>
+                                        <Button
+                                            onClick={() => {
+                                                setAnswersVerified(true);
+                                                // Atualiza o histórico com a pontuação
+                                                const updatedHistory =
+                                                    history.map((item) => {
+                                                        if (
+                                                            item.theme ===
+                                                                aiResponse.theme &&
+                                                            item.difficulty ===
+                                                                aiResponse.difficulty &&
+                                                            item.quantity ===
+                                                                aiResponse.quantity
+                                                        ) {
+                                                            return {
+                                                                ...item,
+                                                                score: correctCount,
+                                                            };
+                                                        }
+                                                        return item;
+                                                    });
+                                                setHistory(updatedHistory);
+                                                localStorage.setItem(
+                                                    "aiQuestionsHistory",
+                                                    JSON.stringify(
+                                                        updatedHistory
+                                                    )
+                                                );
+                                            }}
+                                            disabled={!allQuestionsAnswered}
+                                        >
+                                            Verificar respostas
+                                        </Button>
                                     ) : (
                                         <div className={styles.resultsFeedback}>
                                             <p>
@@ -888,29 +866,6 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                         </ul>
                                     </div>
                                 )}
-                            {isLoading && (
-                                <div className={styles.loadingState}>
-                                    <div className={styles.simpleAnimation}>
-                                        <div className={styles.aiIcon}>
-                                            <RiRobot2Fill />
-                                        </div>
-                                        <div className={styles.thinkingDots}>
-                                            <div className={styles.dot}></div>
-                                            <div className={styles.dot}></div>
-                                            <div className={styles.dot}></div>
-                                        </div>
-                                    </div>
-
-                                    <h3 className={styles.loadingTitle}>
-                                        Aguardando suas questões...
-                                    </h3>
-                                    <p className={styles.loadingDescription}>
-                                        Suas questões estão sendo geradas pela
-                                        inteligência artificual, aguarde alguns
-                                        instantes!
-                                    </p>
-                                </div>
-                            )}
                         </>
                     )}
                 </div>
