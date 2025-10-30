@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { FaArrowLeft, FaTrashAlt } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight , FaTrashAlt } from "react-icons/fa";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import Button from "../../components/Button/Button";
 import AddCardForm from "../../components/AddCardForm/AddCardForm";
@@ -52,7 +52,7 @@ const Cards = ({ decks, loadData }) => {
             }
         } catch (error) {
             console.log(error);
-        } 
+        }
     };
 
     const handleNextCard = () => {
@@ -327,33 +327,33 @@ const Cards = ({ decks, loadData }) => {
                                     <span>Muito fácil</span>
                                     <span>Muito difícil</span>
                                 </div>
+                                <ul className={styles.difficulty}>
+                                    {[1, 2, 3, 4].map((level) => (
+                                        <li
+                                            key={level}
+                                            className={
+                                                currentDifficulty === level ||
+                                                selectedDifficulty === level
+                                                    ? styles.selected
+                                                    : null
+                                            }
+                                            onClick={() =>
+                                                handleSetDifficulty(level)
+                                            }
+                                        >
+                                            {level}
+                                        </li>
+                                    ))}
+                                </ul>
                                 <div className={styles.flexContainer}>
                                     <button
                                         onClick={handlePrevCard}
                                         disabled={currentCardIndex === 0}
                                         className={styles.navBtn}
                                     >
-                                        <MdArrowLeft />
+                                        <MdArrowLeft /> Anterior
                                     </button>
-                                    <ul className={styles.difficulty}>
-                                        {[1, 2, 3, 4].map((level) => (
-                                            <li
-                                                key={level}
-                                                className={
-                                                    currentDifficulty ===
-                                                        level ||
-                                                    selectedDifficulty === level
-                                                        ? styles.selected
-                                                        : null
-                                                }
-                                                onClick={() =>
-                                                    handleSetDifficulty(level)
-                                                }
-                                            >
-                                                {level}
-                                            </li>
-                                        ))}
-                                    </ul>
+
                                     <button
                                         onClick={handleNextCard}
                                         disabled={
@@ -362,7 +362,7 @@ const Cards = ({ decks, loadData }) => {
                                         }
                                         className={styles.navBtn}
                                     >
-                                        <MdArrowRight />
+                                        Próximo <MdArrowRight />
                                     </button>
                                 </div>
                             </div>
