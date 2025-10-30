@@ -151,9 +151,8 @@
     box-shadow: -4px 4px 0px var(--border-color);
 }
 
-.flashcard:hover {
+.showAnswer {
     transform: rotateY(180deg);
-    box-shadow: -4px 4px 0px var(--shadow-color);
 }
 
 .flashcardFront,

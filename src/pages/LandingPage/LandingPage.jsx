@@ -19,61 +19,62 @@ import logo from "../../assets/logo.png";
 const LandingPage = () => {
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [showAnswer, setShoeAnswer] = useState(false);
 
     const features = [
         {
             icon: <FaBrain />,
-            title: "Algoritmo de Repetição Espaçada",
+            title: "Revisão no Momento Certo",
             description:
-                "Revisões no momento exato antes do esquecimento, aumentando a retenção em até 400% com 35% menos tempo de estudo",
+                "Revisões inteligentes no momento exato antes de você esquecer, ajudando a memorizar até 4x mais com menos tempo de estudo",
         },
         {
             icon: <FaRobot />,
-            title: "IA Generativa Google Gemini",
+            title: "Criação com Inteligência Artificial",
             description:
-                "Gere decks completos automaticamente em segundos. Digite um tema e receba perguntas e respostas contextualizadas",
+                "Crie flashcards automaticamente em segundos. Digite um assunto e receba perguntas e respostas prontas sobre qualquer tema",
         },
         {
             icon: <FaUsers />,
-            title: "Métricas Comprovadas",
+            title: "Acompanhamento de Progresso",
             description:
-                "Acompanhe +47% de performance em exames e 3.2x mais retenção com nosso dashboard inteligente de progresso",
+                "Veja seu progresso com dados claros: +47% de desempenho em provas e 3x mais retenção com nosso painel inteligente",
         },
         {
             icon: <FaChartLine />,
-            title: "Tecnologia Enterprise",
+            title: "Tecnologia Avançada",
             description:
-                "Mesma arquitetura de grandes plataformas: React, Node.js, PostgreSQL e segurança JWT - escalável e confiável",
+                "Plataforma segura e confiável, usando as mesmas tecnologias de grandes empresas, garantindo velocidade e proteção dos seus dados",
         },
     ];
 
     const steps = [
         {
             step: "1",
-            title: "Criação Inteligente",
+            title: "Crie Seus Flashcards",
             description:
-                "Crie decks manualmente ou com IA em segundos. Nossa IA entende qualquer tema e gera conteúdo contextualizado",
+                "Crie seus cartões de estudo manualmente ou use nossa IA para gerar conteúdo automaticamente em segundos",
             icon: <FaBook />,
         },
         {
             step: "2",
-            title: "Revisão Estratégica",
+            title: "Revise no Tempo Certo",
             description:
-                "Nosso algoritmo calcula o momento exato da revisão antes do esquecimento, otimizando cada minuto de estudo",
+                "Nosso sistema avisa quando revisar cada conteúdo, no momento exato antes de você começar a esquecer",
             icon: <FaClock />,
         },
         {
             step: "3",
-            title: "Acompanhamento Científico",
+            title: "Acompanhe Seu Progresso",
             description:
-                "Dashboard com métricas baseadas em evidências: retenção, progresso e desempenho mensuráveis",
+                "Painel simples com métricas fáceis de entender: veja sua evolução, retenção e desempenho ao longo do tempo",
             icon: <FaChartLine />,
         },
         {
             step: "4",
-            title: "Maestria Comprovada",
+            title: "Atinga a Maestria",
             description:
-                "Alcance 320% mais retenção e domine conteúdos complexos com eficiência comprovada por estudos",
+                "Domine conteúdos complexos com eficiência comprovada, memorizando 3x mais do que métodos tradicionais",
             icon: <FaTrophy />,
         },
     ];
@@ -82,37 +83,36 @@ const LandingPage = () => {
         {
             name: "Ana Silva",
             role: "Estudante de Medicina",
-            text: "Reduzi 41% do tempo de estudo com a FlashFy e aumentei 47% minha performance nos exames. A IA para gerar decks de anatomia é incrível!",
+            text: "Reduzi pela metade meu tempo de estudo com o FlashFy e melhorei quase 50% minhas notas nas provas. A função de criar flashcards com IA é fantástica!",
         },
         {
             name: "Carlos Mendes",
             role: "Concurseiro Aprovado",
-            text: "O algoritmo de repetição espaçada me fez reter 3.2x mais conteúdo. Passei em 2º lugar no concurso graças à eficiência da plataforma.",
+            text: "O sistema de revisões me fez memorizar 3x mais conteúdo. Passei em 2º lugar no concurso graças à eficiência da plataforma.",
         },
         {
             name: "Marina Costa",
             role: "Coordenadora de Treinamento",
-            text: "Implementamos na empresa e reduzimos 60% do tempo de onboarding. A retenção de treinamentos saltou de 25% para 85% com a FlashFy.",
+            text: "Usamos na empresa e reduzimos 60% do tempo de treinamento. A retenção dos funcionários subiu de 25% para 85% com o FlashFy.",
         },
     ];
 
     const faqData = [
         {
-            question:
-                "Como a repetição espaçada aumenta minha retenção em 400%?",
-            answer: "Nosso algoritmo baseado no método SuperMemo-2 identifica o momento exato antes do esquecimento e agenda revisões estratégicas. Estudos comprovam que esta técnica aumenta a retenção em até 400% comparado a métodos tradicionais, economizando 35% do seu tempo de estudo.",
+            question: "Como esse método ajuda a memorizar mais?",
+            answer: "Nosso sistema identifica o momento exato antes de você esquecer e agenda revisões estratégicas. Estudos mostram que esta técnica ajuda a memorizar até 4x mais comparado a métodos tradicionais, economizando tempo de estudo.",
         },
         {
-            question: "A IA realmente gera conteúdo de qualidade?",
-            answer: "Sim! Usamos o Google Gemini, treinado em 1.56 trilhão de parâmetros, com 94% de precisão em conteúdo educacional. Ele gera perguntas e respostas contextualizadas em segundos, adaptando-se ao seu nível de conhecimento. Empresas como Google e Samsung confiam nesta mesma tecnologia.",
+            question: "A IA realmente cria bons conteúdos?",
+            answer: "Sim! Usamos tecnologia de inteligência artificial avançada que gera perguntas e respostas de qualidade em segundos, adaptando-se ao seu nível de conhecimento. A mesma tecnologia é usada por grandes empresas.",
         },
         {
-            question: "É seguro e confiável para estudos importantes?",
-            answer: "Totalmente! Usamos arquitetura enterprise: PostgreSQL (banco de 80% das Fortune 500), JWT para autenticação segura, e backups automáticos. Sua senha é criptografada com Bcrypt - nem nós temos acesso. Plataforma com 99.7% de uptime e escalável para milhões de usuários.",
+            question: "É seguro usar para estudos importantes?",
+            answer: "Completamente seguro! Usamos tecnologia profissional com proteção de dados, backups automáticos e senhas criptografadas. Sua privacidade e conteúdo estão sempre protegidos.",
         },
         {
-            question: "Os resultados são comprovados cientificamente?",
-            answer: "Absolutamente! Nossa metodologia é baseada em Ebbinghaus (Curva do Esquecimento), Dunlosky (Práticas de Aprendizagem) e Kerfoot (Repetição Espaçada). Estudos independentes com 500 usuários mostraram +47% em exames e 3.2x mais retenção após 6 meses.",
+            question: "Os resultados são comprovados?",
+            answer: "Sim! Nossa metodologia é baseada em pesquisas científicas sobre aprendizagem. Testes com usuários mostraram melhoras de até 47% em provas e 3x mais retenção após alguns meses de uso.",
         },
     ];
 
@@ -222,7 +222,7 @@ const LandingPage = () => {
                 </div>
                 <div className={styles.heroVisual}>
                     <div className={styles.flashcardDemo}>
-                        <div className={styles.flashcard}>
+                        <div className={`${styles.flashcard} ${showAnswer ? styles.showAnswer : null}`} onClick={() => setShoeAnswer(!showAnswer)}>
                             <div className={styles.flashcardFront}>
                                 <h3>
                                     O que é a teoria da relatividade de
@@ -298,7 +298,6 @@ const LandingPage = () => {
                 </div>
             </section>
 
-            {/* NOVO: Seção de FAQ adicionada aqui */}
             <section id="faq" className={styles.faq}>
                 <div className={styles.container}>
                     <h2>Perguntas Frequentes</h2>

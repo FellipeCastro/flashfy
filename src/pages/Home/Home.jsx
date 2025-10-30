@@ -8,7 +8,6 @@ import Deck from "../../components/Deck/Deck";
 import AddDeckForm from "../../components/AddDeckForm/AddDeckForm";
 import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 import AddDeckWithAIForm from "../../components/AddDeckWithAIForm/AddDeckWithAIForm";
-import Loading from "../../components/Loading/Loading";
 import api from "../../constants/api";
 import styles from "./Home.module.css";
 

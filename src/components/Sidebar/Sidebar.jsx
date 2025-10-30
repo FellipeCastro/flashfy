@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { MdKeyboardDoubleArrowRight, MdHome } from "react-icons/md";
-import { FaUser, FaBookReader } from "react-icons/fa";
-import { RiRobot2Fill } from "react-icons/ri";
+import { FaUser, FaMap } from "react-icons/fa";
+import { BsStars } from 'react-icons/bs';
 import styles from "./Sidebar.module.css";
 import logo from "../../assets/logo.png";
 
@@ -55,7 +55,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     : null
                             }
                         >
-                            <RiRobot2Fill /> Perguntas geradas por IA
+                            <BsStars />  Perguntas geradas por IA
                         </Link>
                         <Link
                             to="/methodology"
@@ -65,7 +65,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                     : null
                             }
                         >
-                            <FaBookReader /> Nossa metodologia
+                            <FaMap /> Nossa metodologia
                         </Link>
                         <Link
                             to="/profile"
