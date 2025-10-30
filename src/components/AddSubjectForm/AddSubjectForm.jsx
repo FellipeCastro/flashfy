@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
+import ModalComponent from "../ModalComponent/ModalComponent";
 import styles from "./AddSubjectForm.module.css";
 
 const AddSubjectForm = ({ setIsAddSubjectFormOpen, createSubject }) => {
     const [name, setName] = useState("");
     const [color, setColor] = useState("#ffffff");
-    const [isLoading, setIsLoading] = useState(false); 
+    const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState({
         name: "",
         color: "",
@@ -89,21 +90,21 @@ const AddSubjectForm = ({ setIsAddSubjectFormOpen, createSubject }) => {
             return;
         }
 
-        setIsLoading(true); 
+        setIsLoading(true);
 
         try {
             // Converter a cor para RGBA com opacidade 0.4
             const colorWithOpacity = hexToRgba(color, 0.4);
 
-            await createSubject(name, colorWithOpacity); 
-            setIsAddSubjectFormOpen(false); 
+            await createSubject(name, colorWithOpacity);
+            setIsAddSubjectFormOpen(false);
         } catch (error) {
             console.error("Erro ao criar matéria:", error);
             setErrorMessage({
                 main: "Ocorreu um erro ao criar a matéria. Tente novamente.",
-            }); 
+            });
         } finally {
-            setIsLoading(false); 
+            setIsLoading(false);
         }
     };
 
@@ -112,89 +113,84 @@ const AddSubjectForm = ({ setIsAddSubjectFormOpen, createSubject }) => {
     };
 
     return (
-        <>
-            <div className={styles.fade} onClick={closeModal}></div>
-            <div className={styles.formContainer}>
-                <div className={styles.flexContainer}>
-                    <h2>Criar nova Matéria</h2>
+        <ModalComponent closeModal={closeModal}>
+            <div className={styles.flexContainer}>
+                <h2>Criar nova Matéria</h2>
 
-                    <button className={styles.closeBtn} onClick={closeModal}>
-                        <IoMdClose />
-                    </button>
+                <button className={styles.closeBtn} onClick={closeModal}>
+                    <IoMdClose />
+                </button>
+            </div>
+
+            <form
+                method="post"
+                autoComplete="off"
+                onSubmit={onSubmit}
+                className={styles.form}
+            >
+                <div className={styles.inputContainer}>
+                    <label htmlFor="name">Matéria</label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Digite a matéria aqui"
+                        onChange={(e) =>
+                            handleInputChange("name", e.target.value)
+                        }
+                        value={name}
+                        className={errorMessage.name ? styles.inputError : ""}
+                    />
+                    {errorMessage.name && (
+                        <span className={styles.fieldError}>
+                            {errorMessage.name}
+                        </span>
+                    )}
                 </div>
 
-                <form
-                    method="post"
-                    autoComplete="off"
-                    onSubmit={onSubmit}
-                    className={styles.form}
-                >
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="name">Matéria</label>
+                <div className={styles.inputContainer}>
+                    <label htmlFor="color">Cor</label>
+                    <div className={styles.colorPickerContainer}>
                         <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            placeholder="Digite a matéria aqui"
+                            type="color"
+                            name="color"
+                            id="color"
+                            value={color}
                             onChange={(e) =>
-                                handleInputChange("name", e.target.value)
+                                handleInputChange("color", e.target.value)
                             }
-                            value={name}
                             className={
-                                errorMessage.name ? styles.inputError : ""
+                                errorMessage.color ? styles.inputError : ""
                             }
                         />
-                        {errorMessage.name && (
-                            <span className={styles.fieldError}>
-                                {errorMessage.name}
-                            </span>
-                        )}
+                        <span className={styles.colorPreview}>
+                            {hexToRgba(color, 0.4)}
+                        </span>
                     </div>
-
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="color">Cor</label>
-                        <div className={styles.colorPickerContainer}>
-                            <input
-                                type="color"
-                                name="color"
-                                id="color"
-                                value={color}
-                                onChange={(e) =>
-                                    handleInputChange("color", e.target.value)
-                                }
-                                className={
-                                    errorMessage.color ? styles.inputError : ""
-                                }
-                            />
-                            <span className={styles.colorPreview}>
-                                {hexToRgba(color, 0.4)}
-                            </span>
-                        </div>
-                        {errorMessage.color && (
-                            <span className={styles.fieldError}>
-                                {errorMessage.color}
-                            </span>
-                        )}
-                    </div>
-
-                    {errorMessage.main && (
-                        <div className={styles.errorContainer}>
-                            <div className={styles.errorText}>
-                                <p>{errorMessage.main}</p>
-                            </div>
-                        </div>
+                    {errorMessage.color && (
+                        <span className={styles.fieldError}>
+                            {errorMessage.color}
+                        </span>
                     )}
+                </div>
 
-                    <Button
-                        type="submit"
-                        isLoading={isLoading}
-                        loadingText="Criando Matéria..."
-                    >
-                        Criar Matéria
-                    </Button>
-                </form>
-            </div>
-        </>
+                {errorMessage.main && (
+                    <div className={styles.errorContainer}>
+                        <div className={styles.errorText}>
+                            <p>{errorMessage.main}</p>
+                        </div>
+                    </div>
+                )}
+
+                <Button
+                    type="submit"
+                    isLoading={isLoading}
+                    loadingText="Criando Matéria..."
+                >
+                    Criar Matéria
+                </Button>
+            </form>
+        </ModalComponent>
     );
 };
 

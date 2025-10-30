@@ -1,5 +1,6 @@
 import { IoIosWarning } from "react-icons/io";
 import styles from "./ConfirmModal.module.css";
+import ModalComponent from "../ModalComponent/ModalComponent";
 
 const ConfirmModal = ({
     title,
@@ -12,9 +13,7 @@ const ConfirmModal = ({
     success,
 }) => {
     return (
-        <>
-            <div className={styles.fadeModal} onClick={onCancel}></div>
-            <div className={styles.confirmModal}>
+        <ModalComponent closeModal={onCancel}>
                 <div className={styles.flexModal}>
                     {success ? null : <IoIosWarning />}
                     <div>
@@ -43,8 +42,7 @@ const ConfirmModal = ({
                         )}
                     </button>
                 </div>
-            </div>
-        </>
+        </ModalComponent>
     );
 };
 

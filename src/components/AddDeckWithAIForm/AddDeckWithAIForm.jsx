@@ -1,19 +1,20 @@
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import { BsStars } from 'react-icons/bs';
+import { BsStars } from "react-icons/bs";
 import Button from "../Button/Button";
-import styles from "./AddDeckWithAIForm.module.css"; 
+import ModalComponent from "../ModalComponent/ModalComponent";
+import styles from "./AddDeckWithAIForm.module.css";
 
 const AddDeckWithAIForm = ({
     setIsAddDeckWithAIFormOpen,
     setIsAddSubjectFormOpen,
     subjects,
-    generateDeckWithAI, 
+    generateDeckWithAI,
     loadData,
 }) => {
     const [idSubject, setIdSubject] = useState("");
     const [theme, setTheme] = useState("");
-    const [quantity, setQuantity] = useState(5); 
+    const [quantity, setQuantity] = useState(5);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState({
         idSubject: "",
@@ -67,22 +68,24 @@ const AddDeckWithAIForm = ({
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (!validateForm()) {
             return;
         }
 
-        setIsLoading(true); 
+        setIsLoading(true);
         try {
             await generateDeckWithAI(idSubject, theme, quantity);
-            
-            await loadData(); 
+
+            await loadData();
             setIsAddDeckWithAIFormOpen(false);
         } catch (error) {
             console.error("Erro ao gerar deck com IA:", error);
-            setErrorMessage({ main: "Ocorreu um erro ao gerar o deck. Tente novamente." });
+            setErrorMessage({
+                main: "Ocorreu um erro ao gerar o deck. Tente novamente.",
+            });
         } finally {
-            setIsLoading(false); 
+            setIsLoading(false);
         }
     };
 
@@ -96,106 +99,112 @@ const AddDeckWithAIForm = ({
     };
 
     return (
-        <>
-            <div className={styles.fade} onClick={closeModal}></div>
-            <div className={styles.formContainer}>
-                <div className={styles.flexContainer}>
-                    <h2>Gerar Deck com IA</h2>
-                    <button className={styles.closeBtn} onClick={closeModal}>
-                        <IoMdClose />
-                    </button>
+        <ModalComponent closeModal={closeModal}>
+            <div className={styles.flexContainer}>
+                <h2>Gerar Deck com IA</h2>
+                <button className={styles.closeBtn} onClick={closeModal}>
+                    <IoMdClose />
+                </button>
+            </div>
+
+            <form
+                method="post"
+                autoComplete="off"
+                onSubmit={onSubmit}
+                className={styles.form}
+            >
+                <div className={styles.inputContainer}>
+                    <label htmlFor="theme">Título</label>
+                    <input
+                        type="text"
+                        name="theme"
+                        id="theme"
+                        placeholder="Ex: Revolução Francesa, Fotossíntese..."
+                        onChange={(e) =>
+                            handleInputChange("theme", e.target.value)
+                        }
+                        value={theme}
+                        className={errorMessage.theme ? styles.inputError : ""}
+                    />
+                    {errorMessage.theme && (
+                        <span className={styles.fieldError}>
+                            {errorMessage.theme}
+                        </span>
+                    )}
                 </div>
 
-                <form
-                    method="post"
-                    autoComplete="off"
-                    onSubmit={onSubmit}
-                    className={styles.form}
-                >
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="theme">Título</label>
-                        <input
-                            type="text"
-                            name="theme"
-                            id="theme"
-                            placeholder="Ex: Revolução Francesa, Fotossíntese..."
-                            onChange={(e) =>
-                                handleInputChange("theme", e.target.value)
-                            }
-                            value={theme}
-                            className={errorMessage.theme ? styles.inputError : ""}
-                        />
-                        {errorMessage.theme && (
-                            <span className={styles.fieldError}>
-                                {errorMessage.theme}
-                            </span>
-                        )}
+                <div className={styles.inputContainer}>
+                    <div className={styles.addSubjectContainer}>
+                        <label htmlFor="subject">Matéria</label>
+                        <button
+                            type="button"
+                            className={styles.addSubject}
+                            onClick={openAddSubjectForm}
+                        >
+                            Adicionar matéria
+                        </button>
                     </div>
-
-                    <div className={styles.inputContainer}>
-                        <div className={styles.addSubjectContainer}>
-                            <label htmlFor="subject">Matéria</label>
-                            <button
-                                type="button"
-                                className={styles.addSubject}
-                                onClick={openAddSubjectForm}
+                    <select
+                        name="subject"
+                        id="subject"
+                        onChange={(e) =>
+                            handleInputChange("idSubject", e.target.value)
+                        }
+                        value={idSubject}
+                        className={
+                            errorMessage.idSubject ? styles.inputError : ""
+                        }
+                    >
+                        <option value="">Selecione uma matéria</option>
+                        {subjects.map((subject) => (
+                            <option
+                                key={subject.idSubject}
+                                value={subject.idSubject}
                             >
-                                Adicionar matéria
-                            </button>
-                        </div>
-                        <select
-                            name="subject"
-                            id="subject"
-                            onChange={(e) =>
-                                handleInputChange("idSubject", e.target.value)
-                            }
-                            value={idSubject}
-                            className={errorMessage.idSubject ? styles.inputError : ""}
-                        >
-                            <option value="">Selecione uma matéria</option>
-                            {subjects.map((subject) => (
-                                <option key={subject.idSubject} value={subject.idSubject}>
-                                    {subject.name}
-                                </option>
-                            ))}
-                        </select>
-                        {errorMessage.idSubject && (
-                            <span className={styles.fieldError}>
-                                {errorMessage.idSubject}
-                            </span>
-                        )}
-                    </div>
-
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="quantity">Quantidade</label>
-                        <select
-                            name="quantity"
-                            id="quantity"
-                            onChange={(e) =>
-                                handleInputChange("quantity", e.target.value)
-                            }
-                            value={quantity}
-                        >
-                            <option value={5}>5 Cards</option>
-                            <option value={10}>10 Cards</option>
-                            <option value={15}>15 Cards</option>
-                        </select>
-                    </div>
-
-                    {errorMessage.main && (
-                        <div className={styles.errorContainer}>
-                            <div className={styles.errorText}>
-                                <p>{errorMessage.main}</p>
-                            </div>
-                        </div>
+                                {subject.name}
+                            </option>
+                        ))}
+                    </select>
+                    {errorMessage.idSubject && (
+                        <span className={styles.fieldError}>
+                            {errorMessage.idSubject}
+                        </span>
                     )}
+                </div>
 
-                    <Button onClick={onSubmit} isLoading={isLoading} loadingText="Gerando Deck...">
-                        <BsStars /> Gerar Deck
-                    </Button>
-                </form>
-            </div>
-        </>
+                <div className={styles.inputContainer}>
+                    <label htmlFor="quantity">Quantidade</label>
+                    <select
+                        name="quantity"
+                        id="quantity"
+                        onChange={(e) =>
+                            handleInputChange("quantity", e.target.value)
+                        }
+                        value={quantity}
+                    >
+                        <option value={5}>5 Cards</option>
+                        <option value={10}>10 Cards</option>
+                        <option value={15}>15 Cards</option>
+                    </select>
+                </div>
+
+                {errorMessage.main && (
+                    <div className={styles.errorContainer}>
+                        <div className={styles.errorText}>
+                            <p>{errorMessage.main}</p>
+                        </div>
+                    </div>
+                )}
+
+                <Button
+                    onClick={onSubmit}
+                    isLoading={isLoading}
+                    loadingText="Gerando Deck..."
+                >
+                    <BsStars /> Gerar Deck
+                </Button>
+            </form>
+        </ModalComponent>
     );
 };
 

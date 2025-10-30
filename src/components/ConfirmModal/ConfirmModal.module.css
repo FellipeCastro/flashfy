@@ -1,29 +1,3 @@
-.fadeModal {
-    z-index: 9;
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.5);
-    animation: fadeIn 0.3s ease-out;
-}
-
-.confirmModal {
-    width: 100%;
-    max-width: 450px;
-    z-index: 10;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--secondary-color);
-    padding: 1.4rem 2rem;
-    border-radius: 0.4rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    animation: slideIn 0.3s ease-out;
-}
-
 .flexModal {
     display: flex;
     align-items: center;

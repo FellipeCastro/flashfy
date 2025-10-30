@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
+import ModalComponent from "../ModalComponent/ModalComponent";
 import styles from "./AddDeckForm.module.css";
 
 const AddDeckForm = ({
@@ -11,7 +12,7 @@ const AddDeckForm = ({
 }) => {
     const [idSubject, setIdSubject] = useState("");
     const [title, setTitle] = useState("");
-    const [isLoading, setIsLoading] = useState(false); 
+    const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState({
         idSubject: "",
         title: "",
@@ -85,17 +86,17 @@ const AddDeckForm = ({
             return;
         }
 
-        setIsLoading(true); 
+        setIsLoading(true);
         try {
-            await createDeck(idSubject, title); 
-            setIsAddDeckFormOpen(false); 
+            await createDeck(idSubject, title);
+            setIsAddDeckFormOpen(false);
         } catch (error) {
             console.error("Erro ao criar deck:", error);
             setErrorMessage({
                 main: "Ocorreu um erro ao criar o deck. Tente novamente.",
             });
         } finally {
-            setIsLoading(false); 
+            setIsLoading(false);
         }
     };
 
@@ -104,104 +105,99 @@ const AddDeckForm = ({
     };
 
     return (
-        <>
-            <div className={styles.fade} onClick={closeModal}></div>
-            <div className={styles.formContainer}>
-                <div className={styles.flexContainer}>
-                    <h2>Criar novo Deck</h2>
+        <ModalComponent closeModal={closeModal}>
+            <div className={styles.flexContainer}>
+                <h2>Criar novo Deck</h2>
 
-                    <button className={styles.closeBtn} onClick={closeModal}>
-                        <IoMdClose />
-                    </button>
+                <button className={styles.closeBtn} onClick={closeModal}>
+                    <IoMdClose />
+                </button>
+            </div>
+
+            <form
+                method="post"
+                autoComplete="off"
+                onSubmit={onSubmit}
+                className={styles.form}
+            >
+                <div className={styles.inputContainer}>
+                    <label htmlFor="title">Título</label>
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        placeholder="Digite o título do deck aqui"
+                        onChange={(e) =>
+                            handleInputChange("title", e.target.value)
+                        }
+                        value={title}
+                        className={errorMessage.title ? styles.inputError : ""}
+                    />
+                    {errorMessage.title && (
+                        <span className={styles.fieldError}>
+                            {errorMessage.title}
+                        </span>
+                    )}
                 </div>
 
-                <form
-                    method="post"
-                    autoComplete="off"
-                    onSubmit={onSubmit}
-                    className={styles.form}
-                >
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="title">Título</label>
-                        <input
-                            type="text"
-                            name="title"
-                            id="title"
-                            placeholder="Digite o título do deck aqui"
-                            onChange={(e) =>
-                                handleInputChange("title", e.target.value)
-                            }
-                            value={title}
-                            className={
-                                errorMessage.title ? styles.inputError : ""
-                            }
-                        />
-                        {errorMessage.title && (
-                            <span className={styles.fieldError}>
-                                {errorMessage.title}
-                            </span>
-                        )}
-                    </div>
-
-                    <div className={styles.inputContainer}>
-                        <div className={styles.addSubjectContainer}>
-                            <label htmlFor="subject">Matéria</label>
-                            <button
-                                type="button"
-                                className={styles.addSubject}
-                                onClick={openAddSubjectForm}
-                            >
-                                Adicionar matéria
-                            </button>
-                        </div>
-                        <select
-                            name="subject"
-                            id="subject"
-                            onChange={(e) =>
-                                handleInputChange("idSubject", e.target.value)
-                            }
-                            value={idSubject}
-                            className={
-                                errorMessage.idSubject ? styles.inputError : ""
-                            }
+                <div className={styles.inputContainer}>
+                    <div className={styles.addSubjectContainer}>
+                        <label htmlFor="subject">Matéria</label>
+                        <button
+                            type="button"
+                            className={styles.addSubject}
+                            onClick={openAddSubjectForm}
                         >
-                            <option value="">Selecione uma matéria</option>
-                            {subjects.map((subject) => {
-                                return (
-                                    <option
-                                        key={subject.idSubject}
-                                        value={subject.idSubject}
-                                    >
-                                        {subject.name}
-                                    </option>
-                                );
-                            })}
-                        </select>
-                        {errorMessage.idSubject && (
-                            <span className={styles.fieldError}>
-                                {errorMessage.idSubject}
-                            </span>
-                        )}
+                            Adicionar matéria
+                        </button>
                     </div>
-
-                    {errorMessage.main && (
-                        <div className={styles.errorContainer}>
-                            <div className={styles.errorText}>
-                                <p>{errorMessage.main}</p>
-                            </div>
-                        </div>
-                    )}
-
-                    <Button
-                        type="submit"
-                        isLoading={isLoading}
-                        loadingText="Criando Deck..."
+                    <select
+                        name="subject"
+                        id="subject"
+                        onChange={(e) =>
+                            handleInputChange("idSubject", e.target.value)
+                        }
+                        value={idSubject}
+                        className={
+                            errorMessage.idSubject ? styles.inputError : ""
+                        }
                     >
-                        + Criar Deck
-                    </Button>
-                </form>
-            </div>
-        </>
+                        <option value="">Selecione uma matéria</option>
+                        {subjects.map((subject) => {
+                            return (
+                                <option
+                                    key={subject.idSubject}
+                                    value={subject.idSubject}
+                                >
+                                    {subject.name}
+                                </option>
+                            );
+                        })}
+                    </select>
+                    {errorMessage.idSubject && (
+                        <span className={styles.fieldError}>
+                            {errorMessage.idSubject}
+                        </span>
+                    )}
+                </div>
+
+                {errorMessage.main && (
+                    <div className={styles.errorContainer}>
+                        <div className={styles.errorText}>
+                            <p>{errorMessage.main}</p>
+                        </div>
+                    </div>
+                )}
+
+                <Button
+                    type="submit"
+                    isLoading={isLoading}
+                    loadingText="Criando Deck..."
+                >
+                    + Criar Deck
+                </Button>
+            </form>
+        </ModalComponent>
     );
 };
 
