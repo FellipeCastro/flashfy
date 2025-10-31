@@ -15,6 +15,7 @@ import { useState } from "react";
 import styles from "./LandingPage.module.css";
 import Button from "../../components/Button/Button";
 import logo from "../../assets/logo.png";
+import CardComponent from "../../components/CardComponent/CardComponent";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -252,13 +253,16 @@ const LandingPage = () => {
                     <h2>Recursos Poderosos</h2>
                     <div className={styles.featuresGrid}>
                         {features.map((feature, index) => (
-                            <div key={index} className={styles.featureCard}>
+                            <CardComponent
+                                alternativeClass={styles.featureCard}
+                                key={index}
+                            >
                                 <div className={styles.featureIcon}>
                                     {feature.icon}
                                 </div>
                                 <h3>{feature.title}</h3>
                                 <p>{feature.description}</p>
-                            </div>
+                            </CardComponent>
                         ))}
                     </div>
                 </div>
@@ -269,70 +273,24 @@ const LandingPage = () => {
                     <h2>Como o FlashFy Funciona</h2>
 
                     <div className={styles.timeline}>
-                        <div
-                            className={`${styles.timelineContainer} ${styles.left}`}
-                        >
-                            <div className={styles.content}>
-                                <div className={styles.stepHeader}>
-                                    <div className={styles.stepNumber}>1</div>
-                                    <h3>Crie Seus Flashcards</h3>
-                                </div>
-                                <p>
-                                    Crie seus cartões de estudo manualmente ou
-                                    use nossa IA para gerar conteúdo
-                                    automaticamente em segundos sobre qualquer
-                                    assunto.
-                                </p>
+                        {steps.map((step, index) => (
+                            <div
+                                key={index}
+                                className={`${styles.timelineContainer} ${
+                                    index % 2 === 0 ? styles.left : styles.right
+                                }`}
+                            >
+                                <CardComponent alternativeClass={styles.content}>
+                                    <div className={styles.stepHeader}>
+                                        <div className={styles.stepNumber}>
+                                            {step.step}
+                                        </div>
+                                        <h3>{step.title}</h3>
+                                    </div>
+                                    <p>{step.description}</p>
+                                </CardComponent>
                             </div>
-                        </div>
-                        <div
-                            className={`${styles.timelineContainer} ${styles.right}`}
-                        >
-                            <div className={styles.content}>
-                                <div className={styles.stepHeader}>
-                                    <div className={styles.stepNumber}>2</div>
-                                    <h3>Revisão no Tempo Certo</h3>
-                                </div>
-                                <p>
-                                    Nosso sistema avisa quando revisar cada
-                                    conteúdo, no momento exato antes de você
-                                    começar a esquecer, maximizando sua
-                                    retenção.
-                                </p>
-                            </div>
-                        </div>
-                        <div
-                            className={`${styles.timelineContainer} ${styles.left}`}
-                        >
-                            <div className={styles.content}>
-                                <div className={styles.stepHeader}>
-                                    <div className={styles.stepNumber}>3</div>
-                                    <h3>Acompanhe Seu Progresso</h3>
-                                </div>
-                                <p>
-                                    Painel simples com métricas fáceis de
-                                    entender: veja sua evolução, retenção e
-                                    desempenho ao longo do tempo com dados
-                                    claros.
-                                </p>
-                            </div>
-                        </div>
-                        <div
-                            className={`${styles.timelineContainer} ${styles.right}`}
-                        >
-                            <div className={styles.content}>
-                                <div className={styles.stepHeader}>
-                                    <div className={styles.stepNumber}>4</div>
-                                    <h3>Atinga a Maestria</h3>
-                                </div>
-                                <p>
-                                    Domine conteúdos complexos com eficiência
-                                    comprovada, memorizando 3x mais do que
-                                    métodos tradicionais e alcançando
-                                    excelência.
-                                </p>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -342,7 +300,7 @@ const LandingPage = () => {
                     <h2>O que nossos usuários dizem</h2>
                     <div className={styles.testimonialGrid}>
                         {testimonials.map((testimonial, index) => (
-                            <div key={index} className={styles.testimonialCard}>
+                            <CardComponent key={index} alternativeClass={styles.testimonialCard}>
                                 <div className={styles.testimonialContent}>
                                     <p>"{testimonial.text}"</p>
                                 </div>
@@ -350,7 +308,7 @@ const LandingPage = () => {
                                     <h4>{testimonial.name}</h4>
                                     <span>{testimonial.role}</span>
                                 </div>
-                            </div>
+                            </CardComponent>
                         ))}
                     </div>
                 </div>

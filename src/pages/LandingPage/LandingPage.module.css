@@ -204,18 +204,7 @@
 
 /* FEATURE CARD */
 .featureCard {
-    background: var(--secondary-color);
-    padding: 2rem;
-    border-radius: 0.5rem;
     text-align: center;
-    transition: all 0.3s ease;
-    border: 2px solid var(--border-color);
-    border-radius: 0.2rem;
-    box-shadow: -4px 4px 0px var(--border-color);
-}
-
-.featureCard:hover {
-    transform: translateY(-4px);
 }
 
 .featureIcon {
@@ -278,9 +267,8 @@
 
 /* Container around content */
 .timelineContainer {
-    padding: 10px 40px;
+    padding: 1rem 3rem;
     position: relative;
-    background-color: inherit;
     width: 50%;
     z-index: 1;
 }
@@ -313,17 +301,6 @@
 /* Fix the circle for containers on the right side */
 .right::after {
     left: -18px;
-}
-
-/* The actual content */
-.content {
-    padding: 2rem;
-    background: var(--secondary-color);
-    position: relative;
-    border-radius: 0.2rem;
-    border: 2px solid var(--border-color);
-    box-shadow: -4px 4px 0px var(--border-color);
-    transition: all 0.3s ease;
 }
 
 /* Step header styles */
@@ -532,19 +509,6 @@
 }
 
 /* TESTIMONIAL CARD */
-.testimonialCard {
-    background: var(--secondary-color);
-    padding: 2rem;
-    border: 2px solid var(--border-color);
-    border-radius: 0.2rem;
-    box-shadow: -4px 4px 0px var(--border-color);
-    transition: all 0.3s ease;
-}
-
-.testimonialCard:hover {
-    transform: translateY(-4px);
-}
-
 .testimonialContent {
     margin-bottom: 1.5rem;
 }
