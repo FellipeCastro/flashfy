@@ -1,5 +1,6 @@
 import { FaExclamation } from "react-icons/fa";
 import styles from "./Deck.module.css";
+import CardComponent from "../CardComponent/CardComponent";
 
 const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
     const formatDate = (dateString) => {
@@ -58,7 +59,7 @@ const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
     };
 
     return (
-        <li className={styles.deck} onClick={openCard}>
+        <CardComponent alternativeClass={styles.deck} onClick={openCard}>
             {needsAttention() && (
                 <span
                     className={styles.toDo}
@@ -83,7 +84,7 @@ const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
                 <strong>Próxima revisão:</strong>{" "}
                 {nextReview ? formatDate(nextReview) : "Não agendada"}
             </p>
-        </li>
+        </CardComponent>
     );
 };
 

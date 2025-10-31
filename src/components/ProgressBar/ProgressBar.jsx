@@ -1,5 +1,6 @@
 import { FaFire } from "react-icons/fa6";
 import styles from "./ProgressBar.module.css";
+import CardComponent from "../CardComponent/CardComponent";
 
 const ProgressBar = ({ progress }) => {
     const days = ["D", "S", "T", "Q", "Q", "S", "S"];
@@ -8,7 +9,7 @@ const ProgressBar = ({ progress }) => {
     const currentDay = date.getDay();
 
     return (
-        <div className={styles.progressBarContainer}>
+        <CardComponent alternativeClass={styles.progressBarContainer}>
             <h2>
                 <FaFire className={progress.consecutiveDays > 0 ? `${styles.fireIcon}` : `${styles.fireIcon} ${styles.inative}`} />
                 {progress.message ? progress.message : <p id="loader">Carregando...</p>}
@@ -37,7 +38,7 @@ const ProgressBar = ({ progress }) => {
                     {progress.decksToStudy ? progress.decksToStudy : 0}
                 </span>
             </div>
-        </div>
+        </CardComponent>
     );
 };
 

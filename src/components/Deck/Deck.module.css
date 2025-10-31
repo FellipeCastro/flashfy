@@ -1,28 +1,9 @@
 .deck {
-    background: var(--secondary-color);
-    list-style: none;
-    padding: 1.3rem;
-    border: 2px solid var(--border-color);
-    border-radius: 0.2rem;
-    box-shadow: -4px 4px 0px var(--border-color);
+    padding: 1.3rem !important;
     display: grid;
     gap: 0.5rem;
-    transition: 0.2s;
     position: relative;
-}
-
-.deck:hover {
     cursor: pointer;
-    border-color: var(--border-color);
-    box-shadow: -4px 4px 0px var(--border-color);
-    transform: translateY(-4px);
-}
-
-.deck:active {
-    box-shadow: -4px 4px 0px var(--border-color);
-    transform: translateY(4px);
-    transform: translateX(-4px);
-    box-shadow: none;
 }
 
 .subject {
