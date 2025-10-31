@@ -222,7 +222,12 @@ const LandingPage = () => {
                 </div>
                 <div className={styles.heroVisual}>
                     <div className={styles.flashcardDemo}>
-                        <div className={`${styles.flashcard} ${showAnswer ? styles.showAnswer : null}`} onClick={() => setShoeAnswer(!showAnswer)}>
+                        <div
+                            className={`${styles.flashcard} ${
+                                showAnswer ? styles.showAnswer : null
+                            }`}
+                            onClick={() => setShoeAnswer(!showAnswer)}
+                        >
                             <div className={styles.flashcardFront}>
                                 <h3>
                                     O que é a teoria da relatividade de
@@ -262,19 +267,72 @@ const LandingPage = () => {
             <section id="how-it-works" className={styles.howItWorks}>
                 <div className={styles.container}>
                     <h2>Como o FlashFy Funciona</h2>
-                    <div className={styles.steps}>
-                        {steps.map((step, index) => (
-                            <div key={index} className={styles.step}>
-                                <div className={styles.stepNumber}>
-                                    {step.step}
+
+                    <div className={styles.timeline}>
+                        <div
+                            className={`${styles.timelineContainer} ${styles.left}`}
+                        >
+                            <div className={styles.content}>
+                                <div className={styles.stepHeader}>
+                                    <div className={styles.stepNumber}>1</div>
+                                    <h3>Crie Seus Flashcards</h3>
                                 </div>
-                                <div className={styles.stepIcon}>
-                                    {step.icon}
-                                </div>
-                                <h3>{step.title}</h3>
-                                <p>{step.description}</p>
+                                <p>
+                                    Crie seus cartões de estudo manualmente ou
+                                    use nossa IA para gerar conteúdo
+                                    automaticamente em segundos sobre qualquer
+                                    assunto.
+                                </p>
                             </div>
-                        ))}
+                        </div>
+                        <div
+                            className={`${styles.timelineContainer} ${styles.right}`}
+                        >
+                            <div className={styles.content}>
+                                <div className={styles.stepHeader}>
+                                    <div className={styles.stepNumber}>2</div>
+                                    <h3>Revisão no Tempo Certo</h3>
+                                </div>
+                                <p>
+                                    Nosso sistema avisa quando revisar cada
+                                    conteúdo, no momento exato antes de você
+                                    começar a esquecer, maximizando sua
+                                    retenção.
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            className={`${styles.timelineContainer} ${styles.left}`}
+                        >
+                            <div className={styles.content}>
+                                <div className={styles.stepHeader}>
+                                    <div className={styles.stepNumber}>3</div>
+                                    <h3>Acompanhe Seu Progresso</h3>
+                                </div>
+                                <p>
+                                    Painel simples com métricas fáceis de
+                                    entender: veja sua evolução, retenção e
+                                    desempenho ao longo do tempo com dados
+                                    claros.
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            className={`${styles.timelineContainer} ${styles.right}`}
+                        >
+                            <div className={styles.content}>
+                                <div className={styles.stepHeader}>
+                                    <div className={styles.stepNumber}>4</div>
+                                    <h3>Atinga a Maestria</h3>
+                                </div>
+                                <p>
+                                    Domine conteúdos complexos com eficiência
+                                    comprovada, memorizando 3x mais do que
+                                    métodos tradicionais e alcançando
+                                    excelência.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
