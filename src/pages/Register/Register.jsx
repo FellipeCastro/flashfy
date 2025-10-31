@@ -6,6 +6,7 @@ import { jwtDecode } from "jwt-decode";
 import FormField from "../../components/Form/FormField";
 import api from "../../constants/api.js";
 import styles from "./Register.module.css";
+import Button from "../../components/Button/Button.jsx";
 
 const Register = ({ loadData }) => {
     const [formData, setFormData] = useState({
@@ -211,23 +212,15 @@ const Register = ({ loadData }) => {
                         error={errors.confirmPassword}
                         showPasswordToggle={true}
                     />
-
-                    <button
+                    
+                    <Button
                         type="submit"
-                        className={`${styles.registerButton} ${
-                            isLoading || isGoogleLoading ? styles.loading : ""
-                        }`}
-                        disabled={isLoading || isGoogleLoading}
+                        isLoading={isLoading || isGoogleLoading}
+                        loadingText="Criando conta..."
+                        alternativeClass={styles.registerButton}
                     >
-                        {isLoading || isGoogleLoading ? (
-                            <>
-                                <span className={styles.spinner}></span>
-                                Criando conta...
-                            </>
-                        ) : (
-                            "Criar conta e começar"
-                        )}
-                    </button>
+                        Criar conta e começar
+                    </Button>
                 </form>
 
                 <div className={styles.divider}>

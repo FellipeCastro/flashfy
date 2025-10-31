@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode"; // Importante: para decodificar o token
+import { jwtDecode } from "jwt-decode"; 
 import FormField from "../../components/Form/FormField";
+import Button from "../../components/Button/Button.jsx";
 import api from "../../constants/api.js";
 import styles from "./Login.module.css";
 
@@ -191,22 +192,14 @@ const Login = ({ loadData }) => {
                         </Link>
                     </div>
 
-                    <button
+                    <Button
                         type="submit"
-                        className={`${styles.loginButton} ${
-                            isLoading || isGoogleLoading ? styles.loading : ""
-                        }`}
-                        disabled={isLoading || isGoogleLoading}
+                        isLoading={isLoading || isGoogleLoading}
+                        loadingText="Entrando..."
+                        alternativeClass={styles.loginButton}
                     >
-                        {isLoading || isGoogleLoading ? (
-                            <>
-                                <span className={styles.spinner}></span>
-                                Entrando...
-                            </>
-                        ) : (
-                            "Entrar"
-                        )}
-                    </button>
+                            Entrar
+                    </Button>
                 </form>
 
                 <div className={styles.divider}>

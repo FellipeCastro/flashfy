@@ -110,43 +110,8 @@
 
 .loginButton {
     width: 100%;
-    padding: 1rem 2rem;
-    background: var(--primary-color);
-    color: var(--secondary-color);
-    border: none;
-    border-radius: 2rem;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    font-size: 1rem;
 }
 
-.loginButton:hover:not(:disabled) {
-    background: var(--primary-color-hover);
-}
-
-.loginButton:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-.loginButton.loading {
-    background-color: var(--primary-color-hover);
-}
-
-.spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid transparent;
-    border-top: 2px solid var(--secondary-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
 
 .divider {
     display: flex;

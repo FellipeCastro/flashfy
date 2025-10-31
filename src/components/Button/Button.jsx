@@ -3,6 +3,7 @@ import styles from "./Button.module.css";
 const Button = ({
     children,
     onClick,
+    alternativeClass = null,
     isLoading = null,
     loadingText = null,
     secondary = false,
@@ -11,7 +12,7 @@ const Button = ({
         <button
             className={`${styles.btn} ${isLoading ? styles.loading : ""} ${
                 secondary ? styles.secondary : ""
-            }`}
+            } ${alternativeClass ? alternativeClass : ""}`}
             onClick={onClick}
             disabled={isLoading}
         >

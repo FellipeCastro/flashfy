@@ -167,11 +167,15 @@
     transition: 0.3s ease-in-out;
 }
 
+.subject:hover {
+    border-color: var(--text-secondary-color);
+}
+
 .subjectColor {
     width: 1.8rem;
     height: 1.8rem;
     border-radius: 0.2rem;
-    border: 2px solid var(--border-color);
+    border: 0.1rem solid var(--border-color);
     flex-shrink: 0;
 }
 
@@ -221,7 +225,7 @@
     padding: 1.5rem;
     background: rgba(244, 67, 54, 0.05);
     border-radius: 0.4rem;
-    border: 1px solid var(--error-color-text);
+    border: 0.08rem solid var(--error-color-text);
 }
 
 .dangerItem h3 {
@@ -281,6 +285,10 @@
     transition: 0.2s ease-in-out;
 }
 
+.statCard:hover {
+    border-color: var(--text-secondary-color);
+}
+
 .statCard:hover > .statInfo h3 {
     color: var(--text-primary-color);
 }
@@ -298,7 +306,7 @@
 }
 
 .statInfo h3 {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 600;
     color: var(--text-secondary-color);
     margin-bottom: 0.25rem;

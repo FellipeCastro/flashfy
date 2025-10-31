@@ -300,12 +300,11 @@ const Profile = ({
             }
         } catch (error) {
             console.log(error);
-        } 
+        }
     };
 
     return (
         <>
-
             <div className={styles.container}>
                 <Sidebar
                     isSidebarOpen={isSidebarOpen}
@@ -454,13 +453,7 @@ const Profile = ({
                             <div className={styles.statsGrid}>
                                 <div className={styles.statCard}>
                                     <div className={styles.statIcon}>
-                                        <FaFire
-                                            className={`${styles.fireIcon} ${
-                                                progress.consecutiveDays > 0
-                                                    ? styles.active
-                                                    : styles.inactive
-                                            }`}
-                                        />
+                                        <FaFire />
                                     </div>
                                     <div className={styles.statInfo}>
                                         <h3>Dias Consecutivos</h3>
@@ -472,9 +465,6 @@ const Profile = ({
                                             {progress.consecutiveDays === 1
                                                 ? null
                                                 : "s"}{" "}
-                                            {progress.consecutiveDays === 1
-                                                ? null
-                                                : "consecutivos"}{" "}
                                             estudando
                                         </span>
                                     </div>
