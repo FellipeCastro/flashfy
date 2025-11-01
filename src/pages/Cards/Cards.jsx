@@ -4,9 +4,10 @@ import { FaArrowLeft, FaArrowRight , FaTrashAlt } from "react-icons/fa";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import Button from "../../components/Button/Button";
 import AddCardForm from "../../components/AddCardForm/AddCardForm";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import CardComponent from "../../components/CardComponent/CardComponent"
 import api from "../../constants/api.js";
 import styles from "./Cards.module.css";
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal.jsx";
 
 const Cards = ({ decks, loadData }) => {
     const { id } = useParams();
@@ -281,8 +282,8 @@ const Cards = ({ decks, loadData }) => {
                             </span>
                         </div>
 
-                        <div className={styles.cardContainer}>
-                            <div className={styles.card}>
+                        <div class={styles.cardContainer}>
+                            <CardComponent alternativeClass={styles.card}>
                                 <p className={styles.question}>
                                     {currentCard.question}
                                     <button
@@ -314,11 +315,11 @@ const Cards = ({ decks, loadData }) => {
                                         <p>{currentCard.answer}</p>
                                     </div>
                                 </div>
-                            </div>
+                            </CardComponent>
                         </div>
 
-                        <div
-                            className={`${styles.feedbackContainer} ${
+                        <CardComponent
+                            alternativeClass={`${styles.feedbackContainer} ${
                                 showAnswer ? null : styles.hidden
                             }`}
                         >
@@ -366,7 +367,7 @@ const Cards = ({ decks, loadData }) => {
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </CardComponent>
                     </>
                 )}
                 {currentCardIndex === currentDeck.cards.length - 1 ? (

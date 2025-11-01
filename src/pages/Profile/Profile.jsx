@@ -10,6 +10,7 @@ import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import styles from "./Profile.module.css";
 import api from "../../constants/api";
 import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
+import CardComponent from "../../components/CardComponent/CardComponent";
 
 const Profile = ({
     isSidebarOpen,
@@ -280,8 +281,13 @@ const Profile = ({
     };
 
     const handleLogout = () => {
-        localStorage.clear();
-        navigate("/login");
+        setIsLoading(true);
+
+        setTimeout(() => {
+            localStorage.clear();
+            setIsLoading(false);
+            navigate("/login");
+        }, 2000);
     };
 
     const openAddSubjectForm = () => {
@@ -328,127 +334,129 @@ const Profile = ({
                             {successMessage}
                         </div>
                     )}
-
-                    <form
-                        onSubmit={handleSubmit}
-                        className={styles.profileForm}
-                    >
-                        <div className={styles.formSection}>
-                            <h2>Informações Pessoais</h2>
-
-                            <FormField
-                                label="Nome completo"
-                                type="text"
-                                name="name"
-                                value={
-                                    loading
-                                        ? "Carregando dados..."
-                                        : userData.name
-                                }
-                                onChange={handleChange}
-                                placeholder="Seu nome completo"
-                                error={errors.name}
-                                disabled={!isEditing || loading}
-                            />
-
-                            <FormField
-                                label="Email"
-                                type="email"
-                                name="email"
-                                value={
-                                    loading
-                                        ? "Carregando dados..."
-                                        : userData.email
-                                }
-                                onChange={handleChange}
-                                placeholder="seu@email.com"
-                                error={errors.email}
-                                disabled={!isEditing || loading}
-                            />
-                        </div>
-
-                        {isChangingPassword && (
+                    <CardComponent alternativeClass={styles.profileForm}>
+                        <form onSubmit={handleSubmit}>
                             <div className={styles.formSection}>
-                                <h2>Alterar Senha</h2>
+                                <h2>Informações Pessoais</h2>
 
                                 <FormField
-                                    label="Senha atual"
-                                    type="password"
-                                    name="currentPassword"
-                                    value={userData.currentPassword}
+                                    label="Nome completo"
+                                    type="text"
+                                    name="name"
+                                    value={
+                                        loading
+                                            ? "Carregando dados..."
+                                            : userData.name
+                                    }
                                     onChange={handleChange}
-                                    placeholder="Sua senha atual"
-                                    error={errors.currentPassword}
-                                    showPasswordToggle={true}
+                                    placeholder="Seu nome completo"
+                                    error={errors.name}
+                                    disabled={!isEditing || loading}
                                 />
 
                                 <FormField
-                                    label="Nova senha"
-                                    type="password"
-                                    name="newPassword"
-                                    value={userData.newPassword}
+                                    label="Email"
+                                    type="email"
+                                    name="email"
+                                    value={
+                                        loading
+                                            ? "Carregando dados..."
+                                            : userData.email
+                                    }
                                     onChange={handleChange}
-                                    placeholder="Sua nova senha"
-                                    error={errors.newPassword}
-                                    showPasswordToggle={true}
-                                />
-
-                                <FormField
-                                    label="Confirmar nova senha"
-                                    type="password"
-                                    name="confirmPassword"
-                                    value={userData.confirmPassword}
-                                    onChange={handleChange}
-                                    placeholder="Confirme sua nova senha"
-                                    error={errors.confirmPassword}
-                                    showPasswordToggle={true}
+                                    placeholder="seu@email.com"
+                                    error={errors.email}
+                                    disabled={!isEditing || loading}
                                 />
                             </div>
-                        )}
 
-                        <div className={styles.actions}>
-                            {!isEditing && !isChangingPassword ? (
-                                <div className={styles.editActions}>
-                                    <Button
-                                        type="button"
-                                        onClick={handleEditProfile}
-                                        disabled={loading}
-                                    >
-                                        {loading
-                                            ? "Carregando..."
-                                            : "Editar Perfil"}
-                                    </Button>
-                                    <Button
-                                        type="button"
-                                        secondary
-                                        onClick={handleChangePassword}
-                                        disabled={loading}
-                                    >
-                                        Alterar Senha
-                                    </Button>
-                                </div>
-                            ) : (
-                                <div className={styles.editActions}>
-                                    <Button type="submit" disabled={isLoading}>
-                                        {isLoading
-                                            ? "Salvando..."
-                                            : isChangingPassword
-                                            ? "Alterar Senha"
-                                            : "Salvar Alterações"}
-                                    </Button>
-                                    <Button
-                                        type="button"
-                                        secondary
-                                        onClick={handleCancelEdit}
-                                    >
-                                        Cancelar
-                                    </Button>
+                            {isChangingPassword && (
+                                <div className={styles.formSection}>
+                                    <h2>Alterar Senha</h2>
+
+                                    <FormField
+                                        label="Senha atual"
+                                        type="password"
+                                        name="currentPassword"
+                                        value={userData.currentPassword}
+                                        onChange={handleChange}
+                                        placeholder="Sua senha atual"
+                                        error={errors.currentPassword}
+                                        showPasswordToggle={true}
+                                    />
+
+                                    <FormField
+                                        label="Nova senha"
+                                        type="password"
+                                        name="newPassword"
+                                        value={userData.newPassword}
+                                        onChange={handleChange}
+                                        placeholder="Sua nova senha"
+                                        error={errors.newPassword}
+                                        showPasswordToggle={true}
+                                    />
+
+                                    <FormField
+                                        label="Confirmar nova senha"
+                                        type="password"
+                                        name="confirmPassword"
+                                        value={userData.confirmPassword}
+                                        onChange={handleChange}
+                                        placeholder="Confirme sua nova senha"
+                                        error={errors.confirmPassword}
+                                        showPasswordToggle={true}
+                                    />
                                 </div>
                             )}
-                        </div>
-                    </form>
+
+                            <div className={styles.actions}>
+                                {!isEditing && !isChangingPassword ? (
+                                    <div className={styles.editActions}>
+                                        <Button
+                                            type="button"
+                                            onClick={handleEditProfile}
+                                            disabled={loading}
+                                        >
+                                            {loading
+                                                ? "Carregando..."
+                                                : "Editar Perfil"}
+                                        </Button>
+                                        <Button
+                                            type="button"
+                                            secondary
+                                            onClick={handleChangePassword}
+                                            disabled={loading}
+                                        >
+                                            Alterar Senha
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <div className={styles.editActions}>
+                                        <Button
+                                            type="submit"
+                                            disabled={isLoading}
+                                        >
+                                            {isLoading
+                                                ? "Salvando..."
+                                                : isChangingPassword
+                                                ? "Alterar Senha"
+                                                : "Salvar Alterações"}
+                                        </Button>
+                                        <Button
+                                            type="button"
+                                            secondary
+                                            onClick={handleCancelEdit}
+                                        >
+                                            Cancelar
+                                        </Button>
+                                    </div>
+                                )}
+                            </div>
+                        </form>
+                    </CardComponent>
+
                     {progress && (
-                        <div className={styles.statsSection}>
+                        <CardComponent alternativeClass={styles.statsSection}>
                             <h2>Estatísticas de Estudo</h2>
                             <div className={styles.statsGrid}>
                                 <div className={styles.statCard}>
@@ -560,10 +568,10 @@ const Profile = ({
                                     </span>
                                 </div>
                             </div>
-                        </div>
+                        </CardComponent>
                     )}
 
-                    <div className={styles.subjectsSection}>
+                    <CardComponent alternativeClass={styles.subjectsSection}>
                         <div className={styles.flexContainer}>
                             <h2>Matérias cadastradas</h2>
                             <button
@@ -608,9 +616,9 @@ const Profile = ({
                                 })}
                             </div>
                         )}
-                    </div>
+                    </CardComponent>
 
-                    <div className={styles.dangerZone}>
+                    <CardComponent alternativeClass={styles.dangerZone}>
                         <h2>Zona de Perigo</h2>
                         <div className={styles.dangerActions}>
                             <div className={styles.dangerItem}>
@@ -637,7 +645,7 @@ const Profile = ({
                                 </Button>
                             </div>
                         </div>
-                    </div>
+                    </CardComponent>
                 </div>
             </div>
 
@@ -648,6 +656,8 @@ const Profile = ({
                     btnText="Confirmar"
                     onClick={handleLogout}
                     onCancel={() => setLogoutModal(false)}
+                    isLoading={isLoading}
+                    loadingText={"Saindo..."}
                 />
             )}
 

@@ -1,6 +1,6 @@
 import { IoIosWarning } from "react-icons/io";
-import styles from "./ConfirmModal.module.css";
 import ModalComponent from "../ModalComponent/ModalComponent";
+import styles from "./ConfirmModal.module.css";
 
 const ConfirmModal = ({
     title,
