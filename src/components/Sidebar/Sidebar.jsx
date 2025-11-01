@@ -1,11 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { MdKeyboardDoubleArrowRight, MdHome } from "react-icons/md";
-import { FaUser, FaMap } from "react-icons/fa";
+import { FaUser, FaMap, FaSun, FaMoon } from "react-icons/fa";
 import { BsStars } from 'react-icons/bs';
 import styles from "./Sidebar.module.css";
 import logo from "../../assets/logo.png";
 
-const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, theme, toggleTheme }) => {
     const location = useLocation();
 
     return (

@@ -22,6 +22,8 @@ const Home = ({
     setSelectedSubjects,
     loadData,
     loading,
+    theme,
+    toggleTheme,
 }) => {
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
     const [isAddDeckWithAIFormOpen, setIsAddDeckWithAIFormOpen] = useState(false);
@@ -83,6 +85,8 @@ const Home = ({
                 <Sidebar
                     isSidebarOpen={isSidebarOpen}
                     setIsSidebarOpen={setIsSidebarOpen}
+                    theme={theme}
+                    toggleTheme={toggleTheme}
                 />
 
                 <div className={styles.mainContainer}>

@@ -11,7 +11,8 @@ import {
     FaBars,
     FaChevronDown,
 } from "react-icons/fa";
-import { useState } from "react";
+// Importações necessárias do React
+import { useState, useEffect, useRef } from "react"; 
 import styles from "./LandingPage.module.css";
 import Button from "../../components/Button/Button";
 import logo from "../../assets/logo.png";
@@ -21,6 +22,42 @@ const LandingPage = () => {
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showAnswer, setShoeAnswer] = useState(false);
+
+    // --- LÓGICA DA ANIMAÇÃO AO ROLAR (ATUALIZADA) ---
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    // --- MUDANÇA BEM AQUI ---
+                    if (entry.isIntersecting) {
+                        // Se está na tela, adiciona a classe para animar a entrada
+                        entry.target.classList.add(styles.isVisible);
+                    } else {
+                        // Se saiu da tela, remove a classe para animar a saída
+                        entry.target.classList.remove(styles.isVisible);
+                    }
+                    // A linha 'observer.unobserve(entry.target);' FOI REMOVIDA
+                });
+            },
+            {
+                root: null, // viewport
+                rootMargin: "0px",
+                threshold: 0.1, // 10% do item precisa estar visível
+            }
+        );
+
+        // Seleciona todos os elementos que queremos animar
+        const elementsToAnimate = document.querySelectorAll(
+            `.${styles.animateOnScroll}`
+        );
+        elementsToAnimate.forEach((el) => observer.observe(el));
+
+        // Limpa o observer quando o componente desmonta
+        return () => {
+            elementsToAnimate.forEach((el) => observer.unobserve(el));
+        };
+    }, []);
+    // --- FIM DA LÓGICA DA ANIMAÇÃO ---
 
     const features = [
         {
@@ -205,7 +242,8 @@ const LandingPage = () => {
             </header>
 
             <section className={styles.hero}>
-                <div className={styles.heroContent}>
+                {/* Adiciona a classe de animação */}
+                <div className={`${styles.heroContent} ${styles.animateOnScroll}`}>
                     <h1>Domine qualquer assunto com flashcards inteligentes</h1>
                     <p>
                         O FlashFy utiliza algoritmos de repetição espaçada e IA
@@ -221,7 +259,8 @@ const LandingPage = () => {
                         </Button>
                     </div>
                 </div>
-                <div className={styles.heroVisual}>
+                {/* Adiciona a classe de animação */}
+                <div className={`${styles.heroVisual} ${styles.animateOnScroll}`}>
                     <div className={styles.flashcardDemo}>
                         <div
                             className={`${styles.flashcard} ${
@@ -250,11 +289,13 @@ const LandingPage = () => {
 
             <section id="features" className={styles.features}>
                 <div className={styles.container}>
-                    <h2>Recursos Poderosos</h2>
+                    {/* Adiciona a classe de animação */}
+                    <h2 className={styles.animateOnScroll}>Recursos Poderosos</h2>
                     <div className={styles.featuresGrid}>
                         {features.map((feature, index) => (
                             <CardComponent
-                                alternativeClass={styles.featureCard}
+                                // Adiciona a classe de animação
+                                alternativeClass={`${styles.featureCard} ${styles.animateOnScroll}`}
                                 key={index}
                             >
                                 <div className={styles.featureIcon}>
@@ -270,15 +311,17 @@ const LandingPage = () => {
 
             <section id="how-it-works" className={styles.howItWorks}>
                 <div className={styles.container}>
-                    <h2>Como o FlashFy Funciona</h2>
+                    {/* Adiciona a classe de animação */}
+                    <h2 className={styles.animateOnScroll}>Como o FlashFy Funciona</h2>
 
                     <div className={styles.timeline}>
                         {steps.map((step, index) => (
                             <div
                                 key={index}
+                                // Adiciona a classe de animação
                                 className={`${styles.timelineContainer} ${
                                     index % 2 === 0 ? styles.left : styles.right
-                                }`}
+                                } ${styles.animateOnScroll}`}
                             >
                                 <CardComponent alternativeClass={styles.content}>
                                     <div className={styles.stepHeader}>
@@ -297,10 +340,15 @@ const LandingPage = () => {
 
             <section id="testimonials" className={styles.testimonials}>
                 <div className={styles.container}>
-                    <h2>O que nossos usuários dizem</h2>
+                    {/* Adiciona a classe de animação */}
+                    <h2 className={styles.animateOnScroll}>O que nossos usuários dizem</h2>
                     <div className={styles.testimonialGrid}>
                         {testimonials.map((testimonial, index) => (
-                            <CardComponent key={index} alternativeClass={styles.testimonialCard}>
+                            <CardComponent 
+                                key={index} 
+                                // Adiciona a classe de animação
+                                alternativeClass={`${styles.testimonialCard} ${styles.animateOnScroll}`}
+                            >
                                 <div className={styles.testimonialContent}>
                                     <p>"{testimonial.text}"</p>
                                 </div>
@@ -316,10 +364,12 @@ const LandingPage = () => {
 
             <section id="faq" className={styles.faq}>
                 <div className={styles.container}>
-                    <h2>Perguntas Frequentes</h2>
+                    {/* Adiciona a classe de animação */}
+                    <h2 className={styles.animateOnScroll}>Perguntas Frequentes</h2>
                     <div className={styles.faqContainer}>
                         {faqData.map((item, index) => (
-                            <details key={index} className={styles.faqItem}>
+                            // Adiciona a classe de animação
+                            <details key={index} className={`${styles.faqItem} ${styles.animateOnScroll}`}>
                                 <summary className={styles.faqQuestion}>
                                     {item.question}
                                     <FaChevronDown className={styles.faqIcon} />

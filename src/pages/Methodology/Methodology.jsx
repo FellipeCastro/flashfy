@@ -9,28 +9,28 @@ import { GoGoal } from "react-icons/go";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import styles from "./Methodology.module.css";
 
-const Methodology = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const Methodology = ({ isSidebarOpen, setIsSidebarOpen, theme, toggleTheme }) => {
     const scientificPillars = [
         {
             icon: <FaChartLine />,
             title: "Curva do Esquecimento",
             description:
                 "Baseado nos estudos de Hermann Ebbinghaus, nosso sistema combate a tendência natural de esquecer informações. As revisões são agendadas nos momentos exatos em que sua memória começa a enfraquecer, reforçando o conhecimento de forma duradoura.",
-            link: "https://en.wikipedia.org/wiki/Hermann_Ebbinghaus",
+            link: "[https://en.wikipedia.org/wiki/Hermann_Ebbinghaus](https://en.wikipedia.org/wiki/Hermann_Ebbinghaus)",
         },
         {
             icon: <FaRegClock />,
             title: "Efeito do Espaçamento",
             description:
                 "Distribuir as revisões ao longo do tempo é muito mais eficaz do que estudar tudo de uma vez. O FlashFy automatiza esse processo, garantindo que você revise o conteúdo em intervalos otimizados para a máxima retenção.",
-            link: "https://pubmed.ncbi.nlm.nih.gov/16893288/",
+            link: "[https://pubmed.ncbi.nlm.nih.gov/16893288/](https://pubmed.ncbi.nlm.nih.gov/16893288/)",
         },
         {
             icon: <FaBrain />,
             title: "Dificuldade Desejável",
             description:
                 "O aprendizado é mais forte quando seu cérebro precisa se esforçar um pouco para lembrar de algo. Nosso algoritmo ajusta os intervalos para criar um desafio na medida certa, fortalecendo suas conexões neurais a cada revisão.",
-            link: "https://bjorklab.psych.ucla.edu/research/",
+            link: "[https://bjorklab.psych.ucla.edu/research/](https://bjorklab.psych.ucla.edu/research/)",
         },
     ];
 
@@ -39,6 +39,8 @@ const Methodology = ({ isSidebarOpen, setIsSidebarOpen }) => {
             <Sidebar
                 isSidebarOpen={isSidebarOpen}
                 setIsSidebarOpen={setIsSidebarOpen}
+                theme={theme}
+                toggleTheme={toggleTheme}
             />
             <main className={styles.mainContainer}>
                 <header className={styles.header}>

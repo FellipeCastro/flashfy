@@ -3,20 +3,23 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    /* LINHA ATUALIZADA: Sai o gradiente fixo, entra a variável */
+    background: var(--bg-color);
     padding: 20px;
     animation: fadeIn 0.5s ease-out;
+    /* Adiciona transição para suavidade */
+    transition: background-color 0.3s ease;
 }
 
 .registerCard {
     background-color: var(--secondary-color);
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px var(--shadow-color);
     padding: 2.5rem;
     width: 100%;
     max-width: 480px;
     animation: slideIn 0.5s ease-out;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transição Suave */
     position: relative;
 }
 

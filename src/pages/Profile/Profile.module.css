@@ -422,3 +422,95 @@
 .dangerZone:hover {
     transform: translateY(0px) !important;
 }
+
+/* --- NOVOS ESTILOS PARA SEÇÃO DE APARÊNCIA --- */
+.appearanceSection {
+    margin-bottom: 2rem;
+}
+
+.appearanceSection:hover {
+     transform: translateY(0px) !important;
+}
+
+.appearanceSection h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.themeToggleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.25rem;
+}
+
+.themeLabel {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary-color);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.themeIcon {
+    font-size: 1.2rem;
+    color: var(--text-secondary-color);
+    display: flex;
+    align-items: center;
+}
+
+/* --- Estilos do Interruptor (Toggle Switch) --- */
+.toggleSwitch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+
+.toggleInput {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggleSlider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 28px;
+}
+
+.toggleSlider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.toggleInput:checked + .toggleSlider {
+    background-color: var(--primary-color);
+}
+
+.toggleInput:focus + .toggleSlider {
+    box-shadow: 0 0 1px var(--primary-color);
+}
+
+.toggleInput:checked + .toggleSlider:before {
+    transform: translateX(22px);
+}
+/* --- Fim dos Novos Estilos --- */

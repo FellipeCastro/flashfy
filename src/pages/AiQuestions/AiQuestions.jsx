@@ -12,7 +12,7 @@ import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import styles from "./AiQuestions.module.css";
 import api from "../../constants/api.js";
 
-const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen, theme, toggleTheme }) => {
     const [formData, setFormData] = useState({
         theme: "",
         difficulty: "",
@@ -315,6 +315,8 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 <Sidebar
                     isSidebarOpen={isSidebarOpen}
                     setIsSidebarOpen={setIsSidebarOpen}
+                    theme={theme}
+                    toggleTheme={toggleTheme}
                 />
 
                 <div className={styles.mainContainer}>

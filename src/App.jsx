@@ -19,6 +19,24 @@ const App = () => {
     const [selectedSubjects, setSelectedSubjects] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    // --- Dark Mode State ---
+    const [theme, setTheme] = useState(() => {
+        const savedTheme = localStorage.getItem("theme");
+        return savedTheme ? savedTheme : "light";
+    });
+
+    // Effect to apply theme to body and save to localStorage
+    useEffect(() => {
+        document.body.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+    }, [theme]);
+
+    // Function to toggle theme
+    const toggleTheme = () => {
+        setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    };
+    // --- End Dark Mode State ---
+
     const loadData = async () => {
         try {
             setLoading(true);
@@ -146,6 +164,9 @@ const App = () => {
                                 setSelectedSubjects={setSelectedSubjects}
                                 loadData={loadData}
                                 loading={loading}
+                                // Pass theme props
+                                theme={theme}
+                                toggleTheme={toggleTheme}
                             />
                         </ProtectedRoute>
                     }
@@ -167,6 +188,9 @@ const App = () => {
                             <AiQuestions
                                 isSidebarOpen={isSidebarOpen}
                                 setIsSidebarOpen={setIsSidebarOpen}
+                                // Pass theme props
+                                theme={theme}
+                                toggleTheme={toggleTheme}
                             />
                         </ProtectedRoute>
                     }
@@ -179,6 +203,9 @@ const App = () => {
                             <Methodology
                                 isSidebarOpen={isSidebarOpen}
                                 setIsSidebarOpen={setIsSidebarOpen}
+                                // Pass theme props
+                                theme={theme}
+                                toggleTheme={toggleTheme}
                             />
                         </ProtectedRoute>
                     }
@@ -197,6 +224,9 @@ const App = () => {
                                 refreshSubjects={refreshSubjects}
                                 loading={loading}
                                 progress={progress}
+                                // Pass theme props
+                                theme={theme}
+                                toggleTheme={toggleTheme}
                             />
                         </ProtectedRoute>
                     }

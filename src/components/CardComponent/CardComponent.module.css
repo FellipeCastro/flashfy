@@ -4,7 +4,10 @@
     transition: all 0.3s ease;
     border: 2px solid var(--border-color);
     border-radius: 0.2rem;
-    box-shadow: -4px 4px 0px var(--border-color);
+    
+    /* --- MUDANÇA AQUI --- */
+    /* Trocamos a variável para que ela possa ser controlada no index.css */
+    box-shadow: -4px 4px 0px var(--hard-shadow-color);
 }
 
 .card:hover {

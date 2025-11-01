@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaTrashAlt, FaBook, FaLayerGroup, FaFileAlt } from "react-icons/fa";
+import {
+    FaTrashAlt,
+    FaBook,
+    FaLayerGroup,
+    FaFileAlt,
+    FaSun,
+    FaMoon,
+} from "react-icons/fa";
 import { FaFire } from "react-icons/fa6";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
@@ -21,6 +28,8 @@ const Profile = ({
     refreshSubjects,
     loading,
     progress,
+    theme, // Prop para receber o tema atual
+    toggleTheme, // Prop para receber a função de toggle
 }) => {
     const [userData, setUserData] = useState({
         name: "",
@@ -202,7 +211,7 @@ const Profile = ({
 
             await api.delete("/users/profile");
 
-            localStorage.clear();
+            localStorage.clear(); // Aqui tudo bem apagar tudo
             navigate("/login");
         } catch (error) {
             console.error("Erro ao excluir conta:", error);
@@ -280,15 +289,23 @@ const Profile = ({
         setSubjectToDelete(null);
     };
 
+    // --- FUNÇÃO CORRIGIDA ---
     const handleLogout = () => {
         setIsLoading(true);
 
         setTimeout(() => {
-            localStorage.clear();
+            // CORREÇÃO AQUI:
+            // Em vez de apagar tudo, removemos apenas o token e o ID do usuário.
+            // Assim, a preferência de tema ("theme") é mantida no localStorage.
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("idUser");
+            // localStorage.clear(); // <--- O PROBLEMA ESTAVA AQUI
+
             setIsLoading(false);
             navigate("/login");
         }, 2000);
     };
+    // --- FIM DA CORREÇÃO ---
 
     const openAddSubjectForm = () => {
         setIsAddSubjectFormOpen(true);
@@ -454,6 +471,33 @@ const Profile = ({
                             </div>
                         </form>
                     </CardComponent>
+
+                    {/* --- SEÇÃO DE APARÊNCIA --- */}
+                    <CardComponent alternativeClass={styles.appearanceSection}>
+                        <h2>Aparência</h2>
+                        <div className={styles.themeToggleContainer}>
+                            <div className={styles.themeLabel}>
+                                <span className={styles.themeIcon}>
+                                    {theme === "light" ? <FaSun /> : <FaMoon />}
+                                </span>
+                                <span>
+                                    {theme === "light"
+                                        ? "Modo Claro"
+                                        : "Modo Escuro"}
+                                </span>
+                            </div>
+                            <label className={styles.toggleSwitch}>
+                                <input
+                                    type="checkbox"
+                                    className={styles.toggleInput}
+                                    checked={theme === "dark"}
+                                    onChange={toggleTheme}
+                                />
+                                <span className={styles.toggleSlider}></span>
+                            </label>
+                        </div>
+                    </CardComponent>
+                    {/* --- FIM DA SEÇÃO --- */}
 
                     {progress && (
                         <CardComponent alternativeClass={styles.statsSection}>

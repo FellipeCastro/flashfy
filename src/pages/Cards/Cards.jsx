@@ -144,7 +144,8 @@ const Cards = ({ decks, loadData }) => {
 
     if (!currentDeck) {
         return (
-            <>
+            // Adicionado o .pageWrapper aqui também
+            <div className={styles.pageWrapper}>
                 <header className={styles.header}>
                     <div className={styles.titleContainer}>
                         <Link to="/">
@@ -156,7 +157,7 @@ const Cards = ({ decks, loadData }) => {
                 <div className={styles.mainContainer}>
                     <p className={styles.msg}>Esse deck não existe!</p>
                 </div>
-            </>
+            </div>
         );
     }
 
@@ -165,7 +166,8 @@ const Cards = ({ decks, loadData }) => {
     const currentDifficulty = difficulties[currentCardIndex];
 
     return (
-        <>
+        // Adicionado o .pageWrapper aqui
+        <div className={styles.pageWrapper}>
             {deleteDeckModal && (
                 <ConfirmModal
                     title={"Deletar Deck"}
@@ -389,7 +391,7 @@ const Cards = ({ decks, loadData }) => {
                     createCard={createCard}
                 />
             )}
-        </>
+        </div>
     );
 };
 
