@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { BsStars } from 'react-icons/bs';
+import { FaSearch } from "react-icons/fa"; // Importar o ícone de busca
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
@@ -24,6 +25,8 @@ const Home = ({
     loading,
     theme,
     toggleTheme,
+    searchQuery, // Nova prop
+    setSearchQuery, // Nova prop
 }) => {
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
     const [isAddDeckWithAIFormOpen, setIsAddDeckWithAIFormOpen] = useState(false);
@@ -92,6 +95,19 @@ const Home = ({
                 <div className={styles.mainContainer}>
                     <ProgressBar progress={progress} />
 
+                    {/* --- INÍCIO DA BARRA DE PESQUISA --- */}
+                    <div className={styles.searchContainer}>
+                        <FaSearch className={styles.searchIcon} />
+                        <input
+                            type="text"
+                            placeholder="O que você quer estudar hoje?"
+                            className={styles.searchInput}
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </div>
+                    {/* --- FIM DA BARRA DE PESQUISA --- */}
+
                     {loading ? (
                         <p id="loader">Carregando dados...</p>
                     ) : (
@@ -150,13 +166,19 @@ const Home = ({
                                         </div>
                                     </div>
                                     <h3 className={styles.title}>
-                                        {selectedSubjects.length > 0
+                                        {/* Mensagem atualizada */}
+                                        {searchQuery.length > 0
+                                            ? "Nenhum deck encontrado"
+                                            : selectedSubjects.length > 0
                                             ? "Nenhum deck criado nessa matéria"
                                             : "Nenhum deck criado ainda"}
                                     </h3>
                                     <p className={styles.msg}>
-                                        Comece organizando seus estudos criando
-                                        seu primeiro deck!
+                                        {/* Mensagem atualizada */}
+                                        {searchQuery.length > 0
+                                            ? "Tente uma busca diferente ou limpe os filtros."
+                                            : "Comece organizando seus estudos criando seu primeiro deck!"
+                                        }
                                     </p>
                                     <Button
                                         onClick={() =>

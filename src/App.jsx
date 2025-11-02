@@ -18,6 +18,9 @@ const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [selectedSubjects, setSelectedSubjects] = useState([]);
     const [loading, setLoading] = useState(false);
+    
+    // --- Novo estado para a busca ---
+    const [searchQuery, setSearchQuery] = useState("");
 
     // --- Dark Mode State ---
     const [theme, setTheme] = useState(() => {
@@ -95,16 +98,20 @@ const App = () => {
         loadData();
     }, []);
 
-    // Filtra os decks com base nas matérias selecionados
-    const filteredDecks = decks.filter((deck) => {
-        // Se não há assuntos selecionados, mostra todos os decks
-        if (selectedSubjects.length === 0) return true;
-
-        // Verifica se o deck tem pelo menos um dos assuntos selecionados
-        return selectedSubjects.some((subject) =>
-            deck.subject.name?.includes(subject)
-        );
-    });
+    // Filtra os decks com base nas matérias selecionados E na busca
+    const filteredDecks = decks
+        .filter((deck) => {
+            // Filtro de Matéria
+            if (selectedSubjects.length === 0) return true;
+            return selectedSubjects.some((subject) =>
+                deck.subject.name?.includes(subject)
+            );
+        })
+        .filter((deck) => {
+            // Novo Filtro de Pesquisa (pelo título)
+            if (searchQuery.trim() === "") return true;
+            return deck.title.toLowerCase().includes(searchQuery.toLowerCase());
+        });
 
     // Componente de rota protegida
     const ProtectedRoute = ({ children }) => {
@@ -167,6 +174,9 @@ const App = () => {
                                 // Pass theme props
                                 theme={theme}
                                 toggleTheme={toggleTheme}
+                                // Pass search props
+                                searchQuery={searchQuery}
+                                setSearchQuery={setSearchQuery}
                             />
                         </ProtectedRoute>
                     }

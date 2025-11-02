@@ -152,3 +152,68 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 }
+/* ... (todos os estilos existentes) ... */
+
+/* --- INÍCIO: Barra de Pesquisa (Correção de Especificidade) --- */
+.searchContainer {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1.5rem; 
+}
+
+.searchIcon {
+    position: absolute;
+    top: 50%;
+    left: 1rem; /* Posição do ícone a partir da esquerda */
+    transform: translateY(-50%); /* Alinhamento vertical perfeito */
+    color: var(--text-secondary-color);
+    font-size: 1rem;
+    pointer-events: none; /* Permite clicar no input através do ícone */
+    z-index: 1; /* Garante que o ícone fique acima do input */
+}
+
+/* Usamos '.searchContainer input.searchInput' para aumentar a especificidade 
+   e garantir que este padding sobrescreva o 'padding: 0.9rem 1rem;' 
+   definido globalmente no index.css 
+*/
+.searchContainer input.searchInput {
+    padding: 0.9rem 1rem 0.9rem 2.8rem; /* Padding esquerdo aumentado */
+    
+    /* Garante que o fundo correto (light/dark) seja usado */
+    background-color: var(--input-bg-color); 
+    position: relative;
+    z-index: 0;
+}
+
+/* Foco */
+.searchContainer input.searchInput:focus {
+    background-color: var(--input-focus-bg-color); 
+}
+/* --- FIM: Barra de Pesquisa --- */
+
+
+@media (max-width: 768px) {
+    .mainContainer {
+        padding: 1rem 2rem;
+    }
+
+    .filterContainer {
+        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    }
+
+    .decksContainer {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    /* Ajustes responsivos para a busca */
+    .searchContainer input.searchInput {
+        font-size: 0.9rem;
+        /* Padding esquerdo menor para telas pequenas */
+        padding: 0.9rem 1rem 0.9rem 2.5rem; 
+    }
+
+    .searchIcon {
+        left: 0.9rem;
+        font-size: 0.9rem;
+    }
+}

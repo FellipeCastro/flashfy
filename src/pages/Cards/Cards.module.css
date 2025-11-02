@@ -275,7 +275,7 @@
     /* --- MUDANÇA AQUI --- */
     /* background-color: var(--shadow-color); <- Removido */
     width: 100%;
-    height: 200px;
+    height: 340px;
     border-radius: 0.2rem;
     cursor: pointer;
     transform-style: preserve-3d;
@@ -285,7 +285,7 @@
 
 .face {
     width: 100%;
-    height: 200px;
+    height: 340px;
     position: absolute;
     top: 0;
     left: 0;
