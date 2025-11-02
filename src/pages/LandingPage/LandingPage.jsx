@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import {
     FaBrain,
-    FaUsers,
-    FaRobot,
     FaChartLine,
     FaBook,
     FaClock,
@@ -16,10 +14,10 @@ import {
     FaStar,
 } from "react-icons/fa";
 import { useState } from "react";
-import styles from "./LandingPage.module.css";
 import Button from "../../components/Button/Button";
-import logo from "../../assets/logo.png";
 import CardComponent from "../../components/CardComponent/CardComponent";
+import logo from "../../assets/logo.png";
+import styles from "./LandingPage.module.css";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -198,16 +196,10 @@ const LandingPage = () => {
                         avançada para transformar sua forma de estudar e
                         maximizar em 4x sua retenção de conhecimento.
                     </p>
-                    <div className={styles.heroButtons}>
-                        <Button onClick={handleRegisterClick}>
+                        <Button onClick={handleRegisterClick} alternativeClass={styles.heroButton}>
                             <FaRocket className={styles.buttonIcon} />
                             Começar Agora
                         </Button>
-                        <Button secondary onClick={handleLoginClick}>
-                            <FaPlay className={styles.buttonIcon} />
-                            Ver Demonstração
-                        </Button>
-                    </div>
                     <div className={styles.heroStats}>
                         <div className={styles.stat}>
                             <strong>+3.2k</strong>

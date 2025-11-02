@@ -193,10 +193,8 @@
     line-height: 1.6;
 }
 
-.heroButtons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+.heroButton {
+    width: 100%;
 }
 
 .buttonIcon {
