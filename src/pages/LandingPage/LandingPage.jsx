@@ -10,6 +10,10 @@ import {
     FaTimes,
     FaBars,
     FaChevronDown,
+    FaRocket,
+    FaPlay,
+    FaCheck,
+    FaStar,
 } from "react-icons/fa";
 import { useState } from "react";
 import styles from "./LandingPage.module.css";
@@ -20,34 +24,7 @@ import CardComponent from "../../components/CardComponent/CardComponent";
 const LandingPage = () => {
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [showAnswer, setShoeAnswer] = useState(false);
-
-    const features = [
-        {
-            icon: <FaBrain />,
-            title: "Revisão no Momento Certo",
-            description:
-                "Revisões inteligentes no momento exato antes de você esquecer, ajudando a memorizar até 4x mais com menos tempo de estudo",
-        },
-        {
-            icon: <FaRobot />,
-            title: "Criação com Inteligência Artificial",
-            description:
-                "Crie flashcards automaticamente em segundos. Digite um assunto e receba perguntas e respostas prontas sobre qualquer tema",
-        },
-        {
-            icon: <FaUsers />,
-            title: "Acompanhamento de Progresso",
-            description:
-                "Veja seu progresso com dados claros: +47% de desempenho em provas e 3x mais retenção com nosso painel inteligente",
-        },
-        {
-            icon: <FaChartLine />,
-            title: "Tecnologia Avançada",
-            description:
-                "Plataforma segura e confiável, usando as mesmas tecnologias de grandes empresas, garantindo velocidade e proteção dos seus dados",
-        },
-    ];
+    const [showAnswer, setShowAnswer] = useState(false);
 
     const steps = [
         {
@@ -157,15 +134,6 @@ const LandingPage = () => {
                         }`}
                     >
                         <a
-                            href="#features"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                scrollToSection("features");
-                            }}
-                        >
-                            Recursos
-                        </a>
-                        <a
                             href="#how-it-works"
                             onClick={(e) => {
                                 e.preventDefault();
@@ -182,6 +150,15 @@ const LandingPage = () => {
                             }}
                         >
                             Depoimentos
+                        </a>
+                        <a
+                            href="#faq"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                scrollToSection("faq");
+                            }}
+                        >
+                            FAQ
                         </a>
                     </nav>
                     <div
@@ -206,64 +183,184 @@ const LandingPage = () => {
 
             <section className={styles.hero}>
                 <div className={styles.heroContent}>
-                    <h1>Domine qualquer assunto com flashcards inteligentes</h1>
+                    <div className={styles.heroBadge}>
+                        <FaRocket />
+                        Transforme sua forma de estudar
+                    </div>
+                    <h1>
+                        Domine qualquer assunto com{" "}
+                        <span className={styles.highlight}>
+                            flashcards inteligentes
+                        </span>
+                    </h1>
                     <p>
                         O FlashFy utiliza algoritmos de repetição espaçada e IA
-                        para transformar sua forma de estudar e maximizar sua
-                        retenção de conhecimento.
+                        avançada para transformar sua forma de estudar e
+                        maximizar em 4x sua retenção de conhecimento.
                     </p>
                     <div className={styles.heroButtons}>
                         <Button onClick={handleRegisterClick}>
+                            <FaRocket className={styles.buttonIcon} />
                             Começar Agora
                         </Button>
                         <Button secondary onClick={handleLoginClick}>
-                            Fazer Login
+                            <FaPlay className={styles.buttonIcon} />
+                            Ver Demonstração
                         </Button>
+                    </div>
+                    <div className={styles.heroStats}>
+                        <div className={styles.stat}>
+                            <strong>+3.2k</strong>
+                            <span>Estudantes</span>
+                        </div>
+                        <div className={styles.stat}>
+                            <strong>94%</strong>
+                            <span>Sucesso</span>
+                        </div>
+                        <div className={styles.stat}>
+                            <strong>4.8</strong>
+                            <span>Avaliação</span>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.heroVisual}>
                     <div className={styles.flashcardDemo}>
                         <div
                             className={`${styles.flashcard} ${
-                                showAnswer ? styles.showAnswer : null
+                                showAnswer ? styles.showAnswer : ""
                             }`}
-                            onClick={() => setShoeAnswer(!showAnswer)}
+                            onClick={() => setShowAnswer(!showAnswer)}
                         >
                             <div className={styles.flashcardFront}>
+                                <div className={styles.cardBadge}>Fácil</div>
                                 <h3>
                                     O que é a teoria da relatividade de
                                     Einstein?
                                 </h3>
+                                <div className={styles.cardHint}>
+                                    Clique para ver a resposta
+                                </div>
                             </div>
                             <div className={styles.flashcardBack}>
+                                <div className={styles.cardBadge}>Resposta</div>
                                 <p>
                                     É uma teoria que descreve a relação entre
                                     espaço e tempo, onde a gravidade é uma
                                     curvatura no espaço-tempo causada pela massa
                                     e energia.
                                 </p>
+                                <div className={styles.cardHint}>
+                                    Clique para voltar
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section id="features" className={styles.features}>
+            <section className={styles.benefits}>
                 <div className={styles.container}>
-                    <h2>Recursos Poderosos</h2>
-                    <div className={styles.featuresGrid}>
-                        {features.map((feature, index) => (
-                            <CardComponent
-                                alternativeClass={styles.featureCard}
-                                key={index}
-                            >
-                                <div className={styles.featureIcon}>
-                                    {feature.icon}
+                    <div className={styles.benefitsContent}>
+                        <div className={styles.benefitsText}>
+                            <h2>
+                                Resultados comprovados que fazem a diferença
+                            </h2>
+                            <div className={styles.benefitItems}>
+                                <div className={styles.benefitItem}>
+                                    <div className={styles.benefitIcon}>
+                                        <FaChartLine />
+                                    </div>
+                                    <div>
+                                        <h4>+47% de desempenho</h4>
+                                        <p>
+                                            Melhora significativa em provas e
+                                            avaliações
+                                        </p>
+                                    </div>
                                 </div>
-                                <h3>{feature.title}</h3>
-                                <p>{feature.description}</p>
-                            </CardComponent>
-                        ))}
+                                <div className={styles.benefitItem}>
+                                    <div className={styles.benefitIcon}>
+                                        <FaBrain />
+                                    </div>
+                                    <div>
+                                        <h4>3x mais retenção</h4>
+                                        <p>
+                                            Memorização de longo prazo garantida
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className={styles.benefitItem}>
+                                    <div className={styles.benefitIcon}>
+                                        <FaClock />
+                                    </div>
+                                    <div>
+                                        <h4>50% menos tempo</h4>
+                                        <p>
+                                            Estude de forma mais inteligente e
+                                            eficiente
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.benefitsVisual}>
+                            <div className={styles.comparisonChart}>
+                                <div className={styles.chartHeader}>
+                                    <h4>Comparação de Eficiência</h4>
+                                    <p>Retenção de conhecimento após 30 dias</p>
+                                </div>
+                                <div className={styles.chartBars}>
+                                    <div className={styles.chartBarGroup}>
+                                        <div className={styles.barLabel}>
+                                            FlashFy
+                                        </div>
+                                        <div className={styles.barContainer}>
+                                            <div
+                                                className={`${styles.bar} ${styles.flashfyBar}`}
+                                                style={{ width: "85%" }}
+                                            >
+                                                <span
+                                                    className={styles.barValue}
+                                                >
+                                                    85%
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles.chartBarGroup}>
+                                        <div className={styles.barLabel}>
+                                            Método Tradicional
+                                        </div>
+                                        <div className={styles.barContainer}>
+                                            <div
+                                                className={`${styles.bar} ${styles.traditionalBar}`}
+                                                style={{ width: "28%" }}
+                                            >
+                                                <span
+                                                    className={styles.barValue}
+                                                >
+                                                    28%
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={styles.chartLegend}>
+                                    <div className={styles.legendItem}>
+                                        <div
+                                            className={`${styles.legendColor} ${styles.flashfyColor}`}
+                                        ></div>
+                                        <span>Com FlashFy</span>
+                                    </div>
+                                    <div className={styles.legendItem}>
+                                        <div
+                                            className={`${styles.legendColor} ${styles.traditionalColor}`}
+                                        ></div>
+                                        <span>Método Tradicional</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -280,7 +377,9 @@ const LandingPage = () => {
                                     index % 2 === 0 ? styles.left : styles.right
                                 }`}
                             >
-                                <CardComponent alternativeClass={styles.content}>
+                                <CardComponent
+                                    alternativeClass={styles.content}
+                                >
                                     <div className={styles.stepHeader}>
                                         <div className={styles.stepNumber}>
                                             {step.step}
@@ -300,7 +399,19 @@ const LandingPage = () => {
                     <h2>O que nossos usuários dizem</h2>
                     <div className={styles.testimonialGrid}>
                         {testimonials.map((testimonial, index) => (
-                            <CardComponent key={index} alternativeClass={styles.testimonialCard}>
+                            <CardComponent
+                                key={index}
+                                alternativeClass={styles.testimonialCard}
+                            >
+                                <div className={styles.testimonialHeader}>
+                                    <div className={styles.testimonialStars}>
+                                        <FaStar />
+                                        <FaStar />
+                                        <FaStar />
+                                        <FaStar />
+                                        <FaStar />
+                                    </div>
+                                </div>
                                 <div className={styles.testimonialContent}>
                                     <p>"{testimonial.text}"</p>
                                 </div>
@@ -341,6 +452,7 @@ const LandingPage = () => {
                     </p>
                     <div className={styles.ctaButtonContainer}>
                         <Button onClick={handleRegisterClick}>
+                            <FaCheck className={styles.buttonIcon} />
                             Criar Minha Conta Gratuita
                         </Button>
                     </div>
@@ -367,15 +479,6 @@ const LandingPage = () => {
                             <div className={styles.footerSection}>
                                 <h4>Produto</h4>
                                 <a
-                                    href="#features"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        scrollToSection("features");
-                                    }}
-                                >
-                                    Recursos
-                                </a>
-                                <a
                                     href="#how-it-works"
                                     onClick={(e) => {
                                         e.preventDefault();
@@ -392,6 +495,15 @@ const LandingPage = () => {
                                     }}
                                 >
                                     Depoimentos
+                                </a>
+                                <a
+                                    href="#faq"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        scrollToSection("faq");
+                                    }}
+                                >
+                                    FAQ
                                 </a>
                             </div>
                             <div className={styles.footerSection}>
