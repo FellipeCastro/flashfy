@@ -1,0 +1,263 @@
+.assistantBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--fade-color);
+    z-index: 100;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.assistantSidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    background: var(--secondary-color);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 101;
+    display: flex;
+    flex-direction: column; /* Essencial para o layout de chat */
+    animation: slideIn 0.3s ease-out;
+    color: var(--text-primary-color);
+}
+
+.assistantHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0; /* Impede que o header encolha */
+}
+
+.assistantHeader h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-secondary-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+    background-color: var(--shadow-color);
+    color: var(--text-primary-color);
+}
+
+.initialContext {
+    padding: 1.5rem;
+    background: var(--bg-color);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0; /* Impede que o contexto encolha */
+}
+
+.initialContext p {
+    font-size: 0.9rem;
+    color: var(--text-secondary-color);
+    margin: 0 0 0.25rem 0;
+}
+
+.initialContext strong {
+    font-size: 1rem;
+    color: var(--text-primary-color);
+}
+
+.promptButtons {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.promptButton {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.9rem 1rem;
+    border-radius: 0.2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+.promptButton:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.chatContainer {
+    flex-grow: 1; /* Faz o container de chat ocupar todo o espaço */
+    overflow-y: auto; /* Adiciona scroll */
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.chatMessage {
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 90%;
+}
+
+.userMessage {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-bottom-right-radius: 2px;
+    align-self: flex-end;
+}
+
+.modelMessage {
+    background-color: var(--bg-color);
+    color: var(--text-primary-color);
+    border: 1px solid var(--border-color);
+    border-bottom-left-radius: 2px;
+    align-self: flex-start;
+    white-space: pre-wrap; /* Preserva quebras de linha da IA */
+}
+
+/* --- Novos Estilos para o Formulário de Input --- */
+
+.chatInputForm {
+    display: flex;
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+    background: var(--secondary-color);
+    flex-shrink: 0; /* Impede que o form encolha */
+    gap: 0.5rem;
+}
+
+.chatInput {
+    flex-grow: 1;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg-color);
+    color: var(--text-primary-color);
+    border-radius: 2rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.chatInput:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: var(--input-focus-bg-color);
+    box-shadow: 0 0 0 3px rgba(1, 165, 228, 0.1);
+}
+
+.sendButton {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.sendButton:hover:not(:disabled) {
+    background: var(--primary-color-hover);
+}
+
+.sendButton:disabled {
+    background: var(--border-color);
+    cursor: not-allowed;
+}
+
+/* Animação de "digitando..." */
+.loadingDots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+}
+.loadingDots span {
+    width: 8px;
+    height: 8px;
+    margin: 0 3px;
+    background-color: var(--text-secondary-color);
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+.loadingDots span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+.loadingDots span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1);
+    }
+}
+
+/* Animações de entrada/saída */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@media (max-width: 480px) {
+    .assistantSidebar {
+        max-width: 90%;
+    }
+}
+/* ... (todos os estilos existentes) ... */
+
+/* --- ADICIONE ESTE ESTILO DE ERRO NO FINAL --- */
+
+.errorMessage {
+    background-color: var(--incorrect-bg); /* Fundo de erro (já existe no seu index.css) */
+    color: var(--error-color-text); /* Cor de texto de erro (já existe) */
+    border: 1px solid var(--error-color-text);
+    white-space: normal; /* Permite quebra de linha */
+}
+
+.errorMessage p {
+    margin: 0;
+}
+.errorMessage p + p {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-primary-color);
+    opacity: 0.8;
+}

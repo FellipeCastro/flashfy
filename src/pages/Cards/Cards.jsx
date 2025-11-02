@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { FaArrowLeft, FaArrowRight , FaTrashAlt } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaTrashAlt } from "react-icons/fa";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
+import { BsStars } from "react-icons/bs";
 import Button from "../../components/Button/Button";
 import AddCardForm from "../../components/AddCardForm/AddCardForm";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
-import CardComponent from "../../components/CardComponent/CardComponent"
+import CardComponent from "../../components/CardComponent/CardComponent";
+import StudyAssistant from "../../components/StudyAssistant/StudyAssistant";
 import api from "../../constants/api.js";
 import styles from "./Cards.module.css";
 
@@ -28,17 +30,27 @@ const Cards = ({ decks, loadData }) => {
     const [deleteDeckModal, setDeleteDeckModal] = useState(false);
     const [studyDeckModal, setStudyDeckModal] = useState(false);
     const [cardToDelete, setCardToDelete] = useState(null);
+    const [isAssistantOpen, setIsAssistantOpen] = useState(false);
+
+    // --- MUDANÇA 1: Tooltips revertidos para sua lógica original ---
+    const difficultyTooltips = {
+        1: "Muito fácil - aparecerá menos vezes",
+        2: "Fácil - aparecerá poucas vezes",
+        3: "Difícil - aparecerá mais vezes",
+        4: "Muito difícil - aparecerá com mais frequência",
+    };
 
     useEffect(() => {
         setCurrentDeck(selectedDeck);
         setCurrentCardIndex(0);
         setShowAnswer(false);
         setSelectedDifficulty(null);
+        setIsAssistantOpen(false);
 
         if (selectedDeck?.cards) {
             setDifficulties(new Array(selectedDeck.cards.length).fill(null));
         }
-    }, [decks, id]);
+    }, [decks, id, selectedDeck]);
 
     const createCard = async (question, answer) => {
         try {
@@ -61,6 +73,7 @@ const Cards = ({ decks, loadData }) => {
             setCurrentCardIndex(currentCardIndex + 1);
             setShowAnswer(false);
             setSelectedDifficulty(null);
+            setIsAssistantOpen(false);
         }
     };
 
@@ -69,6 +82,7 @@ const Cards = ({ decks, loadData }) => {
             setCurrentCardIndex(currentCardIndex - 1);
             setShowAnswer(false);
             setSelectedDifficulty(null);
+            setIsAssistantOpen(false);
         }
     };
 
@@ -125,7 +139,6 @@ const Cards = ({ decks, loadData }) => {
                 setDeleteCardModal(false);
                 setCardToDelete(null);
 
-                // Se era o último card, volta para o primeiro
                 if (currentCardIndex >= currentDeck.cards.length - 1) {
                     setCurrentCardIndex(0);
                 }
@@ -144,7 +157,6 @@ const Cards = ({ decks, loadData }) => {
 
     if (!currentDeck) {
         return (
-            // Adicionado o .pageWrapper aqui também
             <div className={styles.pageWrapper}>
                 <header className={styles.header}>
                     <div className={styles.titleContainer}>
@@ -166,8 +178,15 @@ const Cards = ({ decks, loadData }) => {
     const currentDifficulty = difficulties[currentCardIndex];
 
     return (
-        // Adicionado o .pageWrapper aqui
         <div className={styles.pageWrapper}>
+            {isAssistantOpen && currentCard && (
+                <StudyAssistant
+                    isOpen={isAssistantOpen}
+                    onClose={() => setIsAssistantOpen(false)}
+                    currentCard={currentCard}
+                />
+            )}
+
             {deleteDeckModal && (
                 <ConfirmModal
                     title={"Deletar Deck"}
@@ -284,7 +303,7 @@ const Cards = ({ decks, loadData }) => {
                             </span>
                         </div>
 
-                        <div class={styles.cardContainer}>
+                        <div className={styles.cardContainer}>
                             <CardComponent alternativeClass={styles.card}>
                                 <p className={styles.question}>
                                     {currentCard.question}
@@ -315,6 +334,17 @@ const Cards = ({ decks, loadData }) => {
                                         className={`${styles.face} ${styles.front}`}
                                     >
                                         <p>{currentCard.answer}</p>
+
+                                        <button
+                                            className={styles.aiButton}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setIsAssistantOpen(true);
+                                            }}
+                                            title="Assistente de Estudo"
+                                        >
+                                            <BsStars />
+                                        </button>
                                     </div>
                                 </div>
                             </CardComponent>
@@ -327,6 +357,7 @@ const Cards = ({ decks, loadData }) => {
                         >
                             <div className={styles.feedback}>
                                 <div className={styles.flexContainer}>
+                                    {/* --- MUDANÇA 2: Labels revertidas para o original --- */}
                                     <span>Muito fácil</span>
                                     <span>Muito difícil</span>
                                 </div>
@@ -343,6 +374,8 @@ const Cards = ({ decks, loadData }) => {
                                             onClick={() =>
                                                 handleSetDifficulty(level)
                                             }
+                                            // --- MUDANÇA 3: Tooltip atualizado ---
+                                            title={difficultyTooltips[level]}
                                         >
                                             {level}
                                         </li>
