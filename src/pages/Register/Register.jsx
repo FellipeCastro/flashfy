@@ -149,7 +149,7 @@ const Register = ({ loadData }) => {
     };
 
     const handleBack = () => {
-        navigate("/");
+        window.location.href = "/";
     };
 
     return (
@@ -235,7 +235,6 @@ const Register = ({ loadData }) => {
                         locale="pt_BR"
                         shape="rectangular"
                         size="large"
-                        width="400"
                         text="continue_with"
                     />
                 </div>

@@ -109,7 +109,9 @@ const App = () => {
                         localStorage.getItem("authToken") ? (
                             <Navigate to="/home" replace />
                         ) : (
-                            <LandingPage />
+                            <GuestRoute>
+                                <LandingPage />
+                            </GuestRoute>
                         )
                     }
                 />

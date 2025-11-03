@@ -131,7 +131,7 @@ const Login = ({ loadData }) => {
     };
 
     const handleBack = () => {
-        navigate("/");
+        window.location.href = "/";
     };
 
     return (
@@ -214,7 +214,6 @@ const Login = ({ loadData }) => {
                         locale="pt_BR"
                         shape="retangular"
                         size="large"
-                        width="400"
                         text="continue_with"
                     />
                 </div>
