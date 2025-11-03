@@ -169,4 +169,10 @@
     .howItWorksCard {
         padding: 1.5rem;
     }
+
+    /* --- INÍCIO DA CORREÇÃO --- */
+    .pillarsGrid {
+        grid-template-columns: 1fr; /* Faz os cards ficarem um embaixo do outro */
+    }
+    /* --- FIM DA CORREÇÃO --- */
 }

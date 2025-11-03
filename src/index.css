@@ -124,7 +124,12 @@ body {
     scroll-behavior: smooth;
     background: var(--bg-color);
     color: var(--text-primary-color);
-    font-size: 8px;
+    
+    /* --- MUDANÇA EXECUTADA AQUI --- */
+    /* O valor original era 8px. 8 * 1.4 = 11.2px */
+    font-size: 11.2px; 
+    /* --- FIM DA MUDANÇA --- */
+    
     /* --- TRANSIÇÃO SUAVE AQUI --- */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
