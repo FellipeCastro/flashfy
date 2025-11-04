@@ -110,6 +110,10 @@
     font-size: 1rem;
 }
 
+.searchInput {
+    margin-bottom: 1rem;
+}
+
 .filterContainer {
     width: 100%;
     display: grid;

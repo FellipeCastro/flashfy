@@ -16,7 +16,6 @@ const App = () => {
     const [subjects, setSubjects] = useState([]);
     const [profile, setProfile] = useState({});
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [selectedSubjects, setSelectedSubjects] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const loadData = async () => {
@@ -77,16 +76,6 @@ const App = () => {
         loadData();
     }, []);
 
-    // Filtra os decks com base nas matérias selecionados
-    const filteredDecks = decks.filter((deck) => {
-        // Se não há assuntos selecionados, mostra todos os decks
-        if (selectedSubjects.length === 0) return true;
-
-        // Verifica se o deck tem pelo menos um dos assuntos selecionados
-        return selectedSubjects.some((subject) =>
-            deck.subject.name?.includes(subject)
-        );
-    });
 
     // Componente de rota protegida
     const ProtectedRoute = ({ children }) => {
@@ -104,7 +93,8 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route
-                    exact path="/"
+                    exact
+                    path="/"
                     element={
                         localStorage.getItem("authToken") ? (
                             <Navigate to="/home" replace />
@@ -141,11 +131,9 @@ const App = () => {
                             <Home
                                 isSidebarOpen={isSidebarOpen}
                                 setIsSidebarOpen={setIsSidebarOpen}
-                                decks={filteredDecks}
+                                decks={decks}
                                 progress={progress}
                                 subjects={subjects}
-                                selectedSubjects={selectedSubjects}
-                                setSelectedSubjects={setSelectedSubjects}
                                 loadData={loadData}
                                 loading={loading}
                             />

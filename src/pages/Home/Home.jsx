@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { BsStars } from 'react-icons/bs';
+import { BsStars } from "react-icons/bs";
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
@@ -11,21 +11,21 @@ import AddDeckWithAIForm from "../../components/AddDeckWithAIForm/AddDeckWithAIF
 import api from "../../constants/api";
 import styles from "./Home.module.css";
 
-
 const Home = ({
     isSidebarOpen,
     setIsSidebarOpen,
     decks,
     progress,
     subjects,
-    selectedSubjects,
-    setSelectedSubjects,
     loadData,
     loading,
 }) => {
     const [isAddDeckFormOpen, setIsAddDeckFormOpen] = useState(false);
-    const [isAddDeckWithAIFormOpen, setIsAddDeckWithAIFormOpen] = useState(false);
+    const [isAddDeckWithAIFormOpen, setIsAddDeckWithAIFormOpen] =
+        useState(false);
     const [isAddSubjectFormOpen, setIsAddSubjectFormOpen] = useState(false);
+    const [selectedSubjects, setSelectedSubjects] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
 
     const createDeck = async (idSubject, title) => {
@@ -35,23 +35,23 @@ const Home = ({
                 title,
             });
             if (response.data) {
-                setIsAddDeckFormOpen(false); 
+                setIsAddDeckFormOpen(false);
                 loadData();
             }
         } catch (error) {
             console.log(error);
-        } 
+        }
     };
-    
-   const generateDeckWithAI = async (idSubject, theme, quantity) => {
-        try {            
+
+    const generateDeckWithAI = async (idSubject, theme, quantity) => {
+        try {
             await api.post("/ai/create-deck", { idSubject, theme, quantity });
-            
+
             loadData();
             setIsAddDeckWithAIFormOpen(false);
         } catch (error) {
             console.error("Erro ao gerar deck com IA:", error);
-        } 
+        }
     };
 
     const createSubject = async (name, color) => {
@@ -77,6 +77,41 @@ const Home = ({
         );
     };
 
+    const filteredDecks = decks.filter((deck) => {
+        // Filtro por matéria
+        const subjectFilter =
+            selectedSubjects.length === 0 ||
+            selectedSubjects.includes(deck.subject.name);
+
+        // Filtro por busca
+        const searchFilter =
+            searchTerm === "" ||
+            deck.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            deck.subject.name.toLowerCase().includes(searchTerm.toLowerCase());
+
+        return subjectFilter && searchFilter;
+    });
+
+    // Ordenação aplicada ao array filtrado
+    const sortedAndFilteredDecks = filteredDecks.sort((a, b) => {
+        const now = new Date();
+
+        // Tratamento para decks sem nextReview
+        if (!a.nextReview && !b.nextReview) return 0;
+        if (!a.nextReview) return 1;
+        if (!b.nextReview) return -1;
+
+        const aDate = new Date(a.nextReview);
+        const bDate = new Date(b.nextReview);
+
+        // Decks com nextReview no passado têm prioridade
+        if (aDate < now && bDate >= now) return -1;
+        if (bDate < now && aDate >= now) return 1;
+
+        // Ordenação por data mais próxima
+        return aDate - bDate;
+    });
+
     return (
         <>
             <div className={styles.container}>
@@ -96,18 +131,30 @@ const Home = ({
                                 <h1>Meus decks</h1>
                                 <div className={styles.buttons}>
                                     <Button
-                                        onClick={() => setIsAddDeckWithAIFormOpen(true)}
+                                        onClick={() =>
+                                            setIsAddDeckWithAIFormOpen(true)
+                                        }
                                         secondary
                                     >
                                         <BsStars /> Deck Por IA
                                     </Button>
                                     <Button
-                                        onClick={() => setIsAddDeckFormOpen(true)}
+                                        onClick={() =>
+                                            setIsAddDeckFormOpen(true)
+                                        }
                                     >
                                         + Novo deck
                                     </Button>
                                 </div>
                             </div>
+
+                            <input
+                                type="text"
+                                placeholder="Pesquisar deck"
+                                className={styles.searchInput}
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
 
                             <div className={styles.filterContainer}>
                                 {subjects.map((subject) => {
@@ -136,7 +183,7 @@ const Home = ({
                                 })}
                             </div>
 
-                            {decks.length === 0 && loading === false && (
+                            {filteredDecks.length === 0 && !loading && (
                                 <div className={styles.noDecks}>
                                     <div className={styles.illustration}>
                                         <div className={styles.cardStack}>
@@ -146,55 +193,41 @@ const Home = ({
                                         </div>
                                     </div>
                                     <h3 className={styles.title}>
-                                        {selectedSubjects.length > 0
-                                            ? "Nenhum deck criado nessa matéria"
+                                        {selectedSubjects.length > 0 ||
+                                        searchTerm
+                                            ? "Nenhum deck encontrado com os filtros aplicados"
                                             : "Nenhum deck criado ainda"}
                                     </h3>
                                     <p className={styles.msg}>
-                                        Comece organizando seus estudos criando
-                                        seu primeiro deck!
+                                        {selectedSubjects.length > 0 ||
+                                        searchTerm
+                                            ? "Tente ajustar os filtros de busca"
+                                            : "Comece organizando seus estudos criando seu primeiro deck!"}
                                     </p>
                                     <Button
                                         onClick={() =>
                                             setIsAddDeckFormOpen(true)
                                         }
                                     >
-                                        Criar Meu Primeiro Deck
+                                        Criar Deck
                                     </Button>
                                 </div>
                             )}
 
                             <ul className={styles.decksContainer}>
-                                {decks
-                                    .sort((a, b) => {
-                                        const now = new Date();
-                                        if (!a.nextReview && !b.nextReview)
-                                            return 0;
-                                        if (!a.nextReview) return 1;
-                                        if (!b.nextReview) return -1;
-                                        const aDate = new Date(a.nextReview);
-                                        const bDate = new Date(b.nextReview);
-                                        if (aDate < now && bDate >= now)
-                                            return -1;
-                                        if (bDate < now && aDate >= now)
-                                            return 1;
-                                        return aDate - bDate;
-                                    })
-                                    .map((deck) => (
-                                        <Deck
-                                            key={deck.idDeck}
-                                            color={deck.subject.color}
-                                            subject={deck.subject.name}
-                                            title={deck.title}
-                                            cards={deck.cards.length}
-                                            nextReview={deck.nextReview}
-                                            openCard={() =>
-                                                navigate(
-                                                    `/cards/${deck.idDeck}`
-                                                )
-                                            }
-                                        />
-                                    ))}
+                                {sortedAndFilteredDecks.map((deck) => (
+                                    <Deck
+                                        key={deck.idDeck}
+                                        color={deck.subject.color}
+                                        subject={deck.subject.name}
+                                        title={deck.title}
+                                        cards={deck.cards.length}
+                                        nextReview={deck.nextReview}
+                                        openCard={() =>
+                                            navigate(`/cards/${deck.idDeck}`)
+                                        }
+                                    />
+                                ))}
                             </ul>
                         </>
                     )}
@@ -209,7 +242,7 @@ const Home = ({
                     createDeck={createDeck}
                 />
             )}
-            
+
             {isAddDeckWithAIFormOpen && (
                 <AddDeckWithAIForm
                     setIsAddDeckWithAIFormOpen={setIsAddDeckWithAIFormOpen}
