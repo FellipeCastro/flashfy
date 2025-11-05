@@ -1,0 +1,132 @@
+/* SelectComponent/SelectComponent.module.css */
+.formField {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+/* Seu CSS original */
+.addSubjectContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.addSubject {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.addSubject:hover {
+    color: var(--primary-color-hover);
+    text-decoration: underline;
+}
+
+.addSubject:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Estilos do label */
+.label {
+    display: block;
+    color: var(--text-primary-color);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.required {
+    color: var(--error-color-text);
+    margin-left: 0.25rem;
+}
+
+/* Container do select */
+.selectContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.select {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    padding-right: 2.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.4rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    background-color: #fafafa;
+    appearance: none;
+    cursor: pointer;
+    color: var(--text-secondary-color);
+}
+
+.select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(1, 165, 228, 0.1);
+    background-color: #fff;
+    color: var(--text-primary-color);
+}
+
+.select.focused {
+    border-color: var(--primary-color);
+    background-color: #fff;
+    color: var(--text-primary-color);
+}
+
+.select.errorSelect {
+    border-color: var(--error-color-text);
+}
+
+.select:disabled {
+    background-color: var(--border-color);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.dropdownIcon {
+    position: absolute;
+    right: 1rem;
+    pointer-events: none;
+    color: var(--text-secondary-color);
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.select:focus + .dropdownIcon {
+    color: var(--primary-color);
+    transform: rotate(180deg);
+}
+
+.select.errorSelect + .dropdownIcon {
+    color: var(--error-color-text);
+}
+
+.fieldError {
+    color: var(--error-color-text);
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+    display: block;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

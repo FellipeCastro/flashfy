@@ -3,6 +3,8 @@ import { IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
 import ModalComponent from "../ModalComponent/ModalComponent";
 import styles from "./AddDeckForm.module.css";
+import InputComponent from "../InputComponent/InputComponent";
+import SelectComponent from "../SelectComponent/SelectComponent";
 
 const AddDeckForm = ({
     setIsAddDeckFormOpen,
@@ -103,6 +105,11 @@ const AddDeckForm = ({
     const closeModal = () => {
         setIsAddDeckFormOpen(false);
     };
+    
+    const subjectOptions = subjects.map((subject) => ({
+        value: subject.idSubject,
+        label: subject.name,
+    }));
 
     return (
         <ModalComponent closeModal={closeModal}>
@@ -120,66 +127,30 @@ const AddDeckForm = ({
                 onSubmit={onSubmit}
                 className={styles.form}
             >
-                <div className={styles.inputContainer}>
-                    <label htmlFor="title">Título</label>
-                    <input
-                        type="text"
-                        name="title"
-                        id="title"
-                        placeholder="Digite o título do deck aqui"
-                        onChange={(e) =>
-                            handleInputChange("title", e.target.value)
-                        }
-                        value={title}
-                        className={errorMessage.title ? styles.inputError : ""}
-                    />
-                    {errorMessage.title && (
-                        <span className={styles.fieldError}>
-                            {errorMessage.title}
-                        </span>
-                    )}
-                </div>
+                <InputComponent
+                    label="Título"
+                    type="text"
+                    name="title"
+                    value={title}
+                    onChange={(e) => handleInputChange("title", e.target.value)}
+                    placeholder="Digite o título do deck aqui"
+                    error={errorMessage.title}
+                    disabled={isLoading}
+                />
 
-                <div className={styles.inputContainer}>
-                    <div className={styles.addSubjectContainer}>
-                        <label htmlFor="subject">Matéria</label>
-                        <button
-                            type="button"
-                            className={styles.addSubject}
-                            onClick={openAddSubjectForm}
-                        >
-                            Adicionar matéria
-                        </button>
-                    </div>
-                    <select
-                        name="subject"
-                        id="subject"
-                        onChange={(e) =>
-                            handleInputChange("idSubject", e.target.value)
-                        }
-                        value={idSubject}
-                        className={
-                            errorMessage.idSubject ? styles.inputError : ""
-                        }
-                    >
-                        <option value="">Selecione uma matéria</option>
-                        {subjects.map((subject) => {
-                            return (
-                                <option
-                                    key={subject.idSubject}
-                                    value={subject.idSubject}
-                                >
-                                    {subject.name}
-                                </option>
-                            );
-                        })}
-                    </select>
-                    {errorMessage.idSubject && (
-                        <span className={styles.fieldError}>
-                            {errorMessage.idSubject}
-                        </span>
-                    )}
-                </div>
+                <SelectComponent
+                    label="Matéria"
+                    name="subject"
+                    value={idSubject}
+                    onChange={(value) => handleInputChange("idSubject", value)}
+                    options={subjectOptions}
+                    placeholder="Selecione uma matéria"
+                    error={errorMessage.idSubject}
+                    disabled={isLoading}
+                    required
+                    onActionClick={openAddSubjectForm}
+                    actionButtonText="Adicionar matéria"
+                />
 
                 {errorMessage.main && (
                     <div className={styles.errorContainer}>

@@ -3,6 +3,8 @@ import { IoMdClose } from "react-icons/io";
 import { BsStars } from "react-icons/bs";
 import Button from "../Button/Button";
 import ModalComponent from "../ModalComponent/ModalComponent";
+import InputComponent from "../InputComponent/InputComponent";
+import SelectComponent from "../SelectComponent/SelectComponent";
 import styles from "./AddDeckWithAIForm.module.css";
 
 const AddDeckWithAIForm = ({
@@ -21,6 +23,19 @@ const AddDeckWithAIForm = ({
         theme: "",
         main: "",
     });
+
+    // Converter subjects para o formato correto
+    const subjectOptions = subjects.map((subject) => ({
+        value: subject.idSubject,
+        label: subject.name,
+    }));
+
+    // Opções para quantidade de cards
+    const quantityOptions = [
+        { value: 5, label: "5 Cards" },
+        { value: 10, label: "10 Cards" },
+        { value: 15, label: "15 Cards" },
+    ];
 
     const validateForm = () => {
         const newErrors = {
@@ -54,7 +69,7 @@ const AddDeckWithAIForm = ({
         } else if (field === "theme") {
             setTheme(value);
         } else if (field === "quantity") {
-            setQuantity(value);
+            setQuantity(Number(value)); // Converter para número
         }
 
         if (errorMessage[field]) {
@@ -76,7 +91,6 @@ const AddDeckWithAIForm = ({
         setIsLoading(true);
         try {
             await generateDeckWithAI(idSubject, theme, quantity);
-
             await loadData();
             setIsAddDeckWithAIFormOpen(false);
         } catch (error) {
@@ -113,80 +127,44 @@ const AddDeckWithAIForm = ({
                 onSubmit={onSubmit}
                 className={styles.form}
             >
-                <div className={styles.inputContainer}>
-                    <label htmlFor="theme">Título</label>
-                    <input
-                        type="text"
-                        name="theme"
-                        id="theme"
-                        placeholder="Ex: Revolução Francesa, Fotossíntese..."
-                        onChange={(e) =>
-                            handleInputChange("theme", e.target.value)
-                        }
-                        value={theme}
-                        className={errorMessage.theme ? styles.inputError : ""}
-                    />
-                    {errorMessage.theme && (
-                        <span className={styles.fieldError}>
-                            {errorMessage.theme}
-                        </span>
-                    )}
-                </div>
+                {/* Input para o tema usando InputComponent */}
+                <InputComponent
+                    label="Título"
+                    type="text"
+                    name="theme"
+                    value={theme}
+                    onChange={(e) => handleInputChange("theme", e.target.value)}
+                    placeholder="Ex: Revolução Francesa, Fotossíntese..."
+                    error={errorMessage.theme}
+                    disabled={isLoading}
+                    required
+                />
 
-                <div className={styles.inputContainer}>
-                    <div className={styles.addSubjectContainer}>
-                        <label htmlFor="subject">Matéria</label>
-                        <button
-                            type="button"
-                            className={styles.addSubject}
-                            onClick={openAddSubjectForm}
-                        >
-                            Adicionar matéria
-                        </button>
-                    </div>
-                    <select
-                        name="subject"
-                        id="subject"
-                        onChange={(e) =>
-                            handleInputChange("idSubject", e.target.value)
-                        }
-                        value={idSubject}
-                        className={
-                            errorMessage.idSubject ? styles.inputError : ""
-                        }
-                    >
-                        <option value="">Selecione uma matéria</option>
-                        {subjects.map((subject) => (
-                            <option
-                                key={subject.idSubject}
-                                value={subject.idSubject}
-                            >
-                                {subject.name}
-                            </option>
-                        ))}
-                    </select>
-                    {errorMessage.idSubject && (
-                        <span className={styles.fieldError}>
-                            {errorMessage.idSubject}
-                        </span>
-                    )}
-                </div>
+                {/* Select para matéria usando SelectComponent */}
+                <SelectComponent
+                    label="Matéria"
+                    name="subject"
+                    value={idSubject}
+                    onChange={(value) => handleInputChange("idSubject", value)}
+                    options={subjectOptions}
+                    placeholder="Selecione uma matéria"
+                    error={errorMessage.idSubject}
+                    disabled={isLoading}
+                    required
+                    onActionClick={openAddSubjectForm}
+                    actionButtonText="Adicionar matéria"
+                />
 
-                <div className={styles.inputContainer}>
-                    <label htmlFor="quantity">Quantidade</label>
-                    <select
-                        name="quantity"
-                        id="quantity"
-                        onChange={(e) =>
-                            handleInputChange("quantity", e.target.value)
-                        }
-                        value={quantity}
-                    >
-                        <option value={5}>5 Cards</option>
-                        <option value={10}>10 Cards</option>
-                        <option value={15}>15 Cards</option>
-                    </select>
-                </div>
+                {/* Select para quantidade usando SelectComponent */}
+                <SelectComponent
+                    label="Quantidade de Cards"
+                    name="quantity"
+                    value={quantity}
+                    onChange={(value) => handleInputChange("quantity", value)}
+                    options={quantityOptions}
+                    placeholder="Selecione a quantidade"
+                    disabled={isLoading}
+                />
 
                 {errorMessage.main && (
                     <div className={styles.errorContainer}>
@@ -197,11 +175,11 @@ const AddDeckWithAIForm = ({
                 )}
 
                 <Button
-                    onClick={onSubmit}
+                    type="submit"
                     isLoading={isLoading}
                     loadingText="Gerando Deck..."
                 >
-                    <BsStars /> Gerar Deck
+                    <BsStars /> Gerar Deck com IA
                 </Button>
             </form>
         </ModalComponent>

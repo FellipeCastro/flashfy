@@ -10,6 +10,7 @@ import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 import AddDeckWithAIForm from "../../components/AddDeckWithAIForm/AddDeckWithAIForm";
 import api from "../../constants/api";
 import styles from "./Home.module.css";
+import InputComponent from "../../components/InputComponent/InputComponent";
 
 const Home = ({
     isSidebarOpen,
@@ -128,14 +129,13 @@ const Home = ({
                                 </div>
                             </div>
 
-                            <input
+                            <InputComponent
                                 type="text"
-                                placeholder="Pesquisar deck"
-                                className={styles.searchInput}
+                                name="searchInput"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
+                                placeholder="Pesquisar deck..."
                             />
-
                             <div className={styles.filterContainer}>
                                 {subjects.map((subject) => {
                                     return (

@@ -1,14 +1,14 @@
 import { useState } from "react";
 import styles from "./InputComponent.module.css";
 
-const FormField = ({
-    label,
+const InputComponent = ({
+    label = null,
     type = "text",
     name,
     value,
     onChange,
     placeholder,
-    error,
+    error = null,
     showPasswordToggle = false,
 }) => {
     const [showPassword, setShowPassword] = useState(false);
@@ -26,9 +26,11 @@ const FormField = ({
 
     return (
         <div className={styles.formField}>
-            <label htmlFor={name} className={styles.label}>
-                {label}
-            </label>
+            {label && (
+                <label htmlFor={name} className={styles.label}>
+                    {label}
+                </label>
+            )}
 
             <div className={styles.inputContainer}>
                 <input
@@ -86,4 +88,4 @@ const FormField = ({
     );
 };
 
-export default FormField;
+export default InputComponent;
