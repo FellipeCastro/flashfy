@@ -115,18 +115,8 @@ const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
                 className={styles.form}
             >
                 <div className={styles.inputContainer}>
-                    <div className={styles.flexContainer}>
-                        <label htmlFor="question">Pergunta</label>
-
-                        <label htmlFor="fileQuestion" className={styles.file}>
-                            <IoMdLink />
-                            <input
-                                type="file"
-                                name="fileQuestion"
-                                id="fileQuestion"
-                            />
-                        </label>
-                    </div>
+                    <label htmlFor="question">Pergunta</label>
+                    
                     <textarea
                         name="question"
                         id="question"
@@ -147,17 +137,8 @@ const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
                 </div>
 
                 <div className={styles.inputContainer}>
-                    <div className={styles.flexContainer}>
-                        <label htmlFor="answer">Resposta</label>
-                        <label htmlFor="fileAnswer" className={styles.file}>
-                            <IoMdLink />
-                            <input
-                                type="file"
-                                name="fileAnswer"
-                                id="fileAnswer"
-                            />
-                        </label>
-                    </div>
+                    <label htmlFor="answer">Resposta</label>
+
                     <textarea
                         name="answer"
                         id="answer"

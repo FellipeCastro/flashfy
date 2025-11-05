@@ -4,8 +4,7 @@ import { FaTrashAlt, FaBook, FaLayerGroup, FaFileAlt } from "react-icons/fa";
 import { FaFire } from "react-icons/fa6";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
-import FormField from "../../components/Form/FormField";
-import Loading from "../../components/Loading/Loading";
+import InputComponent from "../../components/InputComponent/InputComponent";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import styles from "./Profile.module.css";
 import api from "../../constants/api";
@@ -339,7 +338,7 @@ const Profile = ({
                             <div className={styles.formSection}>
                                 <h2>Informações Pessoais</h2>
 
-                                <FormField
+                                <InputComponent
                                     label="Nome completo"
                                     type="text"
                                     name="name"
@@ -354,7 +353,7 @@ const Profile = ({
                                     disabled={!isEditing || loading}
                                 />
 
-                                <FormField
+                                <InputComponent
                                     label="Email"
                                     type="email"
                                     name="email"
@@ -374,7 +373,7 @@ const Profile = ({
                                 <div className={styles.formSection}>
                                     <h2>Alterar Senha</h2>
 
-                                    <FormField
+                                    <InputComponent
                                         label="Senha atual"
                                         type="password"
                                         name="currentPassword"
@@ -385,7 +384,7 @@ const Profile = ({
                                         showPasswordToggle={true}
                                     />
 
-                                    <FormField
+                                    <InputComponent
                                         label="Nova senha"
                                         type="password"
                                         name="newPassword"
@@ -396,7 +395,7 @@ const Profile = ({
                                         showPasswordToggle={true}
                                     />
 
-                                    <FormField
+                                    <InputComponent
                                         label="Confirmar nova senha"
                                         type="password"
                                         name="confirmPassword"

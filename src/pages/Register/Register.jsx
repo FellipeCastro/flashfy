@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import FormField from "../../components/Form/FormField";
+import InputComponent from "../../components/InputComponent/InputComponent";
 import api from "../../constants/api.js";
 import styles from "./Register.module.css";
 import Button from "../../components/Button/Button.jsx";
@@ -171,7 +171,7 @@ const Register = ({ loadData }) => {
                         </div>
                     )}
 
-                    <FormField
+                    <InputComponent
                         label="Nome completo"
                         type="text"
                         name="name"
@@ -181,7 +181,7 @@ const Register = ({ loadData }) => {
                         error={errors.name}
                     />
 
-                    <FormField
+                    <InputComponent
                         label="Email"
                         type="email"
                         name="email"
@@ -191,7 +191,7 @@ const Register = ({ loadData }) => {
                         error={errors.email}
                     />
 
-                    <FormField
+                    <InputComponent
                         label="Senha"
                         type="password"
                         name="password"
@@ -202,7 +202,7 @@ const Register = ({ loadData }) => {
                         showPasswordToggle={true}
                     />
 
-                    <FormField
+                    <InputComponent
                         label="Confirmar senha"
                         type="password"
                         name="confirmPassword"

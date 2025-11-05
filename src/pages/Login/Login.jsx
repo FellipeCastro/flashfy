@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode"; 
-import FormField from "../../components/Form/FormField";
+import InputComponent from "../../components/InputComponent/InputComponent";
 import Button from "../../components/Button/Button.jsx";
 import api from "../../constants/api.js";
 import styles from "./Login.module.css";
@@ -153,7 +153,7 @@ const Login = ({ loadData }) => {
                         </div>
                     )}
 
-                    <FormField
+                    <InputComponent
                         label="Email"
                         type="email"
                         name="email"
@@ -164,7 +164,7 @@ const Login = ({ loadData }) => {
                         disabled={isLoading || isGoogleLoading}
                     />
 
-                    <FormField
+                    <InputComponent
                         label="Senha"
                         type="password"
                         name="password"

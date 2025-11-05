@@ -55,24 +55,6 @@
     font-size: 0.9rem;
 }
 
-.file {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--primary-color);
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: color 0.2s ease;
-}
-
-.file:hover {
-    color: var(--primary-color-hover);
-}
-
-.file input {
-    display: none;
-}
-
 textarea {
     width: 100%;
     padding: 0.9rem 1rem;
