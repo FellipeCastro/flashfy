@@ -6,9 +6,9 @@ import Cards from "./pages/Cards/Cards";
 import AiQuestions from "./pages/AiQuestions/AiQuestions";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import Profile from "./pages/Profile/Profile";
+import LandingPage from "./pages/LandingPage/LandingPage";
 import api from "./constants/api.js";
-import Profile from "./pages/Profile/Profile.jsx";
-import LandingPage from "./pages/LandingPage/LandingPage.jsx";
 
 const App = () => {
     const [decks, setDecks] = useState([]);

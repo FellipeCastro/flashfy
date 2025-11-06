@@ -8,6 +8,7 @@ const InputComponent = ({
     value,
     onChange,
     placeholder,
+    required = false,
     error = null,
     showPasswordToggle = false,
 }) => {
@@ -29,6 +30,7 @@ const InputComponent = ({
             {label && (
                 <label htmlFor={name} className={styles.label}>
                     {label}
+                    {required && <span className={styles.required}>*</span>}
                 </label>
             )}
 

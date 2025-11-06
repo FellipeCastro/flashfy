@@ -139,6 +139,7 @@ const AddDeckForm = ({
                     placeholder="Digite o título do deck aqui"
                     error={errorMessage.title}
                     disabled={isLoading}
+                    required
                 />
 
                 <SelectComponent

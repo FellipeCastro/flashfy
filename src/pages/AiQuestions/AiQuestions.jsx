@@ -502,6 +502,7 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                         placeholder="Selecione a dificuldade"
                                         error={errorMessage.difficulty}
                                         disabled={isLoading}
+                                        required
                                     />
 
                                     <SelectComponent
@@ -515,6 +516,7 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                         placeholder="Selecione a quantidade"
                                         error={errorMessage.quantity}
                                         disabled={isLoading}
+                                        required
                                     />
                                 </div>
 
