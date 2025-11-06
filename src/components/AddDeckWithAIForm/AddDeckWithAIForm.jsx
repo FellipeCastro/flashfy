@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import ModalComponent from "../ModalComponent/ModalComponent";
 import InputComponent from "../InputComponent/InputComponent";
 import SelectComponent from "../SelectComponent/SelectComponent";
+import ErrorComponent from "../ErrorComponent/ErrorComponent";
 import styles from "./AddDeckWithAIForm.module.css";
 
 const AddDeckWithAIForm = ({
@@ -127,7 +128,8 @@ const AddDeckWithAIForm = ({
                 onSubmit={onSubmit}
                 className={styles.form}
             >
-                {/* Input para o tema usando InputComponent */}
+                <ErrorComponent error={errorMessage.main} />
+
                 <InputComponent
                     label="Título"
                     type="text"
@@ -140,7 +142,6 @@ const AddDeckWithAIForm = ({
                     required
                 />
 
-                {/* Select para matéria usando SelectComponent */}
                 <SelectComponent
                     label="Matéria"
                     name="subject"
@@ -155,7 +156,6 @@ const AddDeckWithAIForm = ({
                     actionButtonText="Adicionar matéria"
                 />
 
-                {/* Select para quantidade usando SelectComponent */}
                 <SelectComponent
                     label="Quantidade de Cards"
                     name="quantity"
@@ -165,14 +165,6 @@ const AddDeckWithAIForm = ({
                     placeholder="Selecione a quantidade"
                     disabled={isLoading}
                 />
-
-                {errorMessage.main && (
-                    <div className={styles.errorContainer}>
-                        <div className={styles.errorText}>
-                            <p>{errorMessage.main}</p>
-                        </div>
-                    </div>
-                )}
 
                 <Button
                     type="submit"

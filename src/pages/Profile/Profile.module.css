@@ -71,16 +71,6 @@
 }
 
 /* Mensagens */
-.errorMessage {
-    background-color: var(--incorrect-bg);
-    color: var(--error-color-text);
-    padding: 1rem;
-    border-radius: 0.2rem;
-    margin-bottom: 1.5rem;
-    border-left: 4px solid var(--error-color-text);
-    animation: fadeIn 0.3s ease-out;
-}
-
 .successMessage {
     background-color: var(--correct-bg);
     color: var(--correct-color);

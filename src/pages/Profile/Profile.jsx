@@ -10,6 +10,7 @@ import styles from "./Profile.module.css";
 import api from "../../constants/api";
 import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 import CardComponent from "../../components/CardComponent/CardComponent";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 
 const Profile = ({
     isSidebarOpen,
@@ -64,7 +65,7 @@ const Profile = ({
 
         if (diffDays === 0) {
             return "Hoje";
-        } else if (diffDays === 1) {
+        } else if (diffDays > 0 && diffDays <= 1) {
             return "Ontem";
         } else {
             return `Há ${diffDays} dias`;
@@ -322,17 +323,16 @@ const Profile = ({
                         <p>Gerencie suas informações pessoais e preferências</p>
                     </div>
 
-                    {errors.general && (
-                        <div className={styles.errorMessage}>
-                            {errors.general}
-                        </div>
-                    )}
+                    <ErrorComponent 
+                        error={errors.general}
+                    />
 
                     {successMessage && (
                         <div className={styles.successMessage}>
                             {successMessage}
                         </div>
                     )}
+                    
                     <CardComponent alternativeClass={styles.profileForm}>
                         <form onSubmit={handleSubmit}>
                             <div className={styles.formSection}>

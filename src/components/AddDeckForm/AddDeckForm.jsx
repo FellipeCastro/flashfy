@@ -2,9 +2,10 @@ import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
 import ModalComponent from "../ModalComponent/ModalComponent";
-import styles from "./AddDeckForm.module.css";
 import InputComponent from "../InputComponent/InputComponent";
 import SelectComponent from "../SelectComponent/SelectComponent";
+import ErrorComponent from "../ErrorComponent/ErrorComponent";
+import styles from "./AddDeckForm.module.css";
 
 const AddDeckForm = ({
     setIsAddDeckFormOpen,
@@ -105,7 +106,7 @@ const AddDeckForm = ({
     const closeModal = () => {
         setIsAddDeckFormOpen(false);
     };
-    
+
     const subjectOptions = subjects.map((subject) => ({
         value: subject.idSubject,
         label: subject.name,
@@ -127,6 +128,8 @@ const AddDeckForm = ({
                 onSubmit={onSubmit}
                 className={styles.form}
             >
+                <ErrorComponent error={errorMessage.main} />
+
                 <InputComponent
                     label="Título"
                     type="text"
@@ -151,14 +154,6 @@ const AddDeckForm = ({
                     onActionClick={openAddSubjectForm}
                     actionButtonText="Adicionar matéria"
                 />
-
-                {errorMessage.main && (
-                    <div className={styles.errorContainer}>
-                        <div className={styles.errorText}>
-                            <p>{errorMessage.main}</p>
-                        </div>
-                    </div>
-                )}
 
                 <Button
                     type="submit"

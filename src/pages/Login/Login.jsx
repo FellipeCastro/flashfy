@@ -5,6 +5,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode"; 
 import InputComponent from "../../components/InputComponent/InputComponent";
 import Button from "../../components/Button/Button.jsx";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent.jsx";
 import api from "../../constants/api.js";
 import styles from "./Login.module.css";
 
@@ -147,11 +148,9 @@ const Login = ({ loadData }) => {
                 </div>
 
                 <form onSubmit={handleSubmit} className={styles.loginForm}>
-                    {errors.general && (
-                        <div className={styles.errorMessage}>
-                            {errors.general}
-                        </div>
-                    )}
+                    <ErrorComponent 
+                        error={errors.general}
+                    />
 
                     <InputComponent
                         label="Email"

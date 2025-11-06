@@ -2,8 +2,9 @@ import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
 import ModalComponent from "../ModalComponent/ModalComponent";
-import styles from "./AddSubjectForm.module.css";
 import InputComponent from "../InputComponent/InputComponent";
+import ErrorComponent from "../ErrorComponent/ErrorComponent";
+import styles from "./AddSubjectForm.module.css";
 
 const AddSubjectForm = ({ setIsAddSubjectFormOpen, createSubject }) => {
     const [name, setName] = useState("");
@@ -129,6 +130,8 @@ const AddSubjectForm = ({ setIsAddSubjectFormOpen, createSubject }) => {
                 onSubmit={onSubmit}
                 className={styles.form}
             >
+                <ErrorComponent error={errorMessage.main} />
+            
                 <InputComponent
                     label="Matéria"
                     type="text"
@@ -165,14 +168,6 @@ const AddSubjectForm = ({ setIsAddSubjectFormOpen, createSubject }) => {
                         </span>
                     )}
                 </div>
-
-                {errorMessage.main && (
-                    <div className={styles.errorContainer}>
-                        <div className={styles.errorText}>
-                            <p>{errorMessage.main}</p>
-                        </div>
-                    </div>
-                )}
 
                 <Button
                     type="submit"

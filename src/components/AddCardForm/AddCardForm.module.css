@@ -40,7 +40,7 @@
 .form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .inputContainer {
@@ -88,20 +88,6 @@ textarea:focus {
     animation: fadeIn 0.3s ease-out;
 }
 
-.errorContainer {
-    background-color: var(--error-color);
-    color: var(--error-color-text);
-    padding: 0.9rem;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 0.9rem;
-    border-left: 4px solid var(--error-color-text);
-    animation: fadeIn 0.3s ease-out;
-}
-
-.errorText p {
-    margin: 0;
-}
 
 /* Animações */
 @keyframes fadeIn {

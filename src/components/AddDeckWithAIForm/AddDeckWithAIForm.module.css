@@ -36,21 +36,6 @@
     flex-direction: column;
 }
 
-.errorContainer {
-    background-color: var(--error-color);
-    color: var(--error-color-text);
-    padding: 0.9rem;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 0.9rem;
-    border-left: 4px solid var(--error-color-text);
-    animation: fadeIn 0.3s ease-out;
-}
-
-.errorText p {
-    margin: 0;
-}
-
 /* Animações */
 @keyframes fadeIn {
     from {

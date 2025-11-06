@@ -4,9 +4,10 @@ import { FaArrowLeft } from "react-icons/fa";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import InputComponent from "../../components/InputComponent/InputComponent";
+import Button from "../../components/Button/Button";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import api from "../../constants/api.js";
 import styles from "./Register.module.css";
-import Button from "../../components/Button/Button.jsx";
 
 const Register = ({ loadData }) => {
     const [formData, setFormData] = useState({
@@ -165,11 +166,9 @@ const Register = ({ loadData }) => {
                 </div>
 
                 <form onSubmit={handleSubmit} className={styles.registerForm}>
-                    {errors.general && (
-                        <div className={styles.errorMessage}>
-                            {errors.general}
-                        </div>
-                    )}
+                    <ErrorComponent 
+                        error={errors.general}
+                    />
 
                     <InputComponent
                         label="Nome completo"

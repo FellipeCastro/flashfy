@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { IoMdLink, IoMdClose } from "react-icons/io";
+import { IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
 import ModalComponent from "../ModalComponent/ModalComponent";
+import ErrorComponent from "../ErrorComponent/ErrorComponent";
 import styles from "./AddCardForm.module.css";
 
 const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
@@ -114,9 +115,11 @@ const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
                 onSubmit={onSubmit}
                 className={styles.form}
             >
+                <ErrorComponent error={errorMessage.main} />
+
                 <div className={styles.inputContainer}>
                     <label htmlFor="question">Pergunta</label>
-                    
+
                     <textarea
                         name="question"
                         id="question"
@@ -155,14 +158,6 @@ const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
                         </span>
                     )}
                 </div>
-
-                {errorMessage.main && (
-                    <div className={styles.errorContainer}>
-                        <div className={styles.errorText}>
-                            <p>{errorMessage.main}</p>
-                        </div>
-                    </div>
-                )}
 
                 <Button
                     type="submit"
