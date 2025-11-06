@@ -16,13 +16,13 @@ const ConfirmModal = ({
         <ModalComponent closeModal={onCancel}>
                 <div className={styles.flexModal}>
                     {success ? null : <IoIosWarning />}
-                    <div>
+                    <div className={styles.modalText}>
                         <h2>{title}</h2>
                         <p>{description}</p>
                     </div>
                 </div>
                 <div className={styles.btnsContainerModal}>
-                    <button className={styles.cancelBtn} onClick={onCancel}>
+                    <button className={styles.cancelBtn} onClick={onCancel} disabled={isLoading}>
                         Cancelar
                     </button>
                     <button

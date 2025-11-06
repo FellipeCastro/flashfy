@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-    RiRobot2Fill,
-    RiLightbulbFlashLine,
-    RiHistoryLine,
-    RiDownload2Line,
-} from "react-icons/ri";
+import { RiLightbulbFlashLine, RiHistoryLine } from "react-icons/ri";
 import { GoAlertFill } from "react-icons/go";
 import Button from "../../components/Button/Button";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import InputComponent from "../../components/InputComponent/InputComponent";
+import SelectComponent from "../../components/SelectComponent/SelectComponent";
 import styles from "./AiQuestions.module.css";
 import api from "../../constants/api.js";
 
@@ -51,6 +48,18 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
         itemId: null,
         itemTheme: "",
     });
+
+    // Opções para os selects
+    const difficultyOptions = [
+        { value: "Fácil", label: "Fácil" },
+        { value: "Médio", label: "Médio" },
+        { value: "Difícil", label: "Difícil" },
+    ];
+
+    const quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => ({
+        value: num.toString(),
+        label: num.toString(),
+    }));
 
     // Carrega o histórico do localStorage quando o componente monta
     useEffect(() => {
@@ -169,18 +178,17 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
         }));
     };
 
-    // Manipulador de mudança no formulário
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
+    // Manipulador de mudança no formulário para os componentes
+    const handleInputChange = (field, value) => {
         setFormData((prev) => ({
             ...prev,
-            [name]: value,
+            [field]: value,
         }));
 
-        if (errorMessage[name]) {
+        if (errorMessage[field]) {
             setErrorMessage((prev) => ({
                 ...prev,
-                [name]: "",
+                [field]: "",
                 main: "",
             }));
         }
@@ -462,92 +470,52 @@ const AiQuestions = ({ isSidebarOpen, setIsSidebarOpen }) => {
                                 className={styles.form}
                                 autoComplete="off"
                             >
-                                <div className={styles.inputContainer}>
-                                    <label htmlFor="theme">Tema:</label>
-                                    <input
-                                        type="text"
-                                        name="theme"
-                                        id="theme"
-                                        placeholder="Digite o tema das questões aqui"
-                                        value={formData.theme}
-                                        onChange={handleInputChange}
-                                        className={
-                                            errorMessage.theme
-                                                ? styles.inputError
-                                                : ""
-                                        }
-                                    />
-                                    {errorMessage.theme && (
-                                        <span className={styles.fieldError}>
-                                            {errorMessage.theme}
-                                        </span>
-                                    )}
-                                </div>
+                                <InputComponent
+                                    label="Tema:"
+                                    type="text"
+                                    name="theme"
+                                    value={formData.theme}
+                                    onChange={(e) =>
+                                        handleInputChange(
+                                            "theme",
+                                            e.target.value
+                                        )
+                                    }
+                                    placeholder="Digite o tema das questões aqui"
+                                    error={errorMessage.theme}
+                                    disabled={isLoading}
+                                    required
+                                />
 
                                 <div className={styles.flexContainer}>
-                                    <div className={styles.inputContainer}>
-                                        <label htmlFor="difficulty">
-                                            Dificuldade:
-                                        </label>
-                                        <select
-                                            name="difficulty"
-                                            id="difficulty"
-                                            value={formData.difficulty}
-                                            onChange={handleInputChange}
-                                            className={
-                                                errorMessage.difficulty
-                                                    ? styles.inputError
-                                                    : ""
-                                            }
-                                        >
-                                            <option value="">
-                                                Selecione a dificuldade
-                                            </option>
-                                            <option value="Fácil">Fácil</option>
-                                            <option value="Médio">Médio</option>
-                                            <option value="Difícil">
-                                                Difícil
-                                            </option>
-                                        </select>
-                                        {errorMessage.difficulty && (
-                                            <span className={styles.fieldError}>
-                                                {errorMessage.difficulty}
-                                            </span>
-                                        )}
-                                    </div>
+                                    <SelectComponent
+                                        label="Dificuldade:"
+                                        name="difficulty"
+                                        value={formData.difficulty}
+                                        onChange={(value) =>
+                                            handleInputChange(
+                                                "difficulty",
+                                                value
+                                            )
+                                        }
+                                        options={difficultyOptions}
+                                        placeholder="Selecione a dificuldade"
+                                        error={errorMessage.difficulty}
+                                        disabled={isLoading}
+                                    />
 
-                                    <div className={styles.inputContainer}>
-                                        <label htmlFor="quantity">
-                                            Quantidade:
-                                        </label>
-                                        <select
-                                            name="quantity"
-                                            id="quantity"
-                                            value={formData.quantity}
-                                            onChange={handleInputChange}
-                                            className={
-                                                errorMessage.quantity
-                                                    ? styles.inputError
-                                                    : ""
-                                            }
-                                        >
-                                            <option value="">
-                                                Selecione a quantidade
-                                            </option>
-                                            {[
-                                                1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                                            ].map((num) => (
-                                                <option key={num} value={num}>
-                                                    {num}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        {errorMessage.quantity && (
-                                            <span className={styles.fieldError}>
-                                                {errorMessage.quantity}
-                                            </span>
-                                        )}
-                                    </div>
+                                    <SelectComponent
+                                        label="Quantidade:"
+                                        name="quantity"
+                                        value={formData.quantity}
+                                        onChange={(value) =>
+                                            handleInputChange("quantity", value)
+                                        }
+                                        options={quantityOptions}
+                                        placeholder="Selecione a quantidade"
+                                        error={errorMessage.quantity}
+                                        disabled={isLoading}
+                                    />
                                 </div>
 
                                 <Button

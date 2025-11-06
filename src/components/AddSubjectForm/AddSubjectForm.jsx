@@ -3,6 +3,7 @@ import { IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
 import ModalComponent from "../ModalComponent/ModalComponent";
 import styles from "./AddSubjectForm.module.css";
+import InputComponent from "../InputComponent/InputComponent";
 
 const AddSubjectForm = ({ setIsAddSubjectFormOpen, createSubject }) => {
     const [name, setName] = useState("");
@@ -128,27 +129,18 @@ const AddSubjectForm = ({ setIsAddSubjectFormOpen, createSubject }) => {
                 onSubmit={onSubmit}
                 className={styles.form}
             >
-                <div className={styles.inputContainer}>
-                    <label htmlFor="name">Matéria</label>
-                    <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        placeholder="Digite a matéria aqui"
-                        onChange={(e) =>
-                            handleInputChange("name", e.target.value)
-                        }
-                        value={name}
-                        className={errorMessage.name ? styles.inputError : ""}
-                    />
-                    {errorMessage.name && (
-                        <span className={styles.fieldError}>
-                            {errorMessage.name}
-                        </span>
-                    )}
-                </div>
+                <InputComponent
+                    label="Matéria"
+                    type="text"
+                    name="name"
+                    value={name}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
+                    placeholder="Digite o nome da matéria aqui"
+                    error={errorMessage.name}
+                    disabled={isLoading}
+                />
 
-                <div className={styles.inputContainer}>
+                <div className={styles.inputColorContainer}>
                     <label htmlFor="color">Cor</label>
                     <div className={styles.colorPickerContainer}>
                         <input
