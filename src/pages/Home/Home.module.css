@@ -9,6 +9,106 @@
     background: var(--bg-color);
 }
 
+/* components/CardLoader/CardLoader.module.css */
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    width: 100%;
+}
+
+.loaderContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.cardStack {
+    position: relative;
+    width: 120px;
+    height: 100px;
+}
+
+.card {
+    position: absolute;
+    width: 100px;
+    height: 70px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: cardFloat 2s ease-in-out infinite;
+}
+
+.card1 {
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    animation-delay: 0s;
+    z-index: 3;
+}
+
+.card2 {
+    top: 8px;
+    left: 8px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    animation-delay: 0.2s;
+    z-index: 2;
+}
+
+.card3 {
+    top: 16px;
+    left: 16px;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    animation-delay: 0.4s;
+    z-index: 1;
+}
+
+.loaderText {
+    text-align: center;
+}
+
+.loaderText h3 {
+    color: var(--text-secondary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.loaderText p {
+    color: var(--text-secondary-color);
+    font-size: 0.9rem;
+}
+
+@keyframes cardFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(-2deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(2deg);
+    }
+}
+
+/* Efeito de pulso suave */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: shine 2s infinite;
+}
+
+@keyframes shine {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
 .titleContainer {
     width: 100%;
     display: flex;
@@ -16,11 +116,13 @@
     justify-content: space-between;
     margin-bottom: 1.2rem;
 }
-.buttons    {
+
+.buttons {
     display: flex;
     align-items: center;
     gap: 0.6rem;
 }
+
 .columnContainer {
     display: flex;
     flex-direction: column;

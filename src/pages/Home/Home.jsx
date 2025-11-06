@@ -105,7 +105,25 @@ const Home = ({
                     <ProgressBar progress={progress} />
 
                     {loading ? (
-                        <p id="loader">Carregando dados...</p>
+                        <div className={styles.loaderContainer}>
+                            <div className={styles.loaderContent}>
+                                <div className={styles.cardStack}>
+                                    <div
+                                        className={`${styles.card} ${styles.card1}`}
+                                    ></div>
+                                    <div
+                                        className={`${styles.card} ${styles.card2}`}
+                                    ></div>
+                                    <div
+                                        className={`${styles.card} ${styles.card3}`}
+                                    ></div>
+                                </div>
+                                <div className={styles.loaderText}>
+                                    <h3 id="loader">Preparando seus decks...</h3>
+                                    <p>Organizando o conhecimento</p>
+                                </div>
+                            </div>
+                        </div>
                     ) : (
                         <>
                             <div className={styles.titleContainer}>
