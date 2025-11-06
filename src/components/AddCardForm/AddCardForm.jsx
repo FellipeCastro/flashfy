@@ -3,6 +3,7 @@ import { IoMdClose } from "react-icons/io";
 import Button from "../Button/Button";
 import ModalComponent from "../ModalComponent/ModalComponent";
 import ErrorComponent from "../ErrorComponent/ErrorComponent";
+import TextareaComponent from "../TextareaComponent/TextareaComponent";
 import styles from "./AddCardForm.module.css";
 
 const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
@@ -117,47 +118,33 @@ const AddCardForm = ({ setIsAddCardFormOpen, createCard }) => {
             >
                 <ErrorComponent error={errorMessage.main} />
 
-                <div className={styles.inputContainer}>
-                    <label htmlFor="question">Pergunta</label>
+                <TextareaComponent
+                    label="Pergunta"
+                    name="question"
+                    value={question}
+                    onChange={(value) => handleInputChange("question", value)}
+                    placeholder="Digite a pergunta aqui"
+                    error={errorMessage.question}
+                    disabled={isLoading}
+                    required
+                    rows={4}
+                    maxLength={500}
+                    showCharCount={true}
+                />
 
-                    <textarea
-                        name="question"
-                        id="question"
-                        placeholder="Digite a pergunta aqui"
-                        onChange={(e) =>
-                            handleInputChange("question", e.target.value)
-                        }
-                        value={question}
-                        className={
-                            errorMessage.question ? styles.inputError : ""
-                        }
-                    ></textarea>
-                    {errorMessage.question && (
-                        <span className={styles.fieldError}>
-                            {errorMessage.question}
-                        </span>
-                    )}
-                </div>
-
-                <div className={styles.inputContainer}>
-                    <label htmlFor="answer">Resposta</label>
-
-                    <textarea
-                        name="answer"
-                        id="answer"
-                        placeholder="Digite a resposta aqui"
-                        onChange={(e) =>
-                            handleInputChange("answer", e.target.value)
-                        }
-                        value={answer}
-                        className={errorMessage.answer ? styles.inputError : ""}
-                    ></textarea>
-                    {errorMessage.answer && (
-                        <span className={styles.fieldError}>
-                            {errorMessage.answer}
-                        </span>
-                    )}
-                </div>
+                <TextareaComponent
+                    label="Resposta"
+                    name="answer"
+                    value={answer}
+                    onChange={(value) => handleInputChange("answer", value)}
+                    placeholder="Digite a resposta aqui"
+                    error={errorMessage.answer}
+                    disabled={isLoading}
+                    required
+                    rows={6}
+                    maxLength={1000}
+                    showCharCount={true}
+                />
 
                 <Button
                     type="submit"

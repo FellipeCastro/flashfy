@@ -70,17 +70,6 @@
     gap: 1rem;
 }
 
-/* Mensagens */
-.successMessage {
-    background-color: var(--correct-bg);
-    color: var(--correct-color);
-    padding: 1rem;
-    border-radius: 0.2rem;
-    margin-bottom: 1.5rem;
-    border-left: 4px solid var(--correct-color);
-    animation: fadeIn 0.3s ease-out;
-}
-
 /* Seção de estatísticas */
 .statsSection {
     margin-bottom: 2rem;

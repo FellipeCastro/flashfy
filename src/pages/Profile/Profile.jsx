@@ -6,11 +6,11 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
 import InputComponent from "../../components/InputComponent/InputComponent";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
-import styles from "./Profile.module.css";
-import api from "../../constants/api";
 import AddSubjectForm from "../../components/AddSubjectForm/AddSubjectForm";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import styles from "./Profile.module.css";
+import api from "../../constants/api";
 
 const Profile = ({
     isSidebarOpen,
@@ -33,14 +33,13 @@ const Profile = ({
     const [isLoading, setIsLoading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [isChangingPassword, setIsChangingPassword] = useState(false);
-    const [successMessage, setSuccessMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState(null);
     const [deleteModal, setDeleteModal] = useState(false);
     const [deleteSubjectModal, setDeleteSubjectModal] = useState(false);
     const [logoutModal, setLogoutModal] = useState(false);
     const [subjectToDelete, setSubjectToDelete] = useState(null);
     const [isDeletingSubject, setIsDeletingSubject] = useState(false);
     const [isAddSubjectFormOpen, setIsAddSubjectFormOpen] = useState(false);
-    const [isCreatingSubject, setIsCreatingSubject] = useState(false);
     const navigate = useNavigate();
 
     // Carregar dados do usuário quando o profile mudar
@@ -53,6 +52,18 @@ const Profile = ({
             }));
         }
     }, [profile]);
+
+    // Efeito para limpar a mensagem de sucesso após 5 segundos
+    useEffect(() => {
+        if (successMessage) {
+            const timer = setTimeout(() => {
+                setSuccessMessage(null);
+            }, 5000); // 5 segundos
+
+            // Cleanup function para limpar o timer se o componente desmontar
+            return () => clearTimeout(timer);
+        }
+    }, [successMessage]);
 
     // Função para formatar a data do último estudo
     const formatLastStudyDate = (dateString) => {
@@ -323,16 +334,8 @@ const Profile = ({
                         <p>Gerencie suas informações pessoais e preferências</p>
                     </div>
 
-                    <ErrorComponent 
-                        error={errors.general}
-                    />
+                    <ErrorComponent error={errors.general} />
 
-                    {successMessage && (
-                        <div className={styles.successMessage}>
-                            {successMessage}
-                        </div>
-                    )}
-                    
                     <CardComponent alternativeClass={styles.profileForm}>
                         <form onSubmit={handleSubmit}>
                             <div className={styles.formSection}>
@@ -350,7 +353,7 @@ const Profile = ({
                                     onChange={handleChange}
                                     placeholder="Seu nome completo"
                                     error={errors.name}
-                                    disabled={!isEditing || loading}
+                                    disabled={loading}
                                 />
 
                                 <InputComponent
@@ -365,7 +368,7 @@ const Profile = ({
                                     onChange={handleChange}
                                     placeholder="seu@email.com"
                                     error={errors.email}
-                                    disabled={!isEditing || loading}
+                                    disabled={loading}
                                 />
                             </div>
 
@@ -433,12 +436,16 @@ const Profile = ({
                                     <div className={styles.editActions}>
                                         <Button
                                             type="submit"
-                                            disabled={isLoading}
+                                            disabled={
+                                                isLoading || successMessage
+                                            }
                                         >
                                             {isLoading
                                                 ? "Salvando..."
                                                 : isChangingPassword
                                                 ? "Alterar Senha"
+                                                : successMessage
+                                                ? successMessage
                                                 : "Salvar Alterações"}
                                         </Button>
                                         <Button

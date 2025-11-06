@@ -11,11 +11,21 @@ const InputComponent = ({
     required = false,
     error = null,
     showPasswordToggle = false,
+    disabled = false,
 }) => {
     const [showPassword, setShowPassword] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
+    };
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
     };
 
     const inputType =
@@ -41,9 +51,14 @@ const InputComponent = ({
                     name={name}
                     value={value}
                     onChange={onChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
                     placeholder={placeholder}
+                    disabled={disabled}
                     className={`${styles.input} ${
                         error ? styles.errorInput : ""
+                    } ${isFocused ? styles.focused : ""} ${
+                        disabled ? styles.disabled : ""
                     }`}
                 />
 
@@ -52,6 +67,7 @@ const InputComponent = ({
                         type="button"
                         className={styles.passwordToggle}
                         onClick={togglePasswordVisibility}
+                        disabled={disabled}
                         aria-label={
                             showPassword ? "Ocultar senha" : "Mostrar senha"
                         }

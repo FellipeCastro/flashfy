@@ -3,32 +3,11 @@
     position: relative;
 }
 
-.addSubjectContainer {
+.labelContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0.5rem;
-}
-
-.addSubject {
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-radius: 4px;
-    transition: all 0.2s ease;
-}
-
-.addSubject:hover:not(:disabled) {
-    color: var(--primary-color-hover);
-    text-decoration: underline;
-}
-
-.addSubject:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
 }
 
 .label {
@@ -43,69 +22,50 @@
     margin-left: 0.25rem;
 }
 
-.selectContainer {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.select {
-    width: 100%;
-    padding: 0.9rem 1rem;
-    padding-right: 2.5rem;
-    border: 1px solid var(--border-color);
-    border-radius: 0.2rem;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-    background-color: #fafafa;
-    appearance: none;
-    cursor: pointer;
+.charCount {
+    font-size: 0.8rem;
     color: var(--text-secondary-color);
 }
 
-.select:focus {
+.textareaContainer {
+    position: relative;
+}
+
+.textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.2rem;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 100px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    background-color: #fafafa;
+    line-height: 1.5;
+}
+
+.textarea:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(1, 165, 228, 0.1);
     background-color: #fff;
-    color: var(--text-primary-color);
 }
 
-.select.focused {
+.textarea.focused {
     border-color: var(--primary-color);
     background-color: #fff;
-    color: var(--text-primary-color);
 }
 
-.select.errorSelect {
+.textarea.errorTextarea {
     border-color: var(--error-color-text);
 }
 
-.select:disabled {
+.textarea:disabled {
     background-color: var(--border-color);
     cursor: not-allowed;
     opacity: 0.6;
-}
-
-.dropdownIcon {
-    position: absolute;
-    right: 1rem;
-    pointer-events: none;
-    color: var(--text-secondary-color);
-    transition: transform 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.select:focus + .dropdownIcon {
-    color: var(--primary-color);
-    transform: rotate(180deg);
-}
-
-.select.errorSelect + .dropdownIcon {
-    color: var(--error-color-text);
 }
 
 .fieldError {
@@ -125,4 +85,9 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* Estilo para quando atingir o limite de caracteres */
+.charCount.warning {
+    color: var(--error-color-text);
 }
