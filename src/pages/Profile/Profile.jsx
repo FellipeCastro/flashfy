@@ -69,17 +69,50 @@ const Profile = ({
     const formatLastStudyDate = (dateString) => {
         if (!dateString) return "Nunca estudou";
 
-        const date = new Date(dateString);
-        const now = new Date();
-        const diffTime = Math.abs(now - date);
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        try {
+            const date = new Date(dateString);
+            const now = new Date();
 
-        if (diffDays === 0) {
-            return "Hoje";
-        } else if (diffDays > 0 && diffDays <= 1) {
-            return "Ontem";
-        } else {
-            return `Há ${diffDays} dias`;
+            // Verifica se a data é válida
+            if (isNaN(date.getTime())) {
+                return "Data inválida";
+            }
+
+            // Define as datas para o mesmo horário (meia-noite) para comparar apenas os dias
+            const today = new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate()
+            );
+            const studyDate = new Date(
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate()
+            );
+
+            const diffTime = today - studyDate;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays === 0) {
+                return "Hoje";
+            } else if (diffDays === 1) {
+                return "Ontem";
+            } else if (diffDays > 1 && diffDays <= 7) {
+                return `Há ${diffDays} dias`;
+            } else if (diffDays > 7 && diffDays <= 30) {
+                const weeks = Math.floor(diffDays / 7);
+                return `Há ${weeks} semana${weeks > 1 ? "s" : ""}`;
+            } else {
+                // Formata a data completa para casos mais antigos
+                return date.toLocaleDateString("pt-BR", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                });
+            }
+        } catch (error) {
+            console.error("Erro ao formatar data:", error);
+            return "Data inválida";
         }
     };
 

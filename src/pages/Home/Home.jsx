@@ -109,13 +109,13 @@ const Home = ({
                             <div className={styles.loaderContent}>
                                 <div className={styles.cardStack}>
                                     <div
-                                        className={`${styles.card} ${styles.card1}`}
+                                        className={`${styles.card} ${styles.animatedCard} ${styles.card1}`}
                                     ></div>
                                     <div
-                                        className={`${styles.card} ${styles.card2}`}
+                                        className={`${styles.card} ${styles.animatedCard} ${styles.card2}`}
                                     ></div>
                                     <div
-                                        className={`${styles.card} ${styles.card3}`}
+                                        className={`${styles.card} ${styles.animatedCard} ${styles.card3}`}
                                     ></div>
                                 </div>
                                 <div className={styles.loaderText}>

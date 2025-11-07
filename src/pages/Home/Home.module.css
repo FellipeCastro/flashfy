@@ -9,7 +9,6 @@
     background: var(--bg-color);
 }
 
-/* components/CardLoader/CardLoader.module.css */
 .loaderContainer {
     display: flex;
     justify-content: center;
@@ -37,6 +36,9 @@
     height: 70px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.animatedCard {
     animation: cardFloat 2s ease-in-out infinite;
 }
 
@@ -89,7 +91,7 @@
 }
 
 /* Efeito de pulso suave */
-.card::before {
+.animatedCard::before {
     content: '';
     position: absolute;
     top: 0;
@@ -154,7 +156,6 @@
     background: var(--bg-secondary-color);
     border-radius: 0.4rem;
     margin: 1rem 0;
-    /* border: 2px dashed var(--border-color); */
 
 }
 
