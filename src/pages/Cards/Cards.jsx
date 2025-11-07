@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { FaArrowLeft, FaArrowRight , FaTrashAlt } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaTrashAlt } from "react-icons/fa";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import Button from "../../components/Button/Button";
 import AddCardForm from "../../components/AddCardForm/AddCardForm";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
-import CardComponent from "../../components/CardComponent/CardComponent"
+import CardComponent from "../../components/CardComponent/CardComponent";
 import api from "../../constants/api.js";
 import styles from "./Cards.module.css";
 
@@ -366,21 +366,26 @@ const Cards = ({ decks, loadData }) => {
                                         Próximo <MdArrowRight />
                                     </button>
                                 </div>
+                                {currentCardIndex ===
+                                currentDeck.cards.length - 1 ? (
+                                    <div
+                                        className={`${styles.finalizeBtn} ${
+                                            showAnswer ? null : styles.hidden
+                                        }`}
+                                    >
+                                        <Button
+                                            onClick={() =>
+                                                setStudyDeckModal(true)
+                                            }
+                                        >
+                                            Finalizar estudo
+                                        </Button>
+                                    </div>
+                                ) : null}
                             </div>
                         </CardComponent>
                     </>
                 )}
-                {currentCardIndex === currentDeck.cards.length - 1 ? (
-                    <div
-                        className={`${styles.finalizeBtn} ${
-                            showAnswer ? null : styles.hidden
-                        }`}
-                    >
-                        <Button onClick={() => setStudyDeckModal(true)}>
-                            Finalizar estudo
-                        </Button>
-                    </div>
-                ) : null}
             </div>
 
             {isAddCardFormOpen && (

@@ -345,12 +345,7 @@
     transition: 0.2s;
 }
 
-.difficulty li:hover {
-    transform: translateY(-4px);
-}
-
 .difficulty li.selected {
-    transform: translateY(-4px);
     background: var(--text-secondary-color);
 }
 
@@ -359,7 +354,7 @@
     align-items: center;
     justify-content: center;
     border: none;
-    padding: 0.4rem;
+    padding: 0.2rem 0.4rem;
     font-size: 0.9rem;
     font-weight: bold;
     background: transparent;
@@ -384,6 +379,8 @@
 .finalizeBtn {
     width: 100%;
     transition: 1s ease-in-out;
+    padding-top: 1rem;
+    border-top: 2px solid var(--border-color);
 }
 
 .finalizeBtn button {
