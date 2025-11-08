@@ -8,40 +8,46 @@ const ConfirmModal = ({
     btnText,
     onClick,
     onCancel,
-    isLoading = null,
-    loadingText = null,
-    success,
+    isLoading = false,
+    loadingText = "Carregando...",
+    success = false,
 }) => {
     return (
         <ModalComponent closeModal={onCancel}>
-                <div className={styles.flexModal}>
-                    {success ? null : <IoIosWarning />}
-                    <div className={styles.modalText}>
-                        <h2>{title}</h2>
-                        <p>{description}</p>
-                    </div>
+            <div className={styles.flexModal}>
+                {!success && <IoIosWarning />}
+                <div className={styles.modalText}>
+                    <h2>{title}</h2>
+                    <p>{description}</p>
                 </div>
-                <div className={styles.btnsContainerModal}>
-                    <button className={styles.cancelBtn} onClick={onCancel} disabled={isLoading}>
-                        Cancelar
-                    </button>
-                    <button
-                        className={`${styles.confirmBtn} ${
-                            isLoading ? styles.loading : ""
-                        } ${success ? styles.success : null}`}
-                        disabled={isLoading}
-                        onClick={onClick}
-                    >
-                        {isLoading ? (
-                            <>
-                                <span className={styles.spinner}></span>
-                                {loadingText}
-                            </>
-                        ) : (
-                            btnText
-                        )}
-                    </button>
-                </div>
+            </div>
+            <div className={styles.btnsContainerModal}>
+                <button
+                    className={styles.cancelBtn}
+                    onClick={onCancel}
+                    disabled={isLoading}
+                    type="button"
+                >
+                    Cancelar
+                </button>
+                <button
+                    className={`${styles.confirmBtn} ${
+                        isLoading ? styles.loading : ""
+                    } ${success ? styles.success : ""}`}
+                    disabled={isLoading}
+                    onClick={onClick}
+                    type="button"
+                >
+                    {isLoading ? (
+                        <>
+                            <span className={styles.spinner}></span>
+                            {loadingText}
+                        </>
+                    ) : (
+                        btnText
+                    )}
+                </button>
+            </div>
         </ModalComponent>
     );
 };

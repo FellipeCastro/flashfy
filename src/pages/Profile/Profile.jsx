@@ -331,7 +331,7 @@ const Profile = ({
             localStorage.clear();
             setIsLoading(false);
             navigate("/login");
-        }, 2000);
+        }, 3000);
     };
 
     const openAddSubjectForm = () => {

@@ -154,6 +154,7 @@ const Home = ({
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 placeholder="Pesquisar deck..."
                             />
+        
                             <div className={styles.filterContainer}>
                                 {subjects.map((subject) => {
                                     return (
