@@ -36,7 +36,6 @@ const TextareaComponent = ({
                 <div className={styles.labelContainer}>
                     <label htmlFor={name} className={styles.label}>
                         {label}
-                        {required && <span className={styles.required}>*</span>}
                     </label>
                     {showCharCount && maxLength && (
                         <span className={styles.charCount}>

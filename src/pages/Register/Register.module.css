@@ -112,11 +112,13 @@
 .googleLoginContainer {
     margin-bottom: 1rem;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.googleLoading {
-    text-align: center;
-    margin-top: 1rem;
+.googleLoginContainer div {
+    width: 100%;
 }
 
 @keyframes fadeIn {

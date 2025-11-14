@@ -38,7 +38,6 @@ const SelectComponent = ({
                 <div className={styles.addSubjectContainer}>
                     <label htmlFor={name} className={styles.label}>
                         {label}
-                        {required && <span className={styles.required}>*</span>}
                     </label>
 
                     {shouldShowActionButton && onActionClick && (

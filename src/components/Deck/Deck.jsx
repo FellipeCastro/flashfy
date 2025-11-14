@@ -30,7 +30,7 @@ const Deck = ({ color, subject, title, cards, nextReview, openCard }) => {
                     ? "Agora"
                     : `Em ${diffMinutes} minuto${diffMinutes > 1 ? "s" : ""}`;
             }
-            return `Hoje em ${diffHours} hora${diffHours > 1 ? "s" : ""}`;
+            return `Em ${diffHours} hora${diffHours > 1 ? "s" : ""}`;
         }
 
         // Amanhã
