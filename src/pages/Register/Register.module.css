@@ -114,7 +114,7 @@
     width: 100%;
     display: flex;
     flex-direction: column; 
-    align-items: stretch; 
+    align-items: center; 
 }
 
 @keyframes fadeIn {
