@@ -32,6 +32,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Montserrat", sans-serif;
+    -webkit-tap-highlight-color: transparent; /* Remove o flash azul no toque em mobile */
 }
 
 html,
@@ -39,7 +40,13 @@ body {
     scroll-behavior: smooth;
     background: var(--bg-color);
     color: var(--text-primary-color);
-    font-size: 8px;
+    /* AQUI ESTÁ A MÁGICA:
+       Base anterior: 8px.
+       Nova base para mobile: 11.5px (Aprox 144% de aumento).
+       Isso fará com que 1rem valha muito mais, dando o efeito de zoom.
+    */
+    font-size: 11.5px; 
+    overflow-x: hidden; /* Evita rolagem lateral indesejada no mobile */
 }
 
 #loader {
@@ -60,36 +67,11 @@ body {
     }
 }
 
-/* 
-    xs: 0,
-    sm: 576px,
-    md: 768px,
-    lg: 992px,
-    xl: 1200px,
-    xxl: 1400px 
-*/
-
-/* Small devices (landscape phones, 576px and up) */
-/* @media (min-width: 576px) {
-    html,
-    body {
-        font-size: 10px;
-    }
-} */
-
-/* Medium devices (tablets, 768px and up) */
-/* @media (min-width: 768px) {
-    html,
-    body {
-        font-size: 10px;
-    }
-} */
-
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
     html,
     body {
-        font-size: 12px;
+        font-size: 12px; /* Mantém o tamanho original para Desktop */
     }
 }
 

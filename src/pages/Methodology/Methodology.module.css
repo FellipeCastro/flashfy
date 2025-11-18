@@ -70,6 +70,7 @@
     text-align: center;
     display: flex;
     flex-direction: column;
+    transition: transform 0.2s ease-in-out;
 }
 
 .pillarIcon {
@@ -166,7 +167,18 @@
         font-size: 1.5rem;
     }
 
-    .howItWorksCard {
+    /* AQUI FAZ A MÁGICA: Transforma o grid de 3 colunas em 1 só */
+    .pillarsGrid {
+        grid-template-columns: 1fr;
+        gap: 2rem; /* Aumentei um pouco o espaço entre eles verticalmente */
+    }
+
+    /* Ajuste para o card ficar confortável no mobile */
+    .pillarCard {
         padding: 1.5rem;
+    }
+
+    .howItWorksCard {
+        padding: 0; /* Remove padding extra no card de texto para aproveitar largura */
     }
 }

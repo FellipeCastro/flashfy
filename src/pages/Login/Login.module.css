@@ -4,7 +4,7 @@
     align-items: center;
     min-height: 100vh;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    padding: 20px;
+    padding: 1.5rem; /* Padding reduzido para telas pequenas */
     animation: fadeIn 0.5s ease-out;
 }
 
@@ -12,12 +12,13 @@
     background-color: var(--secondary-color);
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 2.5rem;
+    padding: 2rem;
     width: 100%;
     max-width: 450px;
     animation: slideIn 0.5s ease-out;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
+    /* Removemos alturas fixas para deixar o conteúdo crescer com o zoom */
 }
 
 .backBtn {
@@ -26,7 +27,7 @@
     left: 1rem;
     background: none;
     border: none;
-    font-size: 1rem;
+    font-size: 1.2rem; /* Ícone maior para toque */
     color: var(--text-secondary-color);
     cursor: pointer;
     padding: 0.5rem;
@@ -45,6 +46,7 @@
 .loginHeader {
     text-align: center;
     margin-bottom: 2rem;
+    margin-top: 1rem;
 }
 
 .loginHeader h1 {
@@ -70,6 +72,8 @@
     align-items: center;
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .rememberMe {
@@ -82,6 +86,8 @@
 .rememberMe input {
     margin-right: 0.5rem;
     cursor: pointer;
+    width: 16px; /* Checkbox maior */
+    height: 16px;
 }
 
 .forgotPassword {
@@ -98,6 +104,7 @@
 
 .loginButton {
     width: 100%;
+    padding: 1.2rem; /* Botão mais alto para toque */
 }
 
 .divider {
@@ -183,17 +190,18 @@
 
 /* Responsividade */
 @media (max-width: 768px) {
-    .loginCard {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 100vw;
-        height: 40vh;
+    .loginContainer {
+        align-items: flex-start; /* Permite scroll se for muito alto */
+        padding: 0;
+        background: var(--secondary-color); /* Fundo branco no mobile total */
     }
 
-    .rememberForgot {
+    .loginCard {
+        box-shadow: none;
+        border-radius: 0;
+        min-height: 100vh;
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        gap: 0.8rem;
+        justify-content: center;
     }
 }
