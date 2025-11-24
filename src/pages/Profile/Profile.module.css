@@ -274,19 +274,10 @@
     transition: border-color 0.3s ease;
 }
 
-.dangerItem:hover {
-    border-color: var(--primary-color);
-}
-
 /* Estilo Específico APENAS para o último item (Excluir Conta) - Vermelho */
-.dangerItem:last-child {
+.dangerItem {
     background: rgba(244, 67, 54, 0.05);
     border: 0.08rem solid var(--error-color-text);
-}
-
-.dangerItem:last-child:hover {
-    background: rgba(244, 67, 54, 0.1);
-    border-color: var(--error-color-text);
 }
 
 .dangerItem h3 {
@@ -303,11 +294,11 @@
 }
 
 /* Garante que o botão de excluir continue vermelho */
-.dangerItem:last-child button {
+.dangerItem button {
     background-color: var(--error-color-text) !important;
 }
 
-.dangerItem:last-child button:hover {
+.dangerItem button:hover {
     background-color: var(--error-color) !important;
 }
 
