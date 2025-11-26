@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaTrashAlt, FaBook, FaLayerGroup, FaFileAlt } from "react-icons/fa";
+import { FaTrashAlt, FaBook, FaLayerGroup, FaFileAlt, FaMoon, FaSun } from "react-icons/fa";
 import { FaFire } from "react-icons/fa6";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from "../../components/Button/Button";
@@ -21,6 +21,8 @@ const Profile = ({
     refreshSubjects,
     loading,
     progress,
+    toggleTheme, // Nova prop
+    currentTheme // Nova prop
 }) => {
     const [userData, setUserData] = useState({
         name: "",
@@ -42,7 +44,6 @@ const Profile = ({
     const [isAddSubjectFormOpen, setIsAddSubjectFormOpen] = useState(false);
     const navigate = useNavigate();
 
-    // Carregar dados do usuário quando o profile mudar
     useEffect(() => {
         if (profile && profile.name) {
             setUserData((prev) => ({
@@ -53,19 +54,15 @@ const Profile = ({
         }
     }, [profile]);
 
-    // Efeito para limpar a mensagem de sucesso após 5 segundos
     useEffect(() => {
         if (successMessage) {
             const timer = setTimeout(() => {
                 setSuccessMessage(null);
-            }, 5000); // 5 segundos
-
-            // Cleanup function para limpar o timer se o componente desmontar
+            }, 5000);
             return () => clearTimeout(timer);
         }
     }, [successMessage]);
 
-    // Função para formatar a data do último estudo
     const formatLastStudyDate = (dateString) => {
         if (!dateString) return "Nunca estudou";
 
@@ -73,12 +70,10 @@ const Profile = ({
             const date = new Date(dateString);
             const now = new Date();
 
-            // Verifica se a data é válida
             if (isNaN(date.getTime())) {
                 return "Data inválida";
             }
 
-            // Define as datas para o mesmo horário (meia-noite) para comparar apenas os dias
             const today = new Date(
                 now.getFullYear(),
                 now.getMonth(),
@@ -103,7 +98,6 @@ const Profile = ({
                 const weeks = Math.floor(diffDays / 7);
                 return `Há ${weeks} semana${weeks > 1 ? "s" : ""}`;
             } else {
-                // Formata a data completa para casos mais antigos
                 return date.toLocaleDateString("pt-BR", {
                     day: "2-digit",
                     month: "2-digit",
@@ -123,7 +117,6 @@ const Profile = ({
             [name]: value,
         }));
 
-        // Limpar erros quando o usuário começar a digitar
         if (errors[name]) {
             setErrors((prev) => ({
                 ...prev,
@@ -131,7 +124,6 @@ const Profile = ({
             }));
         }
 
-        // Limpar mensagem de sucesso
         if (successMessage) {
             setSuccessMessage("");
         }
@@ -150,7 +142,6 @@ const Profile = ({
             newErrors.email = "Email inválido";
         }
 
-        // Validações para senha apenas se estiver alterando senha
         if (isChangingPassword) {
             if (!userData.currentPassword) {
                 newErrors.currentPassword = "Senha atual é obrigatória";
@@ -183,12 +174,10 @@ const Profile = ({
         setIsLoading(true);
 
         try {
-            // Se estiver editando informações pessoais, faz a requisição do perfil
             if (isEditing) {
                 const response = await api.put("/users/profile", {
                     name: userData.name,
                     email: userData.email,
-                    // Se estiver alterando senha, faz a requisição de senha
                     password:
                         isChangingPassword &&
                         userData.currentPassword &&
@@ -205,11 +194,9 @@ const Profile = ({
                 setSuccessMessage("Senha alterada com sucesso!");
             }
 
-            // Reseta os estados
             setIsEditing(false);
             setIsChangingPassword(false);
 
-            // Limpa os campos de senha
             setUserData((prev) => ({
                 ...prev,
                 currentPassword: "",
@@ -288,7 +275,6 @@ const Profile = ({
         setErrors({});
         setSuccessMessage("");
 
-        // Limpa os campos de senha ao iniciar a alteração
         setUserData((prev) => ({
             ...prev,
             currentPassword: "",
@@ -367,6 +353,7 @@ const Profile = ({
                         <p>Gerencie suas informações pessoais e preferências</p>
                     </div>
 
+
                     <ErrorComponent error={errors.general} />
 
                     <CardComponent alternativeClass={styles.profileForm}>
@@ -380,8 +367,8 @@ const Profile = ({
                                     name="name"
                                     value={
                                         loading
-                                            ? "Carregando dados..."
-                                            : userData.name
+                                        ? "Carregando dados..."
+                                        : userData.name
                                     }
                                     onChange={handleChange}
                                     placeholder="Seu nome completo"
@@ -395,8 +382,8 @@ const Profile = ({
                                     name="email"
                                     value={
                                         loading
-                                            ? "Carregando dados..."
-                                            : userData.email
+                                        ? "Carregando dados..."
+                                        : userData.email
                                     }
                                     onChange={handleChange}
                                     placeholder="seu@email.com"
@@ -629,14 +616,14 @@ const Profile = ({
                                 {subjects.map((subject) => {
                                     return (
                                         <div
-                                            key={subject.idSubject}
-                                            className={styles.subject}
+                                        key={subject.idSubject}
+                                        className={styles.subject}
                                         >
                                             <div
                                                 className={styles.subjectColor}
                                                 style={{
                                                     backgroundColor:
-                                                        subject.color,
+                                                    subject.color,
                                                 }}
                                             ></div>
                                             <strong>{subject.name}</strong>
@@ -656,6 +643,27 @@ const Profile = ({
                             </div>
                         )}
                     </CardComponent>
+                        {/* --- SEÇÃO DE TEMA (NOVA) --- */}
+                        <CardComponent alternativeClass={styles.themeSection}>
+                            <div className={styles.themeContent}>
+                                <div className={styles.themeIcon}>
+                                    {currentTheme === 'dark' ? <FaMoon /> : <FaSun />}
+                                </div>
+                                <div className={styles.themeInfo}>
+                                    <h3>Aparência</h3>
+                                    <p>Alternar para modo {currentTheme === 'dark' ? 'claro' : 'escuro'}</p>
+                                </div>
+                            </div>
+                            <div className={styles.toggleSwitch} onClick={toggleTheme}>
+                                <input 
+                                    type="checkbox" 
+                                    checked={currentTheme === 'dark'} 
+                                    readOnly 
+                                />
+                                <span className={styles.slider}></span>
+                            </div>
+                        </CardComponent>
+                        {/* --------------------------- */}
 
                     <CardComponent alternativeClass={styles.dangerZone}>
                         <h2>Zona de Perigo</h2>

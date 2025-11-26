@@ -1,10 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
+    /* --- Variáveis Padrão (Light Mode) --- */
     --primary-color: #01a5e4;
     --primary-color-hover: #55C2ED;
     --secondary-color: #fff;
     --bg-color: #f9f9f9;
+    --input-bg: #fafafa; /* Nova variável para inputs */
     --text-primary-color: #333;
     --text-secondary-color: #8a8a8a;
     --fade-color: rgba(0, 0, 0, 0.5);
@@ -27,12 +29,36 @@
     --difficulty-hard-light: #ffebee;
 }
 
+/* --- Definições do Dark Mode --- */
+[data-theme="dark"] {
+    --primary-color: #01a5e4;
+    --primary-color-hover: #008dc4;
+    --secondary-color: #1e1e1e; /* Cor dos cards */
+    --bg-color: #121212; /* Cor de fundo */
+    --input-bg: #2c2c2c; /* Cor dos inputs */
+    --text-primary-color: #e0e0e0;
+    --text-secondary-color: #a0a0a0;
+    --fade-color: rgba(0, 0, 0, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --border-color: rgba(255, 255, 255, 0.1);
+    
+    --error-color: #cf6679;
+    --error-color-text: #ffb4b4;
+    
+    --incorrect-bg: rgba(244, 67, 54, 0.2);
+    --correct-bg: rgba(76, 175, 80, 0.2);
+
+    --difficulty-easy-light: #1b3320;
+    --difficulty-medium-light: #332610;
+    --difficulty-hard-light: #331515;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Montserrat", sans-serif;
-    -webkit-tap-highlight-color: transparent; /* Remove o flash azul no toque em mobile */
+    -webkit-tap-highlight-color: transparent;
 }
 
 html,
@@ -40,13 +66,17 @@ body {
     scroll-behavior: smooth;
     background: var(--bg-color);
     color: var(--text-primary-color);
-    /* AQUI ESTÁ A MÁGICA:
-       Base anterior: 8px.
-       Nova base para mobile: 11.5px (Aprox 144% de aumento).
-       Isso fará com que 1rem valha muito mais, dando o efeito de zoom.
-    */
     font-size: 11.5px; 
-    overflow-x: hidden; /* Evita rolagem lateral indesejada no mobile */
+    overflow-x: hidden;
+    /* Transição suave ao trocar o tema */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ajuste global para inputs e selects no modo escuro */
+input, select, textarea {
+    background-color: var(--input-bg) !important;
+    color: var(--text-primary-color) !important;
+    border-color: var(--border-color) !important;
 }
 
 #loader {
@@ -56,22 +86,16 @@ body {
 }
 
 @keyframes colorChange {
-    0% {
-        color: lightgray;
-    }
-    50% {
-        color: gray;
-    }
-    100% {
-        color: lightgray;
-    }
+    0% { color: var(--text-secondary-color); }
+    50% { color: var(--text-primary-color); }
+    100% { color: var(--text-secondary-color); }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
     html,
     body {
-        font-size: 12px; /* Mantém o tamanho original para Desktop */
+        font-size: 12px;
     }
 }
 

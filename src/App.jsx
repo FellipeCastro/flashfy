@@ -18,6 +18,21 @@ const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    // --- Lógica do Dark Mode ---
+    const [theme, setTheme] = useState(() => {
+        return localStorage.getItem("theme") || "light";
+    });
+
+    useEffect(() => {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+    }, [theme]);
+
+    const toggleTheme = () => {
+        setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    };
+    // ---------------------------
+
     const loadData = async () => {
         try {
             setLoading(true);
@@ -76,14 +91,11 @@ const App = () => {
         loadData();
     }, []);
 
-
-    // Componente de rota protegida
     const ProtectedRoute = ({ children }) => {
         const token = localStorage.getItem("authToken");
         return token ? children : <Navigate to="/login" replace />;
     };
 
-    // Componente de rota para visitantes
     const GuestRoute = ({ children }) => {
         const token = localStorage.getItem("authToken");
         return token ? <Navigate to="/home" replace /> : children;
@@ -187,6 +199,9 @@ const App = () => {
                                 refreshSubjects={refreshSubjects}
                                 loading={loading}
                                 progress={progress}
+                                // Passando as props de tema
+                                toggleTheme={toggleTheme}
+                                currentTheme={theme}
                             />
                         </ProtectedRoute>
                     }

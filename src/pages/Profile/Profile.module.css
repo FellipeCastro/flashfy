@@ -28,6 +28,97 @@
     font-size: 1rem;
 }
 
+/* --- Seção de Tema (NOVO) --- */
+.themeSection {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.themeContent {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.themeIcon {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.themeInfo h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary-color);
+    margin-bottom: 0.25rem;
+}
+
+.themeInfo p {
+    color: var(--text-secondary-color);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Toggle Switch */
+.toggleSwitch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    cursor: pointer;
+}
+
+.toggleSwitch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+/* --------------------------- */
+
 /* Formulário de perfil */
 .profileForm {
     margin-bottom: 2rem;
@@ -111,7 +202,7 @@
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
-    flex-shrink: 0; /* Garante que o ícone não seja esmagado */
+    flex-shrink: 0;
 }
 
 .statInfo h3 {
@@ -251,8 +342,7 @@
 .dangerZone h2 {
     font-size: 1.3rem;
     font-weight: 600;
-    /* Corrigido: Título geral agora é neutro, não vermelho */
-    color: var(--text-primary-color); 
+    color: var(--text-primary-color);
     margin-bottom: 1.5rem;
 }
 
@@ -262,7 +352,6 @@
     gap: 1.5rem;
 }
 
-/* Estilo Padrão (Para o botão Sair) - Neutro */
 .dangerItem {
     display: flex;
     justify-content: space-between;
@@ -274,8 +363,8 @@
     transition: border-color 0.3s ease;
 }
 
-/* Estilo Específico APENAS para o último item (Excluir Conta) - Vermelho */
-.dangerItem {
+/* Estilo Específico APENAS para o item de Excluir Conta */
+.dangerItem:last-child {
     background: rgba(244, 67, 54, 0.05);
     border: 0.08rem solid var(--error-color-text);
 }
@@ -294,11 +383,11 @@
 }
 
 /* Garante que o botão de excluir continue vermelho */
-.dangerItem button {
+.dangerItem:last-child button {
     background-color: var(--error-color-text) !important;
 }
 
-.dangerItem button:hover {
+.dangerItem:last-child button:hover {
     background-color: var(--error-color) !important;
 }
 
@@ -345,6 +434,17 @@
 }
 
 @media (max-width: 480px) {
+    .themeSection {
+        flex-direction: row;
+        padding: 1rem;
+    }
+    
+    .themeIcon {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+    }
+
     .statsGrid {
         grid-template-columns: 1fr;
     }
@@ -409,6 +509,7 @@
 .profileForm:hover,
 .statsSection:hover,
 .subjectsSection:hover,
-.dangerZone:hover {
+.dangerZone:hover,
+.themeSection:hover {
     transform: translateY(0px) !important;
 }
