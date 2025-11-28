@@ -18,12 +18,13 @@ const App = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    // --- Lógica do Dark Mode ---
+    // --- LÓGICA DO TEMA ---
     const [theme, setTheme] = useState(() => {
         return localStorage.getItem("theme") || "light";
     });
 
     useEffect(() => {
+        // Isso aplica o atributo data-theme="dark" ou "light" na tag HTML
         document.documentElement.setAttribute("data-theme", theme);
         localStorage.setItem("theme", theme);
     }, [theme]);
@@ -31,7 +32,7 @@ const App = () => {
     const toggleTheme = () => {
         setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
     };
-    // ---------------------------
+    // ---------------------
 
     const loadData = async () => {
         try {
@@ -199,7 +200,7 @@ const App = () => {
                                 refreshSubjects={refreshSubjects}
                                 loading={loading}
                                 progress={progress}
-                                // Passando as props de tema
+                                // PASSANDO AS PROPS DO TEMA
                                 toggleTheme={toggleTheme}
                                 currentTheme={theme}
                             />

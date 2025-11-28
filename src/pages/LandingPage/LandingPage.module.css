@@ -14,6 +14,37 @@
 }
 
 /* ======================================== */
+/* ANIMAÇÃO DE SCROLL (REVEAL) - ESTILO ACTIVE */
+/* ======================================== */
+.hidden {
+    opacity: 0;
+    /* Começa um pouco menor e mais abaixo */
+    transform: translateY(60px) scale(0.95);
+    /* Transição rápida e elástica (sem blur) */
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Will-change avisa o navegador para preparar a GPU */
+    will-change: transform, opacity;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Opcional: Para elementos que vêm dos lados na timeline */
+.timelineContainer.hidden.left {
+    transform: translateX(-60px) scale(0.95);
+}
+
+.timelineContainer.hidden.right {
+    transform: translateX(60px) scale(0.95);
+}
+
+.timelineContainer.show {
+    transform: translateX(0) scale(1);
+}
+
+/* ======================================== */
 /* HEADER E NAVEGAÇÃO */
 /* ======================================== */
 .header {
@@ -179,11 +210,6 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-}
-
-.textHighlight {
-    color: var(--primary-color);
-    font-weight: 600;
 }
 
 .heroContent p {
@@ -379,7 +405,7 @@
     font-size: 0.9rem;
 }
 
-/* Novo Gráfico de Comparação */
+/* Chart */
 .comparisonChart {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 0.4rem;
@@ -550,9 +576,6 @@
     position: relative;
     width: 50%;
     z-index: 1;
-    opacity: 0;
-    transform: translateX(-50px);
-    animation: fadeInLeft 0.6s ease forwards;
 }
 
 .timelineContainer::after {
@@ -579,8 +602,6 @@
 
 .right {
     left: 50%;
-    transform: translateX(50px);
-    animation-name: fadeInRight;
 }
 
 .right::after {
@@ -632,34 +653,6 @@
     line-height: 1.7;
     font-size: 1rem;
     margin: 0;
-}
-
-/* Animações da timeline */
-.timelineContainer:nth-child(1) {
-    animation-delay: 0.1s;
-}
-.timelineContainer:nth-child(2) {
-    animation-delay: 0.3s;
-}
-.timelineContainer:nth-child(3) {
-    animation-delay: 0.5s;
-}
-.timelineContainer:nth-child(4) {
-    animation-delay: 0.7s;
-}
-
-@keyframes fadeInLeft {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes fadeInRight {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
 }
 
 /* ======================================== */

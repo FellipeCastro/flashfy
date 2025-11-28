@@ -13,7 +13,7 @@ import {
     FaCheck,
     FaStar,
 } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../../components/Button/Button";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import logo from "../../assets/logo.png";
@@ -23,6 +23,32 @@ const LandingPage = () => {
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showAnswer, setShowAnswer] = useState(false);
+
+    // EFEITO DE OBSERVAÇÃO PARA ANIMAÇÃO
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add(styles.show);
+                    } else {
+                        // Remove a classe para a animação rodar novamente
+                        entry.target.classList.remove(styles.show);
+                    }
+                });
+            },
+            {
+                threshold: 0.15, // Aumentei um pouco para não piscar nas bordas
+            }
+        );
+
+        const hiddenElements = document.querySelectorAll(`.${styles.hidden}`);
+        hiddenElements.forEach((el) => observer.observe(el));
+
+        return () => {
+            hiddenElements.forEach((el) => observer.unobserve(el));
+        };
+    }, []);
 
     const steps = [
         {
@@ -180,7 +206,7 @@ const LandingPage = () => {
             </header>
 
             <section className={styles.hero}>
-                <div className={styles.heroContent}>
+                <div className={`${styles.heroContent} ${styles.hidden}`}>
                     <div className={styles.heroBadge}>
                         <FaRocket />
                         Transforme sua forma de estudar
@@ -215,7 +241,7 @@ const LandingPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className={styles.heroVisual}>
+                <div className={`${styles.heroVisual} ${styles.hidden}`}>
                     <div className={styles.flashcardDemo}>
                         <div
                             className={`${styles.flashcard} ${
@@ -253,7 +279,7 @@ const LandingPage = () => {
             <section className={styles.benefits}>
                 <div className={styles.container}>
                     <div className={styles.benefitsContent}>
-                        <div className={styles.benefitsText}>
+                        <div className={`${styles.benefitsText} ${styles.hidden}`}>
                             <h2>
                                 Resultados comprovados que fazem a diferença
                             </h2>
@@ -295,7 +321,7 @@ const LandingPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.benefitsVisual}>
+                        <div className={`${styles.benefitsVisual} ${styles.hidden}`}>
                             <div className={styles.comparisonChart}>
                                 <div className={styles.chartHeader}>
                                     <h4>Comparação de Eficiência</h4>
@@ -359,13 +385,13 @@ const LandingPage = () => {
 
             <section id="how-it-works" className={styles.howItWorks}>
                 <div className={styles.container}>
-                    <h2>Como o FlashFy Funciona</h2>
+                    <h2 className={styles.hidden}>Como o FlashFy Funciona</h2>
 
                     <div className={styles.timeline}>
                         {steps.map((step, index) => (
                             <div
                                 key={index}
-                                className={`${styles.timelineContainer} ${
+                                className={`${styles.timelineContainer} ${styles.hidden} ${
                                     index % 2 === 0 ? styles.left : styles.right
                                 }`}
                             >
@@ -388,30 +414,31 @@ const LandingPage = () => {
 
             <section id="testimonials" className={styles.testimonials}>
                 <div className={styles.container}>
-                    <h2>O que nossos usuários dizem</h2>
+                    <h2 className={styles.hidden}>O que nossos usuários dizem</h2>
                     <div className={styles.testimonialGrid}>
                         {testimonials.map((testimonial, index) => (
-                            <CardComponent
-                                key={index}
-                                alternativeClass={styles.testimonialCard}
-                            >
-                                <div className={styles.testimonialHeader}>
-                                    <div className={styles.testimonialStars}>
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
+                            <div key={index} className={styles.hidden}>
+                                <CardComponent
+                                    alternativeClass={styles.testimonialCard}
+                                >
+                                    <div className={styles.testimonialHeader}>
+                                        <div className={styles.testimonialStars}>
+                                            <FaStar />
+                                            <FaStar />
+                                            <FaStar />
+                                            <FaStar />
+                                            <FaStar />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className={styles.testimonialContent}>
-                                    <p>"{testimonial.text}"</p>
-                                </div>
-                                <div className={styles.testimonialAuthor}>
-                                    <h4>{testimonial.name}</h4>
-                                    <span>{testimonial.role}</span>
-                                </div>
-                            </CardComponent>
+                                    <div className={styles.testimonialContent}>
+                                        <p>"{testimonial.text}"</p>
+                                    </div>
+                                    <div className={styles.testimonialAuthor}>
+                                        <h4>{testimonial.name}</h4>
+                                        <span>{testimonial.role}</span>
+                                    </div>
+                                </CardComponent>
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -419,10 +446,10 @@ const LandingPage = () => {
 
             <section id="faq" className={styles.faq}>
                 <div className={styles.container}>
-                    <h2>Perguntas Frequentes</h2>
+                    <h2 className={styles.hidden}>Perguntas Frequentes</h2>
                     <div className={styles.faqContainer}>
                         {faqData.map((item, index) => (
-                            <details key={index} className={styles.faqItem}>
+                            <details key={index} className={`${styles.faqItem} ${styles.hidden}`}>
                                 <summary className={styles.faqQuestion}>
                                     {item.question}
                                     <FaChevronDown className={styles.faqIcon} />
@@ -438,11 +465,11 @@ const LandingPage = () => {
 
             <section className={styles.cta}>
                 <div className={styles.container}>
-                    <h2>Pronto para transformar seus estudos?</h2>
-                    <p>
+                    <h2 className={styles.hidden}>Pronto para transformar seus estudos?</h2>
+                    <p className={styles.hidden}>
                         Junte-se a milhares de estudantes que já usam o FlashFy
                     </p>
-                    <div className={styles.ctaButtonContainer}>
+                    <div className={`${styles.ctaButtonContainer} ${styles.hidden}`}>
                         <Button onClick={handleRegisterClick}>
                             <FaCheck className={styles.buttonIcon} />
                             Criar Minha Conta Gratuita

@@ -28,7 +28,7 @@
     font-size: 1rem;
 }
 
-/* --- Seção de Tema (NOVO) --- */
+/* --- Seção de Tema --- */
 .themeSection {
     margin-bottom: 2rem;
     display: flex;
@@ -117,7 +117,6 @@ input:focus + .slider {
 input:checked + .slider:before {
     transform: translateX(26px);
 }
-/* --------------------------- */
 
 /* Formulário de perfil */
 .profileForm {
@@ -352,19 +351,15 @@ input:checked + .slider:before {
     gap: 1.5rem;
 }
 
+/* AJUSTE: Aplicado estilo vermelho para todos os itens da zona de perigo */
 .dangerItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
-    background: var(--bg-color);
     border-radius: 0.4rem;
-    border: 1px solid var(--border-color);
     transition: border-color 0.3s ease;
-}
-
-/* Estilo Específico APENAS para o item de Excluir Conta */
-.dangerItem:last-child {
+    /* Fundo vermelho leve e borda para todos */
     background: rgba(244, 67, 54, 0.05);
     border: 0.08rem solid var(--error-color-text);
 }
@@ -382,12 +377,12 @@ input:checked + .slider:before {
     margin: 0;
 }
 
-/* Garante que o botão de excluir continue vermelho */
-.dangerItem:last-child button {
+/* AJUSTE: Garante que TODOS os botões da danger zone sejam vermelhos */
+.dangerItem button {
     background-color: var(--error-color-text) !important;
 }
 
-.dangerItem:last-child button:hover {
+.dangerItem button:hover {
     background-color: var(--error-color) !important;
 }
 
@@ -486,8 +481,10 @@ input:checked + .slider:before {
         width: 100%;
     }
 
+    /* AJUSTE: Corrigido o tamanho do botão no mobile */
     .editActions button {
-        width: 100%;
+        width: auto; /* Deixa o botão do tamanho do conteúdo, não 100% */
+        align-self: flex-start;
     }
 }
 

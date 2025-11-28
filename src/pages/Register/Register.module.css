@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background-color: var(--bg-color); /* CORRIGIDO */
     padding: 20px;
     animation: fadeIn 0.5s ease-out;
 }
@@ -18,6 +18,7 @@
     animation: slideIn 0.5s ease-out;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
+    border: 1px solid var(--border-color); /* Borda adicionada */
 }
 
 .backBtn {
@@ -38,7 +39,7 @@
 }
 
 .backBtn:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--border-color);
     color: var(--text-primary-color);
 }
 
@@ -118,34 +119,13 @@
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 480px) {
